@@ -1,0 +1,97 @@
+:root {
+  --paper: #f7f8f7;
+  --surface: #fff;
+  --ink: #24332d;
+  --soft: #64716a;
+  --green: #25634b;
+  --green-dark: #194a38;
+  --mist: #e8f0ec;
+  --line: #dce3de;
+  --danger: #a44638;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { min-width: 320px; margin: 0; color: var(--ink); background: var(--paper); font: 14px/1.55 "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+p, h1, h2, figure { margin: 0; }
+
+.app-header { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 14px 18px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand strong { font: 700 20px/1 Georgia, "Songti SC", serif; letter-spacing: .01em; }
+.brand-mark { display: grid; width: 32px; height: 32px; place-items: center; color: #fff; background: var(--green); border-radius: 8px; font: 700 20px/1 Georgia, serif; }
+.beta { padding: 2px 6px; color: var(--green); background: var(--mist); border-radius: 4px; font-size: 10px; font-weight: 700; }
+.app-header > p { color: var(--soft); font-size: 11px; }
+.app-header > p[data-state="online"] { color: var(--green); }
+.app-header > p[data-state="offline"] { color: var(--danger); }
+
+.tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 0 18px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.tab { height: 48px; color: var(--soft); background: transparent; border: 0; border-bottom: 2px solid transparent; }
+.tab.is-active { color: var(--green); border-color: var(--green); font-weight: 700; }
+.panel { padding: 18px; }
+
+.preview { position: relative; display: grid; min-height: 210px; place-items: center; overflow: hidden; background: #edf1ee; border: 1px solid var(--line); border-radius: 10px; }
+.preview img { display: block; width: 100%; max-height: 360px; object-fit: contain; background: #edf1ee; }
+.preview img[hidden] { display: none; }
+.preview figcaption { padding: 28px; color: var(--soft); text-align: center; }
+.preview:not(.is-empty) figcaption { position: absolute; right: 8px; bottom: 8px; max-width: calc(100% - 16px); padding: 5px 8px; overflow: hidden; color: #fff; background: rgb(15 27 21 / 72%); border-radius: 5px; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+
+.paste-zone { display: grid; gap: 2px; margin-top: 10px; padding: 13px 15px; color: var(--green); background: var(--surface); border: 1px dashed #9eb8aa; border-radius: 8px; }
+.paste-zone span { color: var(--soft); font-size: 12px; }
+.paste-zone.is-over { background: var(--mist); border-style: solid; }
+
+.setup-block, .field-group, .current-download, .boundary-note { margin-top: 16px; padding: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.setup-block h2, .section-title h2, .result h2 { font-size: 14px; }
+.setup-block > p, .boundary-note p { margin-top: 6px; color: var(--soft); font-size: 12px; }
+.check-row { display: flex; gap: 8px; margin: 12px 0; font-size: 12px; }
+.check-row input { margin-top: 3px; accent-color: var(--green); }
+.section-title, .result-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.section-title span, .result-meta { color: var(--soft); font-size: 11px; }
+.key-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 9px; }
+input, select { width: 100%; height: 40px; padding: 0 10px; color: var(--ink); background: #fff; border: 1px solid #b8c3bd; border-radius: 6px; }
+
+.primary-button, .secondary-button { min-height: 40px; padding: 0 14px; border-radius: 6px; font-weight: 700; }
+.primary-button { width: 100%; color: #fff; background: var(--green); border: 1px solid var(--green); }
+.primary-button:hover:not(:disabled) { background: var(--green-dark); }
+.secondary-button { color: var(--green); background: #fff; border: 1px solid #8eaa9c; }
+button:disabled { cursor: default; opacity: .48; }
+.text-button { padding: 0; color: var(--soft); background: transparent; border: 0; border-bottom: 1px solid currentColor; font-size: 11px; }
+
+.analysis-action { margin-top: 16px; text-align: center; }
+.analysis-action .text-button { margin-top: 10px; }
+#analysis-feedback, #type-feedback, #download-feedback { min-height: 19px; margin-top: 8px; color: var(--soft); font-size: 12px; }
+[data-tone="error"] { color: var(--danger) !important; }
+[data-tone="success"] { color: var(--green) !important; }
+
+.result { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.result-heading { align-items: flex-start; margin-bottom: 12px; }
+.result-section { padding: 14px 0; border-top: 1px solid var(--line); }
+.result-section:first-child { border-top: 0; }
+.result-section h3 { margin: 0 0 5px; color: var(--green); font-size: 13px; }
+.result-section p { white-space: pre-wrap; }
+
+.download-intro h1 { max-width: 280px; font: 600 26px/1.25 Georgia, "Songti SC", serif; }
+.download-intro p { margin-top: 9px; color: var(--soft); }
+.field-group { display: grid; gap: 8px; }
+.field-group label { font-size: 12px; font-weight: 700; }
+.current-download .primary-button { margin-top: 12px; }
+.download-location { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.download-location p { display: grid; min-width: 0; gap: 2px; }
+.download-location p strong { font-size: 11px; }
+.download-location p span { overflow: hidden; color: var(--soft); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.download-location .secondary-button { min-height: 34px; padding-inline: 11px; font-size: 12px; }
+.boundary-note strong { font-size: 12px; }
+.boundary-note a { display: inline-block; margin-top: 8px; color: var(--green); font-size: 12px; }
+
+@media (max-width: 350px) {
+  .app-header, .panel { padding-inline: 13px; }
+  .tabs { padding-inline: 13px; }
+  .app-header > p { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .panel { animation: panel-in 140ms ease-out; }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(3px); } }
+}

@@ -1,13 +1,19 @@
 import { parseSections } from './analysis-contract.mjs';
+import { normalizeApiKey } from './developer-settings.mjs';
 
 // 全进程唯一的外网调用点。
 //
-// 这是 deepseek-flash 的适配器，走 Anthropic Messages 格式（不是 OpenAI 的 choices[]）。
+// 产品内沿用 deepseek-flash 这个短名称；DeepSeek 官方端点会映射到
+// 实际支持图片输入的 deepseek-v4-flash-vision-exp。自定义兼容端点仍原样透传，
+// 避免破坏供应商自己的模型别名。
+// 适配器走 Anthropic Messages 格式（不是 OpenAI 的 choices[]）。
 // 实测响应里会先出现一个 thinking 块，正文在后面的 text 块——提取时必须跳过 thinking，
 // 否则会把模型的内部推理当成分析结果返回给用户。
 
 export const DEFAULT_MAX_TOKENS = 8192; // Step 0 实测：中文 8 个分项约 1000 token，8192 留足了余量
 export const DEFAULT_TIMEOUT_MS = 120_000; // 带 thinking 的单次调用实测 23s 左右，但网络抖动要留余量
+export const PRODUCT_MODEL = 'deepseek-flash';
+export const OFFICIAL_VISION_MODEL = 'deepseek-v4-flash-vision-exp';
 
 const SUPPORTED_MEDIA_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp', 'image/gif']);
 
@@ -34,6 +40,18 @@ function normalizeBaseUrl(value) {
   return String(value || 'https://api.deepseek.com/anthropic').replace(/\/+$/, '');
 }
 
+export function resolveUpstreamModel(model, baseUrl) {
+  const requested = String(model || PRODUCT_MODEL);
+  try {
+    if (requested === PRODUCT_MODEL && new URL(baseUrl).hostname.toLowerCase() === 'api.deepseek.com') {
+      return OFFICIAL_VISION_MODEL;
+    }
+  } catch {
+    // 非标准兼容地址交给 fetch 报出更具体的连接错误。
+  }
+  return requested;
+}
+
 // 只取 text 块拼成正文。thinking 块和任何未知类型一律丢弃。
 export function extractContentText(payload) {
   const blocks = Array.isArray(payload?.content) ? payload.content : [];
@@ -46,24 +64,29 @@ export function extractContentText(payload) {
 export class DeepSeekVisionAnalyzer {
   constructor({
     apiKey,
-    model = 'deepseek-flash',
+    model = PRODUCT_MODEL,
     baseUrl,
     systemPrompt,
     fetchImpl = globalThis.fetch,
     timeoutMs = DEFAULT_TIMEOUT_MS,
     maxTokens = DEFAULT_MAX_TOKENS,
   } = {}) {
-    if (!apiKey) throw new VisionAnalysisError('NOT_CONFIGURED', 'DeepSeek 凭据尚未配置');
+    const normalizedApiKey = normalizeApiKey(apiKey) || '';
+    if (!normalizedApiKey) throw new VisionAnalysisError('NOT_CONFIGURED', 'DeepSeek 凭据尚未配置');
+    if (!/^[\x21-\x7e]+$/.test(normalizedApiKey)) {
+      throw new VisionAnalysisError('INVALID_CONFIGURATION', 'DeepSeek API Key 含有换行或其他非法字符，请重新配置');
+    }
     if (!systemPrompt) throw new Error('缺少 system prompt：应由 analysis-contract.loadSystemPrompt() 提供');
 
-    this.apiKey = apiKey;
+    this.apiKey = normalizedApiKey;
     this.model = model;
     this.baseUrl = normalizeBaseUrl(baseUrl);
+    this.upstreamModel = resolveUpstreamModel(model, this.baseUrl);
     this.systemPrompt = systemPrompt;
     this.fetchImpl = fetchImpl;
     this.timeoutMs = timeoutMs;
     this.maxTokens = maxTokens;
-    this.secrets = [apiKey];
+    this.secrets = [normalizedApiKey];
   }
 
   redact(text) {
@@ -96,7 +119,7 @@ export class DeepSeekVisionAnalyzer {
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: this.model,
+          model: this.upstreamModel,
           max_tokens: this.maxTokens,
           system: this.systemPrompt,
           messages: [{
@@ -165,7 +188,12 @@ export class DeepSeekVisionAnalyzer {
     if (error?.name === 'AbortError') {
       return new VisionAnalysisError('UPSTREAM_TIMEOUT', '模型请求被中断');
     }
-    return new VisionAnalysisError('UPSTREAM_FAILED', this.redact(`无法连接 DeepSeek：${error?.message ?? error}`), {
+    const causeCode = error?.cause?.code ? ` [${error.cause.code}]` : '';
+    const causeMessage = error?.cause?.message && error.cause.message !== error?.message
+      ? `；${error.cause.message}`
+      : '';
+    const detail = `${error?.message ?? error}${causeCode}${causeMessage}`;
+    return new VisionAnalysisError('UPSTREAM_FAILED', this.redact(`无法连接 DeepSeek：${detail}`), {
       cause: error,
     });
   }

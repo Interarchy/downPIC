@@ -13,8 +13,45 @@ export const DEFAULT_BASE_URL = 'https://api.deepseek.com/anthropic';
 export const DEFAULT_MODEL = 'deepseek-flash';
 export const SETTINGS_FILENAME = 'developer-ai-settings.json';
 
+export function normalizeApiKey(value) {
+  if (typeof value !== 'string') return value;
+
+  // DeepSeek Key 只由可打印 ASCII 字符组成。从网页、密码管理器或聊天窗口
+  // 复制时，文本可能混入换行、空格、BOM、零宽/方向控制字符；它们肉眼
+  // 看不见，却会让 Node 在真正发请求前以 invalid header 拒绝。
+  // 只保留 HTTP header 能安全承载的可打印 ASCII，覆盖所有这类复制噪声。
+  let normalized = Array.from(value)
+    .filter(character => {
+      const codePoint = character.codePointAt(0);
+      return codePoint >= 0x21 && codePoint <= 0x7e;
+    })
+    .join('');
+  const quotePairs = [['"', '"'], ["'", "'"], ['“', '”'], ['‘', '’']];
+  for (const [opening, closing] of quotePairs) {
+    if (normalized.startsWith(opening) && normalized.endsWith(closing)) {
+      normalized = normalized.slice(opening.length, -closing.length);
+      break;
+    }
+  }
+  return normalized;
+}
+
 export function defaultRuntimeRoot() {
   return fileURLToPath(new URL('./runtime/', import.meta.url));
+}
+
+export function windowsPowerShellEnvironment(environment = process.env) {
+  const windowsRoot = environment.WINDIR || 'C:\\Windows';
+  const programFiles = environment.ProgramFiles || 'C:\\Program Files';
+  return {
+    ...environment,
+    // PowerShell 7 会把自己的模块目录放在最前面；Windows PowerShell 5.1
+    // 继承后会误加载不兼容的 Security 模块。这里只保留系统自带模块路径。
+    PSModulePath: [
+      path.join(windowsRoot, 'System32', 'WindowsPowerShell', 'v1.0', 'Modules'),
+      path.join(programFiles, 'WindowsPowerShell', 'Modules'),
+    ].join(path.delimiter),
+  };
 }
 
 // 用 PowerShell 的 DPAPI 解密：ConvertFrom-SecureString 的密文绑定当前用户，
@@ -28,6 +65,7 @@ try { [Console]::Out.Write([Runtime.InteropServices.Marshal]::PtrToStringBSTR($p
 finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer) }`;
     const child = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], {
       windowsHide: true,
+      env: windowsPowerShellEnvironment(),
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     let stdout = '';
@@ -47,8 +85,10 @@ finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer) }`;
 // 回落路径也走这里，保证「返回值里 baseUrl/model 总是有值」这一条对调用方成立，
 // 于是 server 和 analyzer 都不必再各自 `|| DEFAULT_...` 兜一次底。
 function withDefaults(environment) {
+  const apiKey = normalizeApiKey(environment.DEEPSEEK_API_KEY);
   return {
     ...environment,
+    DEEPSEEK_API_KEY: apiKey || undefined,
     DEEPSEEK_BASE_URL: environment.DEEPSEEK_BASE_URL || DEFAULT_BASE_URL,
     DEEPSEEK_MODEL: environment.DEEPSEEK_MODEL || DEFAULT_MODEL,
   };
@@ -57,7 +97,7 @@ function withDefaults(environment) {
 export function settingsToEnvironment(settings, apiKey, environment = {}) {
   return {
     ...withDefaults(environment),
-    DEEPSEEK_API_KEY: environment.DEEPSEEK_API_KEY || apiKey,
+    DEEPSEEK_API_KEY: normalizeApiKey(environment.DEEPSEEK_API_KEY || apiKey),
     DEEPSEEK_BASE_URL: environment.DEEPSEEK_BASE_URL || settings.baseUrl || DEFAULT_BASE_URL,
     DEEPSEEK_MODEL: environment.DEEPSEEK_MODEL || settings.model || DEFAULT_MODEL,
   };

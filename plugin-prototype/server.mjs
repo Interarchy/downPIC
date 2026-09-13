@@ -31,6 +31,7 @@ export const MAX_BODY_BYTES = 20 * 1024 * 1024;
 
 const ERROR_STATUS = {
   NOT_CONFIGURED: 503,
+  INVALID_CONFIGURATION: 503,
   IMAGE_REJECTED: 400,
   ANALYSIS_FORMAT_INVALID: 502,
   UPSTREAM_FAILED: 502,
@@ -125,7 +126,10 @@ export function isTrustedRequest(req) {
   const origin = req.headers.origin;
   if (!origin) return true; // curl 之类没有 Origin，此时自定义头已经足够
   try {
-    const { hostname, port } = new URL(origin);
+    const { protocol, hostname, port } = new URL(origin);
+    // The packaged extension calls the local service from its service worker.
+    // Chrome-generated extension IDs are 32 characters in the a-p alphabet.
+    if (protocol === 'chrome-extension:' && /^[a-p]{32}$/.test(hostname)) return true;
     const host = String(req.headers.host || '');
     return `${hostname}:${port || '80'}` === (host.includes(':') ? host : `${host}:80`);
   } catch {

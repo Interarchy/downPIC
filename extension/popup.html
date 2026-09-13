@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>downPIC</title>
+    <link rel="stylesheet" href="popup.css?v=0.2.2" />
+  </head>
+  <body>
+    <main class="popup-shell">
+      <header class="brand-row">
+        <div class="brand"><span class="brand-mark">d</span><strong>downPIC</strong><span>Beta</span></div>
+        <p id="backend-status" data-state="checking"><i></i><span>检查服务</span></p>
+      </header>
+
+      <section class="switch-row">
+        <div><strong>网页图片工具</strong><p id="capture-copy">功能已关闭</p></div>
+        <label class="switch">
+          <span class="sr-only">开启或关闭网页图片工具</span>
+          <input id="capture-enabled" type="checkbox" />
+          <span class="switch-track"></span>
+        </label>
+      </section>
+
+      <section class="project-section">
+        <div class="section-heading"><strong>默认项目类型</strong><span id="default-badge">文化建筑</span></div>
+        <label class="sr-only" for="preset-type">预设项目类型</label>
+        <select id="preset-type">
+          <optgroup id="preset-options" label="预设类型"></optgroup>
+          <optgroup id="custom-options" label="我的类型"></optgroup>
+        </select>
+        <label class="sr-only" for="custom-type">自定义项目类型</label>
+        <div class="custom-row">
+          <input id="custom-type" type="text" maxlength="40" autocomplete="off" placeholder="输入自定义类型" />
+          <button id="save-type" type="button">设为默认</button>
+        </div>
+        <p id="type-feedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <button id="open-analysis" class="analysis-button" type="button">
+        <span><strong>打开反推提示词</strong><small>粘贴图片，或查看网页选图结果</small></span>
+        <b aria-hidden="true">›</b>
+      </button>
+
+      <p class="usage-note">开启后，将鼠标移到网页内容图片上，即可保存或反推提示词。</p>
+      <p id="global-feedback" class="feedback" aria-live="polite"></p>
+      <a class="privacy-link" href="privacy.html" target="_blank">隐私说明</a>
+    </main>
+    <script type="module" src="popup.mjs"></script>
+  </body>
+</html>

@@ -377,6 +377,9 @@ test('isTrustedRequest 的判定规则', () => {
   assert.equal(isTrustedRequest({
     headers: { 'x-downpic': '1', host: '127.0.0.1:4186', origin: 'http://127.0.0.1:4186' },
   }), true);
+  assert.equal(isTrustedRequest({
+    headers: { 'x-downpic': '1', host: '127.0.0.1:4186', origin: 'chrome-extension://abcdefghijklmnopabcdefghijklmnop' },
+  }), true);
   assert.equal(isTrustedRequest({ headers: { 'x-downpic': '1', host: '127.0.0.1:4186', origin: 'http://localhost:4186' } }), false);
   assert.equal(isTrustedRequest({ headers: { 'x-downpic': '1', host: '127.0.0.1:4186', origin: 'not a url' } }), false);
   assert.equal(isTrustedRequest({ headers: { host: '127.0.0.1:4186' } }), false);

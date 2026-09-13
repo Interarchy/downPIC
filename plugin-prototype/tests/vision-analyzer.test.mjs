@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DeepSeekVisionAnalyzer, VisionAnalysisError, extractContentText, redactSecrets } from '../vision-analyzer.mjs';
+import {
+  DeepSeekVisionAnalyzer,
+  OFFICIAL_VISION_MODEL,
+  VisionAnalysisError,
+  extractContentText,
+  redactSecrets,
+  resolveUpstreamModel,
+} from '../vision-analyzer.mjs';
 
 const API_KEY = 'sk-test-key-that-must-never-leak';
 const SYSTEM_PROMPT = '你是一名建筑可视化分析助手。\n\n【核心视觉特征】\n提炼三至五个最有辨识度的特点。';
@@ -57,7 +64,7 @@ test('请求形状：Anthropic 端点、三件套鉴权头、base64 内联图片
   assert.equal(init.headers['anthropic-version'], '2023-06-01');
 
   const body = JSON.parse(init.body);
-  assert.equal(body.model, 'deepseek-flash');
+  assert.equal(body.model, OFFICIAL_VISION_MODEL);
   assert.equal(body.system, SYSTEM_PROMPT);
   assert.deepEqual(body.messages[0].content[0], {
     type: 'image',
@@ -214,6 +221,61 @@ test('baseUrl 末尾的斜杠被规整，不会拼出双斜杠', async () => {
   );
   await analyzer.analyze({ buffer: IMAGE, mimeType: 'image/png' });
   assert.equal(calls[0].url, 'https://proxy.example.com/anthropic/v1/messages');
+});
+
+test('Key 的不可见 Unicode 复制噪声会在发请求前被清理', async () => {
+  const calls = [];
+  const analyzer = new DeepSeekVisionAnalyzer({
+    apiKey: `  ${API_KEY}\r\n`,
+    systemPrompt: SYSTEM_PROMPT,
+    fetchImpl: async (url, init) => {
+      calls.push({ url, init });
+      return jsonResponse(LIVE_SHAPE);
+    },
+  });
+  await analyzer.analyze({ buffer: IMAGE, mimeType: 'image/png' });
+  assert.equal(calls[0].init.headers['x-api-key'], API_KEY);
+
+  const copiedAnalyzer = new DeepSeekVisionAnalyzer({
+    apiKey: `“${API_KEY.slice(0, 10)}\u200b\n${API_KEY.slice(10)}”`,
+    systemPrompt: SYSTEM_PROMPT,
+    fetchImpl: async (url, init) => {
+      calls.push({ url, init });
+      return jsonResponse(LIVE_SHAPE);
+    },
+  });
+  await copiedAnalyzer.analyze({ buffer: IMAGE, mimeType: 'image/png' });
+  assert.equal(calls[1].init.headers['x-api-key'], API_KEY);
+});
+
+test('fetch failed 时保留脱敏后的底层错误码，便于定位代理与 TLS', async () => {
+  const root = new TypeError('fetch failed', {
+    cause: Object.assign(new Error('socket access denied'), { code: 'EACCES' }),
+  });
+  const { analyzer } = analyzerWith(() => { throw root; });
+
+  await assert.rejects(
+    analyzer.analyze({ buffer: IMAGE, mimeType: 'image/png' }),
+    error => error.code === 'UPSTREAM_FAILED'
+      && /fetch failed/.test(error.message)
+      && /EACCES/.test(error.message)
+      && /socket access denied/.test(error.message),
+  );
+});
+
+test('产品短名称只在 DeepSeek 官方端点映射到视觉模型', () => {
+  assert.equal(
+    resolveUpstreamModel('deepseek-flash', 'https://api.deepseek.com/anthropic'),
+    OFFICIAL_VISION_MODEL,
+  );
+  assert.equal(
+    resolveUpstreamModel('deepseek-flash', 'https://proxy.example.com/anthropic'),
+    'deepseek-flash',
+  );
+  assert.equal(
+    resolveUpstreamModel('custom-vision-model', 'https://api.deepseek.com/anthropic'),
+    'custom-vision-model',
+  );
 });
 
 test('extractContentText 只认 text 块，未知块类型被忽略', () => {

@@ -8,3 +8,6 @@ plugin-prototype/runtime/
 # Dependency and debug artifacts
 node_modules/
 *.log
+
+# Generated Chrome Web Store packages
+extension/dist/

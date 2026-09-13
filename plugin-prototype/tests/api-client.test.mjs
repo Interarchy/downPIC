@@ -19,6 +19,13 @@ test('服务端返回的错误码映射成对应的提示', () => {
   assert.equal(describeApiError(new ApiError('BODY_TOO_LARGE', 'x')), ERROR_HINTS.BODY_TOO_LARGE);
 });
 
+test('上游失败会附带服务端已经脱敏的诊断信息', () => {
+  const error = new ApiError('UPSTREAM_FAILED', '无法连接 DeepSeek：fetch failed [EACCES]');
+  const message = describeApiError(error);
+  assert.match(message, /模型服务暂时不可用/);
+  assert.match(message, /EACCES/);
+});
+
 test('服务端新加了错误码时退回它自己的文案，而不是显示 undefined', () => {
   assert.equal(describeApiError(new ApiError('SOMETHING_NEW', '服务端的新说明')), '服务端的新说明');
   assert.equal(describeApiError(new ApiError('SOMETHING_NEW', '')), '未知错误');

@@ -10,7 +10,9 @@ import {
   SETTINGS_FILENAME,
   credentialSummary,
   loadDeepSeekEnvironment,
+  normalizeApiKey,
   settingsToEnvironment,
+  windowsPowerShellEnvironment,
 } from '../developer-settings.mjs';
 
 const FAKE_KEY = 'sk-this-is-a-fake-key-for-tests';
@@ -179,14 +181,32 @@ test('settingsToEnvironment 不会覆盖已有的环境变量', () => {
   assert.equal(merged.DEEPSEEK_API_KEY, FAKE_KEY);
 });
 
+test('环境变量里的 Key 会清理复制时带入的空白、Unicode 控制字符和外层引号', async () => {
+  const loaded = await loadDeepSeekEnvironment('/not-used', {
+    DEEPSEEK_API_KEY: `  ${FAKE_KEY}\r\n`,
+  });
+  assert.equal(loaded.DEEPSEEK_API_KEY, FAKE_KEY);
+  assert.equal(normalizeApiKey(`\t${FAKE_KEY}\n`), FAKE_KEY);
+  assert.equal(normalizeApiKey(`“${FAKE_KEY.slice(0, 8)}\u200b\r\n${FAKE_KEY.slice(8)}”`), FAKE_KEY);
+  assert.equal(normalizeApiKey(`\u202a${FAKE_KEY.slice(0, 8)}\u200e${FAKE_KEY.slice(8)}\u202c`), FAKE_KEY);
+});
+
 // 上面所有用例都注入了假解密函数，这条走真实的 DPAPI 往返：
 // PowerShell 脚本是那种会静默失效的东西，必须至少真正跑一次。
-test('真实 DPAPI 往返：脚本写入的密文能被读回', { skip: process.platform !== 'win32' }, async () => {
+test('真实 DPAPI 往返：脚本写入的密文能被读回', { skip: process.platform !== 'win32' }, async t => {
   await withRuntime(async runtimeRoot => {
     const encrypt = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command',
       '$s = ConvertTo-SecureString $env:DOWNPIC_TEST_SECRET -AsPlainText -Force; ConvertFrom-SecureString $s'],
-    { encoding: 'utf8', windowsHide: true, env: { ...process.env, DOWNPIC_TEST_SECRET: FAKE_KEY } });
+    {
+      encoding: 'utf8',
+      windowsHide: true,
+      env: windowsPowerShellEnvironment({ ...process.env, DOWNPIC_TEST_SECRET: FAKE_KEY }),
+    });
 
+    if (encrypt.status !== 0 && /CryptographicException/.test(encrypt.stderr)) {
+      t.skip('当前宿主没有可用的 Windows 用户 DPAPI 配置文件；环境变量配置不受影响');
+      return;
+    }
     assert.equal(encrypt.status, 0, encrypt.stderr);
     await writeSettings(runtimeRoot, { ...VALID, encryptedApiKey: encrypt.stdout.trim() });
 

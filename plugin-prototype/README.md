@@ -10,13 +10,33 @@
 powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/configure-deepseek.ps1
 ```
 
-再从仓库根目录启动，访问 http://127.0.0.1:4186/plugin-prototype/ 。不需要安装依赖。
+如果 Windows PowerShell 的隐藏输入框无法粘贴，可先从 DeepSeek 控制台复制 Key，再运行：
 
-```bash
-node plugin-prototype/serve.mjs --library-root="F:\downPIC素材库"
+```powershell
+powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/configure-deepseek.ps1 -ApiKeyFromClipboard
 ```
 
-也可以直接用环境变量 `DEEPSEEK_API_KEY`，它的优先级高于配置文件。`--library-root` 没给的话反推仍可用，但保存会失败。
+该模式只把 Key 转成当前 Windows 用户可解密的 DPAPI 密文，不会在终端显示或将明文写入文件。
+
+再从仓库根目录启动，访问 http://127.0.0.1:4186/plugin-prototype/ 。不需要安装依赖。启动脚本会在当前 PowerShell 内解密，再只通过进程环境交给 Node；明文仍不落盘。未指定路径时，图片默认保存到 `plugin-prototype/runtime/library/`：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototype.ps1
+```
+
+如果 Windows DPAPI 无法解密（常见于受限终端或用户上下文变化），启动脚本会自动停下来，请在此时从 DeepSeek 控制台复制 Key，再回到终端按回车。该次 Key 只进入 Node 子进程环境，关闭服务即失效，不会写入磁盘。也可以显式使用：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototype.ps1 -ApiKeyFromClipboard
+```
+
+要改用自己的素材目录，可以传入：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototype.ps1 --library-root="F:\downPIC素材库"
+```
+
+也可以直接设置环境变量 `DEEPSEEK_API_KEY` 后运行 `node plugin-prototype/serve.mjs`。
 
 ## 本轮范围与边界
 
@@ -27,7 +47,7 @@ node plugin-prototype/serve.mjs --library-root="F:\downPIC素材库"
 - 整体生成准则固定置顶并包含在一键复制文本中。四千像素级输出是生图要求，实际尺寸仍需在生图工具设置。
 - 侧栏宽度 360–520 像素可调。宽屏采用挤压网页的双栏方式，窄屏使用覆盖式面板；均不改变参考图本身比例。
 - **保存会真的写磁盘**：落点是 `素材根目录 / 项目类型 / 网页标题项目名 / 图片`，同项目内按内容 SHA-256 去重，并在图片旁写一份 `.source.json` 来源旁车。
-- **反推会真的调用 deepseek-flash**，不是预设结果。粘贴的图片同样走真实模型。
+- **反推会真的调用 DeepSeek 视觉模型**，不是预设结果。产品内显示名为 `deepseek-flash`；使用 DeepSeek 官方端点时，服务端映射到 `deepseek-v4-flash-vision-exp`。粘贴的图片同样走真实模型。
 - 三张示例图是 `prototype/assets/architecture-board.png` 的 CSS 裁切（`index.html` 里没有 `<img>`），所以浏览器侧要从精灵图裁出 512×512 再上传。
 - 未改动旧原型、插件安装配置或注册项。
 
@@ -65,7 +85,7 @@ node plugin-prototype/serve.mjs --library-root="F:\downPIC素材库"
 
 ### 模型与输出契约（Step 0，2026-09-13 实测）
 
-- `deepseek-flash` 支持视觉，`deepseek-v4-pro` 完全不支持视觉且会编造看似合理的答案——本产品里用户无法分辨，故禁用。
+- 产品内短名称 `deepseek-flash` 在 DeepSeek 官方端点映射到 `deepseek-v4-flash-vision-exp`；普通的 `deepseek-v4-flash` 与 `deepseek-v4-pro` 不接收图片，因此反推链路禁用它们。
 - 端点 `https://api.deepseek.com/anthropic/v1/messages`，鉴权同时带 `x-api-key` 和 `authorization: Bearer`。响应是 **Anthropic Messages 格式**，不是 OpenAI 的 `choices[]`。
 - 实测响应含 `thinking` 块且排在**第一个**，正文在后面的 `text` 块。提取文本必须跳过 `thinking`，否则会把模型的内部推理当成分析结果返回给用户。
 - 真实单次调用耗时 **15.7–23.6s**（无流式输出），所以加载态必须带秒数计时。

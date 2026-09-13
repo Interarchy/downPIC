@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>downPIC</title>
+    <link rel="stylesheet" href="sidepanel.css?v=0.2.2" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand"><span class="brand-mark">d</span><strong>downPIC</strong><span class="beta">Beta</span></div>
+      <p id="session-status" data-state="checking">正在检查服务</p>
+    </header>
+
+    <nav class="tabs" aria-label="功能切换">
+      <button class="tab is-active" type="button" data-tab="analysis">反推提示词</button>
+      <button class="tab" type="button" data-tab="download">下载与分类</button>
+    </nav>
+
+    <main>
+      <section id="analysis-panel" class="panel">
+        <figure id="preview" class="preview is-empty">
+          <img id="preview-image" alt="当前参考图" hidden />
+          <figcaption id="preview-caption">悬浮网页图片点击“反推提示词”，或在侧栏粘贴图片</figcaption>
+        </figure>
+
+        <div id="paste-zone" class="paste-zone" tabindex="0">
+          <strong>粘贴参考图</strong>
+          <span>复制图片后在这里按 Ctrl+V，也可以拖入图片</span>
+        </div>
+
+        <section id="privacy-gate" class="setup-block" hidden>
+          <h2>发送前确认</h2>
+          <p>仅在你主动反推时，所选图片会发送给 downPIC 服务，再由服务调用 DeepSeek 生成中文提示词。其他网页内容不会上传。</p>
+          <label class="check-row"><input id="privacy-check" type="checkbox" />我理解图片将由 downPIC 与 DeepSeek 处理，并确认有权使用该图片</label>
+          <button id="privacy-accept" class="secondary-button" type="button" disabled>确认并继续</button>
+        </section>
+
+        <div class="analysis-action">
+          <button id="analyze" class="primary-button" type="button" disabled>反推提示词</button>
+          <p id="analysis-feedback" aria-live="polite"></p>
+        </div>
+
+        <section id="result" class="result" hidden>
+          <div class="result-heading">
+            <div><h2>结构化提示词</h2><p id="result-meta"></p></div>
+            <button id="copy-all" class="secondary-button" type="button">复制全部</button>
+          </div>
+          <div id="result-sections"></div>
+        </section>
+      </section>
+
+      <section id="download-panel" class="panel" hidden>
+        <div class="download-intro">
+          <h1>保存到清晰的项目目录</h1>
+          <p>网页图片将保存到 Chrome 下载目录中的 downPIC 文件夹，并按项目类型和网页标题分类。</p>
+        </div>
+
+        <section class="field-group">
+          <label for="preset-type">默认项目类型</label>
+          <select id="preset-type"></select>
+          <label for="custom-type">新建自定义类型</label>
+          <div class="key-row">
+            <input id="custom-type" type="text" maxlength="40" autocomplete="off" placeholder="例如：山地酒店" />
+            <button id="save-type" class="secondary-button" type="button">设为默认</button>
+          </div>
+          <p id="type-feedback" aria-live="polite"></p>
+        </section>
+
+        <section class="current-download">
+          <div class="section-title"><h2>当前参考图</h2><span id="download-category"></span></div>
+          <button id="download-current" class="primary-button" type="button" disabled>保存当前参考图</button>
+          <p id="download-feedback" aria-live="polite"></p>
+          <div class="download-location">
+            <p><strong>最近下载</strong><span id="last-download-path">保存图片后可快速定位文件</span></p>
+            <button id="show-download" class="secondary-button" type="button" disabled>在文件夹中显示</button>
+          </div>
+        </section>
+
+        <aside class="boundary-note">
+          <strong>首版边界</strong>
+          <p>只保存你主动点击或粘贴的图片，不绕过登录与付费限制。图片版权与使用授权由使用者自行确认。</p>
+          <a href="privacy.html" target="_blank">查看隐私说明</a>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="sidepanel.mjs"></script>
+  </body>
+</html>

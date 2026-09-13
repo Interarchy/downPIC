@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { loadSystemPrompt } from '../analysis-contract.mjs';
+import { resolveUpstreamModel } from '../vision-analyzer.mjs';
 import { decodePng, cropPng, encodePng, cropRectFor } from './png-tools.mjs';
 
 // Step 0 冒烟脚本：用真实参考图打一次真实模型请求，回答三件事——
@@ -12,6 +13,7 @@ import { decodePng, cropPng, encodePng, cropRectFor } from './png-tools.mjs';
 
 const BASE_URL = process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com/anthropic';
 const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-flash';
+const UPSTREAM_MODEL = resolveUpstreamModel(MODEL, BASE_URL);
 const MAX_TOKENS = Number(process.env.DEEPSEEK_MAX_TOKENS || 8192);
 const CROP_INDEX = Number(process.argv[2] ?? 0);
 
@@ -46,7 +48,7 @@ console.log(`编码后 ${cropPngBytes.length} 字节（base64 约 ${Math.ceil(cr
 // 与线上同一条路径：围栏之间的内容才是发给模型的部分。
 const system = await loadSystemPrompt();
 console.log(`system prompt ${system.length} 字`);
-console.log(`模型 ${MODEL} @ ${BASE_URL}，max_tokens=${MAX_TOKENS}\n`);
+console.log(`产品模型 ${MODEL} → 上游模型 ${UPSTREAM_MODEL} @ ${BASE_URL}，max_tokens=${MAX_TOKENS}\n`);
 
 const started = Date.now();
 let response;
@@ -60,7 +62,7 @@ try {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: MODEL,
+      model: UPSTREAM_MODEL,
       max_tokens: MAX_TOKENS,
       system,
       messages: [{

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>downPIC 隐私说明</title>
+    <style>
+      body { max-width: 720px; margin: 48px auto; padding: 0 24px 64px; color: #24332d; background: #f7f8f7; font: 15px/1.8 "Microsoft YaHei UI", sans-serif; }
+      h1 { font: 700 34px/1.2 Georgia, "Songti SC", serif; }
+      h2 { margin-top: 32px; font-size: 18px; }
+      a { color: #25634b; }
+      .summary { padding: 18px; background: #fff; border-left: 4px solid #25634b; }
+    </style>
+  </head>
+  <body>
+    <h1>downPIC Beta 隐私说明</h1>
+    <p class="summary">downPIC 只处理用户主动选择、粘贴或下载的参考图片，不进行广告追踪、行为画像或后台浏览记录收集。</p>
+    <h2>处理的数据</h2>
+    <p>下载功能会在本地使用所选图片、当前网页标题、来源地址和用户选择的项目类型，用于生成下载目录和文件名。反推功能会处理用户主动选择或粘贴的图片。</p>
+    <h2>图片分析</h2>
+    <p>只有在用户主动点击反推并确认处理说明后，所选图片才会发送至 downPIC 服务，再由服务调用 DeepSeek API 生成中文结构化提示词。其他网页内容不会随图片一同发送。</p>
+    <h2>模型凭据</h2>
+    <p>DeepSeek API Key 只保存在 downPIC 服务端，不包含在扩展程序、网页或用户浏览器存储中。用户无需输入模型密钥。</p>
+    <h2>本地保存与删除</h2>
+    <p>分类设置和隐私确认保存在 Chrome 本地扩展存储中，可通过卸载扩展清除。下载的图片保存在用户的 Chrome 下载目录中，由用户自行管理和删除。</p>
+    <h2>数据用途限制</h2>
+    <p>downPIC 仅使用上述数据提供图片下载、分类与提示词反推功能，不出售数据，不用于个性化广告，也不允许人工读取用户图片。</p>
+    <h2>版权提示</h2>
+    <p>扩展不会绕过登录、付费墙或网站访问限制。用户应确保有权访问、保存和处理所选图片。</p>
+    <p>版本：Beta 0.2.2。此扩展内置页面用于说明首版行为；公开发布前还需将同样内容部署到可公开访问的 HTTPS 地址。</p>
+  </body>
+</html>

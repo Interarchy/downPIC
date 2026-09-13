@@ -15,7 +15,8 @@ export class ApiError extends Error {
 }
 
 export const ERROR_HINTS = {
-  NOT_CONFIGURED: '服务端还没配置 DeepSeek 密钥。运行 scripts/configure-deepseek.ps1，或在环境变量里设置 DEEPSEEK_API_KEY，然后重启服务。',
+  NOT_CONFIGURED: '服务端还没配置 DeepSeek 密钥。运行 plugin-prototype/scripts/configure-deepseek.ps1，或在环境变量里设置 DEEPSEEK_API_KEY，然后重启服务。',
+  INVALID_CONFIGURATION: 'DeepSeek API Key 中含有隐藏换行或非法字符，请重新粘贴 Key 并重启服务。',
   IMAGE_REJECTED: '服务端拒绝了这张图片，请换一张 PNG、JPEG 或 WebP。',
   ANALYSIS_FORMAT_INVALID: '模型这次没有按格式输出，可以直接重试。',
   UPSTREAM_TIMEOUT: '模型超时了，稍后重试通常就好。',
@@ -29,7 +30,13 @@ export const ERROR_HINTS = {
 };
 
 export function describeApiError(error) {
-  if (error instanceof ApiError) return ERROR_HINTS[error.code] || error.message || '未知错误';
+  if (error instanceof ApiError) {
+    const hint = ERROR_HINTS[error.code];
+    if (error.code === 'UPSTREAM_FAILED' && error.message) {
+      return `${hint} ${error.message}`;
+    }
+    return hint || error.message || '未知错误';
+  }
   return '出现未预期的错误，请重试。';
 }
 

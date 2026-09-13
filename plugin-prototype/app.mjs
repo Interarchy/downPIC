@@ -367,7 +367,7 @@ async function loadStatus() {
     $('#reveal-library').disabled = !status.libraryRoot;
     $('#server-note').textContent = configured
       ? `反推使用 ${status.model}，由本地服务调用。`
-      : '尚未配置 DeepSeek 密钥，反推不可用。运行 scripts/configure-deepseek.ps1 后重启服务。';
+      : '尚未配置 DeepSeek 密钥，反推不可用。运行 plugin-prototype/scripts/configure-deepseek.ps1 后重启服务。';
     $('#server-note').hidden = false;
   } catch (error) {
     configured = false;
