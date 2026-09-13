@@ -1,0 +1,105 @@
+.sis-capture-toolbar {
+  --sis-ink: #202722;
+  --sis-soft: #677069;
+  --sis-paper: #fffef9;
+  --sis-line: #aeb5af;
+  --sis-accent: #285d4b;
+  --sis-danger: #a44638;
+  position: absolute;
+  z-index: 2147483647;
+  display: grid;
+  width: min(520px, calc(100vw - 24px));
+  min-width: 0;
+  padding: 7px;
+  transform: translateX(-50%);
+  color: var(--sis-ink);
+  background: var(--sis-paper);
+  border: 1px solid var(--sis-line);
+  border-radius: 4px;
+  box-shadow: 0 10px 32px rgb(20 30 24 / 22%);
+  font: 13px/1.4 "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  animation: sis-toolbar-in 120ms ease-out;
+}
+
+.sis-capture-toolbar * { box-sizing: border-box; }
+
+.sis-capture-row {
+  display: grid;
+  grid-template-columns: minmax(120px, .9fr) minmax(150px, 1.1fr) auto;
+  gap: 7px;
+}
+
+.sis-capture-row select,
+.sis-capture-row input,
+.sis-capture-row button {
+  min-width: 0;
+  height: 34px;
+  margin: 0;
+  border-radius: 3px;
+  font: inherit;
+}
+
+.sis-capture-row select,
+.sis-capture-row input {
+  padding: 0 9px;
+  color: var(--sis-ink);
+  background: #fff;
+  border: 1px solid var(--sis-line);
+  outline: none;
+}
+
+.sis-capture-row select:focus,
+.sis-capture-row input:focus { border-color: var(--sis-accent); box-shadow: 0 0 0 2px rgb(40 93 75 / 12%); }
+.sis-capture-row input[aria-invalid="true"] { border-color: var(--sis-danger); }
+
+.sis-capture-row button {
+  min-width: 74px;
+  padding: 0 14px;
+  color: #fff;
+  background: var(--sis-accent);
+  border: 1px solid var(--sis-accent);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.sis-capture-row button:disabled { cursor: default; color: #6d716e; background: #dfe1dc; border-color: #c7cbc7; }
+
+.sis-capture-status {
+  margin: 0;
+  padding: 6px 4px 1px;
+  color: var(--sis-soft);
+  font-size: 12px;
+  text-align: center;
+}
+
+.sis-capture-status[data-tone="error"] { color: var(--sis-danger); }
+.sis-capture-status[data-tone="warning"] { color: #8a5d22; }
+
+.sis-capture-reveal {
+  justify-self: center;
+  margin: 1px 0 2px;
+  padding: 2px 0;
+  color: var(--sis-accent);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sis-capture-reveal:hover { color: var(--sis-ink); }
+.sis-capture-reveal:disabled { opacity: .5; cursor: wait; }
+
+@keyframes sis-toolbar-in {
+  from { opacity: 0; transform: translate(-50%, -4px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 520px) {
+  .sis-capture-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .sis-capture-row select { grid-column: 1; grid-row: 1; }
+  .sis-capture-row input { grid-column: 1; grid-row: 2; }
+  .sis-capture-row button { grid-column: 2; grid-row: 1 / 3; height: 100%; }
+}

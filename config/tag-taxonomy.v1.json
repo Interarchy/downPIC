@@ -1,0 +1,337 @@
+{
+  "schema_version": "1.0.0",
+  "language": "zh-CN",
+  "status": "review_draft",
+  "scope": {
+    "deep_analysis_type_id": "image_visualization",
+    "deep_analysis_type_name": "效果表现图",
+    "rule": "所有图片先判断图片类型；只有效果表现图生成描述和其余九类标签。"
+  },
+  "global_rules": {
+    "visible_evidence_only": true,
+    "one_canonical_category_per_tag": true,
+    "preset_tag_direct_threshold": 0.8,
+    "atmosphere_tag_direct_threshold": 0.85,
+    "review_threshold": 0.55,
+    "max_effective_tags": 15,
+    "max_ai_candidate_tags": 5,
+    "ai_candidate_default_status": "pending_review"
+  },
+  "categories": [
+    {
+      "id": "image_type",
+      "name": "图片类型",
+      "selection": { "min": 1, "max": 1 },
+      "subcategories": [
+        {
+          "id": "image_format",
+          "name": "图片形式",
+          "tags": [
+            { "id": "image_visualization", "name": "效果表现图", "aliases": ["建筑效果图", "建筑实景照片", "实景照片", "效果图"], "definition": "建筑、室内、景观或细部的实景摄影与视觉效果表达；V1唯一进行深度解析的图片类型。" },
+            { "id": "image_site_plan", "name": "总平面图", "aliases": ["总图", "site plan"], "definition": "表达建筑总体布局及其与场地关系的正投影图。" },
+            { "id": "image_floor_plan", "name": "平面图", "aliases": ["建筑平面", "floor plan"], "definition": "表达建筑单层空间组织的水平剖切图。" },
+            { "id": "image_analysis_diagram", "name": "分析图", "aliases": ["设计分析图", "diagram"], "definition": "以图示方式解释设计信息、关系或策略的图片。" },
+            { "id": "image_elevation", "name": "立面图", "aliases": ["建筑立面图", "elevation"], "definition": "表达建筑外立面的正投影图。" },
+            { "id": "image_section", "name": "剖面图", "aliases": ["建筑剖面图", "section"], "definition": "表达建筑竖向剖切关系的图纸。" },
+            { "id": "image_other", "name": "其他", "aliases": [], "definition": "不属于上述类型或当前无法可靠归类的图片。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "view_type",
+      "name": "视角类型",
+      "selection": { "min": 0, "max": 1 },
+      "subcategories": [
+        {
+          "id": "camera_angle",
+          "name": "相机视角",
+          "tags": [
+            { "id": "view_aerial", "name": "鸟瞰", "aliases": ["鸟瞰图", "高空俯视"], "definition": "从明显高处斜向俯视，可见建筑屋顶及较完整场地。" },
+            { "id": "view_elevated", "name": "半鸟瞰", "aliases": ["半鸟瞰图", "高视点"], "definition": "视点略高于建筑主体，同时可见主要立面和部分屋顶。" },
+            { "id": "view_eye_level", "name": "人视", "aliases": ["人视图", "平视"], "definition": "接近人的正常观察高度观看建筑或空间。" },
+            { "id": "view_low_angle", "name": "仰视", "aliases": ["仰视图", "低视点"], "definition": "从较低位置明显向上观察建筑或构件。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "space_type",
+      "name": "空间类型",
+      "selection": { "min": 0, "max": 3 },
+      "subcategories": [
+        {
+          "id": "building_exterior_space",
+          "name": "建筑外部空间",
+          "tags": [
+            { "id": "space_courtyard", "name": "庭院", "aliases": ["院落"], "definition": "由建筑或界面限定、与建筑直接关联的室外院落空间。" },
+            { "id": "space_inner_courtyard", "name": "内院", "aliases": ["内部庭院"], "definition": "位于建筑体量内部或被建筑高度围合的庭院。" },
+            { "id": "space_block_courtyard", "name": "街区内院", "aliases": ["街区院落"], "definition": "由街区尺度建筑围合形成的公共或半公共内院。" },
+            { "id": "space_roof_terrace", "name": "屋顶平台", "aliases": ["屋顶露台"], "definition": "位于建筑屋顶且可停留使用的室外平台。" },
+            { "id": "space_terrace", "name": "露台", "aliases": ["室外露台"], "definition": "与建筑室内相连、开放且可停留的室外平台空间。" },
+            { "id": "space_entrance", "name": "入口", "aliases": ["入口空间", "建筑入口"], "definition": "承担建筑进入、识别和内外转换的主要空间或部位。" },
+            { "id": "space_balcony", "name": "阳台", "aliases": ["阳台空间"], "definition": "从建筑外墙伸出或凹入、与室内相连的外部空间。" },
+            { "id": "space_platform", "name": "平台", "aliases": ["室外平台"], "definition": "具有明确高差、承载停留或连接活动的水平空间。" },
+            { "id": "space_sunken", "name": "下沉", "aliases": ["下沉空间", "下沉广场", "下沉庭院"], "definition": "明显低于周边地坪形成的可使用空间。" }
+          ]
+        },
+        {
+          "id": "building_interior_space",
+          "name": "建筑内部空间",
+          "tags": [
+            { "id": "space_foyer", "name": "门厅", "aliases": ["前厅"], "definition": "进入建筑后承担迎候与分流的室内前厅。" },
+            { "id": "space_atrium", "name": "中庭", "aliases": ["室内中庭"], "definition": "贯通或联系多个楼层的建筑内部核心空间。" },
+            { "id": "space_hall", "name": "大厅", "aliases": ["公共大厅"], "definition": "尺度较大、承担公共集散或活动的室内空间。" },
+            { "id": "space_exhibition", "name": "展厅", "aliases": ["展览空间"], "definition": "有明确展陈界面、展品或展览设施的空间。" },
+            { "id": "space_reading", "name": "阅览空间", "aliases": ["阅读空间"], "definition": "有书架、阅览桌椅等明确阅读设施的空间。" },
+            { "id": "space_classroom", "name": "教室", "aliases": ["教学空间"], "definition": "有明确教学家具、设备或活动证据的空间。" },
+            { "id": "space_office", "name": "办公空间", "aliases": ["办公室"], "definition": "有明确工位、办公家具或办公活动证据的空间。" },
+            { "id": "space_dining", "name": "餐饮空间", "aliases": ["餐厅"], "definition": "有明确餐桌、餐饮设施或就餐活动证据的空间。" }
+          ]
+        },
+        {
+          "id": "transition_space",
+          "name": "过渡空间",
+          "tags": [
+            { "id": "space_semi_outdoor", "name": "灰空间", "aliases": ["半室外空间"], "definition": "介于室内外之间、具有遮蔽且边界开放的过渡空间。" },
+            { "id": "space_portico", "name": "门廊", "aliases": ["入口门廊"], "definition": "位于入口前、带顶盖并形成进入过渡的空间。" },
+            { "id": "space_under_eaves", "name": "檐下空间", "aliases": ["檐下"], "definition": "由明显出檐覆盖形成的半室外空间。" },
+            { "id": "space_link_bridge", "name": "连廊", "aliases": ["连接廊"], "definition": "连接不同建筑或空间单元的有顶通行空间。" },
+            { "id": "space_elevated", "name": "架空", "aliases": ["架空层", "架空公共空间"], "definition": "建筑主体脱离地面并在下方形成清晰可识别或可使用的空间。" }
+          ]
+        },
+        {
+          "id": "circulation_space",
+          "name": "建筑交通空间",
+          "tags": [
+            { "id": "space_corridor", "name": "走廊", "aliases": ["廊道"], "definition": "承担水平通行和空间联系的线性空间。" },
+            { "id": "space_stair", "name": "楼梯", "aliases": ["楼梯空间", "阶梯"], "definition": "以踏步连接不同标高的交通空间及其核心构件。" },
+            { "id": "space_ramp", "name": "坡道", "aliases": ["坡道空间"], "definition": "通过连续斜面连接不同标高的交通空间或构件。" },
+            { "id": "space_elevator_lobby", "name": "电梯厅", "aliases": ["电梯前厅"], "definition": "围绕电梯出入口形成的候梯与分流空间。" }
+          ]
+        },
+        {
+          "id": "urban_linear_space",
+          "name": "城市街道与线性空间",
+          "tags": [
+            { "id": "urban_street", "name": "城市街道", "aliases": ["街道空间"], "definition": "由道路及两侧城市界面共同形成的城市线性空间。" },
+            { "id": "urban_pedestrian_street", "name": "步行街", "aliases": ["步行商业街"], "definition": "以连续步行为主、机动车受限的街道空间。" },
+            { "id": "urban_alley", "name": "巷道", "aliases": ["巷弄"], "definition": "尺度较窄、由连续界面限定的城市通行空间。" },
+            { "id": "urban_waterfront_walk", "name": "滨水步道", "aliases": ["滨水漫步道"], "definition": "沿水体连续设置的公共步行空间。" },
+            { "id": "urban_greenway", "name": "绿道", "aliases": ["绿色步道"], "definition": "以绿化环境为主要特征的连续慢行空间。" }
+          ]
+        },
+        {
+          "id": "urban_node_space",
+          "name": "城市广场与节点空间",
+          "tags": [
+            { "id": "urban_square", "name": "城市广场", "aliases": ["公共广场"], "definition": "城市尺度、边界和开放性清晰的公共广场空间。" },
+            { "id": "urban_forecourt", "name": "建筑前广场", "aliases": ["前广场"], "definition": "位于建筑主要入口前、承担集散和过渡的开放空间。" },
+            { "id": "urban_street_corner", "name": "街角空间", "aliases": ["转角空间"], "definition": "位于街道交叉或转折处、具有停留或节点特征的公共空间。" },
+            { "id": "urban_pocket_square", "name": "口袋广场", "aliases": ["小微广场"], "definition": "嵌入街区、尺度较小且可公共停留的广场空间。" }
+          ]
+        },
+        {
+          "id": "urban_park_ecology_space",
+          "name": "城市公园与生态空间",
+          "tags": [
+            { "id": "urban_park", "name": "城市公园", "aliases": ["公共公园"], "definition": "位于城市环境中、以绿地和公共活动为主的开放空间。" },
+            { "id": "urban_roadside_green", "name": "街旁绿地", "aliases": ["街边绿地"], "definition": "沿街设置、尺度相对有限的公共绿地空间。" },
+            { "id": "urban_waterfront_public", "name": "滨水公共空间", "aliases": ["滨水空间"], "definition": "以公共活动和停留为主、与可见水体直接关联的城市空间。" },
+            { "id": "urban_understory_activity", "name": "林下活动空间", "aliases": ["林下空间"], "definition": "由连续树冠覆盖并具有明确公共活动或停留设施的空间。" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "component",
+      "name": "建筑部位与构件",
+      "selection": { "min": 0, "max": 4 },
+      "subcategory_rule": "门、窗、墙体、地面等常见对象，只有成为画面重点或具有明显设计特征时才标注。",
+      "subcategories": [
+        { "id": "overall_part", "name": "整体部位", "tags": [
+          { "id": "part_facade", "name": "立面", "aliases": ["建筑立面"], "definition": "画面重点呈现建筑外部界面的整体设计。" },
+          { "id": "part_roof", "name": "屋顶", "aliases": ["建筑屋面"], "definition": "画面重点呈现建筑顶部覆盖部分或屋顶设计。" },
+          { "id": "part_plinth", "name": "基座", "aliases": ["建筑基座"], "definition": "建筑底部形成明确承托、抬高或接地关系的整体部位。" }
+        ]},
+        { "id": "spatial_interface", "name": "空间界面", "tags": [
+          { "id": "interface_exterior_wall", "name": "外墙", "aliases": ["外部墙面"], "definition": "具有明显设计特征并构成建筑外部边界的墙面。" },
+          { "id": "interface_interior_wall", "name": "内墙", "aliases": ["内部墙面"], "definition": "具有明显设计特征并组织室内空间的墙面。" },
+          { "id": "interface_floor", "name": "地面", "aliases": ["地坪"], "definition": "具有明显铺装、高差或连续设计特征的地面界面。" },
+          { "id": "interface_ceiling", "name": "顶棚", "aliases": ["天花"], "definition": "具有明显造型、材料或设备整合特征的室内顶部界面。" }
+        ]},
+        { "id": "opening_skin", "name": "开口与表皮", "tags": [
+          { "id": "component_door", "name": "门", "aliases": ["门洞"], "definition": "成为画面重点或具有明显尺度、形式特征的门及门洞。" },
+          { "id": "component_window", "name": "窗", "aliases": ["窗洞", "开窗"], "definition": "成为画面重点或形成连续、特殊开窗关系的窗。" },
+          { "id": "component_curtain_wall", "name": "幕墙", "aliases": ["玻璃幕墙"], "definition": "具有连续非承重表皮特征的建筑外围护界面。" },
+          { "id": "component_skylight", "name": "天窗", "aliases": ["屋顶天窗"], "definition": "位于屋面并清晰可见的采光开口或构件。" },
+          { "id": "component_screen", "name": "格栅", "aliases": ["建筑格栅"], "definition": "由重复条状或网格单元构成、用于围护、遮蔽或分隔的构件。" },
+          { "id": "component_sunshade", "name": "遮阳构件", "aliases": ["遮阳板", "建筑遮阳"], "definition": "位于开口或立面外侧、具有明确遮阳作用的构件。" }
+        ]},
+        { "id": "horizontal_component", "name": "水平构件", "tags": [
+          { "id": "component_floor_slab", "name": "楼板", "aliases": ["水平楼板"], "definition": "楼板边缘、厚度或结构关系成为画面重点的水平构件。" },
+          { "id": "component_eave", "name": "挑檐", "aliases": ["出檐"], "definition": "从外墙或屋面明显向外伸出的檐部构件。" },
+          { "id": "component_canopy", "name": "雨棚", "aliases": ["入口雨棚"], "definition": "覆盖入口或室外局部区域的突出顶盖构件。" }
+        ]},
+        { "id": "vertical_component", "name": "竖向构件", "tags": [
+          { "id": "component_column", "name": "柱", "aliases": ["柱体"], "definition": "柱的尺度、排列或造型成为画面重要特征。" },
+          { "id": "component_wall", "name": "墙体", "aliases": ["独立墙体"], "definition": "独立、曲面或具有明显空间组织作用的墙体。" },
+          { "id": "component_railing", "name": "栏杆", "aliases": ["护栏"], "definition": "具有明显设计特征并承担防护或边界作用的栏杆。" }
+        ]},
+        { "id": "landscape_auxiliary_component", "name": "景观与附属构件", "tags": [
+          { "id": "component_steps", "name": "台阶", "aliases": ["室外台阶"], "definition": "具有停留、连接或塑造地形作用的连续踏步构件。" },
+          { "id": "component_seating", "name": "座椅", "aliases": ["固定座椅"], "definition": "与建筑或景观一体化、具有明显设计特征的坐具。" },
+          { "id": "component_planter", "name": "花池", "aliases": ["种植池"], "definition": "边界清晰、与空间设计整合的种植构件。" },
+          { "id": "component_retaining_wall", "name": "挡土墙", "aliases": ["护土墙"], "definition": "用于保持地形高差且清晰可见的墙体构件。" }
+        ]}
+      ]
+    },
+    {
+      "id": "material_surface",
+      "name": "材料与表面",
+      "selection": { "min": 0, "max": 4 },
+      "subcategories": [
+        { "id": "base_material", "name": "基础材料", "tags": [
+          { "id": "material_concrete", "name": "混凝土", "aliases": ["砼", "concrete"], "definition": "视觉证据支持的混凝土材料。" },
+          { "id": "material_wood", "name": "木材", "aliases": ["木质", "wood"], "definition": "视觉证据支持的天然或工程木质材料；仅见木纹但材质不明时不使用。" },
+          { "id": "material_brick", "name": "砖", "aliases": ["砖材", "brick"], "definition": "可见砌筑单元、砖缝或明确砖质表面的材料。" },
+          { "id": "material_stone", "name": "石材", "aliases": ["石料", "stone"], "definition": "可见天然或人造石质特征、但不臆测具体石种的材料。" },
+          { "id": "material_glass", "name": "玻璃", "aliases": ["玻璃材质", "glass"], "definition": "具有透明、半透明或反射特征的玻璃材料。" },
+          { "id": "material_metal", "name": "金属", "aliases": ["金属材质", "metal"], "definition": "可确认金属视觉特征、但无法可靠判断具体金属种类的材料。" },
+          { "id": "material_steel", "name": "钢材", "aliases": ["钢构件", "steel"], "definition": "构件形态与表面证据足以支持钢材判断时使用。" },
+          { "id": "material_paint", "name": "涂料", "aliases": ["涂装", "paint"], "definition": "表面具有连续涂覆特征且能与抹灰等区分时使用。" },
+          { "id": "material_plaster", "name": "抹灰", "aliases": ["灰泥", "plaster"], "definition": "墙面呈现连续抹灰或灰泥质感且证据充分时使用。" },
+          { "id": "material_ceramic", "name": "陶瓷", "aliases": ["陶板", "瓷砖", "ceramic"], "definition": "可见陶瓷板、陶砖或瓷砖单元特征的材料。" },
+          { "id": "material_rammed_earth", "name": "夯土", "aliases": ["夯土墙", "rammed earth"], "definition": "可见典型分层夯筑纹理且证据充分的材料。" },
+          { "id": "material_fabric", "name": "织物", "aliases": ["膜材", "fabric"], "definition": "具有柔性织物或膜材视觉特征的材料。" }
+        ]},
+        { "id": "surface_appearance", "name": "视觉表现", "tags": [
+          { "id": "surface_exposed", "name": "清水表面", "aliases": ["清水质感"], "definition": "材料本体直接外露、保留成型或施工痕迹的表面表现。" },
+          { "id": "surface_rough", "name": "粗糙表面", "aliases": ["粗糙肌理"], "definition": "具有明显凹凸、颗粒或不平整纹理的表面。" },
+          { "id": "surface_polished", "name": "抛光表面", "aliases": ["磨光表面"], "definition": "经处理形成平整并具有明显光泽的表面。" },
+          { "id": "surface_perforated", "name": "穿孔表面", "aliases": ["穿孔板", "多孔表皮"], "definition": "由规则或连续孔洞构成的材料表面。" },
+          { "id": "surface_weathered", "name": "锈蚀表面", "aliases": ["锈蚀肌理"], "definition": "金属表面呈现清晰氧化、锈色或风化特征。" },
+          { "id": "surface_translucent", "name": "半透明表面", "aliases": ["透光表面"], "definition": "允许光线通过但无法清晰透视背后物体的表面。" },
+          { "id": "surface_mirror", "name": "镜面反射", "aliases": ["镜面", "高反射表面"], "definition": "表面产生清晰或较强环境映射反射。" }
+        ]}
+      ]
+    },
+    {
+      "id": "construction_structure",
+      "name": "构造与结构",
+      "selection": { "min": 0, "max": 3 },
+      "subcategory_rule": "只标注清晰可见的构造特征，不反推隐藏结构体系。",
+      "subcategories": [
+        { "id": "support_force", "name": "支撑与受力特征", "tags": [
+          { "id": "structure_column_grid", "name": "柱网", "aliases": ["柱列"], "definition": "重复柱列形成清晰可辨的结构秩序。" },
+          { "id": "structure_truss", "name": "桁架", "aliases": ["桁架结构"], "definition": "由杆件组成三角受力体系且清晰外露。" },
+          { "id": "structure_arch", "name": "拱", "aliases": ["拱结构"], "definition": "清晰可见的弧形承重或跨越构造。" },
+          { "id": "structure_shell", "name": "壳体", "aliases": ["薄壳"], "definition": "连续曲面形成的整体受力外形且证据明确。" },
+          { "id": "structure_tensile", "name": "张拉结构", "aliases": ["张拉膜结构"], "definition": "由张力构件或膜面形成且受力逻辑可见的结构。" },
+          { "id": "structure_suspension", "name": "悬索结构", "aliases": ["索结构"], "definition": "以清晰可见的悬索承担主要受力的结构。" }
+        ]},
+        { "id": "spatial_construction", "name": "空间构造特征", "tags": [
+          { "id": "structure_cantilever", "name": "悬挑", "aliases": ["悬挑结构"], "definition": "构件或体量从支撑处明显向外伸出且下方无直接支撑。" },
+          { "id": "structure_large_span", "name": "大跨度", "aliases": ["无柱大空间"], "definition": "有明显连续无柱空间、跨越尺度或可见受力构件作为证据。" }
+        ]},
+        { "id": "exposed_construction", "name": "外露构造", "tags": [
+          { "id": "structure_exposed", "name": "外露结构", "aliases": ["结构外露"], "definition": "主要受力构件在室内或外部直接可见并参与空间表达。" },
+          { "id": "structure_externalized", "name": "外置结构", "aliases": ["结构外置"], "definition": "主要结构体系明确布置在建筑围护界面之外。" },
+          { "id": "structure_skin_integrated", "name": "结构表皮一体化", "aliases": ["结构表皮融合"], "definition": "可见结构同时构成主要建筑表皮，二者难以分离。" }
+        ]},
+        { "id": "joint_assembly", "name": "节点与装配", "tags": [
+          { "id": "construction_timber_joint", "name": "木构节点", "aliases": ["木节点"], "definition": "木构件连接方式成为画面清晰重点。" },
+          { "id": "construction_steel_joint", "name": "钢构节点", "aliases": ["钢节点"], "definition": "钢构件连接板、螺栓或焊接关系清晰可见。" },
+          { "id": "construction_prefabricated", "name": "装配式构件", "aliases": ["预制构件"], "definition": "重复预制单元及其装配关系具有明确视觉证据。" }
+        ]}
+      ]
+    },
+    {
+      "id": "form_type",
+      "name": "形态类型",
+      "selection": { "min": 0, "max": 3 },
+      "subcategory_rule": "只标注具有明显辨识度和独立检索价值的形态。",
+      "subcategories": [
+        { "id": "mass_organization", "name": "体量组织", "tags": [
+          { "id": "form_linear", "name": "线性体量", "aliases": ["线性建筑"], "definition": "建筑体量沿单一主方向显著延展。" },
+          { "id": "form_distributed", "name": "分散式", "aliases": ["分散布局"], "definition": "多个相对独立体量分散布置并形成整体。" },
+          { "id": "form_enclosed", "name": "围合", "aliases": ["围合体量"], "definition": "建筑体量形成清晰连续或近连续围合关系。" },
+          { "id": "form_stacked", "name": "层叠", "aliases": ["体量层叠"], "definition": "多个体量在竖向或水平方向呈明显叠置关系。" },
+          { "id": "form_terraced", "name": "退台", "aliases": ["退台体量"], "definition": "建筑体量随高度逐级后退形成台阶式轮廓。" },
+          { "id": "form_staggered", "name": "错动", "aliases": ["体量错动"], "definition": "相邻体量或楼层发生清晰水平或竖向错位。" },
+          { "id": "form_interlocking", "name": "穿插", "aliases": ["体量穿插"], "definition": "两个或多个体量形成明显相互嵌套或交叉关系。" }
+        ]},
+        { "id": "geometric_form", "name": "几何形态", "tags": [
+          { "id": "form_angular", "name": "折线形", "aliases": ["折线体量"], "definition": "轮廓或界面由多个明显折线转折构成。" },
+          { "id": "form_curved", "name": "曲面", "aliases": ["曲面体量"], "definition": "建筑体量或主要界面呈连续曲率变化。" },
+          { "id": "form_freeform", "name": "自由形态", "aliases": ["自由曲线形态"], "definition": "整体几何难以归入规则直线、圆环或单一曲面。" },
+          { "id": "form_ring", "name": "环形", "aliases": ["环状体量"], "definition": "建筑整体或主要体量形成清晰闭合环状。" },
+          { "id": "form_tower", "name": "塔状", "aliases": ["塔式体量"], "definition": "体量高宽比显著、呈竖向塔式特征。" }
+        ]},
+        { "id": "roof_form", "name": "屋顶形态", "tags": [
+          { "id": "form_pitched_roof", "name": "坡屋顶", "aliases": ["斜屋顶"], "definition": "主要屋面具有清晰单坡、双坡或多坡倾斜关系。" },
+          { "id": "form_folded_roof", "name": "折板屋顶", "aliases": ["折面屋顶"], "definition": "屋面由连续折面构成并形成明显折板几何。" },
+          { "id": "form_curved_roof", "name": "曲面屋顶", "aliases": ["弧形屋顶"], "definition": "主要屋面呈连续弧形或双曲曲面。" }
+        ]},
+        { "id": "solid_void", "name": "虚实关系", "tags": [
+          { "id": "form_transparent", "name": "通透", "aliases": ["空间通透"], "definition": "由大面积开口、透明界面或连续视线形成明显通透关系。" },
+          { "id": "form_void", "name": "开洞", "aliases": ["体量开洞"], "definition": "实体体量上形成尺度清晰、边界明确的主要孔洞。" },
+          { "id": "form_perforated", "name": "镂空", "aliases": ["镂空体量"], "definition": "表皮或体量呈连续、多孔的虚实组织特征。" }
+        ]}
+      ]
+    },
+    {
+      "id": "site_environment",
+      "name": "场地环境",
+      "selection": { "min": 0, "max": 3 },
+      "subcategories": [
+        { "id": "natural_environment", "name": "自然环境", "tags": [
+          { "id": "site_mountain", "name": "山地", "aliases": ["山地环境"], "definition": "画面显示显著山体或坡地地貌。" },
+          { "id": "site_forest", "name": "林地", "aliases": ["森林环境"], "definition": "建筑或空间位于连续、密集树木环境中。" },
+          { "id": "site_waterfront", "name": "滨水", "aliases": ["临水", "滨水环境"], "definition": "建筑或公共空间与清晰可见水体直接关联。" },
+          { "id": "site_grassland", "name": "草地", "aliases": ["草甸"], "definition": "场地以连续草本覆盖的开敞地表为主要特征。" },
+          { "id": "site_desert", "name": "荒漠", "aliases": ["沙漠环境"], "definition": "场地呈干旱、少植被的沙土或荒漠地貌。" },
+          { "id": "site_wetland", "name": "湿地", "aliases": ["湿地环境"], "definition": "可见浅水、滩地及湿地植被共同形成的环境。" },
+          { "id": "site_rocky", "name": "岩石地貌", "aliases": ["岩地"], "definition": "裸露岩体或岩石地形成为场地主要视觉特征。" }
+        ]},
+        { "id": "urban_rural_environment", "name": "城乡环境", "tags": [
+          { "id": "site_urban_block", "name": "城市街区", "aliases": ["街区环境"], "definition": "建筑处于道路和相邻建筑共同构成的城市街区环境。" },
+          { "id": "site_dense_urban", "name": "密集城区", "aliases": ["高密度城区"], "definition": "相邻建筑密度高、城市界面连续且间距紧凑。" },
+          { "id": "site_historic_district", "name": "历史街区", "aliases": ["历史城区"], "definition": "画面有连续历史建筑、传统街巷或明确历史环境证据。" },
+          { "id": "site_rural", "name": "乡村环境", "aliases": ["乡村", "村落环境"], "definition": "画面呈现村落、农田或低密度乡土建成环境。" },
+          { "id": "site_industrial", "name": "工业环境", "aliases": ["工业场地"], "definition": "可见厂房、工业设施或明确工业场地特征。" }
+        ]},
+        { "id": "site_relationship", "name": "场地关系", "tags": [
+          { "id": "site_follow_topography", "name": "顺应地形", "aliases": ["顺应坡地"], "definition": "建筑布局、标高或轮廓随可见地形连续变化。" },
+          { "id": "site_embedded_topography", "name": "嵌入地形", "aliases": ["嵌入山体"], "definition": "建筑体量明显进入、埋入或被地形包覆。" },
+          { "id": "site_street_frontage", "name": "临街", "aliases": ["沿街"], "definition": "建筑主要界面与可见城市街道直接相邻并形成沿街关系。" },
+          { "id": "site_corner", "name": "街角", "aliases": ["转角基地"], "definition": "建筑基地或主要体量明确位于两条街道交汇转角。" }
+        ]}
+      ]
+    },
+    {
+      "id": "tone_atmosphere",
+      "name": "色调与氛围",
+      "selection": { "min": 0, "max": 5 },
+      "subcategories": [
+        { "id": "visual_tone", "name": "画面色调", "selection": { "max": 2 }, "tags": [
+          { "id": "tone_warm", "name": "暖色调", "aliases": ["暖调"], "definition": "画面整体以红、橙、黄或暖色光为主要色彩倾向。" },
+          { "id": "tone_cool", "name": "冷色调", "aliases": ["冷调"], "definition": "画面整体以蓝、青、灰等偏冷色彩为主要倾向。" },
+          { "id": "tone_neutral", "name": "中性色调", "aliases": ["中性调"], "definition": "画面以灰、白、黑或低冷暖倾向色彩为主。" },
+          { "id": "tone_low_saturation", "name": "低饱和", "aliases": ["低饱和度"], "definition": "画面整体色彩纯度较低、综合色彩克制。" },
+          { "id": "tone_high_saturation", "name": "高饱和", "aliases": ["高饱和度"], "definition": "画面整体存在大面积高纯度、鲜明色彩。" },
+          { "id": "tone_bright", "name": "明亮", "aliases": ["高明度"], "definition": "画面整体亮度高且主要空间清晰明快。" },
+          { "id": "tone_dim", "name": "昏暗", "aliases": ["低明度", "暗调"], "definition": "画面整体亮度较低且暗部占明显比例。" }
+        ]},
+        { "id": "spatial_atmosphere", "name": "空间氛围", "selection": { "max": 3 }, "direct_threshold": 0.85, "tags": [
+          { "id": "atmosphere_quiet", "name": "静谧", "aliases": ["安静"], "definition": "由低活动密度、柔和光线、克制色彩或封闭尺度共同支持的安静感受。" },
+          { "id": "atmosphere_open", "name": "开放", "aliases": ["开放感"], "definition": "由较大开敞面、连续视线或弱边界形成的开放感受。" },
+          { "id": "atmosphere_lightweight", "name": "轻盈", "aliases": ["轻盈感"], "definition": "由纤细构件、透明界面、悬挑或弱实体感形成的轻盈感受。" },
+          { "id": "atmosphere_oppressive", "name": "压迫", "aliases": ["压迫感"], "definition": "由低净高、封闭边界、巨大体量或强暗部形成的压迫感受。" },
+          { "id": "atmosphere_intimate", "name": "亲切", "aliases": ["亲和"], "definition": "由近人尺度、可停留设施、柔和材料或可接近边界形成的亲和感受。" },
+          { "id": "atmosphere_solemn", "name": "庄重", "aliases": ["庄严"], "definition": "由清晰轴线、对称秩序、较大尺度、重复节奏或克制材料支持的庄重感受。" }
+        ]}
+      ]
+    }
+  ]
+}

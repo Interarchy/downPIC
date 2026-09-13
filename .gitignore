@@ -1,0 +1,9 @@
+# Local editor state
+.idea/
+
+# Developer-only encrypted AI credentials, downloaded images, indexes and databases
+spikes/phase0-capture/runtime/
+
+# Dependency and debug artifacts
+node_modules/
+*.log

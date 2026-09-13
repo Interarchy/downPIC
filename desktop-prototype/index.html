@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI 建筑素材库桌面端低保真交互原型" />
+    <title>建筑素材库｜桌面端原型</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="desktop-window">
+      <header class="window-bar" aria-label="模拟 Windows 标题栏">
+        <span class="window-app-name">建筑素材库</span>
+        <div class="window-actions" aria-hidden="true"><span>—</span><span>□</span><span>×</span></div>
+      </header>
+
+      <div class="app-shell">
+        <aside class="sidebar" aria-label="素材库导航">
+          <div class="brand-block">
+            <span class="brand-mark">索</span>
+            <div><strong>索引室</strong><span>ARCHIVE INDEX</span></div>
+          </div>
+
+          <nav class="primary-nav" aria-label="主导航">
+            <button class="nav-item is-active" type="button" data-view="home"><span>⌂</span>首页</button>
+            <button class="nav-item" type="button" data-view="all"><span>▦</span>全部素材</button>
+            <button class="nav-item" type="button" data-view="unparsed"><span>◌</span>未解析 <b id="unparsed-count">0</b></button>
+          </nav>
+
+          <div class="sidebar-rule"></div>
+
+          <section class="sidebar-section" aria-labelledby="project-heading">
+            <div class="section-heading"><h2 id="project-heading">按项目浏览</h2><button type="button" aria-label="新建项目类型">＋</button></div>
+            <div id="project-tree" class="tree-list"></div>
+          </section>
+
+          <section class="sidebar-section keyword-section" aria-labelledby="keyword-heading">
+            <div class="section-heading"><h2 id="keyword-heading">按关键词标签</h2><button id="add-keyword" type="button" aria-label="增加关键词标签">＋</button></div>
+            <label class="mini-search"><span>⌕</span><input id="tag-search" type="search" placeholder="搜索关键词" /></label>
+            <div id="tag-tree" class="tag-tree"></div>
+          </section>
+
+          <footer class="sidebar-footer">
+            <button type="button" data-open-library-setup><span>⚙</span>设置</button>
+            <p><i></i>插件已连接 · 索引正常</p>
+          </footer>
+        </aside>
+
+        <main class="workspace">
+          <header class="workspace-header">
+            <div class="workspace-intent">
+              <p>Your visual memory, indexed</p>
+              <h1>用一句设计意图，找回一张参考。</h1>
+            </div>
+            <div class="workspace-actions">
+              <button class="quiet-action" type="button" data-coming="import">＋ 导入</button>
+              <button class="avatar-button" type="button" aria-label="账户菜单">ML</button>
+            </div>
+            <form id="search-form" class="search-form" role="search">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <input
+                id="global-search"
+                type="search"
+                autocomplete="off"
+                placeholder="描述你想找的空间、材料或氛围…"
+                aria-label="自然语言搜索素材库"
+                aria-controls="search-suggestions"
+                aria-expanded="false"
+              />
+              <kbd>Enter</kbd>
+              <button type="submit">搜索</button>
+              <div id="search-suggestions" class="search-suggestions" hidden></div>
+            </form>
+          </header>
+
+          <div id="content" class="content" tabindex="-1"></div>
+        </main>
+
+        <aside id="preview-panel" class="preview-panel" aria-label="图片详情预览" hidden></aside>
+      </div>
+
+      <section id="onboarding-flow" class="onboarding-flow" aria-labelledby="onboarding-title" hidden>
+        <header class="onboarding-header">
+          <div class="onboarding-brand"><span>索</span><div><strong>索引室</strong><small>本地素材库设置</small></div></div>
+          <ol class="onboarding-steps" aria-label="设置进度">
+            <li class="is-active" data-step-indicator="1"><span>1</span>开始</li>
+            <li data-step-indicator="2"><span>2</span>选择位置</li>
+            <li data-step-indicator="3"><span>3</span>确认</li>
+          </ol>
+        </header>
+
+        <div class="onboarding-stage">
+          <article class="onboarding-screen onboarding-welcome" data-onboarding-step="1">
+            <div class="onboarding-copy">
+              <p class="eyebrow">Local-first archive</p>
+              <h1 id="onboarding-title">先为你的参考图，安一个长期可用的家。</h1>
+              <p>索引室会在你选择的位置保存原始图片，并按照“项目类型 / 项目名称”自动建立两级文件夹。图片与索引以本地为准。</p>
+              <div class="onboarding-principles">
+                <div><span>01</span><strong>原图留在本地</strong><small>文件不会被锁在应用内部。</small></div>
+                <div><span>02</span><strong>目录真实可见</strong><small>可以继续用资源管理器管理。</small></div>
+                <div><span>03</span><strong>AI 处理可暂停</strong><small>只有解析时才临时上传图片。</small></div>
+              </div>
+            </div>
+            <div class="onboarding-actions"><span>大约需要 1 分钟</span><button type="button" data-onboarding-next="2">开始设置 →</button></div>
+          </article>
+
+          <article class="onboarding-screen" data-onboarding-step="2" hidden>
+            <div class="setup-heading"><p class="eyebrow">Step 02</p><h1>选择素材库的建立方式</h1><p>推荐新建独立素材库；如果你已经整理过图片，也可以连接或迁移现有目录。</p></div>
+            <div class="setup-mode-grid" role="radiogroup" aria-label="素材库建立方式">
+              <button class="setup-mode is-selected" type="button" role="radio" aria-checked="true" data-setup-mode="create"><span>推荐</span><strong>创建新素材库</strong><small>在空文件夹中建立新的目录与索引</small></button>
+              <button class="setup-mode" type="button" role="radio" aria-checked="false" data-setup-mode="connect"><strong>连接已有素材库</strong><small>读取现有图片，不移动原文件</small></button>
+              <button class="setup-mode" type="button" role="radio" aria-checked="false" data-setup-mode="move"><strong>移动现有素材库</strong><small>迁移文件并同步更新索引</small></button>
+            </div>
+            <div class="folder-picker-panel">
+              <div class="folder-field"><span>素材库位置</span><strong id="library-path-display">尚未选择文件夹</strong><button type="button" data-toggle-folder-choices>选择文件夹</button></div>
+              <div id="folder-choices" class="folder-choices" hidden>
+                <button type="button" data-library-path="D:\建筑素材库"><span>推荐位置</span><strong>D:\建筑素材库</strong><small>可读写 · 186 GB 可用</small></button>
+                <button type="button" data-library-path="C:\Program Files\建筑素材库"><span>受保护位置</span><strong>C:\Program Files\建筑素材库</strong><small>用于验证权限不足状态</small></button>
+              </div>
+              <div id="folder-checks" class="folder-checks" aria-live="polite"><p>选择文件夹后，将检查读取、写入和创建目录权限。</p></div>
+            </div>
+            <div class="onboarding-actions"><button class="text-action" type="button" data-onboarding-back="1">← 返回</button><button type="button" data-onboarding-next="3" disabled>继续 →</button></div>
+          </article>
+
+          <article class="onboarding-screen" data-onboarding-step="3" hidden>
+            <div class="setup-heading"><p class="eyebrow">Step 03</p><h1>确认素材库结构</h1><p id="setup-summary-description"></p></div>
+            <div class="setup-review">
+              <div class="review-root"><span>素材库根目录</span><strong id="setup-summary-path"></strong><small>以后可在设置中移动或连接其他素材库</small></div>
+              <div class="folder-preview" aria-label="两级目录预览">
+                <p>自动建立的目录示例</p>
+                <div id="folder-preview-tree"></div>
+              </div>
+              <div class="setup-final-checks"><p><span>✓</span>目录读写权限正常</p><p><span>✓</span>插件可写入待导入图片</p><p><span>✓</span>索引数据库将在本地创建</p></div>
+            </div>
+            <div class="onboarding-actions"><button class="text-action" type="button" data-onboarding-back="2">← 返回修改</button><button type="button" data-complete-onboarding>完成并进入素材库</button></div>
+          </article>
+        </div>
+      </section>
+
+      <div id="original-viewer" class="original-viewer" role="dialog" aria-modal="true" aria-labelledby="original-viewer-title" hidden>
+        <button class="original-viewer-backdrop" type="button" data-close-original aria-label="关闭原图查看器"></button>
+        <section class="original-viewer-shell">
+          <header>
+            <div><p>Original image</p><h2 id="original-viewer-title">原图预览</h2><span id="original-viewer-meta"></span></div>
+            <button class="original-viewer-close" type="button" data-close-original aria-label="关闭原图查看器">×</button>
+          </header>
+          <div id="original-viewer-image" class="original-viewer-image" role="img"></div>
+          <footer><span>适合窗口 · 100%</span><small>按 Esc 返回图片详情</small></footer>
+        </section>
+      </div>
+    </div>
+
+    <dialog id="keyword-dialog" class="keyword-dialog" aria-labelledby="keyword-dialog-title">
+      <form id="keyword-form" novalidate>
+        <div class="dialog-heading">
+          <div><p>Keyword taxonomy</p><h2 id="keyword-dialog-title">增加关键词标签</h2></div>
+          <button id="close-keyword-dialog" type="button" aria-label="关闭">×</button>
+        </div>
+        <p class="dialog-intro">新标签会加入你的个人词库，后续可以用于图片筛选和 AI 解析候选。</p>
+        <label class="dialog-field">
+          <span>标签名称</span>
+          <input id="keyword-name" type="text" autocomplete="off" placeholder="例如：悬浮屋顶" aria-describedby="keyword-error" />
+        </label>
+        <label class="dialog-field">
+          <span>所属分类</span>
+          <select id="keyword-category">
+            <option>空间</option><option>材料</option><option>构造</option><option>形态</option><option>风格</option><option>氛围</option><option selected>其他</option>
+          </select>
+        </label>
+        <p id="keyword-error" class="dialog-error" hidden></p>
+        <div class="dialog-actions"><button id="cancel-keyword" type="button">取消</button><button type="submit">添加标签</button></div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script type="module" src="./src/app.mjs?v=natural-language-scope-v2"></script>
+  </body>
+</html>

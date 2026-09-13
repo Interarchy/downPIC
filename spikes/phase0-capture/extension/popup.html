@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>索引室图片保存</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main id="plugin-panel" class="plugin-panel">
+      <header class="brand-row">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true">索</span>
+          <div>
+            <h1>图片保存</h1>
+            <p>ARCHIVE INDEX</p>
+          </div>
+        </div>
+        <p id="connection-status" class="connection-status" data-state="checking">
+          <span class="status-dot"></span><span class="connection-copy">正在检查</span>
+        </p>
+      </header>
+
+      <div class="divider"></div>
+
+      <section class="capture-switch-row" aria-labelledby="capture-label">
+        <div>
+          <strong id="capture-label">图片保存功能</strong>
+          <p id="capture-state-copy">功能已关闭</p>
+        </div>
+        <label class="switch">
+          <span class="sr-only">开启或关闭图片保存功能</span>
+          <input id="capture-enabled" type="checkbox" />
+          <span class="switch-track"></span>
+        </label>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="project-section" aria-labelledby="project-heading">
+        <div class="section-heading">
+          <strong id="project-heading">默认项目类型</strong>
+          <span id="default-badge" class="default-badge">文化建筑</span>
+        </div>
+
+        <label class="sr-only" for="preset-type">预设项目类型</label>
+        <select id="preset-type" class="field-control">
+          <option value="">预设类型</option>
+          <optgroup id="preset-options" label="预设类型">
+            <option value="文化建筑">文化建筑</option>
+            <option value="教育建筑">教育建筑</option>
+            <option value="办公建筑">办公建筑</option>
+            <option value="社区建筑">社区建筑</option>
+          </optgroup>
+          <optgroup id="custom-options" label="我的类型"></optgroup>
+        </select>
+
+        <label class="sr-only" for="custom-type">自定义项目类型</label>
+        <input id="custom-type" class="field-control" type="text" autocomplete="off" placeholder="输入自定义类型" />
+
+        <p id="field-error" class="field-error" hidden></p>
+        <button id="apply-default" class="primary-button" type="button">设为默认</button>
+        <p class="field-hint">预设与自定义互斥，网页标题自动成为第二级项目名称。</p>
+      </section>
+
+      <div class="utility-actions" aria-label="素材库快捷操作">
+        <button id="open-desktop" class="desktop-button" type="button">打开桌面应用</button>
+        <button id="open-library-folder" class="folder-button" type="button"><span aria-hidden="true">↗</span> 打开素材文件夹</button>
+      </div>
+      <p id="global-feedback" class="global-feedback" aria-live="polite"></p>
+    </main>
+
+    <section id="copyright-panel" class="copyright-panel" aria-labelledby="copyright-title" hidden>
+      <p class="eyebrow">首次使用确认</p>
+      <h2 id="copyright-title">保存参考图前，请确认使用边界</h2>
+      <p class="copyright-summary">索引室帮助你保存与整理素材，但不会替你取得图片授权。</p>
+      <ul>
+        <li>只保存你主动点击的当前图片。</li>
+        <li>不会绕过登录、付费墙或网站访问限制。</li>
+        <li>保留来源用于溯源，不代表获得使用许可。</li>
+      </ul>
+      <label class="copyright-check">
+        <input id="copyright-check" type="checkbox" />
+        <span>我会仅采集有权访问并可合法使用的图片</span>
+      </label>
+      <div class="copyright-actions">
+        <button id="copyright-cancel" class="quiet-button" type="button">暂不开启</button>
+        <button id="copyright-accept" class="primary-button compact" type="button" disabled>确认并开启</button>
+      </div>
+    </section>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

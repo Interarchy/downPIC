@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="建筑素材采集插件低保真交互原型" />
+    <title>沿山艺术中心 | 建筑案例</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="prototype-shell">
+      <header class="browser-chrome" aria-label="模拟浏览器工具栏">
+        <div class="window-controls" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <button class="browser-nav" type="button" aria-label="后退">‹</button>
+        <button class="browser-nav" type="button" aria-label="前进">›</button>
+        <div class="address-bar">archdaily.local / projects / valley-art-center</div>
+        <div class="extension-anchor">
+          <button
+            id="extension-button"
+            class="extension-button"
+            type="button"
+            aria-label="打开素材采集插件"
+            aria-expanded="false"
+            aria-controls="extension-popup"
+          >
+            S
+            <span id="extension-active-mark" class="extension-active-mark" hidden></span>
+          </button>
+          <section id="extension-popup" class="extension-popup" aria-label="素材采集插件" hidden></section>
+        </div>
+      </header>
+
+      <main class="case-page">
+        <nav class="site-nav" aria-label="案例网站导航">
+          <a class="site-mark" href="#top">构筑志</a>
+          <div class="site-links">
+            <a href="#project">项目</a>
+            <a href="#gallery">图集</a>
+            <a href="#about">关于</a>
+          </div>
+          <div class="site-avatar" aria-label="作者头像">林</div>
+        </nav>
+
+        <article id="project" class="project-article">
+          <header id="top" class="project-header">
+            <p class="project-kicker">文化建筑 · 山地公共空间</p>
+            <h1>沿山艺术中心</h1>
+            <div class="project-meta">
+              <span>中国 · 贵州</span>
+              <span>2025</span>
+              <span>建筑面积 8,600㎡</span>
+            </div>
+            <p class="project-intro">
+              建筑顺应狭长山谷展开，以清水混凝土体量围合展览、工作坊与公共庭院。连续的水平开口将远山、天光和室内动线连接起来。
+            </p>
+          </header>
+
+          <section id="gallery" class="project-gallery" aria-label="项目图片">
+            <figure class="capture-target gallery-wide" data-image-id="image-01">
+              <div class="architecture-photo crop-01" role="img" aria-label="山谷中的混凝土艺术中心外观"></div>
+              <figcaption>主入口与山谷关系</figcaption>
+            </figure>
+
+            <div class="gallery-pair">
+              <figure class="capture-target" data-image-id="image-02">
+                <div class="architecture-photo crop-02" role="img" aria-label="木结构学校庭院"></div>
+                <figcaption>木构庭院与步廊</figcaption>
+              </figure>
+              <figure class="capture-target" data-image-id="image-03">
+                <div class="architecture-photo crop-03" role="img" aria-label="顶部柔和采光的美术馆展厅"></div>
+                <figcaption>顶光展厅</figcaption>
+              </figure>
+            </div>
+
+            <p class="article-copy">
+              材料被控制在混凝土、木材和本地石材之间。不同空间通过光线的方向与强度建立差异，参观路径则始终保持对山体的感知。
+            </p>
+
+            <figure class="capture-target gallery-tall" data-image-id="image-04">
+              <div class="architecture-photo crop-04" role="img" aria-label="砖砌社区图书馆阅览空间"></div>
+              <figcaption>阅览空间与林地</figcaption>
+            </figure>
+
+            <div class="gallery-pair gallery-pair-offset">
+              <figure class="capture-target" data-image-id="image-05">
+                <div class="architecture-photo crop-05" role="img" aria-label="钢与玻璃构成的办公中庭"></div>
+                <figcaption>共享中庭</figcaption>
+              </figure>
+              <figure class="capture-target" data-image-id="image-06">
+                <div class="architecture-photo crop-06" role="img" aria-label="森林中的小型石砌礼拜堂"></div>
+                <figcaption>林间静室</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <footer id="about" class="article-footer">
+            <span>项目资料仅用于交互原型测试</span>
+            <span>图片为 AI 生成的本地测试素材</span>
+          </footer>
+        </article>
+      </main>
+    </div>
+
+    <section id="copyright-dialog" class="consent-backdrop" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden>
+      <div class="consent-card">
+        <p class="consent-kicker">首次使用确认</p>
+        <h2 id="consent-title">保存参考图前，请确认使用边界</h2>
+        <p class="consent-summary">索引室帮助你保存与整理素材，但不会替你取得图片授权。</p>
+        <ul class="consent-points">
+          <li>只保存你主动点击的当前图片，不会整页批量下载。</li>
+          <li>不会绕过登录、付费墙或网站的访问限制。</li>
+          <li>保留来源用于溯源，但保留来源不等于获得使用许可。</li>
+        </ul>
+        <label class="consent-check">
+          <input id="copyright-checkbox" type="checkbox" />
+          <span>我会仅采集有权访问并可合法使用的图片</span>
+        </label>
+        <div class="consent-actions">
+          <button id="cancel-copyright" class="consent-secondary" type="button">暂不开启</button>
+          <button id="accept-copyright" class="consent-primary" type="button" disabled>确认并开启</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="live-region" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="./src/app.mjs"></script>
+  </body>
+</html>

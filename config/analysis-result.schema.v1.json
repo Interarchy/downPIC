@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://archive-index.local/schemas/analysis-result.v1.json",
+  "title": "建筑图片 AI 分析结果 V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "supported",
+    "image_type",
+    "description",
+    "preset_labels",
+    "candidate_labels",
+    "uncertain_items"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "supported": { "type": "boolean" },
+    "image_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag_id", "name", "confidence", "evidence"],
+      "properties": {
+        "tag_id": {
+          "enum": [
+            "image_visualization",
+            "image_site_plan",
+            "image_floor_plan",
+            "image_analysis_diagram",
+            "image_elevation",
+            "image_section",
+            "image_other"
+          ]
+        },
+        "name": {
+          "enum": ["效果表现图", "总平面图", "平面图", "分析图", "立面图", "剖面图", "其他"]
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidence": { "type": "string", "minLength": 2, "maxLength": 30 }
+      }
+    },
+    "unsupported_reason": { "type": "string", "maxLength": 50 },
+    "description": { "type": "string", "maxLength": 120 },
+    "preset_labels": {
+      "type": "array",
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/presetLabel" }
+    },
+    "candidate_labels": {
+      "type": "array",
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/candidateLabel" }
+    },
+    "uncertain_items": {
+      "type": "array",
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/uncertainItem" }
+    }
+  },
+  "$defs": {
+    "categoryId": {
+      "enum": [
+        "view_type",
+        "space_type",
+        "component",
+        "material_surface",
+        "construction_structure",
+        "form_type",
+        "site_environment",
+        "tone_atmosphere"
+      ]
+    },
+    "presetLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag_id", "name", "category_id", "confidence", "evidence"],
+      "properties": {
+        "tag_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 12 },
+        "category_id": { "$ref": "#/$defs/categoryId" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidence": { "type": "string", "minLength": 2, "maxLength": 30 }
+      }
+    },
+    "candidateLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "suggested_category_id", "confidence", "evidence", "reason_not_preset"],
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 12 },
+        "suggested_category_id": { "$ref": "#/$defs/categoryId" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidence": { "type": "string", "minLength": 2, "maxLength": 30 },
+        "reason_not_preset": { "type": "string", "minLength": 2, "maxLength": 40 }
+      }
+    },
+    "uncertainItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept", "reason"],
+      "properties": {
+        "concept": { "type": "string", "minLength": 1, "maxLength": 20 },
+        "reason": { "type": "string", "minLength": 2, "maxLength": 50 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "supported": { "const": true }
+        },
+        "required": ["supported"]
+      },
+      "then": {
+        "properties": {
+          "image_type": {
+            "properties": { "tag_id": { "const": "image_visualization" }, "name": { "const": "效果表现图" } }
+          },
+          "description": { "type": "string", "minLength": 20, "maxLength": 120 }
+        }
+      },
+      "else": {
+        "required": ["unsupported_reason"],
+        "properties": {
+          "description": { "const": "" },
+          "preset_labels": { "maxItems": 0 },
+          "candidate_labels": { "maxItems": 0 },
+          "uncertain_items": { "maxItems": 0 }
+        }
+      }
+    }
+  ],
+  "x-semantic-validation": [
+    "image_type.tag_id 与 image_type.name 必须匹配词库中的同一标签",
+    "preset_labels 的 tag_id、name、category_id 必须与 tag-taxonomy.v1.json 完全一致",
+    "preset_labels 中不得出现 image_type 标签",
+    "preset_labels 与 candidate_labels 合计不得超过15个",
+    "视角类型最多1个，其他分类不得超过词库 selection 上限",
+    "candidate_labels 不得与预设名称、别名或本次其他候选近义重复",
+    "光线和采光仅可写入description，不得生成预设或候选标签"
+  ]
+}

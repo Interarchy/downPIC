@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>灯箱目标锁定测试</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; color: #202722; background: #f3f1e9; font-family: system-ui, sans-serif; }
+      main { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; width: min(1000px, 90vw); margin: 40px auto; }
+      main img { width: 100%; }
+      [role="dialog"] { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 48px; background: rgb(15 20 17 / 78%); }
+      [role="dialog"] img { display: block; width: min(760px, 78vw); max-height: 78vh; object-fit: contain; }
+      [role="dialog"] p { position: absolute; left: 24px; bottom: 18px; margin: 0; color: white; }
+    </style>
+  </head>
+  <body>
+    <main aria-label="背景图库">
+      <img src="/prototype/assets/architecture-board.png" alt="背景图片一" />
+      <img src="/prototype/assets/architecture-board.png" alt="背景图片二" />
+    </main>
+    <section role="dialog" aria-modal="true" aria-label="图片灯箱">
+      <img src="/prototype/assets/architecture-board.png" alt="当前灯箱大图" />
+      <p>浮框只能锁定当前灯箱大图，不能跳到背后图库。</p>
+    </section>
+  </body>
+</html>

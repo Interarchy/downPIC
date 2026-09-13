@@ -1,0 +1,7 @@
+{
+  "name": "com.suoyinshi.capture",
+  "description": "索引室 Capture Spike Native Messaging Host",
+  "path": "__HOST_EXE_PATH__",
+  "type": "stdio",
+  "allowed_origins": ["__ALLOWED_ORIGINS__"]
+}

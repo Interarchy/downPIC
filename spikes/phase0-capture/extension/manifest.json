@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "索引室",
+  "version": "0.2.6",
+  "description": "为建筑设计师主动保存、整理并追溯参考图片。",
+  "permissions": ["downloads", "storage", "nativeMessaging"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.mjs",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "索引室图片保存",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
