@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>downPIC · 参考图与提示词</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="browser-bar">
+    <span class="browser-page">构筑志 / 参考图集</span>
+    <div class="address">本地原型 · 真实落盘 · 真实模型反推</div>
+    <button id="extension-button" class="extension-button" aria-label="打开或关闭插件面板" aria-expanded="true" aria-controls="side-panel"><span class="brand-icon">d</span> downPIC</button>
+  </header>
+  <div id="workspace" class="workspace">
+    <main id="reference-page" class="reference-page">
+      <nav class="site-nav"><a href="#top" class="site-brand">构筑志</a><a href="#gallery">参考图集</a><span>建筑 · 空间 · 景观</span></nav>
+      <article id="top">
+        <header class="article-heading">
+          <p class="muted">视觉参考 / 建筑与自然</p>
+          <h1>建筑与自然参考图集</h1>
+          <p class="intro">山谷建筑、木构庭院与天光展厅，三种材料与光线的表达。</p>
+          <p class="gallery-hint">将鼠标移到图片上，体验「保存图片」与「反推提示词」。</p>
+        </header>
+        <section id="gallery" class="gallery" aria-label="参考图片"></section>
+        <footer class="article-footer">本地测试素材 · 图片为已有人工智能生成示例</footer>
+      </article>
+    </main>
+    <aside id="side-panel" class="side-panel" aria-label="downPIC 插件面板">
+      <header class="panel-header"><div><span class="brand-icon">d</span><strong>downPIC</strong></div><button id="close-panel" class="icon-button" aria-label="关闭插件面板">×</button></header>
+      <nav class="tabs" aria-label="插件功能"><button id="prompt-tab" class="tab active" aria-pressed="true">反推提示词</button><button id="save-tab" class="tab" aria-pressed="false">下载与分类</button></nav>
+      <div id="prompt-view" class="panel-body">
+        <div class="section-heading"><h2>从参考图，提取视觉语言</h2><p class="muted">中文结构化提示词，复制后即可继续创作。</p></div>
+        <div id="image-input" class="image-input" tabindex="0" aria-label="图片粘贴区，按 Control 加 V 粘贴图片">
+          <div id="empty-preview" class="empty-preview"><span class="paste-symbol" aria-hidden="true">▧</span><strong>在这里粘贴参考图</strong><p>复制图片后，按 <kbd>Ctrl</kbd> + <kbd>V</kbd></p><span class="muted">或点击网页图片上的「反推提示词」</span></div>
+          <div id="selected-preview" hidden></div>
+        </div>
+        <div class="image-meta"><span id="image-label">尚未选择图片</span><button id="paste-button" class="text-button">粘贴图片</button></div>
+        <p id="input-error" class="error-text" role="alert" hidden></p>
+        <p id="prototype-note" class="prototype-note">选择一张图片后即可反推。</p>
+        <p id="server-note" class="prototype-note" hidden></p>
+        <div class="analysis-actions"><button id="analyze-button" class="primary" disabled>反推提示词</button><button id="cancel-analysis" class="secondary" hidden>取消</button></div>
+        <div id="analysis-status" class="analysis-status" role="status" hidden></div>
+        <div id="result-empty" class="result-empty"><span>提取结果将在这里呈现</span><p>整体生成准则在前，视觉特征按维度展开。</p><button id="try-example" class="text-button">用第一张参考图试试</button></div>
+        <section id="results" aria-label="结构化提示词示例" hidden>
+          <div class="result-title"><h2>结构化提示词</h2><span id="result-source">模型输出</span></div>
+          <div id="prompt-sections"></div>
+        </section>
+        <div id="manual-copy" hidden><label for="copy-text">自动复制不可用，请选中下方文本复制</label><textarea id="copy-text" readonly rows="8"></textarea></div>
+      </div>
+      <div id="save-view" class="panel-body" hidden>
+        <div class="section-heading"><h2>参考图，有序归档</h2><p class="muted">选择项目类型，网页标题自动成为项目名称。</p></div>
+        <label class="switch-row"><span>显示网页图片工具条</span><input id="toolbar-enabled" type="checkbox" role="switch" checked></label>
+        <form id="default-form" class="default-form">
+          <label for="default-preset">默认项目类型</label><select id="default-preset"></select>
+          <label for="default-custom">自定义项目类型</label><input id="default-custom" placeholder="例如：山地酒店" maxlength="60" autocomplete="off">
+          <p id="default-error" class="error-text" hidden></p>
+          <button id="set-default" class="primary">设为默认</button>
+        </form>
+        <button id="reveal-library" class="secondary">在资源管理器中打开素材目录</button>
+        <div class="folder-preview"><p class="muted">归档位置</p><p><span id="library-path">读取中…</span><br>└ <strong id="default-label">文化建筑</strong><br><span>　└ 建筑与自然参考图集 / 图片</span></p></div>
+        <p class="prototype-note">保存会真的写入上面的素材目录，同项目内按内容去重；反推提示词可独立使用，无需先保存图片。</p>
+      </div>
+      <footer class="panel-footer"><div id="copy-actions"><button id="copy-all" class="primary" disabled>复制全部提示词</button><p>包含整体生成准则与全部视觉描述</p></div><div class="width-control"><label for="panel-width">面板宽度</label><input id="panel-width" type="range" min="360" max="520" step="20" value="420"><output id="width-label" for="panel-width">420</output></div></footer>
+    </aside>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

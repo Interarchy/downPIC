@@ -3,6 +3,7 @@
 
 # Developer-only encrypted AI credentials, downloaded images, indexes and databases
 spikes/phase0-capture/runtime/
+plugin-prototype/runtime/
 
 # Dependency and debug artifacts
 node_modules/
