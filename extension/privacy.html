@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>downPIC 隐私说明</title>
+    <title>ArchBuddy 隐私说明</title>
     <style>
       body { max-width: 720px; margin: 48px auto; padding: 0 24px 64px; color: #24332d; background: #f7f8f7; font: 15px/1.8 "Microsoft YaHei UI", sans-serif; }
       h1 { font: 700 34px/1.2 Georgia, "Songti SC", serif; }
@@ -13,20 +13,25 @@
     </style>
   </head>
   <body>
-    <h1>downPIC Beta 隐私说明</h1>
-    <p class="summary">downPIC 只处理用户主动选择、粘贴或下载的参考图片，不进行广告追踪、行为画像或后台浏览记录收集。</p>
+    <img src="icons/icon-128.png" width="48" height="48" alt="ArchBuddy 标志" />
+    <h1>ArchBuddy 隐私说明</h1>
+    <p class="summary">ArchBuddy 只处理用户主动选择、粘贴或下载的参考图片，不进行广告追踪、行为画像或后台浏览记录收集。</p>
     <h2>处理的数据</h2>
     <p>下载功能会在本地使用所选图片、当前网页标题、来源地址和用户选择的项目类型，用于生成下载目录和文件名。反推功能会处理用户主动选择或粘贴的图片。</p>
     <h2>图片分析</h2>
-    <p>只有在用户主动点击反推并确认处理说明后，所选图片才会发送至 downPIC 服务，再由服务调用 DeepSeek API 生成中文结构化提示词。其他网页内容不会随图片一同发送。</p>
+    <p>只有在用户主动点击反推并确认处理说明后，所选图片才会发送至 ArchBuddy 服务，再由服务调用 DeepSeek API 生成中文结构化提示词。其他网页内容不会随图片一同发送。</p>
     <h2>模型凭据</h2>
-    <p>DeepSeek API Key 只保存在 downPIC 服务端，不包含在扩展程序、网页或用户浏览器存储中。用户无需输入模型密钥。</p>
+    <p>DeepSeek API Key 只保存在 ArchBuddy 服务端，不包含在扩展程序、网页或用户浏览器存储中。用户无需输入模型密钥。</p>
+    <h2>匿名身份与使用额度</h2>
+    <p>扩展首次使用时会在本地生成随机安装标识，并向 ArchBuddy 服务换取短期匿名访问凭据。服务端使用不可逆的匿名标识执行每日个人与项目额度、请求去重和故障排查，不保存原始安装标识。额度及请求记录不包含图片、提示词、网页地址或下载路径，目标保留 30 天。</p>
     <h2>本地保存与删除</h2>
-    <p>分类设置和隐私确认保存在 Chrome 本地扩展存储中，可通过卸载扩展清除。下载的图片保存在用户的 Chrome 下载目录中，由用户自行管理和删除。</p>
+    <p>分类设置、隐私确认和随机安装标识保存在 Chrome 本地扩展存储中；短期匿名凭据保存在会话存储中。卸载扩展可清除这些本地数据。下载的图片保存在用户的 Chrome 下载目录中，由用户自行管理和删除。</p>
     <h2>数据用途限制</h2>
-    <p>downPIC 仅使用上述数据提供图片下载、分类与提示词反推功能，不出售数据，不用于个性化广告，也不允许人工读取用户图片。</p>
+    <p>ArchBuddy 仅使用上述数据提供图片下载、分类与提示词反推功能，不出售数据，不用于个性化广告，也不允许人工读取用户图片。ArchBuddy 对用户数据的使用遵循 Chrome Web Store 用户数据政策，包括其中的 Limited Use（有限使用）要求；数据只用于提供或改进本说明所述的用户可见功能及必要的安全与故障处理。</p>
     <h2>版权提示</h2>
     <p>扩展不会绕过登录、付费墙或网站访问限制。用户应确保有权访问、保存和处理所选图片。</p>
-    <p>版本：Beta 0.2.2。此扩展内置页面用于说明首版行为；公开发布前还需将同样内容部署到可公开访问的 HTTPS 地址。</p>
+    <h2>联系我们</h2>
+    <p>如有隐私相关问题，请发送邮件至 <a href="mailto:19822692515@163.com">19822692515@163.com</a>。</p>
+    <p>版本：Beta 0.3.1。公开隐私政策：<a href="https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/" target="_blank" rel="noreferrer">在线查看</a>。</p>
   </body>
 </html>

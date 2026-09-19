@@ -25,7 +25,7 @@ async function request(message) {
   } catch (error) {
     return {
       ok: false,
-      error: `扩展后台未响应：${error?.message || String(error)}。请在扩展管理页重新加载 downPIC 后再试。`,
+      error: `扩展后台未响应：${error?.message || String(error)}。请在扩展管理页重新加载 ArchBuddy 后再试。`,
     };
   }
 }
@@ -69,7 +69,7 @@ function renderSelection() {
 function renderSetup() {
   elements['privacy-gate'].hidden = state.privacyAccepted;
   if (!state.privacyAccepted) feedback(elements['analysis-feedback'], '确认图片处理说明后即可分析');
-  else if (!state.backendReady) feedback(elements['analysis-feedback'], 'downPIC 服务尚未就绪，请先启动本地服务');
+  else if (!state.backendReady) feedback(elements['analysis-feedback'], 'ArchBuddy 云端反推服务尚未就绪，请稍后再试');
   else if (!state.selection) feedback(elements['analysis-feedback'], '请选择或粘贴一张参考图');
   else if (!analyzing && !state.result) feedback(elements['analysis-feedback'], '参考图已就绪');
 }
@@ -130,10 +130,10 @@ async function refreshBackend({ autoRun = false } = {}) {
   state.backendReady = Boolean(response?.online && response?.configured);
   elements['session-status'].dataset.state = state.backendReady ? 'online' : 'offline';
   elements['session-status'].textContent = state.backendReady
-    ? '本地服务可用'
+    ? '云端服务可用'
     : response?.online
       ? '服务未配置模型'
-      : '本地服务未启动';
+      : '云端服务暂不可用';
   renderSetup();
   renderSelection();
   if (autoRun && state.selection?.pendingAnalysis && state.privacyAccepted && state.backendReady) {

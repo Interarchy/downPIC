@@ -20,8 +20,8 @@ p, strong { margin: 0; }
 .brand-row, .switch-row, .section-heading, .custom-row, .analysis-button { display: flex; align-items: center; }
 .brand-row, .switch-row, .section-heading, .analysis-button { justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 7px; }
-.brand-mark { display: grid; width: 30px; height: 30px; place-items: center; color: #fff; background: var(--green); border-radius: 8px; font: 700 20px/1 Georgia, serif; }
-.brand strong { font: 700 19px/1 Georgia, "Songti SC", serif; }
+.brand-mark { display: block; flex: 0 0 30px; width: 30px; height: 30px; }
+.brand strong { font: 700 19px/1 "Segoe UI", "Microsoft YaHei UI", sans-serif; letter-spacing: -.025em; }
 .brand > span:last-child { padding: 2px 5px; color: var(--green); background: var(--mist); border-radius: 4px; font-size: 9px; font-weight: 700; }
 #backend-status { display: flex; align-items: center; gap: 5px; color: var(--soft); font-size: 10px; }
 #backend-status i { width: 7px; height: 7px; background: #9aa39e; border-radius: 50%; }

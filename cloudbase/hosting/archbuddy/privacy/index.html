@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ArchBuddy Chrome 扩展隐私政策" />
+    <title>ArchBuddy 隐私政策</title>
+    <style>
+      :root { color-scheme: light; --ink: #18251f; --muted: #5f6e67; --green: #25634b; --line: #dce4df; --paper: #fff; --wash: #f3f6f4; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--wash); color: var(--ink); font: 15px/1.8 "Microsoft YaHei UI", "PingFang SC", sans-serif; }
+      main { width: min(820px, calc(100% - 32px)); margin: 40px auto; padding: clamp(28px, 6vw, 64px); background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 60px rgba(24, 37, 31, .07); }
+      header { display: flex; gap: 16px; align-items: center; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+      .mark { width: 50px; height: 50px; flex: 0 0 50px; }
+      h1 { margin: 0; font: 700 clamp(28px, 5vw, 42px)/1.2 Georgia, "Songti SC", serif; }
+      .date, .lead, footer { color: var(--muted); }
+      .date { margin: 4px 0 0; font-size: 13px; }
+      .lead { margin: 28px 0; padding: 18px 20px; background: #eef5f1; border-left: 4px solid var(--green); border-radius: 0 10px 10px 0; }
+      h2 { margin: 32px 0 8px; font-size: 18px; }
+      p { margin: 8px 0; }
+      a { color: var(--green); }
+      footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="ArchBuddy 标志">
+          <rect x="8" y="8" width="112" height="112" rx="24" fill="#25634b" />
+          <path fill="#fff" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z" />
+        </svg>
+        <div><h1>ArchBuddy 隐私政策</h1><p class="date">更新日期：2026 年 9 月 15 日</p></div>
+      </header>
+
+      <p class="lead">ArchBuddy 只处理用户主动选择、粘贴或下载的参考图片，用于提供图片下载、分类和中文结构化提示词反推功能。我们不进行广告追踪、行为画像或后台浏览记录收集。</p>
+
+      <h2>我们处理的数据</h2>
+      <p>下载功能会在用户设备本地使用所选图片、当前网页标题、来源地址和用户选择的项目类型，用于生成下载目录和文件名。提示词反推功能会处理用户主动选择、粘贴或拖入的图片。</p>
+
+      <h2>图片分析与第三方处理</h2>
+      <p>只有在用户主动点击反推并确认图片处理说明后，所选图片才会发送至 ArchBuddy 服务，再由服务调用 DeepSeek API 生成中文结构化提示词。网页浏览历史和其他未选择的网页内容不会随图片发送给模型。</p>
+      <p>ArchBuddy 服务不持久化保存原图或提示词正文，图片只在完成分析所需的请求过程中处理。DeepSeek 对数据的处理同时受其服务条款与隐私政策约束。</p>
+
+      <h2>匿名身份与额度记录</h2>
+      <p>扩展首次使用时会在本地生成随机安装标识，并向 ArchBuddy 服务换取短期匿名访问凭据。服务端将其转换为不可逆的匿名标识，用于执行每日额度、防止重复请求和必要故障排查，不保存原始安装标识。</p>
+      <p>额度和请求记录可能包含匿名标识、日期、请求摘要、成功或失败状态、处理时长及模型返回的数值 Token 用量，不包含图片、提示词正文、网页地址、下载路径或自定义分类文字，保留期限不超过 30 天。</p>
+
+      <h2>模型凭据</h2>
+      <p>DeepSeek API Key 和服务签名密钥只保存在 ArchBuddy 服务端，不包含在扩展、网页、下载文件或用户浏览器存储中。用户无需输入模型密钥。</p>
+
+      <h2>本地保存与删除</h2>
+      <p>分类设置、隐私确认和随机安装标识保存在 Chrome 本地扩展存储中；短期匿名凭据保存在会话存储中。卸载扩展可清除这些本地数据。下载的图片保存在用户的 Chrome 下载目录中，由用户自行管理和删除。</p>
+
+      <h2>数据用途限制与安全</h2>
+      <p>ArchBuddy 不出售用户数据，不将数据用于个性化广告、信用评估或跨站追踪，也不允许人工读取用户图片。ArchBuddy 对用户数据的使用遵循 Chrome Web Store 用户数据政策，包括其中的 Limited Use（有限使用）要求；数据只用于提供或改进本政策所述的用户可见功能及必要的安全与故障处理。图片通过 HTTPS 传输；服务端日志不记录图片正文、提示词、模型密钥或访问凭据。</p>
+
+      <h2>版权与授权</h2>
+      <p>ArchBuddy 不绕过登录、付费墙或网站访问限制。用户应确保有权访问、保存和处理所选图片，并遵守来源网站条款和适用法律。</p>
+
+      <h2>联系我们</h2>
+      <p>如有隐私相关问题，请发送邮件至 <a href="mailto:19822692515@163.com">19822692515@163.com</a>。</p>
+
+      <h2>政策更新</h2>
+      <p>如产品的数据处理方式发生实质变化，我们会更新本政策、生效日期和扩展内说明，并在必要时重新取得用户确认。</p>
+
+      <footer>ArchBuddy · 建筑、室内与景观设计师的参考图助手</footer>
+    </main>
+  </body>
+</html>

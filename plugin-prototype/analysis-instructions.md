@@ -1,4 +1,4 @@
-# 参考图反推提示词：模型指令 v1
+# ArchBuddy｜参考图反推提示词：模型指令 v1
 
 状态：用户已确认内容，2026-09-13。下方围栏之间的内容已接入 deepseek-flash，由 `analysis-contract.mjs` 在服务端读取组装。
 

@@ -1,4 +1,4 @@
-# 建筑图片分析 Prompt V1
+# ArchBuddy｜建筑图片分析 Prompt V1（历史素材库方案）
 
 版本：1.0.0  
 模型基线：`qwen3.7-plus`  

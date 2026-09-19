@@ -40,7 +40,8 @@ $requiredFiles = @(
   'icons\icon-16.png',
   'icons\icon-32.png',
   'icons\icon-48.png',
-  'icons\icon-128.png'
+  'icons\icon-128.png',
+  'icons\logo.svg'
 )
 
 foreach ($relativePath in $requiredFiles) {
@@ -51,7 +52,7 @@ foreach ($relativePath in $requiredFiles) {
 }
 
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
-$archivePath = Join-Path $OutputDirectory ('downpic-beta-' + $version + '.zip')
+$archivePath = Join-Path $OutputDirectory ('archbuddy-beta-' + $version + '.zip')
 if (Test-Path -LiteralPath $archivePath) {
   Remove-Item -LiteralPath $archivePath -Force
 }

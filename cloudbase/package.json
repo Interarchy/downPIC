@@ -1,0 +1,7 @@
+{
+  "name": "archbuddy-cloud-api",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "dependencies": { "@cloudbase/node-sdk": "3.18.3" }
+}

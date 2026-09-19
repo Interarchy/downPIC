@@ -10,7 +10,7 @@ import { normalizeApiKey } from './developer-settings.mjs';
 // 实测响应里会先出现一个 thinking 块，正文在后面的 text 块——提取时必须跳过 thinking，
 // 否则会把模型的内部推理当成分析结果返回给用户。
 
-export const DEFAULT_MAX_TOKENS = 8192; // Step 0 实测：中文 8 个分项约 1000 token，8192 留足了余量
+export const DEFAULT_MAX_TOKENS = 8192; // 输出上限；实际消耗必须读取供应商返回的 usage，不能据此估算账单。
 export const DEFAULT_TIMEOUT_MS = 120_000; // 带 thinking 的单次调用实测 23s 左右，但网络抖动要留余量
 export const PRODUCT_MODEL = 'deepseek-flash';
 export const OFFICIAL_VISION_MODEL = 'deepseek-v4-flash-vision-exp';

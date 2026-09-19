@@ -27,10 +27,10 @@
   height: 36px;
   place-items: center;
   color: #fff;
-  background: var(--downpic-green);
-  border-radius: 8px;
-  font: 700 21px/1 Georgia, serif;
+  background: transparent;
 }
+
+.downpic-mark svg { display: block; width: 36px; height: 36px; }
 
 .downpic-toolbar button {
   height: 36px;

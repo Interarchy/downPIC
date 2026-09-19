@@ -10,7 +10,11 @@ import {
 } from './shared.mjs';
 
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
-const ANALYSIS_TIMEOUT_MS = 70_000;
+// CloudBase development instances can scale to zero. A cold start was measured at
+// about 12.4 seconds, so status/session checks must not fail before the service wakes.
+const STATUS_TIMEOUT_MS = 25_000;
+const SESSION_TIMEOUT_MS = 30_000;
+const ANALYSIS_TIMEOUT_MS = 135_000;
 
 chrome.storage.session.setAccessLevel?.({ accessLevel: 'TRUSTED_CONTEXTS' });
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
@@ -28,6 +32,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     [STORAGE.projectType]: normalizeProjectType(stored[STORAGE.projectType]) || PRESET_TYPES[0],
     [STORAGE.customTypes]: Array.isArray(stored[STORAGE.customTypes]) ? stored[STORAGE.customTypes] : [],
   });
+  await ensureInstallationId();
 });
 
 function bytesAsBase64(bytes) {
@@ -57,34 +62,83 @@ async function fetchOriginalImage(payload) {
 
 function backendError(code, detail = '') {
   const messages = {
-    NOT_CONFIGURED: 'downPIC 服务尚未配置 DeepSeek，请先启动已配置密钥的本地服务。',
-    INVALID_CONFIGURATION: 'downPIC 服务的 DeepSeek 配置无效，请重新配置并重启服务。',
+    NOT_CONFIGURED: 'ArchBuddy 云端服务尚未配置完成，请稍后再试。',
+    INVALID_CONFIGURATION: 'ArchBuddy 云端服务配置无效，请联系开发者。',
     IMAGE_REJECTED: '服务无法读取这张图片，请换一张 PNG、JPEG 或 WebP。',
     ANALYSIS_FORMAT_INVALID: '模型没有按约定格式返回，请重试。',
     UPSTREAM_TIMEOUT: '模型分析超时，请稍后重试。',
     UPSTREAM_FAILED: 'DeepSeek 暂时不可用，请稍后重试。',
     BODY_TOO_LARGE: '图片超过服务允许的大小，请换一张较小的图片。',
-    FORBIDDEN: 'downPIC 服务拒绝了扩展请求，请更新本地服务后重试。',
+    FORBIDDEN: 'ArchBuddy 服务拒绝了扩展请求，请更新本地服务后重试。',
+    UNAUTHORIZED: '匿名访问凭据已失效，正在重新建立连接，请重试。',
+    ANONYMOUS_SESSION_DISABLED: 'ArchBuddy 免登录服务尚未启用，请稍后再试。',
+    INVALID_INSTALLATION_ID: '插件安装身份无效，请在扩展管理页重新加载 ArchBuddy。',
+    USER_DAILY_LIMIT: '你今天的反推次数已用完，请明天再试。下载与分类仍可使用。',
+    PROJECT_DAILY_LIMIT: 'ArchBuddy 今天的反推服务额度已用完，请明天再试。下载与分类仍可使用。',
+    RATE_LIMITED: '请求过于频繁，请稍后再试。',
+    BUSY: '当前分析请求较多，请稍后再试。',
+    ANALYSIS_PAUSED: '反推服务暂时暂停，下载与分类仍可使用。',
   };
-  return new Error(messages[code] || detail || 'downPIC 服务请求失败');
+  const error = new Error(messages[code] || detail || 'ArchBuddy 服务请求失败');
+  error.code = code || 'BACKEND_ERROR';
+  return error;
 }
 
-async function requestBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_TIMEOUT_MS } = {}) {
+async function ensureInstallationId() {
+  const stored = await chrome.storage.local.get(STORAGE.installationId);
+  const current = stored[STORAGE.installationId];
+  if (typeof current === 'string' && /^[0-9a-f-]{36}$/i.test(current)) return current;
+  const installationId = crypto.randomUUID();
+  await chrome.storage.local.set({ [STORAGE.installationId]: installationId });
+  return installationId;
+}
+
+async function createAnonymousSession() {
+  const installationId = await ensureInstallationId();
+  const response = await fetchBackend('/api/session', {
+    method: 'POST',
+    body: { installationId },
+    timeoutMs: SESSION_TIMEOUT_MS,
+  });
+  if (typeof response?.token !== 'string' || !Number.isFinite(Number(response?.expiresAt))) {
+    throw new Error('ArchBuddy 云端返回了无效的匿名凭据');
+  }
+  await chrome.storage.session.set({
+    [STORAGE.sessionToken]: response.token,
+    [STORAGE.sessionExpiresAt]: Number(response.expiresAt),
+  });
+  return response.token;
+}
+
+async function anonymousToken({ forceRefresh = false } = {}) {
+  if (!forceRefresh) {
+    const stored = await chrome.storage.session.get([STORAGE.sessionToken, STORAGE.sessionExpiresAt]);
+    if (typeof stored[STORAGE.sessionToken] === 'string' && Number(stored[STORAGE.sessionExpiresAt]) > Date.now() + 60_000) {
+      return stored[STORAGE.sessionToken];
+    }
+  }
+  await chrome.storage.session.remove([STORAGE.sessionToken, STORAGE.sessionExpiresAt]);
+  return createAnonymousSession();
+}
+
+async function fetchBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_TIMEOUT_MS, token, requestId } = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   let response;
   try {
+    const headers = { 'x-downpic': '1' };
+    if (body) headers['content-type'] = 'application/json';
+    if (token) headers.authorization = `Bearer ${token}`;
+    if (requestId) headers['x-archbuddy-request-id'] = requestId;
     response = await fetch(backendUrl(path), {
       method,
       signal: controller.signal,
-      headers: body
-        ? { 'content-type': 'application/json', 'x-downpic': '1' }
-        : { 'x-downpic': '1' },
+      headers,
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch (error) {
-    if (error?.name === 'AbortError') throw new Error('downPIC 服务响应超时，请确认服务正在运行');
-    throw new Error(`无法连接 downPIC 服务（${BACKEND_BASE_URL}），请先启动本地服务`);
+    if (error?.name === 'AbortError') throw new Error('ArchBuddy 云端服务响应超时，请稍后再试');
+    throw new Error(`无法连接 ArchBuddy 云端服务（${BACKEND_BASE_URL}）`);
   } finally {
     clearTimeout(timeout);
   }
@@ -94,10 +148,29 @@ async function requestBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS
   return payload;
 }
 
+async function requestBackend(path, options = {}) {
+  if (path !== '/api/analyze') return fetchBackend(path, options);
+  const requestId = crypto.randomUUID();
+  let token = await anonymousToken();
+  try {
+    return await fetchBackend(path, { ...options, token, requestId });
+  } catch (error) {
+    if (error?.code !== 'UNAUTHORIZED') throw error;
+    token = await anonymousToken({ forceRefresh: true });
+    return fetchBackend(path, { ...options, token, requestId });
+  }
+}
+
 async function backendStatus() {
   try {
-    const status = await requestBackend('/api/status', { timeoutMs: 2500 });
-    return { ok: true, online: true, configured: Boolean(status?.configured), mode: BACKEND_MODE };
+    const status = await requestBackend('/api/status', { timeoutMs: STATUS_TIMEOUT_MS });
+    return {
+      ok: true,
+      online: true,
+      configured: Boolean(status?.configured && status?.anonymousSessionsEnabled),
+      mode: BACKEND_MODE,
+      quotaMode: status?.quotaMode,
+    };
   } catch (error) {
     return {
       ok: true,
@@ -252,7 +325,7 @@ async function downloadImage(payload) {
   const title = sanitizePathSegment(payload.title, '参考图');
   const extension = extensionFromUrl(payload.url, payload.mimeType);
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/T/, '-').slice(0, 15);
-  const filename = `downPIC/${sanitizePathSegment(category, '未分类')}/${project}/${stamp}_${title}.${extension}`;
+  const filename = `ArchBuddy/${sanitizePathSegment(category, '未分类')}/${project}/${stamp}_${title}.${extension}`;
   const url = String(payload.dataUrl || payload.url || '');
   if (!url) throw new Error('没有可下载的图片地址');
   const downloadId = await chrome.downloads.download({ url, filename, conflictAction: 'uniquify', saveAs: false });
@@ -286,6 +359,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             STORAGE.projectType,
             STORAGE.customTypes,
             STORAGE.privacyAccepted,
+            STORAGE.installationId,
           ]),
           chrome.storage.session.get([STORAGE.selection, STORAGE.result, STORAGE.lastDownload]),
         ]);

@@ -140,7 +140,7 @@
     } catch (error) {
       return {
         ok: false,
-        error: `扩展后台未响应：${error?.message || String(error)}。请在扩展管理页重新加载 downPIC 后再试。`,
+        error: `扩展后台未响应：${error?.message || String(error)}。请在扩展管理页重新加载 ArchBuddy 后再试。`,
       };
     }
   }
@@ -169,7 +169,7 @@
       return;
     }
     button.textContent = '已保存';
-    setStatus(`已保存到 下载/downPIC/${defaultType}`, 'success');
+    setStatus(`已保存到 下载/ArchBuddy/${defaultType}`, 'success');
     toolbarPinned = true;
     clearTimeout(hideTimer);
     const reveal = toolbar?.querySelector('[data-action="reveal"]');
@@ -208,7 +208,7 @@
       return;
     }
     button.textContent = '已送入侧栏';
-    setStatus('参考图已进入 downPIC 侧栏', 'success');
+    setStatus('参考图已进入 ArchBuddy 侧栏', 'success');
   }
 
   function createToolbar(image) {
@@ -217,10 +217,10 @@
     currentImage = image;
     toolbar = document.createElement('div');
     toolbar.className = 'downpic-toolbar';
-    toolbar.setAttribute('aria-label', 'downPIC 图片工具条');
+    toolbar.setAttribute('aria-label', 'ArchBuddy 图片工具条');
     toolbar.innerHTML = `
       <div class="downpic-toolbar-row">
-        <span class="downpic-mark" aria-hidden="true">d</span>
+        <span class="downpic-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" focusable="false"><rect x="8" y="8" width="112" height="112" rx="24" fill="#25634b"/><path fill="#fff" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z"/></svg></span>
         <label class="downpic-category-label"><span>分类</span><select data-role="category" aria-label="选择图片分类"></select></label>
         <button type="button" data-action="save">保存图片</button>
         <button type="button" data-action="analyze">反推提示词</button>

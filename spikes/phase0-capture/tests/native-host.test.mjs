@@ -84,6 +84,7 @@ test('native host imports, deduplicates, remains idempotent, and rejects path es
     fetchMessage.type = 'capture.fetch';
     fetchMessage.payload.image_url = `${imageServerUrl}/image-without-extension`;
     fetchMessage.payload.page_url = `${imageServerUrl}/source-page`;
+    fetchMessage.payload.page_title = '本地获取测试项目';
     fetchMessage.payload.extension = 'jpg';
     delete fetchMessage.payload.temporary_path;
     const fetched = await sendNativeMessage(fetchMessage, env);
@@ -137,6 +138,28 @@ test('native host imports, deduplicates, remains idempotent, and rejects path es
     const duplicate = await sendNativeMessage(envelope('capture-02', duplicatePath), env);
     assert.equal(duplicate.payload.state, 'duplicate');
     assert.equal(duplicate.payload.managed_path, imported.payload.managed_path);
+
+    const sameUrlPath = path.join(stagingRoot, 'capture-same-url.jpg');
+    await writeFile(sameUrlPath, Buffer.from('another-image-from-same-page'));
+    const sameUrl = await sendNativeMessage(envelope('capture-same-url', sameUrlPath), env);
+    assert.equal(sameUrl.payload.state, 'imported');
+    assert.equal(path.dirname(sameUrl.payload.managed_path), path.dirname(imported.payload.managed_path));
+
+    const differentUrlPath = path.join(stagingRoot, 'capture-different-url.jpg');
+    await writeFile(differentUrlPath, Buffer.from('image-from-another-page-with-the-same-title'));
+    const differentUrlMessage = envelope('capture-different-url', differentUrlPath);
+    differentUrlMessage.payload.page_url = 'https://example.com/another-project';
+    const differentUrl = await sendNativeMessage(differentUrlMessage, env);
+    assert.equal(differentUrl.payload.state, 'imported');
+    assert.notEqual(path.dirname(differentUrl.payload.managed_path), path.dirname(imported.payload.managed_path));
+    assert.match(path.dirname(differentUrl.payload.managed_path), /沿山艺术中心 - Example$/);
+
+    const repeatedDifferentUrlPath = path.join(stagingRoot, 'capture-different-url-repeat.jpg');
+    await writeFile(repeatedDifferentUrlPath, Buffer.from('second-image-from-another-page'));
+    const repeatedDifferentUrlMessage = envelope('capture-different-url-repeat', repeatedDifferentUrlPath);
+    repeatedDifferentUrlMessage.payload.page_url = 'https://example.com/another-project#gallery';
+    const repeatedDifferentUrl = await sendNativeMessage(repeatedDifferentUrlMessage, env);
+    assert.equal(path.dirname(repeatedDifferentUrl.payload.managed_path), path.dirname(differentUrl.payload.managed_path));
 
     const outsidePath = path.join(root, 'outside.jpg');
     await writeFile(outsidePath, Buffer.from('outside'));

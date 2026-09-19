@@ -1,0 +1,13 @@
+{
+  "project": "ArchBuddy",
+  "environmentId": "your-cloudbase-environment-id",
+  "region": "ap-shanghai",
+  "serviceName": "archbuddy-api",
+  "port": 8080,
+  "stage": "development",
+  "backendUrl": "https://your-public-cloudbase-service.example.com",
+  "privacySite": {
+    "cloudPath": "/archbuddy/privacy/",
+    "publicUrl": "https://your-public-privacy-site.example.com/"
+  }
+}

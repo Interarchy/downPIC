@@ -1,4 +1,4 @@
-# downPIC 下载分类与提示词反推原型
+# ArchBuddy 下载分类与提示词反推原型
 
 2026-09-13，独立于旧桌面素材库方向的交互验证。当前仅供个人试用，桌面素材库、自动解析和自然语言检索暂停开发。
 
@@ -33,7 +33,7 @@ powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototyp
 要改用自己的素材目录，可以传入：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototype.ps1 --library-root="F:\downPIC素材库"
+powershell -ExecutionPolicy Bypass -File plugin-prototype/scripts/start-prototype.ps1 --library-root="F:\ArchBuddy素材库"
 ```
 
 也可以直接设置环境变量 `DEEPSEEK_API_KEY` 后运行 `node plugin-prototype/serve.mjs`。

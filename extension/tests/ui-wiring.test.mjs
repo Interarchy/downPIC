@@ -58,7 +58,7 @@ test('侧栏下载区提供最近下载路径和文件夹定位按钮', () => {
   assert.match(source['sidepanel.mjs'], /download\.show/);
 });
 
-test('扩展端没有 Key 输入、DeepSeek 地址或上游鉴权头', () => {
+test('扩展端没有模型 Key、DeepSeek 地址或管理员测试凭据', () => {
   const packagedClient = [
     source['popup.html'], source['popup.mjs'], source['sidepanel.html'],
     source['sidepanel.mjs'], source['content.js'], source['background.mjs'],
@@ -67,6 +67,23 @@ test('扩展端没有 Key 输入、DeepSeek 地址或上游鉴权头', () => {
   assert.ok(!packagedClient.includes('id="api-key"'));
   assert.ok(!packagedClient.includes('api.deepseek.com'));
   assert.ok(!packagedClient.includes("'x-api-key'"));
-  assert.ok(!packagedClient.includes('authorization:'));
-  assert.match(source['runtime-config.mjs'], /http:\/\/127\.0\.0\.1:4186/);
+  assert.ok(!packagedClient.includes('ARCHBUDDY_TEST_TOKEN'));
+  assert.match(source['runtime-config.mjs'], /https:\/\/archbuddy-api-[^']+\.sh\.run\.tcloudbase\.com/);
+  assert.match(source['background.mjs'], /\/api\/session/);
+  assert.match(source['background.mjs'], /crypto\.randomUUID\(\)/);
+});
+
+test('普通用户界面和匿名请求结果不展示具体额度', () => {
+  const packagedClient = [source['sidepanel.mjs'], source['background.mjs']].join('\n');
+  assert.ok(!packagedClient.includes('今日剩余'));
+  assert.ok(!packagedClient.includes('userRemaining'));
+  assert.ok(!packagedClient.includes('projectRemaining'));
+});
+
+test('云端状态与匿名会话超时覆盖 CloudBase 冷启动', () => {
+  assert.match(source['background.mjs'], /const STATUS_TIMEOUT_MS = 25_000/);
+  assert.match(source['background.mjs'], /const SESSION_TIMEOUT_MS = 30_000/);
+  assert.match(source['background.mjs'], /const ANALYSIS_TIMEOUT_MS = 135_000/);
+  assert.match(source['background.mjs'], /timeoutMs: SESSION_TIMEOUT_MS/);
+  assert.match(source['background.mjs'], /timeoutMs: STATUS_TIMEOUT_MS/);
 });

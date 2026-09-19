@@ -1,4 +1,6 @@
-# AI 建筑灵感素材库｜MVP 低保真线框图 v1.0
+# ArchBuddy｜AI 建筑灵感素材库｜MVP 低保真线框图 v1.0
+
+> 品牌统一为 ArchBuddy。本文保留早期素材库方案或阶段验证记录；当前插件范围见 [项目介绍](README.md)，桌面素材库与自然语言检索已暂停开发。
 
 > 文档状态：待原型评审  
 > 上游文档：[SPEC.md](./SPEC.md)、[PRD.md](./PRD.md)、[DESKTOP_UX_FLOW.md](./DESKTOP_UX_FLOW.md)  

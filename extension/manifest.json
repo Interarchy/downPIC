@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "downPIC Beta",
-  "version": "0.2.2",
-  "description": "为设计师保存网页参考图，并反推为可复用的中文结构化生图提示词。",
+  "name": "ArchBuddy",
+  "version": "0.3.1",
+  "description": "建筑、室内与景观设计师的参考图助手：一键下载分类，提取色彩、材质与空间特征，生成中文结构化生图提示词。",
   "minimum_chrome_version": "116",
   "permissions": ["activeTab", "scripting", "sidePanel", "downloads", "storage"],
   "host_permissions": ["http://*/*", "https://*/*"],
@@ -11,7 +11,7 @@
     "type": "module"
   },
   "action": {
-    "default_title": "打开 downPIC 图片工具",
+    "default_title": "打开 ArchBuddy 图片工具",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon-16.png",

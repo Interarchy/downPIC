@@ -11,3 +11,10 @@ node_modules/
 
 # Generated Chrome Web Store packages
 extension/dist/
+cloudbase/dist/
+cloudbase/.env
+cloudbase/.env.*
+cloudbase/environment.json
+
+# Local image fixtures may contain user-provided reference material
+pic-test/

@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Stop'
 if ([string]::IsNullOrWhiteSpace($SettingsPath)) {
   $SettingsPath = Join-Path $PSScriptRoot '..\runtime\developer-ai-settings.json'
 }
-Write-Host 'downPIC plugin prototype - Developer DeepSeek configuration' -ForegroundColor DarkGreen
+Write-Host 'ArchBuddy plugin prototype - Developer DeepSeek configuration' -ForegroundColor DarkGreen
 Write-Host 'End users do not run this script. The key is encrypted and never written to source code.'
 
 $defaultBaseUrl = 'https://api.deepseek.com/anthropic'

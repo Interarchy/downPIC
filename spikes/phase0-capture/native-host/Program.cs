@@ -88,7 +88,7 @@ internal static class Program
                     schema_version = 1,
                     message_id = messageId,
                     type = "app.status",
-                    payload = new { state = "connected", host_version = "0.2.5" }
+                    payload = new { state = "connected", host_version = "0.2.6" }
                 };
             }
             if (GetString(envelope, "type") == "library.reveal")
@@ -270,9 +270,12 @@ internal static class Program
             return Persist(jobPath, Failure(messageId, captureId, "UNSUPPORTED_FORMAT", "暂不支持该图片格式"));
 
         var projectType = SanitizeSegment(Required(payload, "project_type_name"), "未分类");
-        var pageTitle = SanitizeSegment(GetString(payload, "page_title"), SanitizeSegment(GetString(payload, "site_name"), "未命名项目") + " " + DateTime.Now.ToString("yyyy-MM-dd"));
+        var capturedAt = CaptureDate(payload);
+        var siteName = SanitizeSegment(GetString(payload, "site_name"), "未命名项目");
+        var pageTitle = SanitizeSegment(GetString(payload, "page_title"), siteName + " " + capturedAt.ToString("yyyy-MM-dd"));
         var libraryRoot = Path.Combine(runtimeRoot, "library");
-        var projectRoot = Path.Combine(libraryRoot, projectType, pageTitle);
+        var projectTypeRoot = Path.Combine(libraryRoot, projectType);
+        var projectRoot = ResolveProjectRoot(projectTypeRoot, pageTitle, siteName, GetString(payload, "page_url"));
         Directory.CreateDirectory(projectRoot);
 
         var hash = Sha256(temporaryPath);
@@ -374,6 +377,63 @@ internal static class Program
         var reserved = new Regex("^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$", RegexOptions.IgnoreCase);
         if (reserved.IsMatch(text)) text = "_" + text;
         return text.Length > 80 ? text.Substring(0, 80).TrimEnd() : text;
+    }
+
+    private static DateTime CaptureDate(IDictionary<string, object> payload)
+    {
+        DateTime capturedAt;
+        return DateTime.TryParse(GetString(payload, "captured_at"), out capturedAt)
+            ? capturedAt.ToLocalTime()
+            : DateTime.Now;
+    }
+
+    private static string ResolveProjectRoot(string projectTypeRoot, string pageTitle, string siteName, string pageUrl)
+    {
+        var primary = Path.Combine(projectTypeRoot, pageTitle);
+        if (!Directory.Exists(primary) || ProjectContainsSource(primary, pageUrl) || String.IsNullOrWhiteSpace(pageUrl))
+            return primary;
+
+        var siteCandidateName = SanitizeSegment(pageTitle + " - " + siteName, pageTitle + " 2");
+        var siteCandidate = Path.Combine(projectTypeRoot, siteCandidateName);
+        if (!Directory.Exists(siteCandidate) || ProjectContainsSource(siteCandidate, pageUrl))
+            return siteCandidate;
+
+        for (var index = 2; index < 10000; index++)
+        {
+            var numberedName = SanitizeSegment(pageTitle + " - " + siteName + " " + index, pageTitle + " " + index);
+            var numbered = Path.Combine(projectTypeRoot, numberedName);
+            if (!Directory.Exists(numbered) || ProjectContainsSource(numbered, pageUrl))
+                return numbered;
+        }
+        throw new IOException("无法为同名网页生成唯一项目目录");
+    }
+
+    private static bool ProjectContainsSource(string projectRoot, string pageUrl)
+    {
+        if (String.IsNullOrWhiteSpace(pageUrl) || !Directory.Exists(projectRoot)) return false;
+        var expected = NormalizePageUrl(pageUrl);
+        foreach (var sourcePath in Directory.EnumerateFiles(projectRoot, "*.source.json", SearchOption.TopDirectoryOnly))
+        {
+            try
+            {
+                var source = Json.DeserializeObject(File.ReadAllText(sourcePath, Encoding.UTF8)) as IDictionary<string, object>;
+                if (source != null && String.Equals(NormalizePageUrl(GetString(source, "page_url")), expected, StringComparison.Ordinal))
+                    return true;
+            }
+            catch
+            {
+                // A malformed sidecar must not block capture into a recoverable project folder.
+            }
+        }
+        return false;
+    }
+
+    private static string NormalizePageUrl(string value)
+    {
+        Uri uri;
+        if (!Uri.TryCreate(value, UriKind.Absolute, out uri)) return (value ?? "").Trim();
+        var builder = new UriBuilder(uri) { Fragment = "" };
+        return builder.Uri.AbsoluteUri;
     }
 
     private static string SafeId(string value)
