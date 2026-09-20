@@ -171,7 +171,7 @@
 - 现有匿名使用限制继续有效；本规格不改变个人每日 20 次和 ArchBuddy 每日 200 次的既定额度。
 - 用户主动保存的图片继续落入现有本地下载目录；清理意图草稿不影响这些文件。
 - 行为统计默认关闭；不同意统计的用户仍可使用完整 V2 核心功能。
-- 项目当前尚未建立正式的 Spec Kit Constitution；在其建立前，以仓库 `AGENTS.md`、CloudBase 隔离文档和现有 VNext PRD 作为约束来源。
+- 项目已建立正式的 Spec Kit Constitution；本规格及后续计划以该宪法、仓库 `AGENTS.md`、CloudBase 隔离文档和现有 VNext PRD 为共同约束来源。
 
 ## Out of Scope
 
