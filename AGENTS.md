@@ -4,11 +4,15 @@
 
 本仓库插件方向为 ArchBuddy，分支 `direction/plugin`；保留 master 原方案及无关工作区改动。
 
+项目正式开发章程：[ArchBuddy MVP 项目章程](.specify/memory/constitution.md)。后续规格、
+计划、任务和实现必须遵循该章程定义的 MVP 范围、质量门槛、中文文档与安全底线。
+
 ## 每次开始工作必须检查
 
 1. 确认工作目录、当前分支和已有改动，读取本文件。
-2. 读取 `docs/CLOUDBASE_PROJECT_ISOLATION.md`，确认本次任务是否影响云端资源、数据、身份、日志、密钥、统计或预算。
-3. 涉及上述范围时，先核对 `cloudbase/environment.json` 和隔离文档中的资源归属，再进行实现或部署；完成文档规定的检查并记录证据。纯本地修改可以注明“不涉及云端资源”。
+2. 读取 `.specify/memory/constitution.md`，确认本次工作的范围、质量门槛和完成条件。
+3. 读取 `docs/CLOUDBASE_PROJECT_ISOLATION.md`，确认本次任务是否影响云端资源、数据、身份、日志、密钥、统计或预算。
+4. 涉及上述范围时，先核对 `cloudbase/environment.json` 和隔离文档中的资源归属，再进行实现或部署；完成文档规定的检查并记录证据。纯本地修改可以注明“不涉及云端资源”。
 
 ## CloudBase 多项目共存：用户明确要求，2026-09-15
 

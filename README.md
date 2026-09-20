@@ -28,6 +28,7 @@ ArchBuddy 帮助设计师把浏览案例时选中的参考图用于新的设计�
 - [隐私政策草案](extension/store/privacy-policy.md)
 - [完整反推提示词](plugin-prototype/analysis-instructions.md)
 - [品牌规范](docs/BRAND.md)
+- [插件 vNext PRD 初稿：从 Reference 到 Render](docs/ARCHBUDDY_PLUGIN_VNEXT_PRD.md)
 - [CloudBase 上海环境部署](cloudbase/README.md)
 - [CloudBase 多项目隔离与每次检查](docs/CLOUDBASE_PROJECT_ISOLATION.md)
 - [开发代理长期约束](AGENTS.md)
