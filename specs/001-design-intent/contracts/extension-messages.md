@@ -12,6 +12,11 @@ V2 返回在现有状态上增加：
 {
   "activeDraftId": "uuid-or-null",
   "drafts": [],
+  "result": {
+    "analysisId": "uuid",
+    "modules": [],
+    "referenceHint": { "sourceType": "file", "displayName": "参考图.jpg" }
+  },
   "analyticsConsent": {
     "enabled": false,
     "updatedAt": "2026-09-20T08:00:00.000Z",
@@ -54,7 +59,7 @@ V2 返回在现有状态上增加：
 
 请求：`{ "type": "draft.create" }`
 
-用途：显式结束当前编辑上下文。后台只清空 `activeDraftId`，不立即持久化空草稿；下一次成功分析创建并保存一份新草稿。该操作不删除历史草稿、当前图片选择或已下载图片。若用户直接分析一个与当前草稿 `referenceSelectionId` 不同的新选择，成功结果也必须创建新草稿，而不是覆盖当前草稿。
+用途：显式结束当前编辑上下文。后台只清空 `activeDraftId` 和会话期候选，不立即持久化空草稿；下一次成功分析创建并保存一份新草稿。该操作不删除历史草稿、当前图片选择或已下载图片。
 
 ## 4. `draft.restore`
 
@@ -70,9 +75,26 @@ V2 返回在现有状态上增加：
 
 ## 6. `analysis.run`
 
-请求保持现状。V2 成功响应包含 `modules` 和 `contractVersion`。普通分析在参考选择发生变化时创建新草稿；只有明确的“重新分析当前草稿”动作使用数据模型中的合并规则，不能直接覆盖用户编辑、锁定或停用模块。
+后台必须把 V2 网络请求发送到 `/api/v2/analyze`；已发布 V1 使用的 `/api/analyze` 服务端契约保持不变。V2 成功响应包含 `modules` 和 `contractVersion`。后台为结果补充 `analysisId` 与安全的 `referenceHint`，把结果保存为会话期候选；已有当前方案时不得自动合并或覆盖其模块。
 
-## 7. `analytics.consent.set`
+## 7. `intent.add`
+
+请求：
+
+```json
+{
+  "type": "intent.add",
+  "payload": {
+    "analysisId": "uuid",
+    "key": "materials_surfaces",
+    "replace": false
+  }
+}
+```
+
+后台必须验证 `analysisId` 与当前会话候选一致，并且 `key` 属于固定目录。目标槽位为空时加入；已有不同内容时只有 `replace=true` 才能替换。成功后只更新该槽位、清空 `overallConfirmedAt` 并返回当前草稿与最近草稿列表。
+
+## 8. `analytics.consent.set`
 
 请求：
 
@@ -85,7 +107,7 @@ V2 返回在现有状态上增加：
 
 后台只保存布尔值、时间和策略版本。默认值必须为 `false`。
 
-## 8. `analytics.record`
+## 9. `analytics.record`
 
 请求：
 
@@ -102,11 +124,11 @@ V2 返回在现有状态上增加：
 
 1. 检查本地选择加入状态；关闭时直接忽略；
 2. 校验事件和结果枚举，丢弃未知字段；
-3. 生成 `eventId`，把 `/api/events` 纳入与 `/api/analyze` 相同的 Bearer token 注入和一次 401 刷新路径；
+3. 生成 `eventId`，把 `/api/events` 纳入与 `/api/v2/analyze` 相同的 Bearer token 注入和一次 401 刷新路径；
 4. 失败时不阻断原操作，不保存敏感重试队列，不记录正文。
 
 侧边栏不得直接访问 CloudBase，也不得自行添加任意统计属性。
 
-## 9. 保持不变的消息
+## 10. 保持不变的消息
 
 现有图片选择/粘贴、图片下载/显示、分析状态和分类相关消息保持不变。V2 不得借草稿或统计改造改变这些消息的语义。

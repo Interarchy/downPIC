@@ -19,7 +19,7 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 | 后端地址 | `cloudbase/environment.json` 中的 `backendUrl` | 仅对应已登记服务；不得覆盖其他项目路由 |
 | 数据库集合或表 | `archbuddy_dev_quotas`、`archbuddy_dev_requests` | 用户已确认按 ADMINONLY 创建，并报告每日额度脚本测试成功；TTL 自动清理仍待配置和验证 |
 | 云存储对象 / 静态托管 | ArchBuddy 独立静态站已部署并公开验证；URL 见 `cloudbase/environment.json` | 隐私政策公开页面；当前图片和结果只在请求内存处理，不落盘 |
-| 业务身份与使用统计 | 匿名安装会话已部署且用户确认真实浏览器反推可用，行为统计未实现 | 原始安装 ID 只在浏览器；服务只处理不可逆项目内主体 |
+| 业务身份与使用统计 | 匿名安装会话已部署；计划集合 `archbuddy_dev_events` 尚未创建、尚未验证、不得启用 | 原始安装 ID 只在浏览器；可选统计默认关闭，只处理不可逆项目内主体和白名单事件 |
 | 调用额度 | 每日 20 / 200 | CloudBase 事务版已部署并由用户报告脚本成功；普通用户不取得具体余额，金额预算尚未设定 |
 | 日志 | 服务输出已有就绪和启动失败事件 | 腾讯云日志主题、访问日志、保留期和权限尚未在本次检查中核验 |
 | 服务凭据 | `DEEPSEEK_API_KEY`、`ARCHBUDDY_TEST_TOKEN`、`ARCHBUDDY_SESSION_SECRET` 等 | 仅登记变量名，不登记值；其他项目不得默认复用本项目令牌 |
@@ -112,6 +112,16 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 用户随后确认 `archbuddy-privacy` 网站托管部署成功；未对静态托管根目录或其他项目路径执行覆盖或删除。公开 HTTPS 地址 `https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/` 已由用户在浏览器中确认可访问。本次只记录 URL 和验证状态，不修改云端资源、权限、数据、密钥、日志或预算。
 
 2026-09-19 隐私政策更新验证：用户更新既有 `archbuddy-privacy` 静态站，加入 Chrome Web Store Limited Use（有限使用）声明。只读请求验证公开地址返回 HTTP 200，同时包含 `Limited Use` 与登记的联系邮箱。本次未新建静态站、未覆盖共享托管根目录，也未修改数据库、身份、密钥、日志或预算；其他项目资源未触及。
+
+### 2026-09-20：V2 可选匿名统计计划登记（仅本地代码准备）
+
+- 固定边界：项目 `archbuddy`、阶段 `development`、地域 `ap-shanghai`、本地登记环境 `dev-mel-d9guu8bpu44029179`、服务 `archbuddy-api`。
+- 计划资源：`archbuddy_dev_events`，用途仅为经用户主动选择加入后的最小产品漏斗；目标权限为 `ADMINONLY`，目标保留期为 30 天。状态为**尚未创建、尚未验证、不得启用**。
+- 计划字段只包括服务端固定的 `projectId`、`stage`、服务端派生的 `actorHash`、UUID `eventId`、白名单 `eventName`、可选白名单 `outcome`、客户端事件时间、服务端接收时间、30 天到期时间和 `schemaVersion=1`。
+- 明确排除：图片、缩略图、网址、Prompt、模块正文、证据、自定义分类、文件路径、Cookie、令牌、原始安装 ID、邮箱、手机号及其他直接身份。
+- 开关：服务环境变量 `ARCHBUDDY_ANALYTICS_ENABLED` 默认且当前必须为 `false`。集合、ADMINONLY 权限、30 天 TTL、V1/V2 路由兼容、日志边界和合成越界拒绝均在 CloudBase 实际验证前，不得设为 `true`。
+- 本次工作只修改仓库内实现与披露草稿，不创建集合、不更改 CloudBase 环境变量、不部署服务、不读取或列举任何 `st-` 或其他项目数据。
+- 未验证：集合实际权限、TTL、生效地域、服务运行角色、事件写入、日志正文边界和跨项目拒绝。结论：可进入本地实现；线上统计继续关闭。
 
 ## 用于其他新项目
 

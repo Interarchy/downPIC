@@ -6,11 +6,14 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT m
 const mode = process.env.ARCHBUDDY_QUOTA_MODE || 'process-test';
 if (!['cloudbase', 'process-test'].includes(mode)) throw new Error('Invalid quota mode');
 let quota = null;
+let eventWriter = null;
 if (mode === 'cloudbase') {
-  const { initializeCloudBaseStore } = await import('./cloudbase-store.mjs');
-  quota = createQuotaService(initializeCloudBaseStore());
+  const { createEventWriter, initializeCloudBaseStore } = await import('./cloudbase-store.mjs');
+  const store = initializeCloudBaseStore();
+  quota = createQuotaService(store);
+  eventWriter = createEventWriter(store);
 }
-const server = createAnalysisServer({ quota });
+const server = createAnalysisServer({ quota, eventWriter });
 server.on('error', error => {
   console.error(JSON.stringify({ event: 'startup_failed', code: error.code || 'UNKNOWN' }));
   process.exitCode = 1;

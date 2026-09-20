@@ -7,6 +7,7 @@ export const STAGE = 'development'; // Only the registered stage may deploy this
 export const COLLECTIONS = Object.freeze({
   counters: 'archbuddy_dev_quotas',
   requests: 'archbuddy_dev_requests',
+  events: 'archbuddy_dev_events',
 });
 
 export class QuotaError extends Error {
@@ -17,6 +18,7 @@ export function shanghaiDay(ms) {
   return new Date(ms + 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
 }
 const digest = value => createHash('sha256').update(value).digest('hex');
+export const actorHashFor = actor => digest(`${PROJECT_ID}:${STAGE}:${actor}`);
 
 // Preserve provider-reported values; never infer image, cached or thinking usage.
 export function normalizeUsage(raw) {
@@ -52,7 +54,7 @@ export function createQuotaService(store, { now = Date.now } = {}) {
       const at = now();
       const day = shanghaiDay(at);
       const expiresAt = new Date(at + 30 * 24 * 60 * 60 * 1000);
-      const actorHash = digest(`${PROJECT_ID}:${STAGE}:${actor}`);
+      const actorHash = actorHashFor(actor);
       const receiptId = digest(`${actorHash}:${requestId.toLowerCase()}`);
       const projectKey = `project_${day}`;
       const userKey = `user_${day}_${actorHash}`;

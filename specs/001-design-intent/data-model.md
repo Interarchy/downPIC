@@ -43,6 +43,7 @@ evidence: AI 对视觉证据的简短说明，允许空字符串
 basis: observed | inferred | uncertain
 confidence: high | medium | low | unknown
 source: ai | user
+sourceHint: { analysisId, displayName } | null
 reviewState: suggested | confirmed | modified
 enabled: boolean
 locked: boolean
@@ -55,7 +56,8 @@ status: suggested | confirmed | modified | locked | disabled（界面派生值�
 - `key` 在一份草稿中唯一，且必须来自固定目录。
 - 用户修改 `value` 后，`source=user`、`reviewState=modified`、`basis=uncertain`、`evidence=''`、`confidence=unknown`，避免原 AI 证据错误解释用户的新文本。
 - `enabled=false` 时保留模块内容，但编译提示词时排除。
-- `locked=true` 时重新分析不得覆盖该模块。
+- `sourceHint` 只记录产生当前模块的本地分析标识和非网址展示名，用于解释当前方案的来源；不包含图片或网址。
+- `locked=true` 时本地编辑仍需先解锁；后续分析本身不改变任何当前方案模块。
 - `status` 按“停用 > 锁定 > `reviewState`”派生，使界面始终显示规格要求的五种状态之一。
 - `changed` 只表示最近一次重新分析发现 AI 建议发生变化，用户再次编辑或确认后可清除。
 - `basis`、`evidence`、`confidence` 和状态字段仅用于界面，不进入最终提示词。
@@ -64,18 +66,20 @@ status: suggested | confirmed | modified | locked | disabled（界面派生值�
 
 ```text
 contractVersion: 2
+analysisId: 浏览器为本次分析生成的会话标识
 modules: AnalysisModuleSuggestion[11]
 model: 模型名称
 durationMs: 服务端耗时
 truncated: boolean
 cached: boolean
+referenceHint: { sourceType, displayName }
 usage: 现有额度结果（不在用户界面显示）
 ```
 
 约束：
 
 - 成功响应必须按固定目录返回 11 个模块；模型未提供的模块由服务端补空。
-- 分析响应只传 AI 建议字段；`source/reviewState/enabled/locked/changed/status` 均由浏览器创建或派生。
+- 服务端分析响应只传 AI 建议字段；浏览器补充 `analysisId/referenceHint` 并把整组结果作为会话期候选保存。`source/reviewState/enabled/locked/changed/status/sourceHint` 均由浏览器创建或派生。
 
 ## 5. ReferenceSelection（当前参考图）
 
@@ -112,7 +116,8 @@ referenceHint: { sourceType, displayName }，可空
 - 按 `updatedAt` 倒序，仅保留 5 份；写入第 6 份时删除最旧项。
 - 不保存图片、缩略图、页面网址、Cookie、令牌或云端身份。
 - 恢复后可编辑、启停和复制；重新分析前必须重新选择图片。
-- 没有当前草稿时的首次成功分析创建草稿；当前 `selectionId` 与草稿 `referenceSelectionId` 不同时创建新草稿；只有明确重新分析当前草稿时执行模块合并。
+- 没有当前草稿时，首次成功分析创建一份包含 11 个空槽位的当前方案；分析结果仍只保留为会话期候选。
+- 已有当前草稿时，后续成功分析只更新最近分析信息和候选区，不改动草稿模块；因此可以跨图片持续拼装同一方案。
 - “新建草稿”只清空活动草稿 ID 和编辑上下文，不立即写入空草稿；下一次成功分析创建并持久化一份草稿，避免重复空记录。
 
 ## 7. PromptCompilation（派生提示词）
@@ -182,15 +187,14 @@ schemaVersion: 1
 
 集合：`archbuddy_dev_events`。状态为“计划中，尚未因本文档自动创建”；权限、TTL 与实际环境证据必须在启用统计前登记。
 
-## 10. 重新分析合并规则
+## 10. 候选加入与同维度替换规则
 
-对固定目录中的每个 `key`：
-
-1. 若旧模块 `reviewState=modified`、`locked=true` 或 `enabled=false`，复制旧模块全部用户状态和值；
-2. 否则采用新分析的 `basis/value/evidence/confidence`，并将 `reviewState` 设为 `suggested`；
-3. 新旧 AI 建议不同则设置 `changed=true`，相同则为 `false`；
-4. 新响应缺失的模块由规范化器补空，不能删除旧的用户模块；
-5. 合并后保留该草稿的 `overallConfirmedAt`；变化模块仍以“建议”和“已变化”提示用户。
+1. 每次分析生成独立 `analysisId`，候选结果只存在于 `chrome.storage.session`，不会自动进入草稿；
+2. 用户点击“加入当前方案”后，浏览器按稳定 `key` 把该候选写入草稿相应槽位，并记录安全的 `sourceHint`；
+3. 目标槽位已有内容时，界面显示“替换当前项”，后台只在请求明确携带替换意图时更新该槽位；
+4. 加入或替换只改变一个 `key`，其他槽位和用户编辑保持不变；
+5. 当前方案发生变化后清空 `overallConfirmedAt`，复制完整 Prompt 前需要重新整体确认；
+6. 选择并分析下一张图只替换会话期候选结果，当前方案和最近 5 份草稿继续保留。
 
 ## 11. 数据边界
 

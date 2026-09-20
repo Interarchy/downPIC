@@ -4,13 +4,15 @@
 
 ## 多项目隔离：每次云端变更前检查
 
-该 CloudBase 环境将同时承载其他项目和 demo，ArchBuddy 只占用自己的资源。开始工作先读根目录 `AGENTS.md` 和 [CloudBase 多项目隔离约定](../docs/CLOUDBASE_PROJECT_ISOLATION.md)，按其中的资源登记和检查清单执行，并记录结果。数据库、存储、身份、统计、日志、凭据与业务预算均按项目和阶段区分；命名前缀不能代替实际访问权限检查。现有后端尚无数据库或云存储读写，后续新增时必须先落实隔离。
+该 CloudBase 环境将同时承载其他项目和 demo，ArchBuddy 只占用自己的资源。开始工作先读根目录 `AGENTS.md` 和 [CloudBase 多项目隔离约定](../docs/CLOUDBASE_PROJECT_ISOLATION.md)，按其中的资源登记和检查清单执行，并记录结果。数据库、存储、身份、统计、日志、凭据与业务预算均按项目和阶段区分；命名前缀不能代替实际访问权限检查。现有后端只读写已登记的 ArchBuddy 额度与请求集合；计划事件集合在实际创建和验证前保持禁用。
 
 ## 当前进度与边界
 
 2026-09-15：公网 `/healthz`、`/api/status`、真实模型调用和 CloudBase 每日额度事务均已由用户测试成功。已验证模型为 `deepseek-v4-flash-vision-exp`；额度版测试脚本随后成功返回。本地 `environment.json` 记录部署证据且不包含密钥值，但仍不提交到公开仓库。
 
-当前代码保留管理员测试令牌用于维护，同时新增免登录匿名安装会话。插件先调用 `POST /api/session` 换取短期匿名凭据，再调用 `POST /api/analyze`；用户无需输入 DeepSeek Key 或测试 Token。签名密钥只存在服务环境变量中。
+当前代码保留管理员测试令牌用于维护，同时新增免登录匿名安装会话。插件先调用 `POST /api/session` 换取短期匿名凭据；已发布 V1 继续调用 `POST /api/analyze`，V2 调用新增的 `POST /api/v2/analyze`。用户无需输入 DeepSeek Key 或测试 Token。签名密钥只存在服务环境变量中。
+
+V2 代码还准备了默认关闭的可选匿名事件接口 `POST /api/events`。`ARCHBUDDY_ANALYTICS_ENABLED` 必须保持 `false`，直到 `archbuddy_dev_events` 已在 ArchBuddy development 范围内按 ADMINONLY 创建，并完成 30 天 TTL、隔离、日志和公开隐私披露验证。关闭时不写入事件；不得复用其他项目集合。
 
 2026-09-15 用户已确定每日额度：个人 20 次、整个 ArchBuddy 200 次；详见 [反推额度规则](../docs/ARCHBUDDY_QUOTA_POLICY.md)。CloudBase 事务计数已部署并完成一次真实测试。匿名会话版也已部署，`/api/status` 与一次不调用模型的 `/api/session` 签发检查通过，用户随后确认真实 Chrome 免登录反推可用。
 
@@ -42,6 +44,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/build-depl
 | `DEEPSEEK_MODEL` | `deepseek-flash` |
 | `ARCHBUDDY_TEST_TOKEN` | 管理员生成的独立随机令牌，至少 32 个可打印 ASCII 字符；不能复用 DeepSeek Key |
 | `ARCHBUDDY_SESSION_SECRET` | 匿名会话签名密钥，独立随机值，至少 32 个可打印 ASCII 字符；只放服务环境变量，不能复用其他 Key |
+| `ARCHBUDDY_ANALYTICS_ENABLED` | `false`；完成集合权限、30 天 TTL、隔离、日志与公开披露验证前不得改为 `true` |
 | `ARCHBUDDY_MAX_CALLS_PER_PROCESS` | `20` |
 | `ARCHBUDDY_MAX_CONCURRENT` | `1` |
 | `ARCHBUDDY_CALLS_PER_MINUTE` | `3` |

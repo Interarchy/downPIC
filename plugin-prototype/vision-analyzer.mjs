@@ -1,4 +1,4 @@
-import { parseSections } from './analysis-contract.mjs';
+import { parseAnalysisModules, parseSections } from './analysis-contract.mjs';
 import { normalizeApiKey } from './developer-settings.mjs';
 
 // 全进程唯一的外网调用点。
@@ -93,9 +93,19 @@ export class DeepSeekVisionAnalyzer {
     return redactSecrets(text, this.secrets);
   }
 
-  // 返回 { text, sections, model, stopReason, truncated, usage, durationMs }。
-  // 只负责「拿到并解析文本」，不负责装配分项——装配是 analysis-contract 的事。
+  // V1 已发布入口：返回原有 sections 字段，行为保持不变。
   async analyze({ buffer, mimeType, signal } = {}) {
+    const result = await this.#request({ buffer, mimeType, signal });
+    return { ...result, sections: parseSections(result.text) };
+  }
+
+  // V2 独立入口：同一传输层，使用固定 11 模块解析契约。
+  async analyzeV2({ buffer, mimeType, signal } = {}) {
+    const result = await this.#request({ buffer, mimeType, signal });
+    return { ...result, modules: parseAnalysisModules(result.text) };
+  }
+
+  async #request({ buffer, mimeType, signal } = {}) {
     if (!Buffer.isBuffer(buffer) || buffer.length === 0) {
       throw new VisionAnalysisError('IMAGE_REJECTED', '图片内容为空');
     }
@@ -166,7 +176,6 @@ export class DeepSeekVisionAnalyzer {
 
     return {
       text,
-      sections: parseSections(text),
       model: payload?.model || this.model,
       stopReason: payload?.stop_reason ?? null,
       truncated: payload?.stop_reason === 'max_tokens',

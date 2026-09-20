@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { createHash, timingSafeEqual } from 'node:crypto';
-import { AnalysisFormatError, assembleSections, loadSystemPrompt } from '../plugin-prototype/analysis-contract.mjs';
+import { AnalysisFormatError, assembleSections, loadSystemPrompt, loadV2SystemPrompt } from '../plugin-prototype/analysis-contract.mjs';
 import { DeepSeekVisionAnalyzer, VisionAnalysisError } from '../plugin-prototype/vision-analyzer.mjs';
 import { QuotaError, normalizeUsage } from './quota.mjs';
 import { createAnonymousSession, validSessionSecret, verifyAnonymousSession } from './session.mjs';
@@ -10,6 +10,15 @@ import { createAnonymousSession, validSessionSecret, verifyAnonymousSession } fr
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const MAX_BODY_BYTES = Math.ceil(MAX_IMAGE_BYTES / 3) * 4 + 4096;
 const MAX_SESSION_BODY_BYTES = 4096;
+const MAX_EVENT_BODY_BYTES = 4096;
+const EVENT_NAMES = new Set([
+  'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
+  'module_disabled', 'prompt_confirmed', 'prompt_copied',
+]);
+const EVENT_OUTCOMES = new Set([
+  'success', 'invalid_input', 'network_unavailable', 'timeout', 'service_unavailable',
+  'quota_exceeded', 'format_invalid', 'version_mismatch', 'unknown_error',
+]);
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -111,11 +120,36 @@ function json(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+function noContent(res) {
+  if (res.destroyed || res.writableEnded) return;
+  res.writeHead(204, { 'cache-control': 'no-store' });
+  res.end();
+}
+
+function validatedEvent(body) {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) throw new HttpError(400, 'EVENT_INVALID', '统计事件格式无效');
+  const allowed = new Set(['eventId', 'eventName', 'outcome', 'clientOccurredAt']);
+  if (Object.keys(body).some(key => !allowed.has(key)) ||
+      typeof body.eventId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.eventId) ||
+      !EVENT_NAMES.has(body.eventName) ||
+      (body.outcome !== undefined && !EVENT_OUTCOMES.has(body.outcome)) ||
+      typeof body.clientOccurredAt !== 'string' || body.clientOccurredAt.length > 40 || !Number.isFinite(Date.parse(body.clientOccurredAt))) {
+    throw new HttpError(400, 'EVENT_INVALID', '统计事件字段无效');
+  }
+  return {
+    eventId: body.eventId,
+    eventName: body.eventName,
+    ...(body.outcome ? { outcome: body.outcome } : {}),
+    clientOccurredAt: body.clientOccurredAt,
+  };
+}
+
 export function createAnalysisServer({
   environment = process.env,
   analyzerFactory = options => new DeepSeekVisionAnalyzer(options),
   now = Date.now,
   quota = null,
+  eventWriter = null,
 } = {}) {
   const testToken = environment.ARCHBUDDY_TEST_TOKEN;
   const sessionSecret = environment.ARCHBUDDY_SESSION_SECRET;
@@ -164,7 +198,22 @@ export function createAnalysisServer({
         json(res, 201, session);
         return;
       }
-      if (pathname !== '/api/analyze') throw new HttpError(404, 'NOT_FOUND', '接口不存在');
+      if (pathname === '/api/events') {
+        if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
+        const identity = authenticate(req.headers.authorization, { testToken, sessionSecret, now });
+        if (!identity) throw new HttpError(401, 'UNAUTHORIZED', '匿名访问凭据无效或已过期');
+        if (environment.ARCHBUDDY_ANALYTICS_ENABLED !== 'true' || typeof eventWriter !== 'function') {
+          req.resume();
+          noContent(res);
+          return;
+        }
+        const event = validatedEvent(await readJson(req, MAX_EVENT_BODY_BYTES));
+        await eventWriter(identity.actorId, event);
+        json(res, 202, { accepted: true });
+        return;
+      }
+      const contractVersion = pathname === '/api/analyze' ? 1 : pathname === '/api/v2/analyze' ? 2 : null;
+      if (!contractVersion) throw new HttpError(404, 'NOT_FOUND', '接口不存在');
       if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
       if (!configured) throw new HttpError(503, 'NOT_CONFIGURED', '测试服务尚未配置完成');
       const identity = authenticate(req.headers.authorization, { testToken, sessionSecret, now });
@@ -185,7 +234,7 @@ export function createAnalysisServer({
         apiKey: environment.DEEPSEEK_API_KEY,
         baseUrl: environment.DEEPSEEK_BASE_URL,
         model: environment.DEEPSEEK_MODEL || 'deepseek-flash',
-        systemPrompt: await loadSystemPrompt(),
+        systemPrompt: contractVersion === 2 ? await loadV2SystemPrompt() : await loadSystemPrompt(),
         timeoutMs,
       });
       if (req.aborted || res.destroyed) return;
@@ -198,8 +247,10 @@ export function createAnalysisServer({
       startedCalls++;
       modelStarted = true;
       modelStartedAt = now();
-      const result = modelResult = await analyzer.analyze({ ...image, signal: controller.signal });
-      const sections = assembleSections(result.sections);
+      const result = modelResult = contractVersion === 2
+        ? await analyzer.analyzeV2({ ...image, signal: controller.signal })
+        : await analyzer.analyze({ ...image, signal: controller.signal });
+      const sections = contractVersion === 1 ? assembleSections(result.sections) : null;
       let usageRecorded = false;
       if (reservation) {
         try {
@@ -211,7 +262,10 @@ export function createAnalysisServer({
           console.warn(JSON.stringify({ event: 'usage_record_failed', projectId: 'archbuddy', stage: 'development' }));
         }
       }
-      json(res, 200, { sections, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
+      const analysisPayload = contractVersion === 2
+        ? { contractVersion: 2, modules: result.modules }
+        : { sections };
+      json(res, 200, { ...analysisPayload, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
         usage: normalizeUsage(result.usage), usageRecorded,
         ...(reservation && identity.type === 'administrator'
           ? { quota: { day: reservation.day, userRemaining: reservation.userRemaining, projectRemaining: reservation.projectRemaining } }

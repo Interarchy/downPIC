@@ -8,6 +8,16 @@ plugin-prototype/runtime/
 # Dependency and debug artifacts
 node_modules/
 *.log
+dist/
+build/
+.env
+.env.*
+!.env.example
+*.tmp
+*.swp
+.vscode/
+.DS_Store
+Thumbs.db
 
 # Generated Chrome Web Store packages
 extension/dist/

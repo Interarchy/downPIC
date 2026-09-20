@@ -1,6 +1,10 @@
 # 契约：结构化图片分析 API
 
-## POST `/api/analyze`
+## 已发布 V1 兼容边界
+
+已发布 V1 继续使用 `POST /api/analyze` 及其既有 `sections` 成功契约。本 V2 功能不得修改、删除或复用该路由的成功响应结构，也不得在其中混入 `modules`。V1 路由的下线不属于本功能范围。
+
+## POST `/api/v2/analyze`
 
 认证、图片大小、MIME 类型、匿名会话和 20/200 每日配额沿用现有实现。
 
@@ -51,7 +55,7 @@ x-archbuddy-request-id: <uuid>
 
 ### 错误
 
-沿用现有 HTTP 状态和错误码映射。V2 额外允许：
+沿用 V1 的 HTTP 状态和错误码映射。V2 路由额外允许：
 
 | HTTP | code | 含义 |
 |---:|---|---|

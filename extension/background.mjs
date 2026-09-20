@@ -1,12 +1,16 @@
 import { BACKEND_BASE_URL, BACKEND_MODE, backendUrl } from './runtime-config.mjs';
 import {
+  INTENT_MODULES,
   PRESET_TYPES,
   STORAGE,
+  addCandidateToPlan,
+  createEmptyIntentModules,
   dataUrlParts,
   extensionFromUrl,
+  normalizeIntentDraft,
+  normalizeIntentModules,
   normalizeProjectType,
   sanitizePathSegment,
-  serializeSections,
 } from './shared.mjs';
 
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
@@ -15,6 +19,15 @@ const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const STATUS_TIMEOUT_MS = 25_000;
 const SESSION_TIMEOUT_MS = 30_000;
 const ANALYSIS_TIMEOUT_MS = 135_000;
+const ANALYTICS_POLICY_VERSION = '2026-09-20';
+const ANALYTICS_EVENTS = new Set([
+  'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
+  'module_disabled', 'prompt_confirmed', 'prompt_copied',
+]);
+const ANALYTICS_OUTCOMES = new Set([
+  'success', 'invalid_input', 'network_unavailable', 'timeout', 'service_unavailable',
+  'quota_exceeded', 'format_invalid', 'version_mismatch', 'unknown_error',
+]);
 
 chrome.storage.session.setAccessLevel?.({ accessLevel: 'TRUSTED_CONTEXTS' });
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
@@ -26,11 +39,19 @@ chrome.runtime.onInstalled.addListener(async () => {
     STORAGE.captureEnabled,
     STORAGE.projectType,
     STORAGE.customTypes,
+    STORAGE.analyticsConsent,
   ]);
   await chrome.storage.local.set({
     [STORAGE.captureEnabled]: Boolean(stored[STORAGE.captureEnabled]),
     [STORAGE.projectType]: normalizeProjectType(stored[STORAGE.projectType]) || PRESET_TYPES[0],
     [STORAGE.customTypes]: Array.isArray(stored[STORAGE.customTypes]) ? stored[STORAGE.customTypes] : [],
+    [STORAGE.analyticsConsent]: stored[STORAGE.analyticsConsent]?.policyVersion === ANALYTICS_POLICY_VERSION
+      ? {
+        enabled: stored[STORAGE.analyticsConsent].enabled === true,
+        updatedAt: String(stored[STORAGE.analyticsConsent].updatedAt || new Date().toISOString()),
+        policyVersion: ANALYTICS_POLICY_VERSION,
+      }
+      : { enabled: false, updatedAt: new Date().toISOString(), policyVersion: ANALYTICS_POLICY_VERSION },
   });
   await ensureInstallationId();
 });
@@ -82,6 +103,25 @@ function backendError(code, detail = '') {
   const error = new Error(messages[code] || detail || 'ArchBuddy 服务请求失败');
   error.code = code || 'BACKEND_ERROR';
   return error;
+}
+
+function categorizedError(code, message, category) {
+  const error = new Error(message);
+  error.code = code;
+  error.category = category;
+  return error;
+}
+
+function errorCategory(error) {
+  if (error?.category) return error.category;
+  if (['IMAGE_REJECTED', 'BODY_TOO_LARGE', 'INVALID_CONTENT_TYPE', 'MALFORMED_JSON'].includes(error?.code)) return 'invalid_input';
+  if (error?.code === 'NETWORK_UNAVAILABLE') return 'network_unavailable';
+  if (['PROCESS_TIMEOUT', 'UPSTREAM_TIMEOUT'].includes(error?.code)) return 'timeout';
+  if (['USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT', 'RATE_LIMITED', 'TEST_LIMIT_REACHED'].includes(error?.code)) return 'quota_exceeded';
+  if (error?.code === 'ANALYSIS_FORMAT_INVALID') return 'format_invalid';
+  if (error?.code === 'VERSION_MISMATCH') return 'version_mismatch';
+  if (['NOT_CONFIGURED', 'UPSTREAM_FAILED', 'BUSY', 'ANALYSIS_PAUSED', 'ANONYMOUS_SESSION_DISABLED'].includes(error?.code)) return 'service_unavailable';
+  return 'unknown_error';
 }
 
 async function ensureInstallationId() {
@@ -137,8 +177,8 @@ async function fetchBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_T
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch (error) {
-    if (error?.name === 'AbortError') throw new Error('ArchBuddy 云端服务响应超时，请稍后再试');
-    throw new Error(`无法连接 ArchBuddy 云端服务（${BACKEND_BASE_URL}）`);
+    if (error?.name === 'AbortError') throw categorizedError('PROCESS_TIMEOUT', 'ArchBuddy 云端服务响应超时，请稍后再试', 'timeout');
+    throw categorizedError('NETWORK_UNAVAILABLE', '无法连接 ArchBuddy 云端服务，请检查网络后重试', 'network_unavailable');
   } finally {
     clearTimeout(timeout);
   }
@@ -149,8 +189,9 @@ async function fetchBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_T
 }
 
 async function requestBackend(path, options = {}) {
-  if (path !== '/api/analyze') return fetchBackend(path, options);
-  const requestId = crypto.randomUUID();
+  const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/events'];
+  if (!authenticatedPaths.includes(path)) return fetchBackend(path, options);
+  const requestId = ['/api/analyze', '/api/v2/analyze'].includes(path) ? crypto.randomUUID() : undefined;
   let token = await anonymousToken();
   try {
     return await fetchBackend(path, { ...options, token, requestId });
@@ -158,6 +199,38 @@ async function requestBackend(path, options = {}) {
     if (error?.code !== 'UNAUTHORIZED') throw error;
     token = await anonymousToken({ forceRefresh: true });
     return fetchBackend(path, { ...options, token, requestId });
+  }
+}
+
+async function setAnalyticsConsent(enabled) {
+  const consent = {
+    enabled: enabled === true,
+    updatedAt: new Date().toISOString(),
+    policyVersion: ANALYTICS_POLICY_VERSION,
+  };
+  await chrome.storage.local.set({ [STORAGE.analyticsConsent]: consent });
+  return { ok: true, consent };
+}
+
+async function recordAnalytics(payload = {}) {
+  const local = await chrome.storage.local.get(STORAGE.analyticsConsent);
+  const consent = local[STORAGE.analyticsConsent];
+  if (consent?.enabled !== true || consent?.policyVersion !== ANALYTICS_POLICY_VERSION) {
+    return { ok: true, accepted: false };
+  }
+  if (!ANALYTICS_EVENTS.has(payload.eventName)) return { ok: true, accepted: false };
+  const event = {
+    eventId: crypto.randomUUID(),
+    eventName: payload.eventName,
+    clientOccurredAt: new Date().toISOString(),
+    ...(ANALYTICS_OUTCOMES.has(payload.outcome) ? { outcome: payload.outcome } : {}),
+  };
+  try {
+    await requestBackend('/api/events', { method: 'POST', body: event, timeoutMs: 15_000 });
+    return { ok: true, accepted: true };
+  } catch {
+    // 可选统计失败不得影响核心功能，也不保存重试队列。
+    return { ok: true, accepted: false };
   }
 }
 
@@ -219,14 +292,12 @@ async function captureImageFromTab(payload, sender) {
   bitmap.close();
   const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.92 });
   return {
-    id: crypto.randomUUID(),
-    dataUrl: await blobAsDataUrl(blob),
+    selectionId: crypto.randomUUID(),
+    sourceType: 'screenshot',
+    displayName: sanitizePathSegment(payload.title || payload.alt || tab.title, '网页参考图'),
     mimeType: blob.type,
-    title: String(payload.title || payload.alt || tab.title || '网页参考图'),
-    sourceUrl: String(payload.sourceUrl || tab.url || ''),
-    pageUrl: String(tab.url || ''),
-    pageTitle: String(tab.title || ''),
-    pendingAnalysis: true,
+    byteSize: blob.size,
+    imagePayload: await blobAsDataUrl(blob),
     selectedAt: new Date().toISOString(),
   };
 }
@@ -250,14 +321,12 @@ async function selectWebImage(payload, sender) {
   }
   const selection = captured
     ? {
-        id: crypto.randomUUID(),
-        dataUrl: captured.dataUrl,
+        selectionId: crypto.randomUUID(),
+        sourceType: 'page-image',
+        displayName: sanitizePathSegment(payload.title || payload.alt || sender.tab.title, '网页参考图'),
         mimeType: captured.mimeType,
-        title: String(payload.title || payload.alt || sender.tab.title || '网页参考图'),
-        sourceUrl: String(payload.sourceUrl || sender.tab.url || ''),
-        pageUrl: String(sender.tab.url || ''),
-        pageTitle: String(sender.tab.title || ''),
-        pendingAnalysis: true,
+        byteSize: Math.ceil(dataUrlParts(captured.dataUrl).base64.length * 0.75),
+        imagePayload: captured.dataUrl,
         selectedAt: new Date().toISOString(),
       }
     : await captureImageFromTab(fallbackPayload, sender);
@@ -268,16 +337,19 @@ async function selectWebImage(payload, sender) {
 
 async function selectPastedImage(payload) {
   const { mimeType, base64 } = dataUrlParts(payload.dataUrl);
-  if (Math.ceil(base64.length * 0.75) > MAX_IMAGE_BYTES) throw new Error('图片超过 10 MB');
+  if (!['image/png', 'image/jpeg', 'image/webp'].includes(mimeType)) {
+    throw categorizedError('IMAGE_REJECTED', '请选择 PNG、JPEG 或 WebP 图片', 'invalid_input');
+  }
+  const byteSize = Math.ceil(base64.length * 0.75);
+  if (!byteSize || byteSize > MAX_IMAGE_BYTES) throw categorizedError('IMAGE_REJECTED', '请选择 1 字节到 10 MB 的图片', 'invalid_input');
+  const sourceType = payload.sourceType === 'file' ? 'file' : 'paste';
   const selection = {
-    id: crypto.randomUUID(),
-    dataUrl: payload.dataUrl,
+    selectionId: crypto.randomUUID(),
+    sourceType,
+    displayName: sanitizePathSegment(payload.title, sourceType === 'file' ? '本地参考图' : '粘贴的参考图'),
     mimeType,
-    title: String(payload.title || '粘贴的参考图'),
-    sourceUrl: '',
-    pageUrl: '',
-    pageTitle: '',
-    pendingAnalysis: false,
+    byteSize,
+    imagePayload: payload.dataUrl,
     selectedAt: new Date().toISOString(),
   };
   await chrome.storage.session.set({ [STORAGE.selection]: selection, [STORAGE.result]: null });
@@ -287,36 +359,170 @@ async function selectPastedImage(payload) {
 
 async function analyzeSelection() {
   const local = await chrome.storage.local.get(STORAGE.privacyAccepted);
-  if (!local[STORAGE.privacyAccepted]) throw new Error('请先确认图片处理与隐私说明');
+  if (!local[STORAGE.privacyAccepted]) throw categorizedError('IMAGE_CONSENT_REQUIRED', '请先确认图片处理与隐私说明', 'invalid_input');
   const session = await chrome.storage.session.get(STORAGE.selection);
   const selection = session[STORAGE.selection];
-  if (!selection?.dataUrl) throw new Error('请先选择或粘贴一张参考图');
-  const { mimeType, base64 } = dataUrlParts(selection.dataUrl);
+  if (!selection?.imagePayload) throw categorizedError('IMAGE_REJECTED', '请先选择、粘贴或拖入一张参考图', 'invalid_input');
+  const { mimeType, base64 } = dataUrlParts(selection.imagePayload);
 
-  const payload = await requestBackend('/api/analyze', {
-    method: 'POST',
-    body: { image: { mimeType, base64 } },
-  });
-  const sections = Array.isArray(payload?.sections)
-    ? payload.sections
-      .filter(section => section?.title && section?.text)
-      .map(section => ({ title: String(section.title), text: String(section.text) }))
-    : [];
-  if (sections.length < 5) throw new Error('服务返回的提示词分项不完整，请重试');
+  const requestBody = { image: { mimeType, base64 } };
+  let payload;
+  let modules;
+  let sourceContractVersion = 2;
+  try {
+    payload = await requestBackend('/api/v2/analyze', { method: 'POST', body: requestBody });
+    const keys = Array.isArray(payload?.modules) ? payload.modules.map(module => module?.key) : [];
+    if (payload?.contractVersion !== 2 || keys.length !== INTENT_MODULES.length
+        || keys.some((key, index) => key !== INTENT_MODULES[index].key)) {
+      throw categorizedError('VERSION_MISMATCH', '服务版本与当前插件不匹配，请更新后重试', 'version_mismatch');
+    }
+    modules = normalizeIntentModules(payload.modules);
+  } catch (error) {
+    if (error?.code !== 'NOT_FOUND') throw error;
+    sourceContractVersion = 1;
+    payload = await requestBackend('/api/analyze', { method: 'POST', body: requestBody });
+    const values = new Map((Array.isArray(payload?.sections) ? payload.sections : [])
+      .map(section => [String(section?.title || ''), String(section?.text || '').trim()]));
+    const titleByKey = {
+      reference_summary: '核心视觉特征',
+      scene_subject: '场景与主体',
+      materials_surfaces: '材料与表面',
+      landscape_context: '环境与配景',
+      view_composition: '视角与构图',
+      color_tone: '色彩与明暗',
+      lighting_atmosphere: '光照与氛围',
+      image_expression: '图像表现',
+    };
+    modules = normalizeIntentModules(INTENT_MODULES.map(definition => {
+      const sourceTitle = titleByKey[definition.key];
+      const value = sourceTitle ? values.get(sourceTitle) || '' : '';
+      return {
+        ...definition,
+        value,
+        basis: value ? 'inferred' : 'uncertain',
+        evidence: value ? `兼容现有 V1 分项“${sourceTitle}”` : '',
+        confidence: value ? 'medium' : 'unknown',
+        enabled: Boolean(value),
+        reviewState: 'suggested',
+        source: 'ai',
+      };
+    }));
+  }
   const result = {
-    sections,
-    text: serializeSections(sections),
+    contractVersion: 2,
+    sourceContractVersion,
+    analysisId: crypto.randomUUID(),
+    modules,
     durationMs: Number(payload.durationMs) || 0,
     model: String(payload.model || 'deepseek-flash'),
     cached: Boolean(payload.cached),
-    selectionId: selection.id,
+    selectionId: selection.selectionId,
+    referenceHint: { sourceType: selection.sourceType, displayName: selection.displayName },
     completedAt: new Date().toISOString(),
   };
   await chrome.storage.session.set({
     [STORAGE.result]: result,
-    [STORAGE.selection]: { ...selection, pendingAnalysis: false },
   });
-  return { ok: true, result };
+  const saved = await prepareDraftForAnalysis(result, selection);
+  return { ok: true, result, draft: saved.draft, drafts: saved.drafts };
+}
+
+async function draftState() {
+  const stored = await chrome.storage.local.get([STORAGE.intentDraftsV2, STORAGE.activeIntentDraftIdV2]);
+  const drafts = (Array.isArray(stored[STORAGE.intentDraftsV2]) ? stored[STORAGE.intentDraftsV2] : [])
+    .map(item => normalizeIntentDraft(item))
+    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
+    .slice(0, 5);
+  const activeDraftId = typeof stored[STORAGE.activeIntentDraftIdV2] === 'string'
+    ? stored[STORAGE.activeIntentDraftIdV2]
+    : null;
+  return { drafts, activeDraftId };
+}
+
+async function saveDraft(input) {
+  const { drafts } = await draftState();
+  const now = new Date().toISOString();
+  const draft = normalizeIntentDraft({ ...input, updatedAt: now }, now);
+  const next = [draft, ...drafts.filter(item => item.draftId !== draft.draftId)]
+    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
+    .slice(0, 5);
+  await chrome.storage.local.set({
+    [STORAGE.intentDraftsV2]: next,
+    [STORAGE.activeIntentDraftIdV2]: draft.draftId,
+  });
+  return { ok: true, draft, drafts: next, activeDraftId: draft.draftId };
+}
+
+async function createDraftContext() {
+  await chrome.storage.local.remove(STORAGE.activeIntentDraftIdV2);
+  await chrome.storage.session.set({ [STORAGE.result]: null });
+  const { drafts } = await draftState();
+  return { ok: true, drafts, activeDraftId: null };
+}
+
+async function restoreDraft(draftId) {
+  const { drafts } = await draftState();
+  const draft = drafts.find(item => item.draftId === draftId);
+  if (!draft) throw categorizedError('DRAFT_NOT_FOUND', '这份草稿已不存在', 'invalid_input');
+  await chrome.storage.local.set({ [STORAGE.activeIntentDraftIdV2]: draft.draftId });
+  return { ok: true, draft, drafts, activeDraftId: draft.draftId };
+}
+
+async function deleteDraft(draftId) {
+  const { drafts, activeDraftId } = await draftState();
+  const next = drafts.filter(item => item.draftId !== draftId);
+  const nextActive = activeDraftId === draftId ? null : activeDraftId;
+  await chrome.storage.local.set({ [STORAGE.intentDraftsV2]: next });
+  if (nextActive) await chrome.storage.local.set({ [STORAGE.activeIntentDraftIdV2]: nextActive });
+  else await chrome.storage.local.remove(STORAGE.activeIntentDraftIdV2);
+  return { ok: true, drafts: next, activeDraftId: nextActive };
+}
+
+async function prepareDraftForAnalysis(result, selection) {
+  const { drafts, activeDraftId } = await draftState();
+  const active = drafts.find(item => item.draftId === activeDraftId);
+  const now = result.completedAt;
+  const draft = normalizeIntentDraft({
+    ...(active ?? {}),
+    draftId: active?.draftId ?? crypto.randomUUID(),
+    name: active?.name ?? `设计意图方案 · ${selection.displayName}`,
+    createdAt: active?.createdAt ?? now,
+    updatedAt: now,
+    lastAnalyzedAt: now,
+    modules: active?.modules ?? createEmptyIntentModules(),
+    overallConfirmedAt: active?.overallConfirmedAt ?? null,
+    referenceSelectionId: selection.selectionId,
+    referenceHint: { sourceType: selection.sourceType, displayName: selection.displayName },
+  }, now);
+  return saveDraft(draft);
+}
+
+async function addCandidate(payload = {}) {
+  const [{ drafts, activeDraftId }, session] = await Promise.all([
+    draftState(),
+    chrome.storage.session.get(STORAGE.result),
+  ]);
+  const draft = drafts.find(item => item.draftId === activeDraftId);
+  const result = session[STORAGE.result];
+  if (!draft) throw categorizedError('DRAFT_NOT_FOUND', '请先完成一次图片分析', 'invalid_input');
+  if (!result || payload.analysisId !== result.analysisId) {
+    throw categorizedError('ANALYSIS_NOT_FOUND', '这组候选意图已经失效，请重新分析当前图片', 'invalid_input');
+  }
+  const candidate = result.modules.find(module => module.key === payload.key);
+  if (!candidate) throw categorizedError('MODULE_NOT_FOUND', '没有找到这项候选意图', 'invalid_input');
+  const current = draft.modules.find(module => module.key === candidate.key);
+  const replacing = Boolean(current?.value && current.value !== candidate.value);
+  if (replacing && payload.replace !== true) {
+    throw categorizedError('REPLACE_REQUIRED', '当前方案已有这一方面，请确认替换', 'invalid_input');
+  }
+  return saveDraft({
+    ...draft,
+    modules: addCandidateToPlan(draft.modules, candidate, {
+      analysisId: result.analysisId,
+      displayName: result.referenceHint?.displayName,
+    }),
+    overallConfirmedAt: null,
+  });
 }
 
 async function downloadImage(payload) {
@@ -349,7 +555,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'backend.status': return backendStatus();
       case 'image.select': return selectWebImage(message.payload ?? {}, sender);
       case 'image.paste': return selectPastedImage(message.payload ?? {});
-      case 'analysis.run': return analyzeSelection();
+      case 'analysis.run': return analyzeSelection(message.payload ?? {});
+      case 'intent.add': return addCandidate(message.payload ?? {});
+      case 'draft.save': return saveDraft(message.payload?.draft ?? {});
+      case 'draft.create': return createDraftContext();
+      case 'draft.restore': return restoreDraft(message.payload?.draftId);
+      case 'draft.delete': return deleteDraft(message.payload?.draftId);
+      case 'analytics.consent.set': return setAnalyticsConsent(message.payload?.enabled);
+      case 'analytics.record': return recordAnalytics(message.payload ?? {});
       case 'download.image': return downloadImage(message.payload ?? {});
       case 'download.show': return showDownload(message.payload ?? {});
       case 'state.get': {
@@ -360,6 +573,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             STORAGE.customTypes,
             STORAGE.privacyAccepted,
             STORAGE.installationId,
+            STORAGE.intentDraftsV2,
+            STORAGE.activeIntentDraftIdV2,
+            STORAGE.analyticsConsent,
           ]),
           chrome.storage.session.get([STORAGE.selection, STORAGE.result, STORAGE.lastDownload]),
         ]);
@@ -369,6 +585,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           projectType: normalizeProjectType(local[STORAGE.projectType]) || PRESET_TYPES[0],
           customTypes: Array.isArray(local[STORAGE.customTypes]) ? local[STORAGE.customTypes] : [],
           privacyAccepted: Boolean(local[STORAGE.privacyAccepted]),
+          drafts: (Array.isArray(local[STORAGE.intentDraftsV2]) ? local[STORAGE.intentDraftsV2] : [])
+            .map(item => normalizeIntentDraft(item))
+            .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
+            .slice(0, 5),
+          activeDraftId: typeof local[STORAGE.activeIntentDraftIdV2] === 'string'
+            ? local[STORAGE.activeIntentDraftIdV2]
+            : null,
+          analyticsConsent: local[STORAGE.analyticsConsent]?.policyVersion === ANALYTICS_POLICY_VERSION
+            ? {
+              enabled: local[STORAGE.analyticsConsent].enabled === true,
+              updatedAt: String(local[STORAGE.analyticsConsent].updatedAt || ''),
+              policyVersion: ANALYTICS_POLICY_VERSION,
+            }
+            : { enabled: false, updatedAt: '', policyVersion: ANALYTICS_POLICY_VERSION },
           selection: session[STORAGE.selection] ?? null,
           result: session[STORAGE.result] ?? null,
           lastDownload: session[STORAGE.lastDownload] ?? null,
@@ -377,6 +607,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       default: return { ok: false, error: '未知操作' };
     }
   };
-  run().then(sendResponse).catch(error => sendResponse({ ok: false, error: error?.message || String(error) }));
+  run().then(sendResponse).catch(error => sendResponse({
+    ok: false,
+    error: error?.message || String(error),
+    code: error?.code || 'UNKNOWN_ERROR',
+    category: errorCategory(error),
+  }));
   return true;
 });

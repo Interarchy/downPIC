@@ -1,5 +1,14 @@
 import cloudbase from '@cloudbase/node-sdk';
-import { COLLECTIONS, STAGE } from './quota.mjs';
+import { actorHashFor, COLLECTIONS, PROJECT_ID, STAGE } from './quota.mjs';
+
+const EVENT_NAMES = new Set([
+  'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
+  'module_disabled', 'prompt_confirmed', 'prompt_copied',
+]);
+const EVENT_OUTCOMES = new Set([
+  'success', 'invalid_input', 'network_unavailable', 'timeout', 'service_unavailable',
+  'quota_exceeded', 'format_invalid', 'version_mismatch', 'unknown_error',
+]);
 
 // The SDK may return an error result rather than throw. Never interpret that as
 // an absent counter (which would reset quota), or a successful write.
@@ -13,6 +22,12 @@ function check(result) {
 }
 
 export function createCloudBaseStore(db) {
+  function directRef(collection, id) {
+    if (!Object.hasOwn(COLLECTIONS, collection) || !/^[a-zA-Z0-9_-]{1,128}$/.test(id)) {
+      throw new Error('Invalid project resource');
+    }
+    return db.collection(COLLECTIONS[collection]).doc(id);
+  }
   return {
     async transaction(callback) {
       return db.runTransaction(async transaction => {
@@ -36,6 +51,38 @@ export function createCloudBaseStore(db) {
         });
       }, 3);
     },
+    async set(collection, id, data) {
+      const { _id, ...fields } = data;
+      check(await directRef(collection, id).set(fields));
+    },
+  };
+}
+
+export function createEventWriter(store, { now = Date.now } = {}) {
+  return async (actor, event) => {
+    if (typeof actor !== 'string' || actor.length < 1 || actor.length > 256) throw new Error('Invalid event actor');
+    const keys = Object.keys(event ?? {}).sort();
+    const allowed = ['clientOccurredAt', 'eventId', 'eventName', 'outcome'];
+    if (keys.some(key => !allowed.includes(key)) ||
+        typeof event?.eventId !== 'string' || !/^[0-9a-f-]{36}$/i.test(event.eventId) ||
+        !EVENT_NAMES.has(event?.eventName) ||
+        (event.outcome !== undefined && !EVENT_OUTCOMES.has(event.outcome)) ||
+        typeof event?.clientOccurredAt !== 'string' || !Number.isFinite(Date.parse(event.clientOccurredAt))) {
+      throw new Error('Invalid analytics event');
+    }
+    const receivedAt = now();
+    await store.set('events', event.eventId.toLowerCase(), {
+      projectId: PROJECT_ID,
+      stage: STAGE,
+      actorHash: actorHashFor(actor),
+      eventId: event.eventId.toLowerCase(),
+      eventName: event.eventName,
+      ...(event.outcome ? { outcome: event.outcome } : {}),
+      clientOccurredAt: event.clientOccurredAt,
+      receivedAt: new Date(receivedAt),
+      expiresAt: new Date(receivedAt + 30 * 24 * 60 * 60 * 1000),
+      schemaVersion: 1,
+    });
   };
 }
 

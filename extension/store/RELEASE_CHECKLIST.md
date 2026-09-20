@@ -40,10 +40,50 @@
 - 景观空间：检查植被、水体、铺装和季节感。
 - 非建筑图片：确认模型不会强行编造建筑信息，结果仍可解释。
 
-## 自动检查
+## 0.4.0 V2 本地发布准备
+
+- [ ] 后端包同时包含未改动的 `analysis-instructions.md` 和新增的 `analysis-instructions-v2.md`；先部署新增 `/api/v2/analyze` 并验证 V1 `/api/analyze` 仍返回原 `sections`。
+- [ ] `archbuddy_dev_events` 仍为尚未创建/尚未验证，`ARCHBUDDY_ANALYTICS_ENABLED=false`；如要启用，必须先完成 ADMINONLY、30 天 TTL、隔离、日志和公开披露验证。
+- [ ] 已更新的公开隐私 HTML 仍是本地待部署版本；重新部署和 Chrome Web Store 数据披露更新属于 V2 受控发布步骤，不能把本地文件更新误记为线上完成。
+- [ ] 完成固定 11 模块、明确分析确认、编辑/停用/锁定、首次整体确认、最近 5 份草稿、失败保护和保存后继续分析的真实 Chrome 人工演示。
+- [ ] SC-001、SC-002、SC-007、SC-008 尚无真实用户或离线样本证据，只作为非阻断产品验证指标，不宣称达成。
+
+### 2026-09-20 本地静态与打包证据
+
+- [x] 9 个目标 JavaScript/ES Module 文件通过 `node --check`；Manifest 可解析，仍为 V3，权限保持 `activeTab`、`scripting`、`sidePanel`、`downloads`、`storage`，主机权限未增加。
+- [x] `git diff --check` 通过；侧边栏脚本引用的 42 个元素 ID 均能在 HTML 中找到。
+- [x] 发布范围未发现硬编码 API Key、Bearer Token 或未批准联系方式；只保留已批准的公开支持邮箱和公开隐私政策网址。
+- [x] CloudBase 包 `cloudbase/dist/archbuddy-api-20260920-200436-049.zip` 共 14 个条目，路径全部使用 `/`，同时包含未改动的 V1 `analysis-instructions.md` 和新增的 V2 `analysis-instructions-v2.md`，脚本已核对归档文件哈希。SHA-256：`4210D2619A7778104D4CC1E77197B618B4FF260703C33CB3998E22C5D90A2A4C`。
+- [x] 商店包 `extension/dist/archbuddy-beta-0.4.0.zip` 共 18 个白名单条目，根目录直接包含 `manifest.json`，不含 `.git`、`.env`、`cloudbase/environment.json`、测试目录、部署包、测试 Token 或用户草稿。SHA-256：`5A984FB0D0148D2F524269FE8CF2D9B08D2EA2BE4E0DD103EDA4E44797C5FBF4`。
+- [ ] 上述证据仅覆盖本地静态质量门槛，不代表 T040/T041 的 CloudBase 部署、V1/V2 在线契约、事件集合权限/TTL、公开隐私站更新或 Chrome Web Store V2 上传已经完成。
+
+### 2026-09-21 多参考图候选拼装增量
+
+- [x] 分析结果与当前方案已经分离：每次分析只刷新“本图候选意图”，不会自动把 11 个模块写入或覆盖当前方案。
+- [x] 候选按钮使用“加入当前方案 / 已加入 / 替换当前项”；同一维度替换由后台再次校验明确替换标志，其他维度保持不变。
+- [x] 当前方案可以保留来自不同单图分析的模块及非网址来源提示，Prompt 只包含当前方案中启用的非空模块；加入、替换、编辑或启停后需重新整体确认。
+- [x] 9 个目标 JavaScript/ES Module 文件通过 `node --check`；Manifest V3 可解析；`git diff --check` 通过；侧边栏脚本引用的 47 个元素 ID 均能在 HTML 中找到。
+- [x] 敏感字面量扫描无实际密钥命中；截图脚本中的 `screenshot-fixture-only` 是明确测试占位值且不进入商店包。
+- [x] 新商店包 `extension/dist/archbuddy-beta-0.4.0.zip` 共 18 个白名单条目，根目录直接包含 `manifest.json`，不含脚本目录、环境配置、Token、CloudBase 文件或用户草稿。SHA-256：`774B15A41F7823C497EF248835C18549E46F90DDB605D4229A1D75D2575B7E7B`。
+- [x] 2026-09-20 记录的同名旧扩展包（SHA-256 `5A984FB0D0148D2F524269FE8CF2D9B08D2EA2BE4E0DD103EDA4E44797C5FBF4`）已被本次构建覆盖并作废，不得上传；CloudBase 后端包未因本次纯本地扩展交互调整而重建或部署。
+- [ ] 仍需在真实 Chrome 本地加载文件夹，演示“第一张图选 2–3 项 → 第二张图继续加入 → 同维度替换 → 完整 Prompt 预览”；本地静态证据不等于线上部署或商店上传完成。
+
+### 2026-09-21 侧栏减法增量
+
+- [x] 主流程只保留候选选择、当前方案与 Prompt 预览；候选和方案卡片不再重复显示依据、置信度、证据与来源。
+- [x] 所有静态核心按钮与候选动态按钮均为四字以内；候选操作统一为“加入 / 已加入 / 替换”。重复的方案内分析按钮已移除。
+- [x] 候选正文默认最多显示三行，可点击正文展开或收起；分析依据、方案来源、固定整体准则和匿名统计统一移至底部默认折叠的“详细说明”。
+- [x] 9 个目标 JavaScript/ES Module 文件语法检查通过；Manifest V3、侧栏元素 ID、旧冗长按钮文案和 `git diff --check` 静态检查通过。
+- [x] 精简版商店包 `extension/dist/archbuddy-beta-0.4.0.zip` 共 18 个白名单条目，根目录直接包含 `manifest.json`，不含脚本目录、环境配置、Token、CloudBase 文件或用户草稿。SHA-256：`465290AA5799EFFCAFA62C06276F6E42E1D2DD4CDBA4B9B903B7D410B22BA31F`。
+- [x] 上一版多参考图包（SHA-256 `774B15A41F7823C497EF248835C18549E46F90DDB605D4229A1D75D2575B7E7B`）已被本次构建覆盖并作废，不得上传。
+- [ ] 尚未在真实 Chrome 中复核侧栏实际高度、三行截断与“详细说明”展开效果；本次没有部署 CloudBase，也没有修改线上 V1。
+
+## 静态检查
 
 ```powershell
-node --test extension/tests/*.test.mjs
+node --check extension/shared.mjs
+node --check extension/background.mjs
+node --check extension/sidepanel.mjs
 powershell -ExecutionPolicy Bypass -File extension/scripts/build-store-package.ps1
 ```
 

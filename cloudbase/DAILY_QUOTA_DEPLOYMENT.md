@@ -2,7 +2,7 @@
 
 本版交付：数据库事务执行个人 20 / ArchBuddy 总计 200 次每日限额；按北京时间自然日计数；重复请求去重；数值 Token 用量返回与记录；项目独立停用开关。模型只在额度成功预占后调用，数据库不可用时拒绝分析。
 
-状态：真实数据库和云端每日额度已由用户完成一次脚本测试。匿名安装会话已部署，公开状态与通行证签发检查通过；真实浏览器图片反推待验证。产品行为统计仍未实现。
+状态：真实数据库和云端每日额度已由用户完成一次脚本测试。匿名安装会话已部署，公开状态与通行证签发检查通过。V2 可选统计代码已在本地准备，但 `archbuddy_dev_events` 尚未创建、权限与 TTL 尚未验证，统计必须保持关闭。
 
 ## 1. 登记专属数据库资源
 
@@ -31,6 +31,7 @@
 | `ARCHBUDDY_CLOUDBASE_API_KEY` | 为 ArchBuddy 新建的 CloudBase 服务端 Key |
 | `ARCHBUDDY_ANALYSIS_ENABLED` | `true`；紧急暂停改为 `false` 并使新配置生效 |
 | `ARCHBUDDY_SESSION_SECRET` | 新生成的 ArchBuddy 开发阶段匿名会话签名密钥，32–256 个可打印 ASCII 字符；不得复用模型 Key、数据库 Key 或管理员 Token |
+| `ARCHBUDDY_ANALYTICS_ENABLED` | `false`；仅当 `archbuddy_dev_events` 以 ADMINONLY 创建并验证 `expiresAt` 30 天 TTL、项目隔离、日志边界和隐私披露后才可启用 |
 
 保留原有 `DEEPSEEK_API_KEY`、`DEEPSEEK_MODEL=deepseek-flash`、`ARCHBUDDY_TEST_TOKEN`、`PORT=8080`。在 daily 模式下不再使用每进程总次数限额；并发 1 和每分钟 3 次仍保留作测试期限制。
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ArchBuddy",
-  "version": "0.3.1",
-  "description": "建筑、室内与景观设计师的参考图助手：一键下载分类，提取色彩、材质与空间特征，生成中文结构化生图提示词。",
+  "version": "0.4.0",
+  "description": "建筑设计参考图助手：下载分类，结构化理解视觉意图，并通过可编辑模块生成可控中文 Prompt。",
   "minimum_chrome_version": "116",
   "permissions": ["activeTab", "scripting", "sidePanel", "downloads", "storage"],
   "host_permissions": ["http://*/*", "https://*/*"],

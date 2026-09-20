@@ -4,50 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ArchBuddy</title>
-    <link rel="stylesheet" href="sidepanel.css?v=0.2.3" />
+    <link rel="stylesheet" href="sidepanel.css?v=0.4.0" />
   </head>
-  <body>
+  <body class="needs-consent">
     <header class="app-header">
       <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span class="beta">Beta</span></div>
       <p id="session-status" data-state="checking">正在检查服务</p>
     </header>
 
     <nav class="tabs" aria-label="功能切换">
-      <button class="tab is-active" type="button" data-tab="analysis">反推提示词</button>
-      <button class="tab" type="button" data-tab="download">下载与分类</button>
+      <button class="tab is-active" type="button" data-tab="analysis">提示词</button>
+      <button class="tab" type="button" data-tab="download">图片保存</button>
     </nav>
 
     <main>
       <section id="analysis-panel" class="panel">
-        <figure id="preview" class="preview is-empty">
-          <img id="preview-image" alt="当前参考图" hidden />
-          <figcaption id="preview-caption">悬浮网页图片点击“反推提示词”，或在侧栏粘贴图片</figcaption>
-        </figure>
-
-        <div id="paste-zone" class="paste-zone" tabindex="0">
-          <strong>粘贴参考图</strong>
-          <span>复制图片后在这里按 Ctrl+V，也可以拖入图片</span>
-        </div>
-
-        <section id="privacy-gate" class="setup-block" hidden>
-          <h2>发送前确认</h2>
-          <p>仅在你主动反推时，所选图片会发送给 ArchBuddy 服务，再由服务调用 DeepSeek 生成中文提示词。其他网页内容不会上传。</p>
-          <label class="check-row"><input id="privacy-check" type="checkbox" />我理解图片将由 ArchBuddy 与 DeepSeek 处理，并确认有权使用该图片</label>
-          <button id="privacy-accept" class="secondary-button" type="button" disabled>确认并继续</button>
+        <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
+          <h1>开始使用前确认</h1>
+          <label class="check-row onboarding-check">
+            <input id="privacy-check" type="checkbox" />
+            <span>
+              <strong>我同意发送所选图片用于分析</strong>
+              <small>仅在我点击“开始分析”时发送给 ArchBuddy 与 DeepSeek；我确认有权使用该图片。</small>
+            </span>
+          </label>
+          <div class="onboarding-actions">
+            <a href="privacy.html" target="_blank">隐私说明</a>
+            <button id="privacy-accept" class="primary-button" type="button" disabled>确认</button>
+          </div>
         </section>
 
+        <figure id="preview" class="preview is-empty" tabindex="0">
+          <img id="preview-image" alt="当前参考图" hidden />
+          <figcaption id="preview-caption">拖入、粘贴或选择一张参考图</figcaption>
+          <button id="choose-file" class="secondary-button compact" type="button">选择文件</button>
+          <input id="file-input" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+        </figure>
+
         <div class="analysis-action">
-          <button id="analyze" class="primary-button" type="button" disabled>反推提示词</button>
+          <button id="analyze" class="primary-button" type="button" disabled>开始分析</button>
           <p id="analysis-feedback" aria-live="polite"></p>
         </div>
 
-        <section id="result" class="result" hidden>
-          <div class="result-heading">
-            <div><h2>结构化提示词</h2><p id="result-meta"></p></div>
-            <button id="copy-all" class="secondary-button" type="button">复制全部</button>
+        <section id="candidate-results" class="candidate-results" hidden>
+          <div class="candidate-heading">
+            <h2>候选意图</h2>
+            <span id="candidate-reference"></span>
           </div>
-          <div id="result-sections"></div>
+          <p class="section-note">选择需要的方面；点击正文可展开。</p>
+          <div id="candidate-list" class="candidate-list"></div>
         </section>
+
+        <section id="workbench" class="workbench" hidden>
+          <div class="workbench-heading">
+            <div><h1>当前方案</h1><p id="result-meta"></p></div>
+            <span id="current-plan-count" class="plan-count">0 / 11</span>
+          </div>
+          <label class="draft-name-field" for="draft-name">草稿名称<input id="draft-name" maxlength="80" /></label>
+
+          <div id="plan-empty" class="plan-empty">还没有加入内容。请从“本图候选意图”中选择需要的方面。</div>
+          <div id="plan-module-list" class="module-list"></div>
+
+          <section class="prompt-block">
+            <div class="section-title"><h2>Prompt 预览</h2><span id="prompt-count"></span></div>
+            <pre id="prompt-preview"></pre>
+            <div class="prompt-actions">
+              <button id="confirm-prompt" class="secondary-button" type="button">整体确认</button>
+              <button id="copy-prompt" class="primary-button" type="button">复制</button>
+            </div>
+            <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
+            <p id="copy-feedback" class="section-note" aria-live="polite"></p>
+          </section>
+        </section>
+
+        <details class="details-panel">
+          <summary>详细说明</summary>
+          <div class="details-body">
+            <section>
+              <h3>分析依据</h3>
+              <div id="analysis-details-list" class="details-list"></div>
+            </section>
+            <section>
+              <h3>方案来源</h3>
+              <div id="plan-source-list" class="details-list"></div>
+            </section>
+            <section>
+              <h3>整体准则</h3>
+              <p id="principle-text" class="principle-text"></p>
+            </section>
+            <section class="analytics-block">
+              <label class="analytics-choice"><span><strong>匿名统计</strong><small>默认关闭。只记录功能事件，不记录图片、网址或 Prompt。</small></span><input id="analytics-toggle" type="checkbox" /></label>
+              <a href="privacy.html" target="_blank">隐私说明</a>
+            </section>
+          </div>
+        </details>
+
+        <details class="drafts-block drafts-panel">
+          <summary>最近草稿</summary>
+          <div class="drafts-body">
+            <div class="section-title">
+              <p class="section-note">仅在本机保存文字意图，最多 5 份。</p>
+              <button id="new-draft" class="text-button" type="button">新建</button>
+            </div>
+            <div id="draft-list" class="draft-list"></div>
+          </div>
+        </details>
       </section>
 
       <section id="download-panel" class="panel" hidden>
@@ -69,11 +130,12 @@
 
         <section class="current-download">
           <div class="section-title"><h2>当前参考图</h2><span id="download-category"></span></div>
-          <button id="download-current" class="primary-button" type="button" disabled>保存当前参考图</button>
+          <button id="download-current" class="primary-button" type="button" disabled>保存图片</button>
           <p id="download-feedback" aria-live="polite"></p>
+          <button id="continue-analysis" class="secondary-button continue-analysis" type="button" hidden>继续分析</button>
           <div class="download-location">
             <p><strong>最近下载</strong><span id="last-download-path">保存图片后可快速定位文件</span></p>
-            <button id="show-download" class="secondary-button" type="button" disabled>在文件夹中显示</button>
+            <button id="show-download" class="secondary-button" type="button" disabled>定位文件</button>
           </div>
         </section>
 

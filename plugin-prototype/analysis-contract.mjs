@@ -17,6 +17,39 @@ export const SYSTEM_FENCE = {
 const TITLE_PATTERN = /【([^】]{1,20})】/g;
 const MIN_SECTIONS = 4; // 指令允许省略【环境与配景】等项，不强制 8 项齐全
 
+export const V2_SYSTEM_FENCE = {
+  start: '<ARCHBUDDY_SYSTEM_PROMPT>',
+  end: '</ARCHBUDDY_SYSTEM_PROMPT>',
+};
+
+export const V2_MODULE_DEFINITIONS = Object.freeze([
+  ['reference_summary', '参考摘要'],
+  ['scene_subject', '场景与主体'],
+  ['space_massing', '空间与体量'],
+  ['facade_elements', '立面与构件'],
+  ['materials_surfaces', '材料与表面'],
+  ['landscape_context', '景观与配景'],
+  ['view_composition', '视角与构图'],
+  ['color_tone', '色彩与明暗'],
+  ['lighting_atmosphere', '光线与氛围'],
+  ['image_expression', '图像表现'],
+  ['negative_constraints', '负向约束'],
+].map(([key, title]) => Object.freeze({ key, title })));
+
+const V2_DEFINITION_BY_TITLE = new Map(V2_MODULE_DEFINITIONS.map(item => [item.title, item]));
+const V2_MIN_MODULES = 4;
+const BASIS_MAP = new Map([
+  ['可见事实', 'observed'],
+  ['合理推断', 'inferred'],
+  ['无法确认', 'uncertain'],
+]);
+const CONFIDENCE_MAP = new Map([
+  ['高', 'high'],
+  ['中', 'medium'],
+  ['低', 'low'],
+  ['未知', 'unknown'],
+]);
+
 export class AnalysisFormatError extends Error {
   constructor(message) {
     super(message);
@@ -38,6 +71,21 @@ export function extractSystemPrompt(markdown) {
 
 export async function loadSystemPrompt(url = new URL('./analysis-instructions.md', import.meta.url)) {
   return extractSystemPrompt(await readFile(url, 'utf8'));
+}
+
+export function extractV2SystemPrompt(markdown) {
+  const start = markdown.indexOf(V2_SYSTEM_FENCE.start);
+  const end = markdown.indexOf(V2_SYSTEM_FENCE.end);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error('analysis-instructions-v2.md 缺少系统提示词围栏');
+  }
+  const body = markdown.slice(start + V2_SYSTEM_FENCE.start.length, end).trim();
+  if (!body) throw new Error('analysis-instructions-v2.md 的系统提示词为空');
+  return body;
+}
+
+export async function loadV2SystemPrompt(url = new URL('./analysis-instructions-v2.md', import.meta.url)) {
+  return extractV2SystemPrompt(await readFile(url, 'utf8'));
 }
 
 // 把模型返回的散文切成 { title, text }[]。只认【】包裹的标题，
@@ -85,4 +133,62 @@ export function assembleSections(modelSections, { minSections = MIN_SECTIONS } =
   }
 
   return [{ title: PRINCIPLE_TITLE, text: PRINCIPLE }, ...ordered];
+}
+
+function parseV2Fields(body) {
+  const fields = new Map();
+  let current = null;
+  for (const rawLine of String(body ?? '').split(/\r?\n/)) {
+    const line = rawLine.trim();
+    const match = line.match(/^(内容|依据类型|证据|置信度)\s*[：:]\s*(.*)$/);
+    if (match) {
+      current = match[1];
+      fields.set(current, match[2].trim());
+    } else if (line && current) {
+      fields.set(current, `${fields.get(current)} ${line}`.trim());
+    }
+  }
+  return fields;
+}
+
+// V2 始终返回固定 11 模块。模型漏项会被补成 uncertain/unknown，
+// 但至少需要识别出 4 个合法标题，否则视为响应格式错误并允许调用方重试。
+export function parseAnalysisModules(text, { minModules = V2_MIN_MODULES } = {}) {
+  const cleaned = String(text ?? '').replace(/```[a-zA-Z]*\s*/g, '');
+  const matches = [...cleaned.matchAll(TITLE_PATTERN)];
+  const collected = new Map();
+
+  for (let index = 0; index < matches.length; index += 1) {
+    const title = matches[index][1].trim();
+    const definition = V2_DEFINITION_BY_TITLE.get(title);
+    if (!definition || collected.has(definition.key)) continue;
+    const start = matches[index].index + matches[index][0].length;
+    const end = matches[index + 1]?.index ?? cleaned.length;
+    const fields = parseV2Fields(cleaned.slice(start, end));
+    const basisLabel = fields.get('依据类型');
+    const confidenceLabel = fields.get('置信度');
+    collected.set(definition.key, {
+      key: definition.key,
+      title: definition.title,
+      value: String(fields.get('内容') ?? '').trim(),
+      basis: BASIS_MAP.get(basisLabel) ?? 'uncertain',
+      evidence: String(fields.get('证据') ?? '').trim(),
+      confidence: CONFIDENCE_MAP.get(confidenceLabel) ?? 'unknown',
+    });
+  }
+
+  if (collected.size < minModules) {
+    throw new AnalysisFormatError(
+      `模型只返回了 ${collected.size} 个有效 V2 模块，少于要求的 ${minModules} 个`,
+    );
+  }
+
+  return V2_MODULE_DEFINITIONS.map(definition => collected.get(definition.key) ?? {
+    key: definition.key,
+    title: definition.title,
+    value: '',
+    basis: 'uncertain',
+    evidence: '',
+    confidence: 'unknown',
+  });
 }
