@@ -22,6 +22,14 @@ export const V2_SYSTEM_FENCE = {
   end: '</ARCHBUDDY_SYSTEM_PROMPT>',
 };
 
+export const V3_EVALUATION_FENCE = {
+  start: '<ARCHBUDDY_EVALUATION_PROMPT>',
+  end: '</ARCHBUDDY_EVALUATION_PROMPT>',
+};
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const EVALUATION_STATUSES = new Set(['compliant', 'partial', 'deviation', 'unknown']);
+
 export const V2_MODULE_DEFINITIONS = Object.freeze([
   ['reference_summary', '参考摘要'],
   ['scene_subject', '场景与主体'],
@@ -86,6 +94,66 @@ export function extractV2SystemPrompt(markdown) {
 
 export async function loadV2SystemPrompt(url = new URL('./analysis-instructions-v2.md', import.meta.url)) {
   return extractV2SystemPrompt(await readFile(url, 'utf8'));
+}
+
+export function extractEvaluationSystemPrompt(markdown) {
+  const start = markdown.indexOf(V3_EVALUATION_FENCE.start);
+  const end = markdown.indexOf(V3_EVALUATION_FENCE.end);
+  if (start === -1 || end === -1 || end < start) throw new Error('evaluation-instructions-v3.md 缺少系统提示词围栏');
+  const body = markdown.slice(start + V3_EVALUATION_FENCE.start.length, end).trim();
+  if (!body) throw new Error('evaluation-instructions-v3.md 的系统提示词为空');
+  return body;
+}
+
+export async function loadEvaluationSystemPrompt(url = new URL('./evaluation-instructions-v3.md', import.meta.url)) {
+  return extractEvaluationSystemPrompt(await readFile(url, 'utf8'));
+}
+
+export function parseEvaluationResult(text, { requestId, evaluationId, requestedKeys } = {}) {
+  if (!UUID_PATTERN.test(String(requestId || '')) || !UUID_PATTERN.test(String(evaluationId || ''))) {
+    throw new AnalysisFormatError('V3 评估请求或结果标识无效');
+  }
+  const expected = Array.isArray(requestedKeys) ? requestedKeys.map(String) : [];
+  if (!expected.length || new Set(expected).size !== expected.length || expected.includes('reference_summary')) {
+    throw new AnalysisFormatError('V3 评估模块集合无效');
+  }
+  let payload;
+  try {
+    const cleaned = String(text ?? '').trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
+    payload = JSON.parse(cleaned);
+  } catch {
+    throw new AnalysisFormatError('V3 评估结果不是合法 JSON');
+  }
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new AnalysisFormatError('V3 评估结果结构无效');
+  const findings = Array.isArray(payload.findings) ? payload.findings : [];
+  if (findings.length !== expected.length) throw new AnalysisFormatError('V3 评估结果数量与请求不一致');
+  const byKey = new Map();
+  for (const item of findings) {
+    const key = String(item?.key || '');
+    if (!expected.includes(key) || key === 'reference_summary' || byKey.has(key) || !EVALUATION_STATUSES.has(item?.status)) {
+      throw new AnalysisFormatError('V3 评估结果包含缺失、重复或额外模块');
+    }
+    const observation = String(item.observation ?? '').trim().slice(0, 4000);
+    if (!observation) throw new AnalysisFormatError('V3 评估观察不能为空');
+    byKey.set(key, {
+      key,
+      status: item.status,
+      observation,
+      gap: String(item.gap ?? '').trim().slice(0, 4000),
+      suggestion: String(item.suggestion ?? '').trim().slice(0, 4000) || null,
+      reliabilityNote: String(item.reliabilityNote ?? '').trim().slice(0, 1000) || null,
+    });
+  }
+  if (expected.some(key => !byKey.has(key))) throw new AnalysisFormatError('V3 评估结果缺少请求模块');
+  const overallConclusion = String(payload.overallConclusion ?? '').trim().slice(0, 2000);
+  if (!overallConclusion) throw new AnalysisFormatError('V3 评估整体结论为空');
+  return {
+    contractVersion: 3,
+    requestId,
+    evaluationId,
+    overallConclusion,
+    findings: expected.map(key => byKey.get(key)),
+  };
 }
 
 // 把模型返回的散文切成 { title, text }[]。只认【】包裹的标题，

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ArchBuddy",
-  "version": "0.4.0",
+  "version": "0.5.2",
   "description": "建筑设计参考图助手：下载分类，结构化理解视觉意图，并通过可编辑模块生成可控中文 Prompt。",
   "minimum_chrome_version": "116",
   "permissions": ["activeTab", "scripting", "sidePanel", "downloads", "storage"],

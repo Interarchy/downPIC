@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
-import { createHash, timingSafeEqual } from 'node:crypto';
-import { AnalysisFormatError, assembleSections, loadSystemPrompt, loadV2SystemPrompt } from '../plugin-prototype/analysis-contract.mjs';
+import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
+import { AnalysisFormatError, V2_MODULE_DEFINITIONS, assembleSections, loadEvaluationSystemPrompt, loadSystemPrompt, loadV2SystemPrompt } from '../plugin-prototype/analysis-contract.mjs';
 import { DeepSeekVisionAnalyzer, VisionAnalysisError } from '../plugin-prototype/vision-analyzer.mjs';
 import { QuotaError, normalizeUsage } from './quota.mjs';
 import { createAnonymousSession, validSessionSecret, verifyAnonymousSession } from './session.mjs';
@@ -11,6 +11,12 @@ const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const MAX_BODY_BYTES = Math.ceil(MAX_IMAGE_BYTES / 3) * 4 + 4096;
 const MAX_SESSION_BODY_BYTES = 4096;
 const MAX_EVENT_BODY_BYTES = 4096;
+const MAX_MODULE_VALUE_LENGTH = 4000;
+const EVALUATION_KEYS = new Set(V2_MODULE_DEFINITIONS
+  .map(module => module.key)
+  .filter(key => key !== 'reference_summary' && key !== 'negative_constraints'));
+const MODULE_TITLE_BY_KEY = new Map(V2_MODULE_DEFINITIONS.map(module => [module.key, module.title]));
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const EVENT_NAMES = new Set([
   'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
   'module_disabled', 'prompt_confirmed', 'prompt_copied',
@@ -86,13 +92,7 @@ async function readJson(req, maximumBytes) {
   catch { throw new HttpError(400, 'MALFORMED_JSON', '请求内容不是有效 JSON'); }
 }
 
-async function readImage(req) {
-  if (String(req.headers['content-type'] || '').split(';')[0].trim().toLowerCase() !== 'application/json') {
-    throw new HttpError(415, 'INVALID_CONTENT_TYPE', '请使用 JSON 发送图片');
-  }
-  const declaredSize = Number(req.headers['content-length'] || 0);
-  if (declaredSize > MAX_BODY_BYTES) throw new HttpError(413, 'BODY_TOO_LARGE', '图片超过 10 MB');
-  const body = await readJson(req, MAX_BODY_BYTES);
+function parseImage(body) {
   const image = body?.image;
   if (!image || typeof image.base64 !== 'string' || !image.base64.length || image.base64.length > Math.ceil(MAX_IMAGE_BYTES / 3) * 4) {
     throw new HttpError(400, 'IMAGE_REJECTED', '图片内容为空或过大');
@@ -108,6 +108,64 @@ async function readImage(req) {
   if (buffer.length >= 20 && buffer.toString('ascii', 0, 4) === 'RIFF' && buffer.toString('ascii', 8, 12) === 'WEBP') mimeType = 'image/webp';
   if (!mimeType || image.mimeType !== mimeType) throw new HttpError(400, 'IMAGE_REJECTED', '图片格式与内容不匹配，请使用 PNG、JPEG 或 WebP');
   return { buffer, mimeType };
+}
+
+async function readImage(req) {
+  const body = await readJson(req, MAX_BODY_BYTES);
+  return parseImage(body);
+}
+
+function optionalText(value, maximum = MAX_MODULE_VALUE_LENGTH) {
+  const text = String(value ?? '').trim();
+  if (text.length > maximum) throw new HttpError(400, 'INVALID_INPUT', '目标文字过长');
+  return text;
+}
+
+function onlyKeys(value, allowed) {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    && Object.keys(value).every(key => allowed.has(key));
+}
+
+async function readEvaluationRequest(req) {
+  const body = await readJson(req, MAX_BODY_BYTES + 64 * 1024);
+  if (!onlyKeys(body, new Set(['contractVersion', 'requestId', 'image', 'target']))
+      || !onlyKeys(body?.image, new Set(['mimeType', 'base64']))
+      || !onlyKeys(body?.target, new Set(['versionId', 'modules', 'context']))
+      || !onlyKeys(body?.target?.context ?? {}, new Set(['referenceSummary', 'negativeConstraints']))) {
+    throw new HttpError(400, 'INVALID_INPUT', '评估请求包含不允许的字段');
+  }
+  if (body?.contractVersion !== 3 || !UUID_PATTERN.test(String(body?.requestId || ''))) {
+    throw new HttpError(400, 'INVALID_INPUT', '评估请求版本或标识无效');
+  }
+  if (!UUID_PATTERN.test(String(body?.target?.versionId || ''))) {
+    throw new HttpError(400, 'INVALID_INPUT', '当前 Prompt 版本标识无效');
+  }
+  const image = parseImage(body);
+  const modules = Array.isArray(body?.target?.modules) ? body.target.modules : [];
+  if (!modules.length || modules.length > EVALUATION_KEYS.size) throw new HttpError(400, 'INVALID_INPUT', '请至少选择一个可评估维度');
+  const seen = new Set();
+  const normalizedModules = modules.map(item => {
+    if (!onlyKeys(item, new Set(['key', 'title', 'value']))) throw new HttpError(400, 'INVALID_INPUT', '评估维度包含不允许的字段');
+    const key = String(item?.key || '');
+    const value = optionalText(item?.value);
+    if (!EVALUATION_KEYS.has(key) || seen.has(key) || !value) throw new HttpError(400, 'INVALID_INPUT', '评估维度无效、重复或为空');
+    seen.add(key);
+    return { key, title: MODULE_TITLE_BY_KEY.get(key), value };
+  });
+  const referenceSummary = optionalText(body?.target?.context?.referenceSummary, 2000);
+  const negativeConstraints = optionalText(body?.target?.context?.negativeConstraints, 2000);
+  return {
+    requestId: body.requestId,
+    image,
+    target: {
+      versionId: body.target.versionId,
+      modules: normalizedModules,
+      context: {
+        ...(referenceSummary ? { referenceSummary } : {}),
+        ...(negativeConstraints ? { negativeConstraints } : {}),
+      },
+    },
+  };
 }
 
 function json(res, status, payload) {
@@ -154,12 +212,12 @@ export function createAnalysisServer({
   const testToken = environment.ARCHBUDDY_TEST_TOKEN;
   const sessionSecret = environment.ARCHBUDDY_SESSION_SECRET;
   const persistent = environment.ARCHBUDDY_QUOTA_MODE === 'cloudbase';
-  const anonymousSessionsEnabled = persistent && validSessionSecret(sessionSecret);
+  const anonymousSessionsEnabled = validSessionSecret(sessionSecret);
   const configured = Boolean(environment.DEEPSEEK_API_KEY)
     && (validSecret(testToken) || anonymousSessionsEnabled)
     && (!persistent || Boolean(quota));
   const maxCalls = positiveInt(environment.ARCHBUDDY_MAX_CALLS_PER_PROCESS, 20);
-  const maxConcurrent = positiveInt(environment.ARCHBUDDY_MAX_CONCURRENT, 1);
+  const maxConcurrent = positiveInt(environment.ARCHBUDDY_MAX_CONCURRENT, 3);
   const perMinute = positiveInt(environment.ARCHBUDDY_CALLS_PER_MINUTE, 3);
   const timeoutMs = positiveInt(environment.ARCHBUDDY_TIMEOUT_MS, 60_000);
   let startedCalls = 0;
@@ -168,6 +226,7 @@ export function createAnalysisServer({
   let minuteCalls = 0;
 
   const server = createServer(async (req, res) => {
+    let contractVersion = null;
     let acquired = false;
     let reservation = null;
     let modelStarted = false;
@@ -181,7 +240,7 @@ export function createAnalysisServer({
         return;
       }
       if (req.method === 'GET' && pathname === '/api/status') {
-        json(res, 200, { configured, provider: 'deepseek', model: 'deepseek-flash', mode: anonymousSessionsEnabled ? 'anonymous-beta' : 'developer-test', authenticationRequired: true,
+        json(res, 200, { configured, provider: 'deepseek', model: 'deepseek-flash', mode: persistent ? 'anonymous-beta' : 'local-process-test', authenticationRequired: true,
           anonymousSessionsEnabled,
           quotaMode: persistent ? 'daily' : 'process-test',
           ...(persistent ? { quotaTimeZone: 'Asia/Shanghai' } : {}),
@@ -212,7 +271,7 @@ export function createAnalysisServer({
         json(res, 202, { accepted: true });
         return;
       }
-      const contractVersion = pathname === '/api/analyze' ? 1 : pathname === '/api/v2/analyze' ? 2 : null;
+      contractVersion = pathname === '/api/analyze' ? 1 : pathname === '/api/v2/analyze' ? 2 : pathname === '/api/v3/evaluate' ? 3 : null;
       if (!contractVersion) throw new HttpError(404, 'NOT_FOUND', '接口不存在');
       if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
       if (!configured) throw new HttpError(503, 'NOT_CONFIGURED', '测试服务尚未配置完成');
@@ -227,14 +286,17 @@ export function createAnalysisServer({
       active++;
       acquired = true;
       minuteCalls++;
-      const image = await readImage(req);
+      const evaluationRequest = contractVersion === 3 ? await readEvaluationRequest(req) : null;
+      const image = evaluationRequest?.image ?? await readImage(req);
       const controller = new AbortController();
       res.on('close', () => { if (!res.writableEnded) controller.abort(); });
       const analyzer = analyzerFactory({
         apiKey: environment.DEEPSEEK_API_KEY,
         baseUrl: environment.DEEPSEEK_BASE_URL,
         model: environment.DEEPSEEK_MODEL || 'deepseek-flash',
-        systemPrompt: contractVersion === 2 ? await loadV2SystemPrompt() : await loadSystemPrompt(),
+        systemPrompt: contractVersion === 3
+          ? await loadEvaluationSystemPrompt()
+          : contractVersion === 2 ? await loadV2SystemPrompt() : await loadSystemPrompt(),
         timeoutMs,
       });
       if (req.aborted || res.destroyed) return;
@@ -247,9 +309,18 @@ export function createAnalysisServer({
       startedCalls++;
       modelStarted = true;
       modelStartedAt = now();
-      const result = modelResult = contractVersion === 2
-        ? await analyzer.analyzeV2({ ...image, signal: controller.signal })
-        : await analyzer.analyze({ ...image, signal: controller.signal });
+      const evaluationId = contractVersion === 3 ? randomUUID() : null;
+      const result = modelResult = contractVersion === 3
+        ? await analyzer.evaluate({
+          ...image,
+          signal: controller.signal,
+          requestId: evaluationRequest.requestId,
+          evaluationId,
+          target: evaluationRequest.target,
+        })
+        : contractVersion === 2
+          ? await analyzer.analyzeV2({ ...image, signal: controller.signal })
+          : await analyzer.analyze({ ...image, signal: controller.signal });
       const sections = contractVersion === 1 ? assembleSections(result.sections) : null;
       let usageRecorded = false;
       if (reservation) {
@@ -262,9 +333,9 @@ export function createAnalysisServer({
           console.warn(JSON.stringify({ event: 'usage_record_failed', projectId: 'archbuddy', stage: 'development' }));
         }
       }
-      const analysisPayload = contractVersion === 2
-        ? { contractVersion: 2, modules: result.modules }
-        : { sections };
+      const analysisPayload = contractVersion === 3
+        ? result.evaluation
+        : contractVersion === 2 ? { contractVersion: 2, modules: result.modules } : { sections };
       json(res, 200, { ...analysisPayload, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
         usage: normalizeUsage(result.usage), usageRecorded,
         ...(reservation && identity.type === 'administrator'
@@ -280,12 +351,21 @@ export function createAnalysisServer({
           console.warn(JSON.stringify({ event: 'usage_record_failed', projectId: 'archbuddy', stage: 'development' }));
         }
       }
-      if (error instanceof HttpError || error instanceof QuotaError) json(res, error.status, { code: error.code, message: error.message });
-      else if (error instanceof AnalysisFormatError) json(res, 502, { code: error.code, message: '模型返回的提示词分项不完整，请重试' });
+      const sendError = (status, code, message) => json(res, status, contractVersion === 3
+        ? { error: { code, message }, requestId: req.headers['x-archbuddy-request-id'] || null }
+        : { code, message });
+      if (error instanceof HttpError || error instanceof QuotaError) {
+        const code = contractVersion === 3
+          ? (error.status === 429 ? 'QUOTA_REACHED' : error.status === 401 ? 'AUTH_REQUIRED' : error.status === 403 ? 'AUTH_INVALID' : error.status >= 500 ? 'SERVICE_UNAVAILABLE' : 'INVALID_INPUT')
+          : error.code;
+        const status = contractVersion === 3 && [413, 415].includes(error.status) ? 400 : error.status;
+        sendError(status, code, error.message);
+      }
+      else if (error instanceof AnalysisFormatError) sendError(502, contractVersion === 3 ? 'MODEL_RESPONSE_INVALID' : error.code, contractVersion === 3 ? '模型评估结果无法解析，请重试' : '模型返回的提示词分项不完整，请重试');
       else if (error instanceof VisionAnalysisError) {
         const timeout = error.code === 'UPSTREAM_TIMEOUT';
-        json(res, timeout ? 504 : 502, { code: error.code, message: timeout ? '模型分析超时，请稍后重试' : '模型服务暂时不可用，请稍后重试' });
-      } else json(res, 500, { code: 'INTERNAL_ERROR', message: '服务暂时不可用' });
+        sendError(timeout ? 504 : contractVersion === 3 ? 503 : 502, contractVersion === 3 ? (timeout ? 'MODEL_TIMEOUT' : 'SERVICE_UNAVAILABLE') : error.code, timeout ? '模型分析超时，请稍后重试' : '模型服务暂时不可用，请稍后重试');
+      } else sendError(500, 'INTERNAL_ERROR', '服务暂时不可用');
       // Do not log request bodies, credentials, images, prompts, or upstream errors.
       req.resume();
     } finally {

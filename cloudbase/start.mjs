@@ -1,9 +1,11 @@
 import { createAnalysisServer } from './server.mjs';
 import { createQuotaService } from './quota.mjs';
+import { loadDeepSeekEnvironment } from '../plugin-prototype/developer-settings.mjs';
 
-const port = Number(process.env.PORT || 8080);
+const environment = await loadDeepSeekEnvironment();
+const port = Number(environment.PORT || 8080);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be 1..65535');
-const mode = process.env.ARCHBUDDY_QUOTA_MODE || 'process-test';
+const mode = environment.ARCHBUDDY_QUOTA_MODE || 'process-test';
 if (!['cloudbase', 'process-test'].includes(mode)) throw new Error('Invalid quota mode');
 let quota = null;
 let eventWriter = null;
@@ -13,7 +15,7 @@ if (mode === 'cloudbase') {
   quota = createQuotaService(store);
   eventWriter = createEventWriter(store);
 }
-const server = createAnalysisServer({ quota, eventWriter });
+const server = createAnalysisServer({ environment, quota, eventWriter });
 server.on('error', error => {
   console.error(JSON.stringify({ event: 'startup_failed', code: error.code || 'UNKNOWN' }));
   process.exitCode = 1;

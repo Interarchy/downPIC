@@ -1,4 +1,4 @@
-import { parseAnalysisModules, parseSections } from './analysis-contract.mjs';
+import { parseAnalysisModules, parseEvaluationResult, parseSections } from './analysis-contract.mjs';
 import { normalizeApiKey } from './developer-settings.mjs';
 
 // 全进程唯一的外网调用点。
@@ -105,7 +105,25 @@ export class DeepSeekVisionAnalyzer {
     return { ...result, modules: parseAnalysisModules(result.text) };
   }
 
-  async #request({ buffer, mimeType, signal } = {}) {
+  async evaluate({ buffer, mimeType, signal, requestId, evaluationId, target } = {}) {
+    const modules = Array.isArray(target?.modules) ? target.modules : [];
+    const context = target?.context ?? {};
+    const userText = [
+      '请评估这张生成结果图。目标如下：',
+      JSON.stringify({ modules, context }),
+    ].join('\n');
+    const result = await this.#request({ buffer, mimeType, signal, userText });
+    return {
+      ...result,
+      evaluation: parseEvaluationResult(result.text, {
+        requestId,
+        evaluationId,
+        requestedKeys: modules.map(module => module.key),
+      }),
+    };
+  }
+
+  async #request({ buffer, mimeType, signal, userText = '分析这张参考图，按要求输出中文结构化生图提示词。' } = {}) {
     if (!Buffer.isBuffer(buffer) || buffer.length === 0) {
       throw new VisionAnalysisError('IMAGE_REJECTED', '图片内容为空');
     }
@@ -136,7 +154,7 @@ export class DeepSeekVisionAnalyzer {
             role: 'user',
             content: [
               { type: 'image', source: { type: 'base64', media_type: mimeType, data: buffer.toString('base64') } },
-              { type: 'text', text: '分析这张参考图，按要求输出中文结构化生图提示词。' },
+              { type: 'text', text: userText },
             ],
           }],
         }),

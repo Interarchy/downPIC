@@ -10,7 +10,8 @@ $files = @(
   'cloudbase/quota.mjs', 'cloudbase/cloudbase-store.mjs', 'cloudbase/session.mjs', 'cloudbase/package.json', 'cloudbase/package-lock.json',
   'plugin-prototype/vision-analyzer.mjs', 'plugin-prototype/developer-settings.mjs',
   'plugin-prototype/analysis-contract.mjs', 'plugin-prototype/prompt-model.mjs',
-  'plugin-prototype/analysis-instructions.md', 'plugin-prototype/analysis-instructions-v2.md'
+  'plugin-prototype/analysis-instructions.md', 'plugin-prototype/analysis-instructions-v2.md',
+  'plugin-prototype/evaluation-instructions-v3.md'
 )
 foreach ($file in $files) {
   $destination = Join-Path $target $file

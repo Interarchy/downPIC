@@ -23,11 +23,18 @@ if ($version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') {
   throw 'manifest version is invalid.'
 }
 
+$runtimeConfigPath = Join-Path $extensionDirectory 'runtime-config.mjs'
+$runtimeConfigText = [System.IO.File]::ReadAllText($runtimeConfigPath, [System.Text.Encoding]::UTF8)
+if ($runtimeConfigText -notmatch 'export\s+const\s+BACKEND_MODE\s*=\s*[''"]cloud[''"]') {
+  throw 'Chrome Web Store packages require BACKEND_MODE=cloud.'
+}
+
 $requiredFiles = @(
   'manifest.json',
   'background.mjs',
   'runtime-config.mjs',
   'shared.mjs',
+  'source-image-store.mjs',
   'content.js',
   'content.css',
   'popup.html',

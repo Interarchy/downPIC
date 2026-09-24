@@ -1,152 +1,105 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ArchBuddy</title>
-    <link rel="stylesheet" href="sidepanel.css?v=0.4.0" />
-  </head>
-  <body class="needs-consent">
-    <header class="app-header">
-      <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span class="beta">Beta</span></div>
-      <p id="session-status" data-state="checking">正在检查服务</p>
-    </header>
-
-    <nav class="tabs" aria-label="功能切换">
-      <button class="tab is-active" type="button" data-tab="analysis">提示词</button>
-      <button class="tab" type="button" data-tab="download">图片保存</button>
-    </nav>
-
-    <main>
-      <section id="analysis-panel" class="panel">
-        <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
-          <h1>开始使用前确认</h1>
-          <label class="check-row onboarding-check">
-            <input id="privacy-check" type="checkbox" />
-            <span>
-              <strong>我同意发送所选图片用于分析</strong>
-              <small>仅在我点击“开始分析”时发送给 ArchBuddy 与 DeepSeek；我确认有权使用该图片。</small>
-            </span>
-          </label>
-          <div class="onboarding-actions">
-            <a href="privacy.html" target="_blank">隐私说明</a>
-            <button id="privacy-accept" class="primary-button" type="button" disabled>确认</button>
-          </div>
-        </section>
-
-        <figure id="preview" class="preview is-empty" tabindex="0">
-          <img id="preview-image" alt="当前参考图" hidden />
-          <figcaption id="preview-caption">拖入、粘贴或选择一张参考图</figcaption>
-          <button id="choose-file" class="secondary-button compact" type="button">选择文件</button>
-          <input id="file-input" type="file" accept="image/png,image/jpeg,image/webp" hidden />
-        </figure>
-
-        <div class="analysis-action">
-          <button id="analyze" class="primary-button" type="button" disabled>开始分析</button>
-          <p id="analysis-feedback" aria-live="polite"></p>
-        </div>
-
-        <section id="candidate-results" class="candidate-results" hidden>
-          <div class="candidate-heading">
-            <h2>候选意图</h2>
-            <span id="candidate-reference"></span>
-          </div>
-          <p class="section-note">选择需要的方面；点击正文可展开。</p>
-          <div id="candidate-list" class="candidate-list"></div>
-        </section>
-
-        <section id="workbench" class="workbench" hidden>
-          <div class="workbench-heading">
-            <div><h1>当前方案</h1><p id="result-meta"></p></div>
-            <span id="current-plan-count" class="plan-count">0 / 11</span>
-          </div>
-          <label class="draft-name-field" for="draft-name">草稿名称<input id="draft-name" maxlength="80" /></label>
-
-          <div id="plan-empty" class="plan-empty">还没有加入内容。请从“本图候选意图”中选择需要的方面。</div>
-          <div id="plan-module-list" class="module-list"></div>
-
-          <section class="prompt-block">
-            <div class="section-title"><h2>Prompt 预览</h2><span id="prompt-count"></span></div>
-            <pre id="prompt-preview"></pre>
-            <div class="prompt-actions">
-              <button id="confirm-prompt" class="secondary-button" type="button">整体确认</button>
-              <button id="copy-prompt" class="primary-button" type="button">复制</button>
-            </div>
-            <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
-            <p id="copy-feedback" class="section-note" aria-live="polite"></p>
-          </section>
-        </section>
-
-        <details class="details-panel">
-          <summary>详细说明</summary>
-          <div class="details-body">
-            <section>
-              <h3>分析依据</h3>
-              <div id="analysis-details-list" class="details-list"></div>
-            </section>
-            <section>
-              <h3>方案来源</h3>
-              <div id="plan-source-list" class="details-list"></div>
-            </section>
-            <section>
-              <h3>整体准则</h3>
-              <p id="principle-text" class="principle-text"></p>
-            </section>
-            <section class="analytics-block">
-              <label class="analytics-choice"><span><strong>匿名统计</strong><small>默认关闭。只记录功能事件，不记录图片、网址或 Prompt。</small></span><input id="analytics-toggle" type="checkbox" /></label>
-              <a href="privacy.html" target="_blank">隐私说明</a>
-            </section>
-          </div>
-        </details>
-
-        <details class="drafts-block drafts-panel">
-          <summary>最近草稿</summary>
-          <div class="drafts-body">
-            <div class="section-title">
-              <p class="section-note">仅在本机保存文字意图，最多 5 份。</p>
-              <button id="new-draft" class="text-button" type="button">新建</button>
-            </div>
-            <div id="draft-list" class="draft-list"></div>
-          </div>
-        </details>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ArchBuddy</title>
+  <link rel="stylesheet" href="sidepanel.css?v=0.5.2" />
+</head>
+<body class="needs-consent">
+  <header class="app-header">
+    <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span class="beta">Beta</span></div>
+    <p id="session-status">正在连接</p>
+  </header>
+  <nav class="tabs">
+    <button class="tab" type="button" data-tab="download">图片采集</button>
+    <button class="tab is-active" type="button" data-tab="analysis">提示词构建</button>
+    <button class="tab" type="button" data-tab="optimize">效果优化</button>
+  </nav>
+  <main>
+    <section id="analysis-panel" class="panel">
+      <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
+        <h1>开始使用前确认</h1>
+        <label class="check-row onboarding-check"><input id="privacy-check" type="checkbox" />
+          <span><strong>我同意发送所选图片用于分析</strong><small>仅在点击“开始分析”时发送给 ArchBuddy 与 DeepSeek；我确认有权使用该图片。</small></span>
+        </label>
+        <div class="onboarding-actions"><a href="privacy.html" target="_blank">隐私说明</a><button id="privacy-accept" class="primary-button" disabled>确认</button></div>
       </section>
-
-      <section id="download-panel" class="panel" hidden>
-        <div class="download-intro">
-          <h1>保存到清晰的项目目录</h1>
-          <p>网页图片将保存到 Chrome 下载目录中的 ArchBuddy 文件夹，并按项目类型和网页标题分类。</p>
+      <div class="builder-toolbar"><span>最多 3 张参考图</span><button id="new-builder" class="text-button">重新构建</button></div>
+      <div id="reference-list" class="reference-list"></div>
+      <button id="add-reference" class="secondary-button add-reference">添加参考图二</button>
+      <p id="builder-feedback" class="section-note"></p>
+      <section class="prompt-block builder-summary">
+        <label class="draft-name-field" for="prompt-name">提示词名称<input id="prompt-name" maxlength="80" placeholder="例如：山地酒店 · 暖色混凝土" /></label>
+        <div class="section-title"><h2>整体 Prompt 预览</h2><span id="prompt-count"></span></div>
+        <p class="section-note">正文可直接编辑；上方替换只更新对应段落。</p>
+        <div id="prompt-preview"></div>
+        <div class="prompt-actions">
+          <button id="confirm-prompt" class="secondary-button" disabled>整体确认</button>
+          <button id="copy-prompt" class="primary-button" disabled>复制</button>
         </div>
-
-        <section class="field-group">
-          <label for="preset-type">默认项目类型</label>
-          <select id="preset-type"></select>
-          <label for="custom-type">新建自定义类型</label>
-          <div class="key-row">
-            <input id="custom-type" type="text" maxlength="40" autocomplete="off" placeholder="例如：山地酒店" />
-            <button id="save-type" class="secondary-button" type="button">设为默认</button>
-          </div>
-          <p id="type-feedback" aria-live="polite"></p>
-        </section>
-
-        <section class="current-download">
-          <div class="section-title"><h2>当前参考图</h2><span id="download-category"></span></div>
-          <button id="download-current" class="primary-button" type="button" disabled>保存图片</button>
-          <p id="download-feedback" aria-live="polite"></p>
-          <button id="continue-analysis" class="secondary-button continue-analysis" type="button" hidden>继续分析</button>
-          <div class="download-location">
-            <p><strong>最近下载</strong><span id="last-download-path">保存图片后可快速定位文件</span></p>
-            <button id="show-download" class="secondary-button" type="button" disabled>定位文件</button>
-          </div>
-        </section>
-
-        <aside class="boundary-note">
-          <strong>首版边界</strong>
-          <p>只保存你主动点击或粘贴的图片，不绕过登录与付费限制。图片版权与使用授权由使用者自行确认。</p>
-          <a href="privacy.html" target="_blank">查看隐私说明</a>
-        </aside>
+        <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
+        <p id="copy-feedback" class="section-note"></p>
       </section>
-    </main>
-
-    <script type="module" src="sidepanel.mjs"></script>
-  </body>
+      <details class="drafts-block drafts-panel">
+        <summary>最近确认的提示词库</summary>
+        <p class="section-note">整体确认后保存在本机，最多 5 份。</p>
+        <div id="library-list" class="draft-list"></div>
+      </details>
+      <details class="details-panel">
+        <summary>详细说明</summary>
+        <p class="section-note">在参考图的各维度中编辑，点击“加入”或“替换”汇入整体预览。已选内容继续编辑时，预览同步更新。整体确认后再复制。</p>
+        <label class="check-row"><input id="analytics-toggle" type="checkbox" />允许匿名功能统计（不包含图片和提示词）</label>
+        <a href="privacy.html" target="_blank">隐私说明</a>
+      </details>
+    </section>
+    <section id="download-panel" class="panel" hidden>
+      <h1>图片采集</h1>
+      <p class="section-note">选择网页图片，或拖入、粘贴本地图片。</p>
+      <figure id="capture-preview" class="preview is-empty" tabindex="0">
+        <img id="capture-image" hidden alt="待保存图片" />
+        <figcaption id="capture-caption">选择一张图片</figcaption>
+        <button id="capture-choose" class="secondary-button compact">选择文件</button>
+        <input id="capture-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+      </figure>
+      <section class="field-group">
+        <label for="preset-type">项目类型</label><select id="preset-type"></select>
+        <div class="key-row"><input id="custom-type" maxlength="40" placeholder="新建分类" /><button id="save-type" class="secondary-button">设为默认</button></div>
+        <p id="type-feedback" class="section-note"></p>
+      </section>
+      <section class="current-download">
+        <button id="download-current" class="primary-button" disabled>保存图片</button>
+        <p id="download-feedback" class="section-note"></p>
+        <div class="prompt-actions"><button id="continue-analysis" class="secondary-button">用于构建</button><button id="show-download" class="secondary-button" disabled>定位文件</button></div>
+        <p id="last-download-path" class="section-note"></p>
+      </section>
+    </section>
+    <section id="optimize-panel" class="panel optimize-panel" hidden>
+      <div class="section-title"><h2>生成效果图</h2><span>粘贴、拖入或选择文件</span></div>
+      <figure id="generated-preview" class="preview is-empty" tabindex="0">
+        <img id="generated-image" hidden alt="生成效果图" />
+        <figcaption id="generated-caption">放入已经生成的效果图</figcaption>
+        <button id="generated-choose" class="secondary-button compact">选择文件</button>
+        <input id="generated-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+      </figure>
+      <section class="baseline-picker">
+        <label for="scheme-select">选择已确认的基本提示词</label>
+        <select id="scheme-select"><option value="">从最近确认的提示词库中选择</option></select>
+        <details id="baseline-details" hidden><summary>查看原文</summary><pre id="baseline-prompt"></pre></details>
+      </section>
+      <label class="check-row evaluation-consent"><input id="evaluation-consent" type="checkbox" /><span>确认发送此生成图与所选提示词进行评估</span></label>
+      <button id="run-evaluation" class="primary-button" disabled>开始评估</button>
+      <p id="evaluation-feedback" class="section-note"></p>
+      <section id="evaluation-report" hidden>
+        <div class="section-title"><h2>评估与调整</h2><span>在原文中直接编辑</span></div>
+        <p id="overall-conclusion" class="section-note"></p>
+        <div id="finding-list" class="finding-list"></div>
+        <div class="prompt-actions"><button id="confirm-revision" class="secondary-button">确认修改</button><button id="copy-revision" class="primary-button" disabled>复制</button></div>
+        <textarea id="revision-copy-fallback" class="copy-fallback" readonly hidden></textarea>
+        <p id="revision-feedback" class="section-note"></p>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="sidepanel.mjs"></script>
+</body>
 </html>

@@ -14,6 +14,8 @@
 
 V2 代码还准备了默认关闭的可选匿名事件接口 `POST /api/events`。`ARCHBUDDY_ANALYTICS_ENABLED` 必须保持 `false`，直到 `archbuddy_dev_events` 已在 ArchBuddy development 范围内按 ADMINONLY 创建，并完成 30 天 TTL、隔离、日志和公开隐私披露验证。关闭时不写入事件；不得复用其他项目集合。
 
+V3 本地开发代码新增 `POST /api/v3/evaluate`，复用同一匿名会话、请求去重和 20/200 日额度，只接收一张生成图与当前版本中启用的可观察模块。它不接收方案名、来源原图、历史版本、路径或 URL。该端点当前仅完成本地实现与静态检查，**尚未重新部署 CloudBase**，也没有创建任何新数据库集合、存储路径、身份配置、日志主题或预算。
+
 2026-09-15 用户已确定每日额度：个人 20 次、整个 ArchBuddy 200 次；详见 [反推额度规则](../docs/ARCHBUDDY_QUOTA_POLICY.md)。CloudBase 事务计数已部署并完成一次真实测试。匿名会话版也已部署，`/api/status` 与一次不调用模型的 `/api/session` 签发检查通过，用户随后确认真实 Chrome 免登录反推可用。
 
 用户完成真实浏览器反推后决定不向普通用户展示或返回具体剩余额度。隐私收紧版本已重新部署，公开状态检查确认不再包含个人或项目限额字段；用户也确认重新加载后的插件界面正常。仅管理员测试身份可在分析响应中取得剩余数字，额度后台规则本身不变。
@@ -27,6 +29,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/build-depl
 ```
 
 脚本输出 `cloudbase/dist/archbuddy-api-时间戳/` 及同名 ZIP。只打包代码白名单，不包含 Git、图片素材、Windows 加密凭据、`.env` 或本地归档目录。Dockerfile 在输出文件夹根目录。ZIP 条目统一使用 Linux 兼容的 `/` 分隔符，并核对归档内每个文件的 SHA-256。不要直接上传整个仓库。
+
+## 本地 process-test 启动（V3 开发）
+
+本地真实调用仍由服务端读取环境变量或当前 Windows 用户的 DPAPI 加密配置；扩展中不得放入任何密钥。V3 开发时可直接运行下方脚本：它会确认扩展处于 `local` 模式，生成仅在当前进程存在的匿名会话密钥，并启动 `127.0.0.1:8080`。该模式只在当前 Node 进程内计数，服务状态明确返回 `quotaMode=process-test`，不冒充 CloudBase 持久每日额度；重启进程会清空本地计数。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/start-local-v3.ps1
+```
+
+在 Chrome 扩展管理页重新加载 `extension/` 后即可联调。脚本不打印、保存或复制密钥；如果既没有当前进程的 `DEEPSEEK_API_KEY`，也没有既有 DPAPI 加密配置，会明确停止并提示先运行 `plugin-prototype/scripts/configure-deepseek.ps1`。完成本地开发后必须把 `BACKEND_MODE` 改回 `cloud`；商店包在非 `cloud` 模式下会直接拒绝生成。
 
 ## 控制台部署
 
@@ -46,7 +58,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/build-depl
 | `ARCHBUDDY_SESSION_SECRET` | 匿名会话签名密钥，独立随机值，至少 32 个可打印 ASCII 字符；只放服务环境变量，不能复用其他 Key |
 | `ARCHBUDDY_ANALYTICS_ENABLED` | `false`；完成集合权限、30 天 TTL、隔离、日志与公开披露验证前不得改为 `true` |
 | `ARCHBUDDY_MAX_CALLS_PER_PROCESS` | `20` |
-| `ARCHBUDDY_MAX_CONCURRENT` | `1` |
+| `ARCHBUDDY_MAX_CONCURRENT` | `3`（支持三张参考图同时分析；已有云端显式配置须在发布时核对） |
 | `ARCHBUDDY_CALLS_PER_MINUTE` | `3` |
 | `ARCHBUDDY_TIMEOUT_MS` | `60000` |
 
@@ -86,11 +98,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "F:\MelyAI-CODEX\downPIC-plu
 
 先执行命令，等出现 `Copy the actual ARCHBUDDY_TEST_TOKEN value now` 提示后，再复制云端已配置的测试令牌真实值，回到终端只按回车，不要粘贴。脚本此时才读取一次剪贴板；不会显示或保存令牌，也不会修改剪贴板。测试后可自行清理剪贴板及其历史。不要复制变量名、遮罩星号或 DeepSeek Key。令牌必须与云端完全一致，不能只在本地临时换一个值；首尾空白会清理，内部空白或不足 32 个字符则在发送请求前拒绝。
 
-```powershell
-node --test cloudbase/tests/*.test.mjs
-```
-
-自动测试使用本地假模型，不消耗 DeepSeek 额度。当前电脑未安装 Docker；云端 002 版本已由控制台完成镜像构建与部署，公网健康检查已通过。
+本阶段按项目章程只执行静态代码检查与人工核心路径验收，不新增或运行自动化测试。当前电脑未安装 Docker；云端 002 版本的历史部署证据不代表 V3 已部署。
 
 ## 官方资料
 

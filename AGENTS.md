@@ -7,12 +7,22 @@
 项目正式开发章程：[ArchBuddy MVP 项目章程](.specify/memory/constitution.md)。后续规格、
 计划、任务和实现必须遵循该章程定义的 MVP 范围、质量门槛、中文文档与安全底线。
 
+当前阶段交接记录：[ArchBuddy 项目进度交接](docs/ARCHBUDDY_PROGRESS.md)。新开窗口或
+新任务必须先读取该文件，了解已发布版本、未提交改动、验证证据与下一步；每完成一轮
+有意义的开发、验证、提交或部署后都必须更新该记录。
+
+完整产品形态采用“Chrome 插件侧栏 + 插件内本地网页素材库 + ArchBuddy AI 服务”，
+详见 [ArchBuddy 完整产品形态决策](docs/ARCHBUDDY_PRODUCT_FORM.md)。侧栏负责图片采集、
+提示词构建和效果优化的即时任务；素材库通过独立完整页面承载资产管理。远期云同步或
+桌面客户端必须单独立项，不得默认塞入当前 MVP。
+
 ## 每次开始工作必须检查
 
-1. 确认工作目录、当前分支和已有改动，读取本文件。
+1. 确认工作目录、当前分支和已有改动，读取本文件和 `docs/ARCHBUDDY_PROGRESS.md`。
 2. 读取 `.specify/memory/constitution.md`，确认本次工作的范围、质量门槛和完成条件。
-3. 读取 `docs/CLOUDBASE_PROJECT_ISOLATION.md`，确认本次任务是否影响云端资源、数据、身份、日志、密钥、统计或预算。
-4. 涉及上述范围时，先核对 `cloudbase/environment.json` 和隔离文档中的资源归属，再进行实现或部署；完成文档规定的检查并记录证据。纯本地修改可以注明“不涉及云端资源”。
+3. 涉及产品边界、信息架构、素材库、数据存储或跨端形态时，读取 `docs/ARCHBUDDY_PRODUCT_FORM.md`。
+4. 读取 `docs/CLOUDBASE_PROJECT_ISOLATION.md`，确认本次任务是否影响云端资源、数据、身份、日志、密钥、统计或预算。
+5. 涉及上述范围时，先核对 `cloudbase/environment.json` 和隔离文档中的资源归属，再进行实现或部署；完成文档规定的检查并记录证据。纯本地修改可以注明“不涉及云端资源”。
 
 ## CloudBase 多项目共存：用户明确要求，2026-09-15
 
