@@ -7,6 +7,7 @@ import {
   STORAGE,
   dataUrlParts,
   normalizeProjectType,
+  normalizePromptVersion,
   parseAnalysisSections,
   sanitizePathSegment,
   serializeSections,
@@ -48,4 +49,26 @@ test('浏览器存储模型中没有 DeepSeek Key', () => {
 test('图片 data URL 只接受允许的静态格式', () => {
   assert.deepEqual(dataUrlParts('data:image/png;base64,QUJD'), { mimeType: 'image/png', base64: 'QUJD' });
   assert.throws(() => dataUrlParts('data:text/html;base64,QUJD'));
+});
+
+
+test('效果优化版本保留生成图与原始版本关系，但不把图像字节写入方案元数据', () => {
+  const schemeId = '11111111-1111-4111-8111-111111111111';
+  const baselineVersionId = '22222222-2222-4222-8222-222222222222';
+  const sourceReferenceId = '33333333-3333-4333-8333-333333333333';
+  const generatedResultId = '44444444-4444-4444-8444-444444444444';
+  const version = normalizePromptVersion({
+    versionId: '55555555-5555-4555-8555-555555555555',
+    baselineVersionId,
+    sourceReferenceIds: [sourceReferenceId, sourceReferenceId],
+    generatedResult: {
+      generatedResultId, displayName: '效果图一.png', mimeType: 'image/png',
+      imagePayload: 'SHOULD_NOT_PERSIST',
+    },
+  }, schemeId);
+  const restored = normalizePromptVersion(JSON.parse(JSON.stringify(version)), schemeId);
+  assert.equal(restored.baselineVersionId, baselineVersionId);
+  assert.deepEqual(restored.sourceReferenceIds, [sourceReferenceId]);
+  assert.equal(restored.generatedResult.generatedResultId, generatedResultId);
+  assert.equal(JSON.stringify(restored).includes('SHOULD_NOT_PERSIST'), false);
 });

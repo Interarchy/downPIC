@@ -25,6 +25,7 @@ import {
   resolveProjectType,
 } from './shared.mjs';
 import {
+  deleteSourceImage,
   deleteSourceImagesByScheme,
   getSourceImage,
   putSourceImage,
@@ -870,7 +871,13 @@ async function commitSchemeVersion(payload = {}) {
   if (payload.confirmed === true && modules.some(module => module.enabled && !module.value)) {
     throw categorizedError('INVALID_INPUT', '启用维度不能为空，请补充后确认', 'invalid_input');
   }
-  if (!initialCopy && !modulesDiffer(current.modulesSnapshot, modules) && current.compiledPrompt === compiledPrompt) throw categorizedError('NO_CHANGES', '当前草稿没有有效变化，不会创建重复版本', 'invalid_input');
+  const session = await chrome.storage.session.get([STORAGE.generatedResultV3, STORAGE.evaluationSessionV3]);
+  const evaluation = normalizeEvaluationSession(session[STORAGE.evaluationSessionV3]);
+  const generated = normalizeGeneratedResult(session[STORAGE.generatedResultV3]);
+  const evaluatedImage = payload.confirmed === true && evaluation.status === 'succeeded'
+    && evaluation.schemeId === scheme.schemeId && evaluation.baseVersionId === current?.versionId
+    && generated?.generatedResultId === evaluation.generatedResultId ? generated : null;
+  if (!initialCopy && !modulesDiffer(current.modulesSnapshot, modules) && current.compiledPrompt === compiledPrompt && !evaluatedImage) throw categorizedError('NO_CHANGES', '当前草稿没有有效变化，不会创建重复版本', 'invalid_input');
   if (!payload.confirmed && (!scheme.sourceReferences.length || scheme.sourceReferences.some(reference => reference.assetState !== 'available'))) {
     throw categorizedError('VERSION_INCOMPLETE', '文本已复制，但来源图未完整保存；请补图后再保存版本', 'invalid_input');
   }
@@ -892,6 +899,14 @@ async function commitSchemeVersion(payload = {}) {
     principleText,
     compiledPrompt,
     sourceReferenceIds: scheme.sourceReferences.map(reference => reference.sourceReferenceId),
+    baselineVersionId: evaluatedImage ? current?.versionId : null,
+    evaluationId: evaluatedImage ? evaluation.evaluationId : null,
+    generatedResult: evaluatedImage ? {
+      generatedResultId: evaluatedImage.generatedResultId,
+      displayName: evaluatedImage.displayName,
+      mimeType: evaluatedImage.mimeType,
+      createdAt: evaluatedImage.selectedAt,
+    } : null,
     changeSummary: payload.changeSummary,
   }, scheme.schemeId, versionNumber);
   const nextScheme = normalizePromptScheme({
@@ -902,7 +917,18 @@ async function commitSchemeVersion(payload = {}) {
     updatedAt: version.createdAt,
     overallConfirmedAt: payload.confirmed ? version.createdAt : scheme.overallConfirmedAt,
   });
-  const saved = await writeSchemeInCollection(nextScheme);
+  if (evaluatedImage) {
+    const bytes = Uint8Array.from(atob(evaluatedImage.imagePayload), character => character.charCodeAt(0));
+    const imageBlob = new Blob([bytes], { type: evaluatedImage.mimeType });
+    if (imageBlob.size !== evaluatedImage.byteSize) throw categorizedError('INVALID_IMAGE', '生成图大小校验失败，请重新选择', 'invalid_input');
+    await putSourceImage({ sourceReferenceId: evaluatedImage.generatedResultId, schemeId: scheme.schemeId, blob: imageBlob });
+  }
+  let saved;
+  try { saved = await writeSchemeInCollection(nextScheme); }
+  catch (error) {
+    if (evaluatedImage) await deleteSourceImage(evaluatedImage.generatedResultId, scheme.schemeId).catch(() => {});
+    throw error;
+  }
   const workingDraft = createWorkingDraft(saved.scheme);
   await chrome.storage.session.set({ [STORAGE.workingDraftV3]: workingDraft });
   await chrome.storage.session.remove(STORAGE.evaluationSessionV3);
@@ -1162,7 +1188,7 @@ async function confirmBuilder(payload = {}) {
   const now = new Date().toISOString();
   const references = [];
   for (const ref of (builder.references || []).slice(0, 3)) {
-    if (!ref.sourceReferenceId || !Object.values(builder.bindings || {}).includes(ref.id)) continue;
+    if (!ref.sourceReferenceId) throw categorizedError('VERSION_INCOMPLETE', '有参考图尚未保存完成，请稍后再确认', 'invalid_input');
     const record = await getSourceImage(ref.sourceReferenceId);
     if (record.schemeId !== builder.builderId) throw categorizedError('OWNERSHIP_MISMATCH', '参考图归属不一致', 'invalid_input');
     references.push({
@@ -1175,7 +1201,8 @@ async function confirmBuilder(payload = {}) {
   }
   const current = existing?.versions.at(-1);
   if (current && payload.baseVersionId !== current.versionId) throw categorizedError('STALE_DRAFT', '已确认提示词已有新版本，请重新打开', 'invalid_input');
-  if (current && current.compiledPrompt === prompt) {
+  if (current && current.compiledPrompt === prompt
+      && references.every(ref => current.sourceReferenceIds.includes(ref.sourceReferenceId))) {
     const saved = await writeSchemeInCollection({
       ...existing, name: String(builder.name || '未命名提示词').slice(0, 80),
       overallConfirmedAt: now, updatedAt: now,
@@ -1502,24 +1529,27 @@ async function describeCapture(payload) {
       });
       else await patchCaptureStatus(id, { descriptionStatus: 'ready', descriptionError: null, descriptionCompletedAt: Date.now() });
     });
-    await queueCaptureMutation(() => bumpDescriptionProgress({ succeeded: 1 }));
+    await queueCaptureMutation(() => bumpDescriptionProgress({ id }));
     return { ok: true, description: result.description };
   } finally { captureDescriptionJobs.delete(jobKey); }
 }
 const DESCRIPTION_MAX_ATTEMPTS = 2;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-async function bumpDescriptionProgress({ succeeded = 0, failed = 0, failedId = null } = {}) {
+async function bumpDescriptionProgress({ id = null, failed = 0, failedId = null } = {}) {
   const stored = await chrome.storage.local.get(STORAGE.descriptionProgressV4);
   const progress = stored[STORAGE.descriptionProgressV4];
-  if (!progress || !Number.isFinite(progress.total) || progress.total < 1
-      || progress.done >= progress.total) return;
-  const failedIds = failed > 0 && failedId !== null
-    ? [...new Set([...(Array.isArray(progress.failedIds) ? progress.failedIds : []), String(failedId)])]
+  const itemId = String(failedId ?? id);
+  if (!Array.isArray(progress?.ids) || !progress.ids.includes(itemId)) return;
+  const completedIds = Array.isArray(progress.completedIds) ? progress.completedIds : [];
+  if (completedIds.includes(itemId)) return;
+  const nextCompletedIds = [...completedIds, itemId];
+  const failedIds = failed > 0
+    ? [...new Set([...(Array.isArray(progress.failedIds) ? progress.failedIds : []), itemId])]
     : (Array.isArray(progress.failedIds) ? progress.failedIds : []);
-  const nextFailed = Math.min(progress.total, Number(progress.failed || 0) + failed);
-  const nextDone = Math.min(progress.total, Number(progress.done || 0) + succeeded + failed);
   await chrome.storage.local.set({ [STORAGE.descriptionProgressV4]: {
-    ...progress, done: nextDone, failed: nextFailed, failedIds, updatedAt: Date.now(),
+    ...progress, completedIds: nextCompletedIds, failedIds,
+    done: nextCompletedIds.length, failed: failedIds.length, updatedAt: Date.now(),
+    ...(nextCompletedIds.length >= progress.total ? { finishedAt: Date.now() } : {}),
   } });
 }
 async function describeMissingCaptureDescriptions() {
@@ -1527,33 +1557,32 @@ async function describeMissingCaptureDescriptions() {
   const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
   if (!consent[STORAGE.assetAIConsent]) throw new Error('请先开启图库 AI');
   const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
-  let queued = 0;
+  const queuedIds = [];
   for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
     if (item.description || !stored[STORAGE.capturePreviewsV4]?.[id]
         || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
     await queueCaptureMutation(() => patchCaptureStatus(Number(id), {
       descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
     }));
-    queued++;
+    queuedIds.push(String(id));
   }
   for (const item of stored[STORAGE.importedAssetsV4] || []) {
     if (item.description || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
     await queueCaptureMutation(() => patchImportedStatus(item.id, {
       descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
     }));
-    queued++;
+    queuedIds.push('local:' + item.id);
   }
-  if (queued) {
+  if (queuedIds.length) {
     await queueCaptureMutation(() => chrome.storage.local.set({
       [STORAGE.descriptionProgressV4]: {
-        total: queued, done: 0, failed: 0, startedAt: Date.now(), updatedAt: Date.now(),
+        ids: queuedIds, completedIds: [], failedIds: [],
+        total: queuedIds.length, done: 0, failed: 0, startedAt: Date.now(), updatedAt: Date.now(),
       },
     }));
     void drainCaptureDescriptions();
-  } else {
-    await chrome.storage.local.remove(STORAGE.descriptionProgressV4);
   }
-  return { ok: true, queued };
+  return { ok: true, queued: queuedIds.length };
 }
 
 // 所有目录更新串行；模型调用在队列外，不阻塞下载、删除或手工描述编辑。

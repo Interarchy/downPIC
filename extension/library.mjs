@@ -1,23 +1,48 @@
-import { PRESET_TYPES, STORAGE, normalizePromptScheme, orderedProjectTypes, resolveProjectType, sanitizePathSegment } from './shared.mjs';
+import { PRESET_TYPES, STORAGE, normalizePromptScheme, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
 import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
 
 const $ = id => document.getElementById(id);
-const state = { schemes: [], items: [], selectedKey: null, urls: new Map(), pendingUrls: new Map(), loadNumber: 0, captures: [], activeTypes: [], previews: {}, catalog: {}, selectedFolder: null, selectedType: null, typeChosenByUser: false, openTypes: new Set(), foldersInitialized: false, captureUrls: new Map(), capturePendingUrls: new Map(), captureLoad: 0, groups: [], assignments: {}, selectedGroupId: 'all', selectedKeys: new Set() };
+const state = { schemes: [], items: [], selectedKey: null, urls: new Map(), pendingUrls: new Map(), loadNumber: 0, captures: [], activeTypes: [], previews: {}, catalog: {}, selectedFolder: null, selectedType: null, showAllCaptures: false, captureProjectView: 'small', typeChosenByUser: false, openTypes: new Set(), foldersInitialized: false, captureUrls: new Map(), capturePendingUrls: new Map(), captureLoad: 0, groups: [], assignments: {}, selectedGroupId: 'all', selectedKeys: new Set() };
 let toastTimer;
+let recentSearches = [];
 let selectedCaptureId = null;
 let deletionSelection = [];
 let failedDescriptionsOnly = false;
+let descriptionTaskFailedIds = new Set();
 const captureSearch = createSemanticSearch(body => request('library.embed', body), 'captures');
 const promptSearch = createSemanticSearch(body => request('library.embed', body), 'prompts');
 let draggingType = null;
 let draggingFolder = null;
+let draggingPromptKey = null;
+let folderScrollFrame = 0;
+let folderScrollPointerY = null;
 const descriptionSaves = new Map();
 const descriptionDrafts = new Map();
-let viewerExportBusy = false;
-let readyViewerDownloadId = null;
-let lastSystemOpen = { id: null, at: 0 };
+let viewerItems = [];
+let viewerIndex = 0;
+let viewerZoom = { scale: 1, x: 0, y: 0 };
+let viewerDrag = null;
+
+function applyViewerZoom() {
+  const canvas = $('viewer-canvas');
+  const image = $('viewer-image');
+  const maxX = Math.max(0, (image.offsetWidth * viewerZoom.scale - canvas.clientWidth) / 2);
+  const maxY = Math.max(0, (image.offsetHeight * viewerZoom.scale - canvas.clientHeight) / 2);
+  viewerZoom.x = Math.max(-maxX, Math.min(maxX, viewerZoom.x));
+  viewerZoom.y = Math.max(-maxY, Math.min(maxY, viewerZoom.y));
+  image.style.transform = `translate(${viewerZoom.x}px, ${viewerZoom.y}px) scale(${viewerZoom.scale})`;
+  canvas.classList.toggle('is-zoomed', viewerZoom.scale > 1);
+  $('viewer-zoom').textContent = Math.round(viewerZoom.scale * 100) + '% · 滚轮缩放';
+}
+
+function resetViewerZoom() {
+  viewerZoom = { scale: 1, x: 0, y: 0 };
+  viewerDrag = null;
+  $('viewer-canvas').classList.remove('is-panning');
+  applyViewerZoom();
+}
 
 function element(tag, className, text) {
   const result = document.createElement(tag);
@@ -45,17 +70,6 @@ function toast(message, tone = '') {
 function humanDate(value) {
   const time = new Date(value);
   return Number.isNaN(time.getTime()) ? '时间未知' : time.toLocaleString('zh-CN');
-}
-
-function humanBytes(bytes) {
-  if (!Number.isFinite(bytes) || bytes < 0) return '未知';
-  if (bytes < 1024) return bytes + ' B';
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-  return (bytes / 1024 / 1024).toFixed(1) + ' MB';
-}
-
-function sourceTypeLabel(type) {
-  return { 'page-image': '网页图片', screenshot: '网页截图', paste: '粘贴图片', file: '本地文件' }[type] || '暂无';
 }
 
 function keyFor(item) {
@@ -129,8 +143,9 @@ function captureText(item) {
 }
 
 function promptSearchText(item) {
+  const version = item.version || item.scheme.versions.at(-1);
   return [item.scheme.name, item.scheme.projectName, item.scheme.category, item.reference?.displayName,
-    ...(item.reference?.tags || []), ...item.scheme.versions.map(version => version.compiledPrompt), promptExcerpt(item)].filter(Boolean).join('；');
+    ...(item.reference?.tags || []), version?.compiledPrompt, promptExcerpt(item)].filter(Boolean).join('；');
 }
 
 function folderKey(item) {
@@ -143,6 +158,12 @@ function showSection(section) {
   $('prompts-section').hidden = captures;
   $('capture-sidebar').hidden = !captures;
   $('prompt-sidebar').hidden = captures;
+  $('capture-sidebar-tools').hidden = !captures;
+  $('prompt-sidebar-tools').hidden = captures;
+  $('capture-header-search').hidden = !captures;
+  $('prompt-header-search').hidden = captures;
+  $('capture-search-history').hidden = true;
+  $('prompt-search-history').hidden = true;
   for (const [id, selected] of [['show-captures', captures], ['show-prompts', !captures]]) {
     $(id).classList.toggle('is-active', selected);
     $(id).setAttribute('aria-pressed', String(selected));
@@ -171,13 +192,25 @@ function renderCaptureFolders() {
     state.openTypes.add(state.selectedType);
     state.foldersInitialized = true;
   }
+  const all = button('', 'capture-all' + (state.showAllCaptures ? ' is-selected' : ''), () => {
+    state.showAllCaptures = true;
+    failedDescriptionsOnly = false;
+    state.selectedFolder = null;
+    selectedCaptureId = null;
+    $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
+    renderCaptureFolders();
+    renderCaptureGrid();
+  });
+  all.append(element('span', '', '全部图片'), element('small', '', state.captures.length + ' 张'));
+  target.append(all);
   const types = [...groups.keys()];
   for (const type of types) {
     const projects = groups.get(type);
     const group = element('div', 'folder-group');
     const total = [...projects.values()].reduce((count, images) => count + images.length, 0);
-    const heading = button(type + ' · ' + total, 'folder-type' + (type === state.selectedType ? ' is-selected' : ''), () => {
+    const heading = button(type + ' · ' + total, 'folder-type' + (type === state.selectedType && !state.showAllCaptures ? ' is-selected' : ''), () => {
       state.selectedType = type;
+      state.showAllCaptures = false;
       state.typeChosenByUser = true;
       $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
       selectedCaptureId = null;
@@ -240,6 +273,7 @@ function renderCaptureFolders() {
             $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
             selectedCaptureId = null;
             state.selectedType = type;
+            state.showAllCaptures = false;
             state.selectedFolder = key;
             renderCaptureFolders();
             renderCaptureGrid();
@@ -263,6 +297,44 @@ function renderCaptureFolders() {
   }
 }
 
+function stopFolderAutoScroll() {
+  if (folderScrollFrame) cancelAnimationFrame(folderScrollFrame);
+  folderScrollFrame = 0;
+  folderScrollPointerY = null;
+}
+
+function scrollFolderListWhileDragging() {
+  const list = $('capture-folders');
+  if (!draggingFolder || folderScrollPointerY === null || list.scrollHeight <= list.clientHeight) {
+    stopFolderAutoScroll();
+    return;
+  }
+  const rect = list.getBoundingClientRect();
+  const edge = Math.min(96, rect.height / 3);
+  const y = folderScrollPointerY;
+  const amount = y < rect.top + edge ? -Math.min(18, Math.max(2, (rect.top + edge - y) / edge * 18))
+    : y > rect.bottom - edge ? Math.min(18, Math.max(2, (y - rect.bottom + edge) / edge * 18)) : 0;
+  if (!amount) { folderScrollFrame = 0; return; }
+  const before = list.scrollTop;
+  list.scrollTop += amount;
+  folderScrollFrame = list.scrollTop === before ? 0 : requestAnimationFrame(scrollFolderListWhileDragging);
+}
+
+function openCaptureProject(item) {
+  state.showAllCaptures = false;
+  state.selectedType = item.type;
+  state.typeChosenByUser = true;
+  state.openTypes.add(item.type);
+  state.selectedFolder = folderKey(item);
+  failedDescriptionsOnly = false;
+  selectedCaptureId = item.id;
+  $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
+  renderCaptureFolders();
+  renderCaptureGrid();
+  $('capture-folders').querySelector('.folder-project.is-selected')?.scrollIntoView({ block: 'nearest' });
+  $('capture-grid').querySelector('.capture-card.is-selected')?.scrollIntoView({ block: 'nearest' });
+}
+
 async function captureImageUrl(captureId) {
   if (state.captureUrls.has(captureId)) return state.captureUrls.get(captureId);
   if (state.capturePendingUrls.has(captureId)) return state.capturePendingUrls.get(captureId);
@@ -283,6 +355,24 @@ async function captureImageUrl(captureId) {
   return pending;
 }
 
+function updateProjectPreviewLayout(folder) {
+  if (!folder?.isConnected) return;
+  const thumbs = [...folder.querySelectorAll('.project-thumb')];
+  const images = thumbs.map(thumb => thumb.querySelector('img'));
+  if (images.some(image => !image?.naturalWidth || !image.naturalHeight)) return;
+  const portraits = thumbs.filter((_, index) => images[index].naturalWidth / images[index].naturalHeight <= 1.05);
+  const usePair = portraits.length >= (thumbs.length >= 4 ? 3 : 2);
+  const layout = usePair ? 'pair' : thumbs.length >= 4 ? 'quad' : 'single';
+  const selected = layout === 'pair' ? portraits.slice(0, 2)
+    : layout === 'single' ? [thumbs.reduce((best, thumb, index) => {
+      const ratio = images[index].naturalWidth / images[index].naturalHeight;
+      const bestIndex = thumbs.indexOf(best);
+      const bestRatio = images[bestIndex].naturalWidth / images[bestIndex].naturalHeight;
+      return Math.abs(Math.log(ratio / 1.55)) < Math.abs(Math.log(bestRatio / 1.55)) ? thumb : best;
+    }, thumbs[0])] : thumbs;
+  folder.dataset.previewLayout = layout;
+  thumbs.forEach(thumb => thumb.classList.toggle('is-preview-selected', selected.includes(thumb)));
+}
 async function capturePreview(item, visual) {
   const captureId = state.previews[String(item.id)];
   if (!captureId) return;
@@ -293,9 +383,14 @@ async function capturePreview(item, visual) {
     return;
   }
   const image = element('img');
-  image.src = url;
   image.alt = item.name;
+  if (visual.classList.contains('project-thumb')) {
+    visual.style.setProperty('--project-thumb-image', `url("${url}")`);
+    visual.classList.add('has-preview');
+    image.addEventListener('load', () => updateProjectPreviewLayout(visual.parentElement));
+  }
   visual.replaceChildren(image);
+  image.src = url;
 }
 
 function renderCaptureGrid() {
@@ -307,18 +402,25 @@ function renderCaptureGrid() {
   const projects = captureGroups().get(state.selectedType) || new Map();
   const folderImages = state.captures.filter(item => folderKey(item) === state.selectedFolder);
   const insideFolder = Boolean(state.selectedFolder && folderImages.length);
-  const failedItems = state.captures.filter(item => state.catalog[item.id]?.descriptionStatus === 'failed');
+  const allImages = state.showAllCaptures && !insideFolder;
+  const failedItems = state.captures.filter(item => descriptionTaskFailedIds.has(String(item.id)));
   const failedOnly = failedDescriptionsOnly && failedItems.length > 0;
   const images = failedOnly ? failedItems
-    : query ? captureSearch.select(state.captures, query, item => item.id, captureText) : folderImages;
-  const showImages = failedOnly || insideFolder || Boolean(query);
+    : query ? captureSearch.select(state.captures, query, item => item.id, captureText)
+      : allImages ? state.captures : folderImages;
+  const showImages = failedOnly || insideFolder || allImages || Boolean(query);
   $('capture-back').hidden = !(failedOnly || insideFolder || query);
+  $('capture-view-switch').hidden = showImages || projects.size === 0;
+  $('capture-view-small').setAttribute('aria-pressed', String(state.captureProjectView === 'small'));
+  $('capture-view-large').setAttribute('aria-pressed', String(state.captureProjectView === 'large'));
+  projectsTarget.classList.toggle('is-large', state.captureProjectView === 'large');
   projectsTarget.hidden = showImages;
   imagesTarget.hidden = !showImages;
   $('capture-path').textContent = failedOnly ? '失败描述 · ' + images.length + ' 张图片'
     : query ? '全图库搜索 · ' + images.length + ' 张图片'
     : insideFolder ? folderImages[0].type + ' / ' + folderImages[0].project + ' / ' + images.length + ' 张图片'
-      : (state.selectedType || '项目类型') + ' / ' + projects.size + ' 个项目';
+      : allImages ? '全部图片 · ' + images.length + ' 张图片'
+        : (state.selectedType || '项目类型') + ' / ' + projects.size + ' 个项目';
   $('capture-empty').hidden = showImages ? images.length > 0 : projects.size > 0;
   $('capture-empty').querySelector('h2').textContent = failedOnly ? '没有失败的描述' : query ? '没有找到匹配的图片' : state.captures.length ? '这个类型还没有项目' : '还没有采集的图片';
   $('capture-empty').querySelector('p').textContent = failedOnly ? '失败项已自动重试；可稍后再次点击“生成概要描述”。'
@@ -331,6 +433,7 @@ function renderCaptureGrid() {
       draggingFolder = { type: entries[0].type, project }; event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData('text/plain', entries[0].type + ' / ' + project);
       card.classList.add('is-dragging');
+      $('capture-folders').classList.add('is-moving-project');
     });
     card.addEventListener('dragend', () => {
       draggingFolder = null; card.classList.remove('is-dragging');
@@ -345,9 +448,12 @@ function renderCaptureGrid() {
       renderCaptureGrid();
     });
     folder.title = '打开项目：' + project;
-    const previews = entries.filter(item => state.previews[String(item.id)]).slice(0, 3);
-    for (const entry of previews.length ? previews : entries.slice(0,1)) {
+    const previews = entries.filter(item => state.previews[String(item.id)]).slice(0, 4);
+    const previewEntries = previews.length ? previews : entries.slice(0, 1);
+    folder.dataset.previewLayout = previewEntries.length >= 4 ? 'quad' : 'single';
+    for (const [index, entry] of previewEntries.entries()) {
       const visual = element('div', 'project-thumb', state.previews[String(entry.id)] ? '' : '待关联预览');
+      if (index === 0) visual.classList.add('is-preview-selected');
       folder.append(visual);
       // 连接到文档后再异步取图。
       queueMicrotask(() => { void capturePreview(entry, visual); });
@@ -358,133 +464,70 @@ function renderCaptureGrid() {
   const missing = state.captures.some(item => !state.previews[String(item.id)]);
   $('link-downloads').hidden = !missing;
   $('capture-preview-help').hidden = !showImages || !images.some(item => !state.previews[String(item.id)]);
-  if (!showImages || !images.some(item => item.id === selectedCaptureId)) { selectedCaptureId = null; hideViewerNotice(); }
+  if (!showImages || !images.some(item => item.id === selectedCaptureId)) selectedCaptureId = null;
   for (const item of showImages ? images : []) {
     const card = element('article', 'capture-card' + (item.id === selectedCaptureId ? ' is-selected' : ''));
     const main = button('', 'capture-card-main', () => {
       if (selectedCaptureId !== null && selectedCaptureId !== item.id) void autoSaveDescription(selectedCaptureId);
-      if (selectedCaptureId !== item.id) hideViewerNotice();
       selectedCaptureId = item.id;
       imagesTarget.querySelectorAll('.capture-card').forEach(node => node.classList.toggle('is-selected', node === card));
       void renderCaptureDetail();
     });
-    main.addEventListener('dblclick', () => openOriginal(item));
-    main.title = '单击查看详情，双击用系统看图软件打开';
+    main.addEventListener('dblclick', () => { void showCaptureImage(item, images); });
+    main.title = '单击查看详情，双击查看大图';
     const visual = element('div', 'capture-visual', state.previews[String(item.id)] ? '正在读取预览…' : '等待关联本地图片');
     const info = element('div', 'capture-info');
-    info.append(element('strong', '', item.name), element('span', '', query ? item.type + ' / ' + item.project : humanDate(item.date)));
+    info.append(element('strong', '', item.name), element('span', '', query || allImages ? item.type + ' / ' + item.project : humanDate(item.date)));
     const description = state.catalog[item.id]?.description;
     if (description) info.append(element('p', 'capture-description-preview', description));
     main.append(visual, info);
     const remove = button('×', 'image-delete', event => { event.stopPropagation(); showDeleteCaptures([item], item.name); });
     remove.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 10v7M14 10v7"/></svg>';
     remove.title = '删除图片'; remove.setAttribute('aria-label', '删除图片 ' + item.name);
-    card.append(main, remove);
+    card.append(main);
+    if (query) {
+      const jump = button('进入项目', 'project-jump', event => {
+        event.stopPropagation();
+        openCaptureProject(item);
+      });
+      jump.title = '进入图库项目文件夹：' + item.type + ' / ' + item.project;
+      card.append(jump);
+    }
+    card.append(remove);
     imagesTarget.append(card);
     void capturePreview(item, visual);
   }
   if (!document.activeElement?.classList.contains('capture-description-editor')) void renderCaptureDetail();
 }
 
-function viewerFolder(item) {
-  const parts = String(state.catalog[item.id]?.sourcePath || '').split('/').filter(Boolean);
-  const type = parts[0] || item.type;
-  const project = parts.length > 2 ? parts[1] : '未分类项目';
-  return 'ArchBuddy-系统查看/' + sanitizePathSegment(type, '未分类') + '/' + sanitizePathSegment(project, '未分类项目');
+async function showCaptureImage(item, siblings) {
+  const available = siblings.filter(entry => state.previews[String(entry.id)]);
+  const index = available.findIndex(entry => entry.id === item.id);
+  if (index < 0) { toast('这张图片尚无可用的本地预览', 'error'); return; }
+  viewerItems = available;
+  viewerIndex = index;
+  if (await updateViewer() && !$('image-viewer').open) $('image-viewer').showModal();
 }
 
-function hideViewerNotice() {
-  readyViewerDownloadId = null;
-  $('system-viewer-notice').hidden = true;
+async function updateViewer() {
+  const item = viewerItems[viewerIndex];
+  if (!item) return false;
+  const url = await captureImageUrl(state.previews[String(item.id)]);
+  if (viewerItems[viewerIndex]?.id !== item.id) return false;
+  if (!url) { toast('图片预览不可用', 'error'); return false; }
+  resetViewerZoom();
+  $('viewer-image').src = url;
+  $('viewer-image').alt = item.name;
+  $('viewer-counter').textContent = (viewerIndex + 1) + ' / ' + viewerItems.length + ' · ' + item.name;
+  $('viewer-prev').hidden = viewerItems.length < 2;
+  $('viewer-next').hidden = viewerItems.length < 2;
+  return true;
 }
 
-function viewerNotice(message, downloadId = null) {
-  readyViewerDownloadId = downloadId;
-  $('system-viewer-notice').hidden = false;
-  $('system-viewer-message').textContent = message;
-  $('open-system-viewer').hidden = downloadId === null;
-}
-
-async function waitForViewerDownload(id) {
-  for (let attempt = 0; attempt < 200; attempt++) {
-    const [download] = await chrome.downloads.search({ id });
-    if (download?.state === 'complete') return download;
-    if (!download || download.state === 'interrupted') throw new Error('系统查看副本未能写入下载目录');
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-  throw new Error('准备系统查看副本超时，请稍后重试');
-}
-
-async function ensureViewerDownload(item, folder) {
-  const existing = state.viewerExports[item.id];
-  if (existing?.folder === folder && Number.isSafeInteger(existing.downloadId)) {
-    const [download] = await chrome.downloads.search({ id: existing.downloadId });
-    if (download?.byExtensionId === chrome.runtime.id && download.state === 'complete' && download.exists !== false) return existing.downloadId;
-  }
-  const id = item.id.slice(6);
-  const image = await getSourceImage(id);
-  if (image.schemeId !== id) throw new Error('导入图片的本地副本归属不一致');
-  const extension = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp' }[image.blob.type];
-  if (!extension) throw new Error('这张图片的格式无法交给系统看图软件');
-  const stem = sanitizePathSegment(item.name.replace(/\.[^.]+$/, ''), '参考图').slice(0, 58);
-  const url = URL.createObjectURL(image.blob);
-  try {
-    const downloadId = await chrome.downloads.download({
-      url, filename: folder + '/' + stem + '_' + id.slice(0, 8) + '.' + extension,
-      conflictAction: 'uniquify', saveAs: false,
-    });
-    await waitForViewerDownload(downloadId);
-    state.viewerExports = { ...state.viewerExports, [item.id]: { downloadId, folder } };
-    await chrome.storage.local.set({ [STORAGE.systemViewerExportsV4]: state.viewerExports });
-    return downloadId;
-  } finally { URL.revokeObjectURL(url); }
-}
-
-async function prepareSystemViewer(item) {
-  if (viewerExportBusy) { viewerNotice('正在准备这个项目的系统查看副本，请稍候…'); return; }
-  viewerExportBusy = true;
-  const folder = viewerFolder(item);
-  const siblings = [item, ...state.captures.filter(other => other.imported && other.id !== item.id && viewerFolder(other) === folder)];
-  let selectedId = null, failed = 0;
-  viewerNotice('正在准备 ' + siblings.length + ' 张图片供系统看图软件浏览…');
-  try {
-    for (const [index, sibling] of siblings.entries()) {
-      try {
-        const id = await ensureViewerDownload(sibling, folder);
-        if (sibling.id === item.id) selectedId = id;
-      } catch (error) {
-        if (sibling.id === item.id) throw error;
-        failed++;
-      }
-      viewerNotice('已准备 ' + (index + 1) + ' / ' + siblings.length + ' 张图片…');
-    }
-    if (selectedId === null) throw new Error('所选图片未能准备完成');
-    try {
-      await chrome.downloads.open(selectedId);
-      viewerNotice('已交给系统看图软件' + (failed ? '（' + failed + ' 张准备失败）' : ''));
-    } catch {
-      viewerNotice('图片已准备好，请点击按钮用系统看图软件打开' + (failed ? '；' + failed + ' 张准备失败' : ''), selectedId);
-    }
-  } catch (error) { viewerNotice('无法打开系统看图软件：' + error.message); }
-  finally { viewerExportBusy = false; }
-}
-
-function openOriginal(item) {
-  const now = performance.now();
-  if (lastSystemOpen.id === item.id && now - lastSystemOpen.at < 450) return;
-  lastSystemOpen = { id: item.id, at: now };
-  if (item.imported) {
-    const folder = viewerFolder(item);
-    const siblings = state.captures.filter(other => other.imported && viewerFolder(other) === folder);
-    if (siblings.every(other => state.viewerExports?.[other.id]?.folder === folder)) {
-      // 已准备过的图片直接在本次点击中交给系统，保留浏览器所需的用户手势。
-      void chrome.downloads.open(state.viewerExports[item.id].downloadId)
-        .then(() => viewerNotice('已交给系统看图软件'))
-        .catch(() => { void prepareSystemViewer(item); });
-    } else void prepareSystemViewer(item);
-    return;
-  }
-  void chrome.downloads.open(item.id).catch(() => toast('无法打开原图，请确认文件尚未移动、删除，并已允许扩展打开下载文件', 'error'));
+function stepViewer(delta) {
+  if (viewerItems.length < 2) return;
+  viewerIndex = (viewerIndex + delta + viewerItems.length) % viewerItems.length;
+  void updateViewer();
 }
 
 async function renderCaptureDetail() {
@@ -493,8 +536,14 @@ async function renderCaptureDetail() {
   detail.hidden = !item;
   $('capture-content-layout').classList.toggle('has-detail', Boolean(item));
   if (!item) { detail.replaceChildren(); return; }
-  const visual = button('', 'detail-image capture-detail-image', () => openOriginal(item));
-  visual.title = '点击用系统看图软件打开';
+  const visual = button('', 'detail-image capture-detail-image', () => {
+    const query = $('capture-search').value.trim();
+    const siblings = query ? captureSearch.select(state.captures, query, entry => entry.id, captureText)
+      : state.showAllCaptures ? state.captures
+        : state.captures.filter(entry => folderKey(entry) === folderKey(item));
+    void showCaptureImage(item, siblings);
+  });
+  visual.title = '点击查看大图，可左右浏览同一项目';
   visual.textContent = '等待关联本地图片';
   const body = element('div', 'detail-body');
   const head = element('div', 'capture-detail-head');
@@ -509,24 +558,44 @@ async function renderCaptureDetail() {
     descriptionSaves.set(item.id, setTimeout(() => { void autoSaveDescription(item.id); }, 700));
   });
   description.addEventListener('blur', () => { void autoSaveDescription(item.id); });
-  const actions = element('div', 'detail-actions');
-  const generate = button('生成完整提示词', 'solid-button', () => {
+  const actions = element('div', 'detail-actions capture-detail-actions');
+  const summary = button('生成概要描述', 'solid-button', async () => {
+    if (!(await ensureCaptureDescriptionConsent())) return;
+    summary.disabled = true;
+    try {
+      await autoSaveDescription(item.id);
+      await request('capture.describe', { downloadId: item.id });
+      toast('概要描述已生成并保存');
+      await loadCaptures();
+    } catch (error) { toast('生成概要描述失败：' + error.message, 'error'); }
+    finally { summary.disabled = false; }
+  });
+  summary.disabled = !state.previews[String(item.id)];
+  const generate = button('生成全提示词', 'solid-button', () => {
     const opening = openPanel(); opening.catch(() => {});
     void request('capture.resume', { downloadId: item.id }).then(() => opening).catch(error => toast(error.message, 'error'));
   });
-  generate.disabled = !state.previews[item.id];
-  actions.append(generate);
-  const files = element('div', 'detail-actions');
-  if (item.imported) files.append(element('span', 'imported-origin', '来自本地文件夹；原文件保留在电脑中'));
-  else files.append(button('打开原文件夹', 'quiet-button', () => {
-    void Promise.resolve(chrome.downloads.show(item.id)).catch(() => toast('文件已移动或删除', 'error'));
+  generate.disabled = !state.previews[String(item.id)];
+  actions.append(summary, generate);
+  if (item.imported) {
+    const folder = button('打开原文件夹', 'solid-button', () => {
+      const path = String(item.sourcePath || '').replaceAll('\\', '/').split('/').filter(Boolean);
+      $('import-source-path').value = path.slice(0, -1).join('/') || item.project || '来源目录未记录';
+      $('import-source-dialog').showModal();
+    });
+    folder.title = '查看并复制导入时的来源目录；浏览器无法直接打开电脑原文件夹';
+    actions.append(folder);
+  } else actions.append(button('打开原文件夹', 'solid-button', () => {
+    try { chrome.downloads.show(item.id); }
+    catch { toast('文件已移动或删除', 'error'); }
   }));
   const status = state.catalog[item.id]?.descriptionStatus;
   if (!description.value) description.placeholder = status === 'processing' ? '正在自动生成视觉描述…'
     : status === 'pending' ? '等待自动生成视觉描述…' : state.catalog[item.id]?.descriptionError || '填写视觉特征，编辑后自动保存';
   body.append(head, infoRow('项目', item.project), infoRow('分类', item.type),
-    infoRow('保存时间', humanDate(item.date)), infoRow('大小', humanBytes(item.size)),
-    element('h3', '', '核心视觉特征'), description, actions, files);
+    infoRow('保存时间', humanDate(item.date)),
+    element('h3', '', '核心视觉特征'), description, actions);
+  if (item.imported) body.append(element('span', 'imported-origin', '原文件保留在导入时选择的文件夹中'));
   detail.replaceChildren(visual, body);
   void capturePreview(item, visual);
 }
@@ -564,7 +633,7 @@ async function moveProjectFolder({ type, project }, targetType) {
   const affected = state.captures.filter(item => item.type === type && item.project === project);
   if (!affected.length || !state.activeTypes.includes(targetType)) throw new Error('目标分类已变化，请刷新后再试');
   await request('capture.folder.move', { fromType: type, project, targetType, ids: affected.map(item => item.id) });
-  state.selectedType = targetType; state.typeChosenByUser = true; state.openTypes.add(targetType);
+  state.selectedType = targetType; state.showAllCaptures = false; state.typeChosenByUser = true; state.openTypes.add(targetType);
   state.selectedFolder = targetType + '\u0000' + project; selectedCaptureId = null;
   await loadCaptures();
   toast('项目“' + project + '”已移到“' + targetType + '”');
@@ -585,16 +654,16 @@ function showDeleteCaptures(items, name) {
 async function loadCaptures() {
   const version = ++state.captureLoad;
   const [downloads, stored] = await Promise.all([
-    chrome.downloads.search({}), chrome.storage.local.get([STORAGE.capturePreviewsV4, STORAGE.captureCatalogV4, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4, STORAGE.captureHiddenV4, STORAGE.importedAssetsV4, STORAGE.systemViewerExportsV4]),
+    chrome.downloads.search({}), chrome.storage.local.get([STORAGE.capturePreviewsV4, STORAGE.captureCatalogV4, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4, STORAGE.captureHiddenV4, STORAGE.importedAssetsV4, STORAGE.captureProjectViewV4]),
   ]);
   if (version !== state.captureLoad) return;
   for (const url of state.captureUrls.values()) URL.revokeObjectURL(url);
   state.captureUrls.clear();
   state.capturePendingUrls.clear();
+  state.captureProjectView = stored[STORAGE.captureProjectViewV4] === 'large' ? 'large' : 'small';
   const imported = Array.isArray(stored[STORAGE.importedAssetsV4]) ? stored[STORAGE.importedAssetsV4] : [];
   state.previews = { ...(stored[STORAGE.capturePreviewsV4] || {}), ...Object.fromEntries(imported.map(item => ['local:' + item.id, item.id])) };
   state.catalog = { ...(stored[STORAGE.captureCatalogV4] || {}), ...Object.fromEntries(imported.map(item => ['local:' + item.id, item])) };
-  state.viewerExports = stored[STORAGE.systemViewerExportsV4] || {};
   state.typeAliases = stored[STORAGE.projectTypeAliasesV4] || {};
   const hidden = Array.isArray(stored[STORAGE.hiddenProjectTypesV4]) ? stored[STORAGE.hiddenProjectTypesV4] : [];
   const custom = Array.isArray(stored[STORAGE.customTypes]) ? stored[STORAGE.customTypes] : [];
@@ -666,14 +735,14 @@ function filteredItems() {
 }
 
 function promptExcerpt(item) {
-  const version = item.scheme.versions.at(-1);
+  const version = item.version || item.scheme.versions.at(-1);
   const text = (version?.modulesSnapshot || item.scheme.modules).filter(module => module.enabled && module.value)
     .map(module => module.title + '：' + module.value).join('\n');
   return text || promptText(item);
 }
 
 function promptText(item) {
-  return item.scheme.versions.at(-1)?.compiledPrompt || '暂无已确认提示词';
+  return (item.version || item.scheme.versions.at(-1))?.compiledPrompt || '暂无已确认提示词';
 }
 
 function renderGroupControls() {
@@ -705,6 +774,40 @@ function renderPromptSidebar() {
     });
     choose.append(element('strong', '', group.name), element('small', '', count + ' 张图片卡'));
     row.append(choose);
+    if (group.id !== 'all') {
+      row.addEventListener('dragover', event => {
+        if (!draggingPromptKey || state.assignments[draggingPromptKey] === group.id
+            || (group.id === 'ungrouped' && !state.assignments[draggingPromptKey])) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+        row.classList.add('is-drop-target');
+      });
+      row.addEventListener('dragleave', event => {
+        if (!row.contains(event.relatedTarget)) row.classList.remove('is-drop-target');
+      });
+      row.addEventListener('drop', event => {
+        if (!draggingPromptKey) return;
+        event.preventDefault();
+        row.classList.remove('is-drop-target');
+        const key = draggingPromptKey;
+        draggingPromptKey = null;
+        if (!state.items.some(item => keyFor(item) === key)) return;
+        const previous = state.assignments[key];
+        const previousSelectedGroupId = state.selectedGroupId;
+        if (group.id === 'ungrouped') delete state.assignments[key];
+        else state.assignments[key] = group.id;
+        state.selectedGroupId = group.id;
+        state.selectedKey = key;
+        state.selectedKeys.clear();
+        void persistGroups().then(() => toast('图片卡已移入“' + group.name + '”')).catch(error => {
+          if (previous) state.assignments[key] = previous;
+          else delete state.assignments[key];
+          state.selectedGroupId = previousSelectedGroupId;
+          renderPromptSidebar(); renderGrid();
+          toast('移动图片卡失败：' + error.message, 'error');
+        });
+      });
+    }
     if (!['all', 'ungrouped'].includes(group.id)) {
       row.append(button('编辑', 'group-mini-action', () => {
         const value = prompt('重命名分组', group.name);
@@ -777,7 +880,21 @@ function renderGrid() {
   for (const item of matches) {
     const key = keyFor(item);
     const card = element('article', 'asset-card' + (key === state.selectedKey ? ' is-selected' : ''));
-    const selectRow = element('label', 'asset-select');
+    card.draggable = true;
+    card.addEventListener('dragstart', event => {
+      if (event.target.closest('label, input')) { event.preventDefault(); return; }
+      draggingPromptKey = key;
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('application/x-archbuddy-prompt-card', key);
+      card.classList.add('is-dragging');
+    });
+    card.addEventListener('dragend', () => {
+      draggingPromptKey = null;
+      card.classList.remove('is-dragging');
+      $('prompt-sidebar-list').querySelectorAll('.is-drop-target').forEach(node => node.classList.remove('is-drop-target'));
+    });
+    const selectRow = element('div', 'asset-select');
+    const selectLabel = element('label', 'asset-select-label');
     const checkbox = element('input');
     checkbox.type = 'checkbox';
     checkbox.checked = state.selectedKeys.has(key);
@@ -787,7 +904,8 @@ function renderGrid() {
       else state.selectedKeys.delete(key);
       renderGroupControls();
     });
-    selectRow.append(checkbox, element('span', '', '选择'));
+    selectLabel.append(checkbox, element('span', '', '选择'));
+    selectRow.append(selectLabel, element('span', 'asset-drag-hint', '拖至左侧分组'));
     const main = button('', 'asset-card-main', () => {
       state.selectedKey = key;
       grid.querySelectorAll('.asset-card').forEach(node => node.classList.toggle('is-selected', node === card));
@@ -799,7 +917,7 @@ function renderGrid() {
     const copy = element('div', 'asset-copy');
     copy.append(
       element('strong', '', item.reference?.displayName || item.scheme.name),
-      element('span', '', item.scheme.projectName || item.scheme.category || '已确认提示词'),
+      element('span', '', (item.generated ? '生成效果图 · ' : '参考图 · ') + (item.scheme.projectName || item.scheme.category || '已确认提示词')),
       element('span', '', item.reference?.tags.length ? item.reference.tags.join('、') : '确认于 ' + humanDate(item.scheme.overallConfirmedAt)),
     );
     copy.append(element('p', 'asset-prompt-preview', promptExcerpt(item)));
@@ -814,6 +932,7 @@ function renderGrid() {
         const image = element('img');
         image.src = url;
         image.alt = item.reference.displayName;
+        image.draggable = false;
         visual.append(image);
       });
     }
@@ -847,18 +966,8 @@ function openPanel() {
   return chrome.sidePanel.open({ windowId: chrome.windows.WINDOW_ID_CURRENT });
 }
 
-async function resumeScheme(item, mode, opening) {
-  try {
-    await request('library.resume', { schemeId: item.scheme.schemeId, mode });
-    await opening;
-    toast(mode === 'builder' ? '已在侧栏打开这份方案' : '已在侧栏选择这份方案');
-  } catch (error) {
-    toast(error.message + '。可手动打开 ArchBuddy 侧栏继续。', 'error');
-  }
-}
-
 async function saveMetadata(item, projectInput, categoryInput, tagsInput) {
-  const tags = item.reference
+  const tags = item.reference && !item.generated
     ? tagsInput.value.split(/[,，、]/).map(value => value.trim()).filter(Boolean)
     : [];
   if (projectInput.value.trim().length > 80 || categoryInput.value.trim().length > 40
@@ -869,7 +978,7 @@ async function saveMetadata(item, projectInput, categoryInput, tagsInput) {
   try {
     await request('library.metadata.save', {
       schemeId: item.scheme.schemeId,
-      sourceReferenceId: item.reference?.sourceReferenceId || null,
+      sourceReferenceId: item.generated ? null : item.reference?.sourceReferenceId || null,
       projectName: projectInput.value,
       category: categoryInput.value,
       tags,
@@ -897,53 +1006,96 @@ async function renderDetail() {
   const detail = $('asset-detail');
   const item = state.items.find(candidate => keyFor(candidate) === state.selectedKey);
   if (!item) {
-    detail.replaceChildren(element('div', 'detail-placeholder', '选择一张参考图，查看关联的方案和 Prompt。'));
+    detail.replaceChildren(element('div', 'detail-placeholder', '选择一张图片，查看对应版本、来源图和提示词。'));
     return;
   }
   const key = keyFor(item);
-  const visual = element('div', 'detail-image', item.reference ? '正在读取图片…' : '尚无来源图');
+  const scheme = item.scheme;
+  const selectedVersion = item.version || [...scheme.versions].reverse()
+    .find(version => version.sourceReferenceIds.includes(item.reference?.sourceReferenceId))
+    || scheme.versions.at(-1);
+  const visual = element('div', 'detail-image', item.reference ? '正在读取图片…' : '尚无关联图');
   visual.title = '双击查看大图';
   visual.addEventListener('dblclick', () => { void showPromptImage(item); });
   const body = element('div', 'detail-body');
   const head = element('div', 'detail-head');
-  head.append(element('h2', '', item.reference?.displayName || item.scheme.name),
-    element('p', '', '所属方案：' + item.scheme.name));
-  const promptPreview = element('div', 'detail-prompt-preview');
-  promptPreview.append(element('strong', '', '对应提示词'), element('p', '', promptExcerpt(item)));
-  body.append(head, promptPreview, infoRow('项目', item.scheme.projectName), infoRow('分类', item.scheme.category),
-    infoRow('来源', sourceTypeLabel(item.reference?.sourceType)),
-    infoRow('保存时间', humanDate(item.reference?.createdAt || item.scheme.updatedAt)));
-  if (item.reference) body.append(infoRow('标签', item.reference.tags.join('、')));
+  head.append(element('h2', '', item.reference?.displayName || scheme.name),
+    element('p', '', '所属方案：' + scheme.name));
 
-  const dimensions = element('section', 'detail-section');
-  dimensions.append(element('h3', '', '已确认设计维度'));
-  const dimensionList = element('div', 'dimension-list');
-  const modules = item.scheme.versions.at(-1)?.modulesSnapshot || item.scheme.modules;
-  const active = modules.filter(module => module.enabled && module.value);
-  if (!active.length) dimensionList.append(element('p', '', '这份方案暂无可显示的设计维度。'));
-  for (const module of active) {
-    const line = element('p');
-    line.append(element('strong', '', module.title + '：'), document.createTextNode(module.value));
-    dimensionList.append(line);
+  const versionSection = element('section', 'detail-section');
+  versionSection.append(element('h3', '', 'Prompt 版本历史'));
+  const versions = [...scheme.versions].reverse();
+  if (versions.length) {
+    const picker = element('div', 'version-list');
+    const select = element('select');
+    for (const version of versions) select.add(new Option('版本 ' + version.versionNumber + ' · ' + humanDate(version.createdAt), version.versionId));
+    if (selectedVersion) select.value = selectedVersion.versionId;
+    const preview = element('pre', 'version-text');
+    const versionMeta = element('p', 'version-meta');
+    const update = () => {
+      const version = versions.find(candidate => candidate.versionId === select.value);
+      preview.textContent = version?.compiledPrompt || '';
+      versionMeta.textContent = version
+        ? (version.generatedResult ? '对应生成图：' + version.generatedResult.displayName + ' · ' : '')
+          + '关联参考图 ' + version.sourceReferenceIds.length + ' 张' : '';
+    };
+    select.addEventListener('change', update);
+    update();
+    picker.append(select, versionMeta, preview, button('复制此版本', 'outline-button', () => {
+      void copyVersion(versions.find(version => version.versionId === select.value));
+    }));
+    versionSection.append(picker);
+  } else versionSection.append(element('p', '', '暂无确认版本。'));
+  body.append(versionSection);
+
+  const baseline = selectedVersion?.baselineVersionId
+    ? scheme.versions.find(version => version.versionId === selectedVersion.baselineVersionId)
+    : scheme.versions[0];
+  if (baseline?.compiledPrompt && baseline.versionId !== selectedVersion?.versionId) {
+    const original = element('section', 'detail-section');
+    original.append(element('h3', '', selectedVersion?.baselineVersionId ? '优化前原始提示词' : '最初确认的提示词'),
+      element('pre', 'version-text original-prompt', baseline.compiledPrompt));
+    body.append(original);
   }
-  dimensions.append(dimensionList);
-  body.append(dimensions);
+
+  const context = element('section', 'detail-section');
+  context.append(element('h3', '', '对应图片'));
+  const imageList = element('div', 'related-images');
+  const relatedRefs = scheme.sourceReferences.filter(reference =>
+    !selectedVersion || selectedVersion.sourceReferenceIds.includes(reference.sourceReferenceId));
+  for (const reference of relatedRefs) {
+    const row = element('div', 'related-image-row');
+    row.append(element('span', 'related-image-role', '参考图'), element('span', '', reference.displayName));
+    imageList.append(row);
+  }
+  if (selectedVersion?.generatedResult) {
+    const row = element('div', 'related-image-row');
+    row.append(element('span', 'related-image-role result-role', '生成图'),
+      element('span', '', selectedVersion.generatedResult.displayName));
+    imageList.append(row);
+  }
+  if (!imageList.childNodes.length) imageList.append(element('p', '', '此版本没有关联图片。'));
+  context.append(imageList);
+
+  const meta = element('div', 'compact-meta');
+  meta.append(infoRow('项目分类', scheme.category), infoRow('保存时间', humanDate(selectedVersion?.createdAt || scheme.updatedAt)));
+  body.append(meta);
 
   const form = element('form', 'metadata-form');
   form.append(element('h3', '', '整理信息'));
   const projectLabel = element('label', '', '项目名称');
   const projectInput = element('input');
-  projectInput.maxLength = 80; projectInput.placeholder = '例如：山地酒店方案'; projectInput.value = item.scheme.projectName;
+  projectInput.maxLength = 80; projectInput.placeholder = '例如：山地酒店方案'; projectInput.value = scheme.projectName;
   projectLabel.append(projectInput);
-  const categoryLabel = element('label', '', '分类');
+  const categoryLabel = element('label', '', '项目分类');
   const categoryInput = element('input');
-  categoryInput.maxLength = 40; categoryInput.placeholder = '例如：文化建筑'; categoryInput.value = item.scheme.category;
+  categoryInput.maxLength = 40; categoryInput.placeholder = '例如：文化建筑'; categoryInput.value = scheme.category;
   categoryLabel.append(categoryInput);
   form.append(projectLabel, categoryLabel);
-  let tagsInput = element('input');
-  if (item.reference) {
-    const tagsLabel = element('label', '', '图片标签，用逗号分隔');
-    tagsInput.maxLength = 150; tagsInput.placeholder = '例如：清水混凝土，暖光'; tagsInput.value = item.reference.tags.join('，');
+  const tagsInput = element('input');
+  if (item.reference && !item.generated) {
+    const tagsLabel = element('label', '', '图片标签');
+    tagsInput.maxLength = 150; tagsInput.placeholder = '用逗号分隔'; tagsInput.value = item.reference.tags.join('，');
     tagsLabel.append(tagsInput);
     form.append(tagsLabel);
   }
@@ -955,46 +1107,12 @@ async function renderDetail() {
     void saveMetadata(item, projectInput, categoryInput, tagsInput);
   });
   body.append(form);
-
-  const versionSection = element('section', 'detail-section');
-  versionSection.append(element('h3', '', 'Prompt 版本'));
-  const versions = [...item.scheme.versions].reverse();
-  if (versions.length) {
-    const picker = element('div', 'version-list');
-    const select = element('select');
-    for (const version of versions) select.add(new Option('版本 ' + version.versionNumber + ' · ' + humanDate(version.createdAt), version.versionId));
-    const preview = element('pre', 'version-text', versions[0].compiledPrompt);
-    select.addEventListener('change', () => {
-      preview.textContent = versions.find(version => version.versionId === select.value)?.compiledPrompt || '';
-    });
-    picker.append(select, preview, button('复制此版本', 'outline-button', () => {
-      void copyVersion(versions.find(version => version.versionId === select.value));
-    }));
-    versionSection.append(picker);
-  } else {
-    versionSection.append(element('p', '', '暂无确认版本。'));
-  }
-  body.append(versionSection);
+  body.append(head, visual, context);
 
   const actions = element('div', 'detail-actions');
-  if (item.reference?.assetState === 'available') actions.append(button('生成完整提示词', 'solid-button', () => {
-    const opening = openPanel(); opening.catch(() => {});
-    void request('library.image.resume', { schemeId: item.scheme.schemeId, sourceReferenceId: item.reference.sourceReferenceId })
-      .then(() => opening).catch(error => toast(error.message, 'error'));
-  }));
-  actions.append(
-    button('继续构建', 'solid-button', () => {
-      const opening = openPanel();
-      void resumeScheme(item, 'builder', opening);
-    }),
-    button('用于效果优化', 'outline-button', () => {
-      const opening = openPanel();
-      void resumeScheme(item, 'optimize', opening);
-    }),
-    button('删除方案', 'danger-button', () => { void deleteScheme(item); }),
-  );
+  actions.append(button('删除方案', 'danger-button', () => { void deleteScheme(item); }));
   body.append(actions);
-  detail.replaceChildren(visual, body);
+  detail.replaceChildren(body);
   if (item.reference) {
     const url = await imageUrl(item);
     if (key !== state.selectedKey || !visual.isConnected) return;
@@ -1004,12 +1122,9 @@ async function renderDetail() {
       image.src = url;
       image.alt = item.reference.displayName;
       visual.append(image);
-    } else {
-      visual.textContent = '原图缺失，仍可查看方案和 Prompt';
-    }
+    } else visual.textContent = '原图缺失，仍可查看 Prompt';
   }
 }
-
 async function load() {
   const loadNumber = ++state.loadNumber;
   const stored = await chrome.storage.local.get([STORAGE.promptSchemesV3, STORAGE.promptGroupsV4]);
@@ -1019,9 +1134,25 @@ async function load() {
   state.schemes = raw.map(item => normalizePromptScheme(item))
     .filter(scheme => scheme.overallConfirmedAt || scheme.versions.some(version => version.origin !== 'legacy-baseline'))
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-  state.items = state.schemes.flatMap(scheme => scheme.sourceReferences.length
-    ? scheme.sourceReferences.map(reference => ({ scheme, reference }))
-    : [{ scheme, reference: null }]);
+  state.items = state.schemes.flatMap(scheme => {
+    const sourceCards = scheme.sourceReferences.map(reference => ({
+      scheme, reference, version: [...scheme.versions].reverse()
+        .find(version => version.sourceReferenceIds.includes(reference.sourceReferenceId)),
+    }));
+    const resultCards = scheme.versions.filter(version => version.generatedResult)
+      .map(version => ({
+        scheme, version, generated: true,
+        reference: {
+          sourceReferenceId: version.generatedResult.generatedResultId,
+          displayName: version.generatedResult.displayName,
+          assetState: 'available',
+          tags: [], createdAt: version.generatedResult.createdAt,
+          sourceType: 'file',
+        },
+      }));
+    return [...sourceCards, ...resultCards].length ? [...sourceCards, ...resultCards]
+      : [{ scheme, reference: null, version: scheme.versions.at(-1) }];
+  });
   const grouping = stored[STORAGE.promptGroupsV4] || {};
   state.groups = Array.isArray(grouping.groups)
     ? grouping.groups.filter(group => group && typeof group.id === 'string' && typeof group.name === 'string')
@@ -1076,6 +1207,19 @@ $('move-selected').addEventListener('click', () => {
   state.selectedKeys.clear();
   void persistGroups().then(() => toast('图片卡已移入“' + groupName(id) + '”')).catch(error => toast(error.message, 'error'));
 });
+document.addEventListener('dragover', event => {
+  if (!draggingFolder) return;
+  const rect = $('capture-folders').getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right
+      || event.clientY < rect.top - 24 || event.clientY > rect.bottom + 40) {
+    stopFolderAutoScroll();
+    return;
+  }
+  folderScrollPointerY = event.clientY;
+  if (!folderScrollFrame) folderScrollFrame = requestAnimationFrame(scrollFolderListWhileDragging);
+});
+document.addEventListener('dragend', () => { stopFolderAutoScroll(); $('capture-folders').classList.remove('is-moving-project'); });
+document.addEventListener('drop', () => { stopFolderAutoScroll(); $('capture-folders').classList.remove('is-moving-project'); });
 $('show-captures').addEventListener('click', () => showSection('captures'));
 $('show-prompts').addEventListener('click', () => showSection('prompts'));
 $('generate-missing-descriptions').addEventListener('click', async event => {
@@ -1107,9 +1251,17 @@ async function primeVectorIndex(search, documents) {
 wireSemanticSearch('capture-search', 'search-captures', 'capture-search-status', captureSearch, captureDocuments, renderCaptureGrid);
 wireSemanticSearch('library-search', 'search-prompts', 'prompt-search-status', promptSearch, promptDocuments, () => { renderGrid(); void renderDetail(); });
 $('category-filter').addEventListener('change', () => { renderGrid(); void renderDetail(); });
-$('refresh-library').addEventListener('click', () => {
-  void Promise.all([load(), loadCaptures()]).catch(error => toast(error.message, 'error'));
-});
+async function setCaptureProjectView(view) {
+  if (state.captureProjectView === view) return;
+  state.captureProjectView = view;
+  $('capture-project-grid').classList.toggle('is-large', view === 'large');
+  $('capture-view-small').setAttribute('aria-pressed', String(view === 'small'));
+  $('capture-view-large').setAttribute('aria-pressed', String(view === 'large'));
+  try { await chrome.storage.local.set({ [STORAGE.captureProjectViewV4]: view }); }
+  catch (error) { toast('保存视图偏好失败：' + error.message, 'error'); }
+}
+$('capture-view-small').addEventListener('click', () => { void setCaptureProjectView('small'); });
+$('capture-view-large').addEventListener('click', () => { void setCaptureProjectView('large'); });
 $('capture-back').addEventListener('click', () => {
   $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
   selectedCaptureId = null;
@@ -1120,6 +1272,7 @@ $('capture-back').addEventListener('click', () => {
 });
 $('description-progress-failed').addEventListener('click', () => {
   failedDescriptionsOnly = true;
+  state.showAllCaptures = false;
   selectedCaptureId = null;
   state.selectedFolder = null;
   $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
@@ -1156,13 +1309,9 @@ $('capture-folder-files').addEventListener('change', event => {
   event.currentTarget.value = '';
   void importDownloadPreviews(files).catch(error => toast(error.message, 'error'));
 });
-$('refresh-captures').addEventListener('click', () => {
-  void loadCaptures().catch(error => toast('图片目录读取失败：' + error.message, 'error'));
-});
 $('open-sidepanel').addEventListener('click', () => { void openPanel().catch(error => toast(error.message, 'error')); });
 $('empty-open-panel').addEventListener('click', () => { void openPanel().catch(error => toast(error.message, 'error')); });
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'local' && changes[STORAGE.systemViewerExportsV4]) state.viewerExports = changes[STORAGE.systemViewerExportsV4].newValue || {};
   if (area === 'local' && (changes[STORAGE.promptSchemesV3] || changes[STORAGE.promptGroupsV4])) {
     void load().catch(error => toast(error.message, 'error'));
   }
@@ -1204,36 +1353,46 @@ $('confirm-delete-capture').addEventListener('click', event => {
 async function renderDescriptionProgress() {
   const progressElement = $('description-progress');
   const progressBar = $('description-progress-bar');
+  const progressTotal = $('description-progress-total');
   const progressText = $('description-progress-text');
   const progressDetail = $('description-progress-detail');
   const failedButton = $('description-progress-failed');
   const stored = await chrome.storage.local.get(STORAGE.descriptionProgressV4);
   const progress = stored[STORAGE.descriptionProgressV4];
-  const missing = state.captures.filter(item => !String(state.catalog[item.id]?.description || '').trim()).length;
-  let total = 0, done = 0, failed = 0;
-  if (progress && Number.isFinite(progress.total) && progress.total > 0) {
-    total = progress.total;
-    done = Math.min(total, Number(progress.done || 0));
-    failed = Math.min(done, Number(progress.failed || 0));
-  } else if (missing > 0) {
-    total = missing;
+  if (!Array.isArray(progress?.ids) || !progress.ids.length) {
+    progressElement.hidden = true;
+    descriptionTaskFailedIds = new Set();
+    return;
   }
-  if (!total) { progressElement.hidden = true; return; }
-  const percent = Math.round((done / total) * 100);
+  const total = progress.ids.length;
+  const processed = Math.min(total, Number(progress.done) || 0);
+  descriptionTaskFailedIds = new Set(Array.isArray(progress.failedIds) ? progress.failedIds : []);
+  const failed = Math.min(processed, descriptionTaskFailedIds.size);
+  const completed = processed - failed;
+  const remaining = total - processed;
   progressElement.hidden = false;
-  progressBar.style.width = percent + '%';
-  progressText.textContent = done + ' / ' + total;
-  progressDetail.textContent = done >= total ? (failed ? '已完成' : '全部已返回') : '剩余 ' + (total - done);
+  progressBar.style.width = Math.round((processed / total) * 100) + '%';
+  progressTotal.textContent = '本次 ' + total;
+  progressText.textContent = '已完成 ' + completed;
+  progressDetail.textContent = '剩余 ' + remaining;
   failedButton.hidden = failed < 1;
   failedButton.textContent = '失败 ' + failed;
-  failedButton.title = '查看失败描述的图片';
+  failedButton.title = '查看本次任务失败的图片';
   progressElement.setAttribute('aria-valuemax', String(total));
-  progressElement.setAttribute('aria-valuenow', String(done));
-  progressElement.setAttribute('aria-label', '概要描述生成进度 ' + done + ' / ' + total);
+  progressElement.setAttribute('aria-valuenow', String(processed));
+  progressElement.setAttribute('aria-label', '本次概要描述任务：总数 ' + total + '，已完成 ' + completed + '，剩余 ' + remaining + '，失败 ' + failed);
 }
 async function refreshAssetConsent() {
   const stored = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
   $('asset-consent').hidden = stored[STORAGE.assetAIConsent] === true && stored[STORAGE.assetVectorConsent] === true;
+}
+async function ensureCaptureDescriptionConsent() {
+  const stored = await chrome.storage.local.get(STORAGE.assetAIConsent);
+  if (stored[STORAGE.assetAIConsent]) return true;
+  if (!confirm('生成概要描述会发送此图片的压缩预览给 ArchBuddy 与 DeepSeek，并消耗模型额度。确认开启图库 AI？')) return false;
+  await request('assets.consent', { enabled: true });
+  await refreshAssetConsent();
+  return true;
 }
 async function ensureAssetConsent() {
   const stored = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
@@ -1249,16 +1408,72 @@ async function ensureAssetConsent() {
   }
   await refreshAssetConsent(); return true;
 }
+function normalizedRecentSearches(values) {
+  return (Array.isArray(values) ? values : []).filter(value => typeof value === 'string' && value.trim())
+    .map(value => value.trim().slice(0, 500)).slice(0, 5);
+}
+
+async function rememberSearch(query) {
+  const stored = await chrome.storage.local.get(STORAGE.librarySearchHistoryV4);
+  const value = query.trim();
+  recentSearches = [value, ...normalizedRecentSearches(stored[STORAGE.librarySearchHistoryV4])
+    .filter(entry => entry.toLocaleLowerCase() !== value.toLocaleLowerCase())].slice(0, 5);
+  await chrome.storage.local.set({ [STORAGE.librarySearchHistoryV4]: recentSearches });
+}
+
+function renderSearchHistory(menu, input, filter = false) {
+  menu.replaceChildren();
+  const heading = element('div', 'search-history-heading');
+  heading.append(element('span', '', '最近搜索'));
+  if (recentSearches.length) heading.append(button('清空', 'search-history-clear', async () => {
+    try {
+      await chrome.storage.local.remove(STORAGE.librarySearchHistoryV4);
+      recentSearches = [];
+      renderSearchHistory(menu, input);
+    } catch (error) { toast('清空搜索记录失败：' + error.message, 'error'); }
+  }));
+  menu.append(heading);
+  const term = filter ? input.value.trim().toLocaleLowerCase() : '';
+  const entries = recentSearches.filter(value => !term || value.toLocaleLowerCase().includes(term));
+  if (!entries.length) menu.append(element('div', 'search-history-empty', recentSearches.length ? '没有匹配的搜索记录' : '暂无搜索记录'));
+  for (const value of entries) menu.append(button(value, 'search-history-item', () => {
+    input.value = value;
+    menu.hidden = true;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.closest('.header-search').querySelector('.search-submit').click();
+  }));
+  menu.hidden = false;
+}
+
 function wireSemanticSearch(inputId, buttonId, statusId, search, documents, render) {
   const input = $(inputId), submit = $(buttonId), status = $(statusId);
+  const menu = $(inputId === 'capture-search' ? 'capture-search-history' : 'prompt-search-history');
   input.maxLength = 500;
   let queuedQuery = null;
+  let openingHistory = false;
+  const openHistory = async () => {
+    if (openingHistory) return;
+    openingHistory = true;
+    try {
+      const stored = await chrome.storage.local.get(STORAGE.librarySearchHistoryV4);
+      recentSearches = normalizedRecentSearches(stored[STORAGE.librarySearchHistoryV4]);
+      if (document.activeElement === input) renderSearchHistory(menu, input);
+    } catch (error) { toast('读取搜索记录失败：' + error.message, 'error'); }
+    finally { openingHistory = false; }
+  };
+  input.addEventListener('focus', () => { void openHistory(); });
+  input.addEventListener('click', () => { if (menu.hidden) void openHistory(); });
+  menu.addEventListener('pointerdown', event => event.preventDefault());
+  document.addEventListener('pointerdown', event => {
+    if (!menu.parentElement.contains(event.target)) menu.hidden = true;
+  });
   const update = () => { status.textContent = search.status; render(); };
   input.addEventListener('input', () => {
     queuedQuery = null;
     search.clear();
     const count = keywordMatches(documents(), input.value, item => item.text).length;
-    search.status = input.value.trim() ? `关键词即时匹配 ${count} 项；按回车进行本地向量检索` : '';
+    search.status = input.value.trim() ? `关键词匹配 ${count} 项` : '';
+    if (!menu.hidden) renderSearchHistory(menu, input, true);
     update();
   });
   const run = async () => {
@@ -1269,31 +1484,91 @@ function wireSemanticSearch(inputId, buttonId, statusId, search, documents, rend
       return;
     }
     if (!(await ensureAssetConsent()) || input.value !== query) return;
+    menu.hidden = true;
+    try { await rememberSearch(query); } catch (error) { toast('保存搜索记录失败：' + error.message, 'error'); }
     await search.run(query, documents(), update);
     if (queuedQuery && queuedQuery === input.value) { queuedQuery = null; await run(); }
   };
   submit.addEventListener('click', () => { void run().catch(error => toast(error.message, 'error')); });
-  input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing) { event.preventDefault(); submit.click(); } });
+  input.addEventListener('keydown', event => {
+    if (event.key === 'Escape') menu.hidden = true;
+    if (event.key === 'Enter' && !event.isComposing) { event.preventDefault(); submit.click(); }
+  });
 }
 async function showPromptImage(item) {
   const url = await imageUrl(item);
   if (!url) { toast('原图缺失，请重新关联图片', 'error'); return; }
+  viewerItems = [];
+  resetViewerZoom();
   $('viewer-image').src = url; $('viewer-image').alt = item.reference?.displayName || '图片大图';
-  $('image-viewer').showModal();
+  $('viewer-counter').textContent = item.reference?.displayName || '';
+  $('viewer-prev').hidden = true; $('viewer-next').hidden = true;
+  if (!$('image-viewer').open) $('image-viewer').showModal();
 }
 $('close-image-viewer').addEventListener('click', () => $('image-viewer').close());
-$('open-system-viewer').addEventListener('click', () => {
-  const id = readyViewerDownloadId;
-  if (!Number.isSafeInteger(id)) return;
-  void chrome.downloads.open(id)
-    .then(() => viewerNotice('已交给系统看图软件'))
-    .catch(error => viewerNotice('系统看图软件未能打开：' + error.message, id));
+$('viewer-prev').addEventListener('click', () => stepViewer(-1));
+$('viewer-next').addEventListener('click', () => stepViewer(1));
+$('viewer-canvas').addEventListener('wheel', event => {
+  event.preventDefault();
+  const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? $('viewer-canvas').clientHeight : 1);
+  const nextScale = Math.max(1, Math.min(6, viewerZoom.scale * Math.exp(-delta * 0.002)));
+  if (nextScale === viewerZoom.scale) return;
+  const rect = $('viewer-canvas').getBoundingClientRect();
+  const anchorX = event.clientX - rect.left - rect.width / 2;
+  const anchorY = event.clientY - rect.top - rect.height / 2;
+  viewerZoom.x = anchorX - (anchorX - viewerZoom.x) * nextScale / viewerZoom.scale;
+  viewerZoom.y = anchorY - (anchorY - viewerZoom.y) * nextScale / viewerZoom.scale;
+  viewerZoom.scale = nextScale;
+  applyViewerZoom();
+}, { passive: false });
+$('viewer-canvas').addEventListener('pointerdown', event => {
+  if (event.button !== 0 || viewerZoom.scale <= 1) return;
+  viewerDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, panX: viewerZoom.x, panY: viewerZoom.y };
+  $('viewer-canvas').setPointerCapture(event.pointerId);
+  $('viewer-canvas').classList.add('is-panning');
+  event.preventDefault();
 });
+$('viewer-canvas').addEventListener('pointermove', event => {
+  if (!viewerDrag || event.pointerId !== viewerDrag.pointerId) return;
+  viewerZoom.x = viewerDrag.panX + event.clientX - viewerDrag.x;
+  viewerZoom.y = viewerDrag.panY + event.clientY - viewerDrag.y;
+  applyViewerZoom();
+});
+function stopViewerDrag(event) {
+  if (!viewerDrag || event.pointerId !== viewerDrag.pointerId) return;
+  viewerDrag = null;
+  $('viewer-canvas').classList.remove('is-panning');
+  if ($('viewer-canvas').hasPointerCapture(event.pointerId)) $('viewer-canvas').releasePointerCapture(event.pointerId);
+}
+$('viewer-canvas').addEventListener('pointerup', stopViewerDrag);
+$('viewer-canvas').addEventListener('pointercancel', stopViewerDrag);
+$('viewer-canvas').addEventListener('dblclick', resetViewerZoom);
+$('image-viewer').addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') { event.preventDefault(); stepViewer(-1); }
+  if (event.key === 'ArrowRight') { event.preventDefault(); stepViewer(1); }
+});
+$('image-viewer').addEventListener('close', () => { viewerItems = []; resetViewerZoom(); $('viewer-image').removeAttribute('src'); });
 $('enable-asset-ai').addEventListener('click', () => { void ensureAssetConsent().catch(error => toast(error.message, 'error')); });
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local') return;
   if (changes[STORAGE.assetAIConsent] || changes[STORAGE.assetVectorConsent]) void refreshAssetConsent();
   if (changes[STORAGE.descriptionProgressV4] || changes[STORAGE.importedAssetsV4] || changes[STORAGE.captureCatalogV4]) void renderDescriptionProgress();
 });
+function updateTopbarShadow() {
+  document.querySelector('.topbar').classList.toggle('is-scrolled', window.scrollY > 4);
+}
+window.addEventListener('scroll', updateTopbarShadow, { passive: true });
+updateTopbarShadow();
 void refreshAssetConsent();
 void renderDescriptionProgress();
+
+$('copy-import-source').addEventListener('click', async () => {
+  const field = $('import-source-path');
+  try {
+    await navigator.clipboard.writeText(field.value);
+    toast('已复制导入时的相对目录');
+  } catch {
+    field.focus(); field.select();
+    toast('路径已选中，请按 Ctrl+C 复制');
+  }
+});

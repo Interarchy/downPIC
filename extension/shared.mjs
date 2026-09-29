@@ -33,6 +33,8 @@ export const STORAGE = {
   captureCatalogV4: 'captureCatalogV4',
   descriptionProgressV4: 'descriptionProgressV4',
   promptGroupsV4: 'promptGroupsV4',
+  librarySearchHistoryV4: 'librarySearchHistoryV4',
+  captureProjectViewV4: 'captureProjectViewV4',
   analyticsConsent: 'analytics_consent_v1',
 };
 
@@ -345,6 +347,16 @@ export function normalizePromptVersion(input = {}, schemeId, fallbackNumber = 1)
     compiledPrompt: cleanText(input.compiledPrompt, 60_000) || compileIntentPrompt(modulesSnapshot, input.principleText ?? PRINCIPLE),
     sourceReferenceIds: [...new Set((Array.isArray(input.sourceReferenceIds) ? input.sourceReferenceIds : [])
       .map(value => cleanText(value, 80)).filter(value => UUID_PATTERN.test(value)))],
+    baselineVersionId: UUID_PATTERN.test(String(input.baselineVersionId || '')) ? input.baselineVersionId : null,
+    evaluationId: UUID_PATTERN.test(String(input.evaluationId || '')) ? input.evaluationId : null,
+    generatedResult: UUID_PATTERN.test(String(input.generatedResult?.generatedResultId || ''))
+      ? {
+        generatedResultId: input.generatedResult.generatedResultId,
+        displayName: cleanText(input.generatedResult.displayName, 120) || '生成效果图',
+        mimeType: ['image/png', 'image/jpeg', 'image/webp'].includes(input.generatedResult.mimeType)
+          ? input.generatedResult.mimeType : 'image/png',
+        createdAt: cleanText(input.generatedResult.createdAt, 40) || new Date().toISOString(),
+      } : null,
     changeSummary: summaryItems.map(item => ({
       moduleKey: MODULE_BY_KEY.has(item?.moduleKey) ? item.moduleKey : null,
       changeType: changeTypes.has(item?.changeType) ? item.changeType : null,

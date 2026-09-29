@@ -9,8 +9,17 @@
 <body>
   <header class="topbar">
     <div class="brand"><img src="icons/icon-48.png" alt="" /><strong>ArchBuddy</strong><span>图词库</span></div>
+    <div class="header-searches" role="search" aria-label="图词库搜索">
+      <div id="capture-header-search" class="header-search">
+        <div class="header-search-control"><svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4.4 4.4"/></svg><input id="capture-search" class="natural-search" type="search" aria-label="搜索采集图片" placeholder="描述你想找的图片，例如：黄昏下带庭院的白色学校（回车搜索）" autocomplete="off" /><button id="search-captures" type="button" class="solid-button search-submit">语义搜索</button></div>
+        <div id="capture-search-history" class="search-history" hidden></div>
+      </div>
+      <div id="prompt-header-search" class="header-search" hidden>
+        <div class="header-search-control"><svg class="header-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4.4 4.4"/></svg><input id="library-search" class="natural-search" type="search" aria-label="搜索提示词图片" placeholder="描述你想找的图片或提示词，例如：暖光下的混凝土庭院（回车搜索）" autocomplete="off" /><button id="search-prompts" type="button" class="solid-button search-submit">语义搜索</button></div>
+        <div id="prompt-search-history" class="search-history" hidden></div>
+      </div>
+    </div>
     <div class="top-actions">
-      <button id="refresh-library" type="button" class="quiet-button">刷新</button>
       <button id="open-sidepanel" type="button" class="outline-button">打开侧栏</button>
     </div>
   </header>
@@ -29,14 +38,13 @@
           </button>
         </nav>
         <div id="capture-sidebar" class="sidebar-section">
-          <div class="sidebar-heading">项目类型 <span>／ 项目名称</span></div>
           <nav id="capture-folders" class="capture-folders" aria-label="项目类型和项目名称"></nav>
         </div>
         <div id="prompt-sidebar" class="sidebar-section" hidden>
           <div class="sidebar-heading">我的分组</div>
           <nav id="prompt-sidebar-list" class="prompt-sidebar-list" aria-label="提示词方案"></nav>
         </div>
-        <div class="sidebar-tools" aria-label="图库工具">
+        <div id="capture-sidebar-tools" class="sidebar-tools" aria-label="图库工具">
           <div id="folder-import-drop" class="sidebar-tool-card folder-import-drop">
             <button id="import-local-folder" type="button" class="sidebar-action-button">
               <span class="sidebar-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.8 8 6.4 5h4.2l1.7 2.4h8.1v11.2H3.8z" fill="#fff"/><path d="M12 10.4v5.2M9.4 13h5.2" stroke="#25634b" stroke-width="1.9"/></svg></span>
@@ -47,30 +55,37 @@
           <div class="sidebar-tool-card generate-card">
             <button id="generate-missing-descriptions" type="button" class="sidebar-action-button">
               <span class="sidebar-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4.5l1.7 4.6 4.6 1.7-4.6 1.7L12 17.1l-1.7-4.6-4.6-1.7 4.6-1.7z"/><path d="M18.8 16.3l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z"/></svg></span>
-              <span class="sidebar-tool-copy"><strong>生成概要描述</strong><small>6 并发</small></span>
+              <span class="sidebar-tool-copy"><strong>生成概要描述</strong></span>
             </button>
             <div id="description-progress" class="description-progress" role="progressbar" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" hidden>
               <div class="progress-track"><div id="description-progress-bar" class="progress-bar"></div></div>
-              <div class="progress-copy"><span id="description-progress-text">0 / 0</span><span id="description-progress-detail">等待开始</span><button id="description-progress-failed" type="button" class="progress-failed" hidden></button></div>
+              <div class="progress-copy"><span id="description-progress-total">本次 0</span><span id="description-progress-text">已完成 0</span><span id="description-progress-detail">剩余 0</span><button id="description-progress-failed" type="button" class="progress-failed" hidden></button></div>
             </div>
           </div>
+        </div>
+        <div id="prompt-sidebar-tools" class="sidebar-tools prompt-sidebar-tools" aria-label="词库分组工具" hidden>
+          <label class="group-tool-label" for="group-name">新建分组</label>
+          <div class="group-tool-row"><input id="group-name" maxlength="40" aria-label="新分组名称" placeholder="输入分组名称" /><button id="create-group" type="button" class="solid-button">新建</button></div>
+          <label class="group-tool-label" for="group-select">移动所选图片卡</label>
+          <div class="group-tool-row"><select id="group-select" aria-label="目标分组"></select><button id="move-selected" type="button" class="outline-button" disabled>移入</button></div>
         </div>
       </aside>
       <div class="library-content">
         <section id="captures-section" class="library-section">
-          <div class="section-heading">
-            <input id="capture-search" class="natural-search" type="search" aria-label="搜索采集图片" placeholder="描述你想找的图片，例如：黄昏下带庭院的白色学校" autocomplete="off" />
-            <button id="search-captures" type="button" class="solid-button search-submit">搜索</button>
-            <div class="capture-actions">
-              <button id="link-downloads" type="button" class="outline-button" hidden>关联图片预览</button>
-              <input id="capture-folder-files" type="file" webkitdirectory directory multiple accept="image/png,image/jpeg,image/webp" hidden />
-              <button id="refresh-captures" type="button" class="quiet-button">刷新图片</button>
-            </div>
+          <div class="capture-actions">
+            <button id="link-downloads" type="button" class="outline-button" hidden>关联图片预览</button>
+            <input id="capture-folder-files" type="file" webkitdirectory directory multiple accept="image/png,image/jpeg,image/webp" hidden />
           </div>
           <p id="import-feedback" class="search-status" role="status"></p>
           <p id="capture-search-status" class="search-status" role="status"></p>
-          <div id="system-viewer-notice" class="system-viewer-notice" role="status" hidden><span id="system-viewer-message"></span><button id="open-system-viewer" type="button" class="outline-button" hidden>用系统看图软件打开</button></div>
-          <div class="capture-breadcrumb"><button id="capture-back" type="button" class="quiet-button" hidden>← 返回项目</button><div id="capture-path" class="capture-path"></div></div>
+          <div class="capture-breadcrumb">
+            <button id="capture-back" type="button" class="quiet-button" hidden>← 返回项目</button>
+            <div id="capture-path" class="capture-path"></div>
+            <div id="capture-view-switch" class="capture-view-switch" role="group" aria-label="项目文件夹预览布局" hidden>
+              <button id="capture-view-small" type="button" aria-label="密集预览，每行更多项目" title="密集预览" aria-pressed="true"><svg class="view-grid-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="5" width="6" height="6" rx="1"/><rect x="9" y="5" width="6" height="6" rx="1"/><rect x="17" y="5" width="6" height="6" rx="1"/><rect x="1" y="13" width="6" height="6" rx="1"/><rect x="9" y="13" width="6" height="6" rx="1"/><rect x="17" y="13" width="6" height="6" rx="1"/></svg></button>
+              <button id="capture-view-large" type="button" aria-label="宽松预览，每行约三至四个项目" title="宽松预览" aria-pressed="false"><svg class="view-grid-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="6" height="6" rx="1"/><rect x="13" y="5" width="6" height="6" rx="1"/><rect x="5" y="13" width="6" height="6" rx="1"/><rect x="13" y="13" width="6" height="6" rx="1"/></svg></button>
+            </div>
+          </div>
           <div id="capture-content-layout" class="capture-detail-layout">
             <div><div id="capture-project-grid" class="capture-project-grid"></div><div id="capture-grid" class="capture-grid"></div></div>
             <aside id="capture-detail" class="detail" hidden></aside>
@@ -82,14 +97,6 @@
           </div>
         </section>
         <section id="prompts-section" class="library-section" hidden>
-          <div class="prompt-toolbar">
-            <input id="library-search" class="natural-search" type="search" aria-label="搜索提示词图片" placeholder="用自然语言查找图片或提示词，例如：暖光下的混凝土庭院" autocomplete="off" />
-            <button id="search-prompts" type="button" class="solid-button search-submit">搜索</button>
-            <input id="group-name" maxlength="40" aria-label="新分组名称" placeholder="新分组名称" />
-            <button id="create-group" type="button" class="solid-button">新建分组</button>
-            <select id="group-select" aria-label="目标分组"></select>
-            <button id="move-selected" type="button" class="outline-button" disabled>移入分组</button>
-          </div>
           <p id="prompt-search-status" class="search-status" role="status"></p>
           <div class="prompt-filter-row">
             <select id="category-filter" aria-label="分类"><option value="">全部分类</option></select>
@@ -115,7 +122,7 @@
       </div>
     </div>
   </main>
-  <dialog id="image-viewer" class="image-viewer"><button id="close-image-viewer" class="viewer-close" aria-label="关闭大图">×</button><img id="viewer-image" alt="图片大图" /></dialog>
+  <dialog id="image-viewer" class="image-viewer" aria-label="图片大图预览"><button id="close-image-viewer" class="viewer-close" aria-label="关闭大图">×</button><button id="viewer-prev" class="viewer-nav viewer-prev" type="button" aria-label="上一张">‹</button><div id="viewer-canvas" class="viewer-canvas"><img id="viewer-image" alt="图片大图" draggable="false" /></div><span id="viewer-zoom" class="viewer-zoom">100% · 滚轮缩放</span><button id="viewer-next" class="viewer-nav viewer-next" type="button" aria-label="下一张">›</button><div id="viewer-counter" class="viewer-counter"></div></dialog>
   <dialog id="delete-capture-dialog" class="delete-dialog">
     <form method="dialog">
       <h2 id="delete-capture-title">删除图片</h2>
@@ -123,6 +130,14 @@
       <label><input id="delete-original" type="checkbox" />同时删除电脑中的下载原图（不可恢复）</label>
       <p class="dialog-note">仅处理本次列出的图片；电脑上的空文件夹会保留。</p>
       <div class="detail-actions"><button value="cancel" class="quiet-button">取消</button><button id="confirm-delete-capture" value="delete" class="danger-button">确认删除</button></div>
+    </form>
+  </dialog>
+  <dialog id="import-source-dialog" class="delete-dialog source-dialog" aria-label="导入图片来源位置">
+    <form method="dialog">
+      <h2>导入图片来源位置</h2>
+      <p>导入时浏览器只记录了相对目录，无法直接打开电脑上的原文件夹。可复制下方位置，在文件管理器中查找。</p>
+      <input id="import-source-path" type="text" readonly aria-label="导入时的相对目录" />
+      <div class="detail-actions"><button value="cancel" class="quiet-button">关闭</button><button id="copy-import-source" type="button" class="solid-button">复制相对目录</button></div>
     </form>
   </dialog>
   <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>

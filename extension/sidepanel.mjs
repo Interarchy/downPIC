@@ -622,7 +622,9 @@ async function confirmRevision() {
   state.scheme = normalizePromptScheme(response.scheme); state.working = response.workingDraft;
   confirmedRevision = prompt;
   $('copy-revision').disabled = false; $('confirm-revision').disabled = true;
-  feedback('revision-feedback', '已确认并保存至提示词库，可以复制。上方提醒来自本次修改前的评估。', 'success');
+  feedback('revision-feedback', response.version?.generatedResult
+    ? '提示词和本次效果图已保存至词库，可查看版本历史和关联图片。'
+    : '提示词已确认；当前没有新的效果图入库。', 'success');
   await loadLibrary();
   } finally {
     confirming = false;
