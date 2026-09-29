@@ -4,7 +4,16 @@ export const STORAGE = {
   captureEnabled: 'capture_enabled',
   projectType: 'default_project_type',
   customTypes: 'custom_project_types',
+  importedAssetsV4: 'importedAssetsV4',
+  systemViewerExportsV4: 'systemViewerExportsV4',
+  hiddenProjectTypesV4: 'hiddenProjectTypesV4',
+  projectTypeOrderV4: 'projectTypeOrderV4',
+  projectTypeAliasesV4: 'projectTypeAliasesV4',
+  captureHiddenV4: 'captureHiddenV4',
+  requestedStageV4: 'requestedStageV4',
   privacyAccepted: 'privacy_accepted_v1',
+  assetAIConsent: 'asset_ai_consent_v1',
+  assetVectorConsent: 'asset_vector_consent_v1',
   installationId: 'anonymous_installation_id_v1',
   sessionToken: 'anonymous_session_token_v1',
   sessionExpiresAt: 'anonymous_session_expires_at_v1',
@@ -19,6 +28,11 @@ export const STORAGE = {
   generatedResultV3: 'generatedResultV3',
   evaluationSessionV3: 'evaluationSessionV3',
   builderV3: 'archbuddyBuilderV3',
+  libraryHandoffV4: 'libraryHandoffV4',
+  capturePreviewsV4: 'capturePreviewsV4',
+  captureCatalogV4: 'captureCatalogV4',
+  descriptionProgressV4: 'descriptionProgressV4',
+  promptGroupsV4: 'promptGroupsV4',
   analyticsConsent: 'analytics_consent_v1',
 };
 
@@ -58,6 +72,18 @@ export const EVALUATION_MODULE_KEYS = Object.freeze(INTENT_MODULES
   .map(module => module.key)
   .filter(key => key !== 'reference_summary' && key !== 'negative_constraints'));
 
+export function normalizeLibraryTags(values) {
+  const seen = new Set();
+  return (Array.isArray(values) ? values : [])
+    .map(value => String(value ?? '').replaceAll('\u3000', ' ').trim().replace(/\s+/g, ' ').slice(0, 24))
+    .filter(value => {
+      const key = value.toLocaleLowerCase();
+      if (!value || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 5);
+}
 export function normalizeProjectType(value) {
   return String(value ?? '').replaceAll('\u3000', ' ').trim().replace(/\s+/g, ' ');
 }
@@ -289,6 +315,7 @@ function normalizeSourceReference(input = {}, schemeId) {
     analysisId: cleanText(input.analysisId, 80) || null,
     selectionId: cleanText(input.selectionId, 80) || null,
     displayName: safeReferenceName(input.displayName),
+    tags: normalizeLibraryTags(input.tags),
     sourceType: ['page-image', 'screenshot', 'paste', 'file'].includes(input.sourceType) ? input.sourceType : 'file',
     mimeType: ['image/png', 'image/jpeg', 'image/webp'].includes(input.mimeType) ? input.mimeType : null,
     byteSize: Number.isInteger(Number(input.byteSize)) ? Number(input.byteSize) : 0,
@@ -336,8 +363,7 @@ export function normalizePromptScheme(input = {}, now = new Date().toISOString()
     byNumber.set(normalized.versionNumber, normalized);
   });
   const versions = [...byNumber.values()]
-    .sort((left, right) => left.versionNumber - right.versionNumber)
-    .slice(-5);
+    .sort((left, right) => left.versionNumber - right.versionNumber);
   const current = versions.at(-1) ?? null;
   const modules = current ? normalizeIntentModules(current.modulesSnapshot) : normalizeIntentModules(input.modules);
   const references = (Array.isArray(input.sourceReferences) ? input.sourceReferences : [])
@@ -347,6 +373,8 @@ export function normalizePromptScheme(input = {}, now = new Date().toISOString()
     schemeId,
     draftId: schemeId,
     name: cleanText(input.name, 80) || '未命名提示词方案',
+    projectName: cleanText(input.projectName, 80),
+    category: cleanText(input.category, 40),
     createdAt: cleanText(input.createdAt, 40) || now,
     updatedAt: cleanText(input.updatedAt, 40) || now,
     lastAnalyzedAt: cleanText(input.lastAnalyzedAt, 40) || null,
@@ -473,4 +501,17 @@ export function normalizeEvaluationSession(input = {}) {
     consentConfirmed: input.consentConfirmed === true,
     updatedAt: cleanText(input.updatedAt, 40) || new Date().toISOString(),
   };
+}
+
+export function orderedProjectTypes(custom = [], hidden = [], order = []) {
+  const available = [...new Set([...PRESET_TYPES, ...custom])].filter(type => !hidden.includes(type));
+  return [...new Set([...order.filter(type => available.includes(type)), ...available])];
+}
+export function resolveProjectType(type, aliases = {}) {
+  const visited = new Set();
+  while (Object.hasOwn(aliases, type) && !visited.has(type)) {
+    visited.add(type);
+    type = aliases[type];
+  }
+  return type;
 }

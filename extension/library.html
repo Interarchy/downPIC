@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>图词库 · ArchBuddy</title>
+  <link rel="stylesheet" href="library.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="icons/icon-48.png" alt="" /><strong>ArchBuddy</strong><span>图词库</span></div>
+    <div class="top-actions">
+      <button id="refresh-library" type="button" class="quiet-button">刷新</button>
+      <button id="open-sidepanel" type="button" class="outline-button">打开侧栏</button>
+    </div>
+  </header>
+  <main class="workspace">
+    <div id="asset-consent" class="asset-consent" hidden><span>开启后，新下载图片生成视觉描述；图库文本会生成本地向量，搜索时只发送一次查询生成向量。</span><button id="enable-asset-ai" class="solid-button">开启图库 AI 与本地向量</button><a href="privacy.html" target="_blank">处理说明</a></div>
+    <div class="library-shell">
+      <aside class="library-sidebar" aria-label="图词库导航">
+        <nav class="mode-switch" aria-label="素材类别">
+          <button id="show-captures" type="button" class="mode-button is-active" aria-pressed="true" title="采集的图片">
+            <span class="mode-icon image-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.2" y="4" width="17.6" height="16" rx="2"/><circle cx="8.4" cy="9.1" r="1.5"/><path d="m4 17 5.2-5 3.6 3.1 2.6-2.2 5.2 4.7"/></svg></span>
+            <span>图库<small id="capture-count">0 张图片</small></span>
+          </button>
+          <button id="show-prompts" type="button" class="mode-button" aria-pressed="false" title="生成的提示词库">
+            <span class="mode-icon prompt-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4.5h9l3 3V20H6z"/><path d="M15 4.5V8h3M9 11h6M9 14h6M9 17h4"/></svg></span>
+            <span>词库<small id="prompt-count">0 份方案</small></span>
+          </button>
+        </nav>
+        <div id="capture-sidebar" class="sidebar-section">
+          <div class="sidebar-heading">项目类型 <span>／ 项目名称</span></div>
+          <nav id="capture-folders" class="capture-folders" aria-label="项目类型和项目名称"></nav>
+        </div>
+        <div id="prompt-sidebar" class="sidebar-section" hidden>
+          <div class="sidebar-heading">我的分组</div>
+          <nav id="prompt-sidebar-list" class="prompt-sidebar-list" aria-label="提示词方案"></nav>
+        </div>
+        <div class="sidebar-tools" aria-label="图库工具">
+          <div id="folder-import-drop" class="sidebar-tool-card folder-import-drop">
+            <button id="import-local-folder" type="button" class="sidebar-action-button">
+              <span class="sidebar-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.8 8 6.4 5h4.2l1.7 2.4h8.1v11.2H3.8z" fill="#fff"/><path d="M12 10.4v5.2M9.4 13h5.2" stroke="#25634b" stroke-width="1.9"/></svg></span>
+              <span class="sidebar-tool-copy"><strong>导入文件夹</strong><small>多选 / 拖入</small></span>
+            </button>
+          </div>
+          <input id="local-folder-files" type="file" webkitdirectory directory multiple hidden />
+          <div class="sidebar-tool-card generate-card">
+            <button id="generate-missing-descriptions" type="button" class="sidebar-action-button">
+              <span class="sidebar-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4.5l1.7 4.6 4.6 1.7-4.6 1.7L12 17.1l-1.7-4.6-4.6-1.7 4.6-1.7z"/><path d="M18.8 16.3l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z"/></svg></span>
+              <span class="sidebar-tool-copy"><strong>生成概要描述</strong><small>6 并发</small></span>
+            </button>
+            <div id="description-progress" class="description-progress" role="progressbar" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" hidden>
+              <div class="progress-track"><div id="description-progress-bar" class="progress-bar"></div></div>
+              <div class="progress-copy"><span id="description-progress-text">0 / 0</span><span id="description-progress-detail">等待开始</span><button id="description-progress-failed" type="button" class="progress-failed" hidden></button></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <div class="library-content">
+        <section id="captures-section" class="library-section">
+          <div class="section-heading">
+            <input id="capture-search" class="natural-search" type="search" aria-label="搜索采集图片" placeholder="描述你想找的图片，例如：黄昏下带庭院的白色学校" autocomplete="off" />
+            <button id="search-captures" type="button" class="solid-button search-submit">搜索</button>
+            <div class="capture-actions">
+              <button id="link-downloads" type="button" class="outline-button" hidden>关联图片预览</button>
+              <input id="capture-folder-files" type="file" webkitdirectory directory multiple accept="image/png,image/jpeg,image/webp" hidden />
+              <button id="refresh-captures" type="button" class="quiet-button">刷新图片</button>
+            </div>
+          </div>
+          <p id="import-feedback" class="search-status" role="status"></p>
+          <p id="capture-search-status" class="search-status" role="status"></p>
+          <div id="system-viewer-notice" class="system-viewer-notice" role="status" hidden><span id="system-viewer-message"></span><button id="open-system-viewer" type="button" class="outline-button" hidden>用系统看图软件打开</button></div>
+          <div class="capture-breadcrumb"><button id="capture-back" type="button" class="quiet-button" hidden>← 返回项目</button><div id="capture-path" class="capture-path"></div></div>
+          <div id="capture-content-layout" class="capture-detail-layout">
+            <div><div id="capture-project-grid" class="capture-project-grid"></div><div id="capture-grid" class="capture-grid"></div></div>
+            <aside id="capture-detail" class="detail" hidden></aside>
+          </div>
+          <p id="capture-preview-help" class="capture-preview-help" hidden>这些旧图片还没有库内预览。选择电脑中的 ArchBuddy 下载目录后，可为匹配的图片补齐预览；原图仍留在下载目录。</p>
+          <div id="capture-empty" class="capture-empty" hidden>
+            <h2>还没有采集的图片</h2>
+            <p>开启网页图片工具并保存图片后，会按项目类型和项目名称出现在这里。</p>
+          </div>
+        </section>
+        <section id="prompts-section" class="library-section" hidden>
+          <div class="prompt-toolbar">
+            <input id="library-search" class="natural-search" type="search" aria-label="搜索提示词图片" placeholder="用自然语言查找图片或提示词，例如：暖光下的混凝土庭院" autocomplete="off" />
+            <button id="search-prompts" type="button" class="solid-button search-submit">搜索</button>
+            <input id="group-name" maxlength="40" aria-label="新分组名称" placeholder="新分组名称" />
+            <button id="create-group" type="button" class="solid-button">新建分组</button>
+            <select id="group-select" aria-label="目标分组"></select>
+            <button id="move-selected" type="button" class="outline-button" disabled>移入分组</button>
+          </div>
+          <p id="prompt-search-status" class="search-status" role="status"></p>
+          <div class="prompt-filter-row">
+            <select id="category-filter" aria-label="分类"><option value="">全部分类</option></select>
+            <span id="selected-count">未选择图片卡</span>
+            <p id="result-count" class="result-count"></p>
+            <div id="library-summary" hidden></div>
+          </div>
+          <div class="content-layout">
+            <section class="collection" aria-label="来源参考图与提示词">
+              <div id="library-grid" class="asset-grid"></div>
+              <div id="empty-state" class="empty-state" hidden>
+                <h2>还没有已确认的提示词方案</h2>
+                <p>在侧栏完成一次“整体确认”，来源参考图与 Prompt 会一起出现在这里。</p>
+                <button id="empty-open-panel" type="button" class="solid-button">打开侧栏</button>
+              </div>
+              <p id="no-results" class="no-results" hidden>没有找到符合条件的方案。可试试其他关键词或分类。</p>
+            </section>
+            <aside id="asset-detail" class="detail" aria-label="方案详情">
+              <div class="detail-placeholder">选择一张参考图，查看关联的方案和 Prompt。</div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <dialog id="image-viewer" class="image-viewer"><button id="close-image-viewer" class="viewer-close" aria-label="关闭大图">×</button><img id="viewer-image" alt="图片大图" /></dialog>
+  <dialog id="delete-capture-dialog" class="delete-dialog">
+    <form method="dialog">
+      <h2 id="delete-capture-title">删除图片</h2>
+      <p id="delete-capture-description"></p>
+      <label><input id="delete-original" type="checkbox" />同时删除电脑中的下载原图（不可恢复）</label>
+      <p class="dialog-note">仅处理本次列出的图片；电脑上的空文件夹会保留。</p>
+      <div class="detail-actions"><button value="cancel" class="quiet-button">取消</button><button id="confirm-delete-capture" value="delete" class="danger-button">确认删除</button></div>
+    </form>
+  </dialog>
+  <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
+  <div id="library-toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="library.mjs"></script>
+</body>
+</html>

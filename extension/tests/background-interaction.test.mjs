@@ -5,7 +5,9 @@ const calls = [];
 let messageListener;
 
 globalThis.chrome = {
+  alarms: { onAlarm: { addListener: () => {} }, create: async () => {} },
   storage: {
+    onChanged: { addListener: () => {} },
     session: {
       setAccessLevel: () => undefined,
       set: async () => {},
@@ -41,6 +43,8 @@ globalThis.chrome = {
     },
   },
   downloads: {
+    onChanged: { addListener: () => {} },
+    onErased: { addListener: () => {} },
     download: async () => 1,
     show: async downloadId => calls.push(['download-show', downloadId]),
   },

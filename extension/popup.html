@@ -14,31 +14,25 @@
       </header>
 
       <section class="switch-row">
-        <div><strong>网页图片工具</strong><p id="capture-copy">功能已关闭</p></div>
+        <div><strong id="capture-title">打开图片浏览器下载浮框</strong><p id="capture-copy">功能已关闭</p></div>
         <label class="switch">
-          <span class="sr-only">开启或关闭网页图片工具</span>
+          <span class="sr-only">打开或关闭图片浏览器下载浮框</span>
           <input id="capture-enabled" type="checkbox" />
           <span class="switch-track"></span>
         </label>
       </section>
 
-      <section class="project-section">
-        <div class="section-heading"><strong>默认项目类型</strong><span id="default-badge">文化建筑</span></div>
-        <label class="sr-only" for="preset-type">预设项目类型</label>
-        <select id="preset-type">
-          <optgroup id="preset-options" label="预设类型"></optgroup>
-          <optgroup id="custom-options" label="我的类型"></optgroup>
-        </select>
-        <label class="sr-only" for="custom-type">自定义项目类型</label>
-        <div class="custom-row">
-          <input id="custom-type" type="text" maxlength="40" autocomplete="off" placeholder="输入自定义类型" />
-          <button id="save-type" type="button">设为默认</button>
-        </div>
-        <p id="type-feedback" class="feedback" aria-live="polite"></p>
-      </section>
-
       <button id="open-analysis" class="analysis-button" type="button">
-        <span><strong>打开反推提示词</strong><small>粘贴图片，或查看网页选图结果</small></span>
+        <span><strong>反馈提示词</strong><small>粘贴图片，或查看网页选图结果</small></span>
+        <b aria-hidden="true">›</b>
+      </button>
+
+      <button id="open-optimize" class="analysis-button" type="button">
+        <span><strong>提示词迭代优化</strong><small>对照已确认提示词，调整生成效果</small></span>
+        <b aria-hidden="true">›</b>
+      </button>
+      <button id="open-library" class="analysis-button" type="button">
+        <span><strong>打开图词库</strong><small>查看采集图片与生成的提示词</small></span>
         <b aria-hidden="true">›</b>
       </button>
 

@@ -1,6 +1,8 @@
 param()
 
 $ErrorActionPreference = 'Stop'
+# Select the Security module belonging to this PowerShell version.
+Import-Module (Join-Path $PSHOME 'Modules/Microsoft.PowerShell.Security/Microsoft.PowerShell.Security.psd1') -ErrorAction Stop
 $projectRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $serverPath = Join-Path $projectRoot 'cloudbase\start.mjs'
 $settingsPath = Join-Path $projectRoot 'plugin-prototype\runtime\developer-ai-settings.json'
@@ -25,6 +27,22 @@ $previousSecret = $env:ARCHBUDDY_SESSION_SECRET
 $previousPort = $env:PORT
 $previousAnalytics = $env:ARCHBUDDY_ANALYTICS_ENABLED
 $previousConcurrent = $env:ARCHBUDDY_MAX_CONCURRENT
+$previousMaxCalls = $env:ARCHBUDDY_MAX_CALLS_PER_PROCESS
+$previousEmbeddingKey = $env:ARCHBUDDY_EMBEDDING_API_KEY
+$embeddingSettingsPath = Join-Path $projectRoot 'plugin-prototype/runtime/embedding-settings.json'
+if ([string]::IsNullOrWhiteSpace($env:ARCHBUDDY_EMBEDDING_API_KEY) -and (Test-Path -LiteralPath $embeddingSettingsPath)) {
+  $embeddingSettings = Get-Content -LiteralPath $embeddingSettingsPath -Raw | ConvertFrom-Json
+  if ($embeddingSettings.projectId -ne 'archbuddy' -or $embeddingSettings.stage -ne 'development') {
+    throw 'Embedding configuration does not belong to ArchBuddy development.'
+  }
+  $embeddingSecureKey = ConvertTo-SecureString $embeddingSettings.encryptedApiKey
+  $embeddingPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($embeddingSecureKey)
+  try { $env:ARCHBUDDY_EMBEDDING_API_KEY = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($embeddingPointer) }
+  finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($embeddingPointer)
+    $embeddingSecureKey.Dispose()
+  }
+}
 
 $bytes = New-Object byte[] 48
 $generator = [System.Security.Cryptography.RandomNumberGenerator]::Create()
@@ -36,7 +54,9 @@ try {
 }
 $env:ARCHBUDDY_QUOTA_MODE = 'process-test'
 $env:ARCHBUDDY_ANALYTICS_ENABLED = 'false'
-$env:ARCHBUDDY_MAX_CONCURRENT = '3'
+$env:ARCHBUDDY_MAX_CONCURRENT = '6'
+$env:ARCHBUDDY_MAX_CALLS_PER_PROCESS = '300'
+$env:ARCHBUDDY_CALLS_PER_MINUTE = '20'
 $env:PORT = '8080'
 
 Write-Host 'ArchBuddy V3 local service is starting at http://127.0.0.1:8080'
@@ -51,4 +71,6 @@ try {
   $env:PORT = $previousPort
   $env:ARCHBUDDY_ANALYTICS_ENABLED = $previousAnalytics
   $env:ARCHBUDDY_MAX_CONCURRENT = $previousConcurrent
+  $env:ARCHBUDDY_MAX_CALLS_PER_PROCESS = $previousMaxCalls
+  $env:ARCHBUDDY_EMBEDDING_API_KEY = $previousEmbeddingKey
 }

@@ -6,11 +6,15 @@
     captureEnabled: 'capture_enabled',
     projectType: 'default_project_type',
     customTypes: 'custom_project_types',
+    hiddenTypes: 'hiddenProjectTypesV4',
+    typeOrder: 'projectTypeOrderV4',
   };
   const PRESET_TYPES = ['文化建筑', '教育建筑', '办公建筑', '社区建筑'];
   let captureEnabled = false;
   let defaultType = '文化建筑';
   let customTypes = [];
+  let hiddenTypes = [];
+  let typeOrder = [];
   let toolbar = null;
   let currentImage = null;
   let showTimer = null;
@@ -18,15 +22,18 @@
   let busy = false;
   let toolbarPinned = false;
 
-  chrome.storage.local.get([STORAGE.captureEnabled, STORAGE.projectType, STORAGE.customTypes]).then(values => {
+  chrome.storage.local.get([STORAGE.captureEnabled, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenTypes, STORAGE.typeOrder]).then(values => {
     captureEnabled = Boolean(values[STORAGE.captureEnabled]);
     defaultType = normalize(values[STORAGE.projectType]) || defaultType;
     customTypes = Array.isArray(values[STORAGE.customTypes])
       ? values[STORAGE.customTypes].map(normalize).filter(Boolean)
       : [];
+    hiddenTypes = Array.isArray(values[STORAGE.hiddenTypes]) ? values[STORAGE.hiddenTypes] : [];
+    typeOrder = Array.isArray(values[STORAGE.typeOrder]) ? values[STORAGE.typeOrder] : [];
     populateCategorySelect();
   });
   chrome.storage.onChanged.addListener(changes => {
+    if (changes[STORAGE.typeOrder]) { typeOrder = changes[STORAGE.typeOrder].newValue || []; populateCategorySelect(); }
     if (changes[STORAGE.captureEnabled]) {
       captureEnabled = Boolean(changes[STORAGE.captureEnabled].newValue);
       if (!captureEnabled) removeToolbar(true);
@@ -39,6 +46,10 @@
       customTypes = Array.isArray(changes[STORAGE.customTypes].newValue)
         ? changes[STORAGE.customTypes].newValue.map(normalize).filter(Boolean)
         : [];
+      populateCategorySelect();
+    }
+    if (changes[STORAGE.hiddenTypes]) {
+      hiddenTypes = Array.isArray(changes[STORAGE.hiddenTypes].newValue) ? changes[STORAGE.hiddenTypes].newValue : [];
       populateCategorySelect();
     }
   });
@@ -116,7 +127,8 @@
   function populateCategorySelect() {
     const select = toolbar?.querySelector('[data-role="category"]');
     if (!select) return;
-    const values = [...new Set([...PRESET_TYPES, ...customTypes])];
+    const available = [...new Set([...PRESET_TYPES, ...customTypes])].filter(type => !hiddenTypes.includes(type));
+    const values = [...new Set([...typeOrder.filter(type => available.includes(type)), ...available])];
     select.replaceChildren(...values.map(value => {
       const option = document.createElement('option');
       option.value = value;
@@ -260,10 +272,12 @@
         input.focus();
         return;
       }
-      customTypes = [...new Set([...customTypes, value])];
+      if (PRESET_TYPES.includes(value)) hiddenTypes = hiddenTypes.filter(type => type !== value);
+      else customTypes = [...new Set([...customTypes, value])];
       defaultType = value;
       await chrome.storage.local.set({
         [STORAGE.customTypes]: customTypes,
+        [STORAGE.hiddenTypes]: hiddenTypes,
         [STORAGE.projectType]: defaultType,
       });
       toolbar.querySelector('.downpic-custom-row').hidden = true;

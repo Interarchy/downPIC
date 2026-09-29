@@ -22,11 +22,11 @@ test('弹窗和侧栏脚本引用的静态元素都真实存在', () => {
   }
 });
 
-test('Logo 弹窗包含总开关、项目类型和反推侧栏入口', () => {
-  for (const id of ['capture-enabled', 'preset-type', 'custom-type', 'open-analysis']) {
-    assert.match(source['popup.html'], new RegExp(`id="${id}"`), `弹窗缺少 ${id}`);
+test('Logo 弹窗提供三条入口和网页图片工具开关', () => {
+  for (const id of ['capture-enabled', 'open-analysis', 'open-optimize', 'open-library']) {
+    assert.match(source['popup.html'], new RegExp('id="' + id + '"'), '弹窗缺少 ' + id);
   }
-  assert.match(source['popup.mjs'], /STORAGE\.captureEnabled/);
+  assert.match(source['popup.mjs'], /STORAGE\.requestedStageV4/);
   assert.match(source['popup.mjs'], /capture\.setEnabled/);
 });
 
@@ -51,11 +51,12 @@ test('网页浮栏初始无空状态行，主要控件使用统一视觉尺寸',
   assert.match(source['content.css'], /\.downpic-category-label select \{[\s\S]*?height: 36px;[\s\S]*?font: 500 14px/);
 });
 
-test('侧栏下载区提供最近下载路径和文件夹定位按钮', () => {
-  assert.match(source['sidepanel.html'], /id="last-download-path"/);
-  assert.match(source['sidepanel.html'], /id="show-download"/);
-  assert.match(source['sidepanel.mjs'], /STORAGE\.lastDownload|lastDownload/);
-  assert.match(source['sidepanel.mjs'], /download\.show/);
+test('侧栏图资库提供全页入口和项目类型管理', () => {
+  for (const id of ['open-library', 'project-type-list', 'custom-type', 'save-type']) {
+    assert.match(source['sidepanel.html'], new RegExp('id="' + id + '"'), '侧栏缺少 ' + id);
+  }
+  assert.doesNotMatch(source['sidepanel.html'], /id="capture-preview"/);
+  assert.match(source['sidepanel.mjs'], /STORAGE\.hiddenProjectTypesV4/);
 });
 
 test('扩展端没有模型 Key、DeepSeek 地址或管理员测试凭据', () => {

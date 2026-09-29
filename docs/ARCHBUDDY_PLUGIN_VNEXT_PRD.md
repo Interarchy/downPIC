@@ -1,6 +1,6 @@
 # ArchBuddy｜从 Reference 到 Render 的 AI 建筑视觉助手｜PRD 初稿 v0.1
 
-> - 文档状态：初稿，待用户研究与技术评审
+> - 文档状态：历史初稿，描述 0.3.1 阶段的规划；当前能力请看 [简版 PRD](ARCHBUDDY_CURRENT_PRD.md)
 > - 当前分支：`direction/plugin`，不合并或改写 `master` 及旧方向
 > - 当前产品基线：Chrome 扩展 `0.3.1 Beta`
 > - 下一阶段重点：V2「结构化理解 + 可编辑设计意图」

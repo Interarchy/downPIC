@@ -1,14 +1,15 @@
 import {
   PRESET_TYPES, STORAGE, PRINCIPLE, PRINCIPLE_TITLE, compileIntentPrompt, createEmptyIntentModules,
-  normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft, normalizeProjectType,
+  normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft, normalizeProjectType, orderedProjectTypes,
 } from './shared.mjs';
 import { putSourceImage, getSourceImage, deleteSourceImagesByScheme } from './source-image-store.mjs';
+import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
 
 // 三参考图构建与效果图直接编辑共用已确认提示词库。
 const $ = id => document.getElementById(id);
 const state = {
   privacyAccepted: false, backendReady: false, stage: 'analysis', selection: null,
-  projectType: PRESET_TYPES[0], customTypes: [], lastDownload: null,
+  projectType: PRESET_TYPES[0], customTypes: [], hiddenTypes: [], typeOrder: [], lastDownload: null,
   schemes: [], scheme: null, working: null, generated: null, evaluation: null,
 };
 const labels = { compliant: '符合', partial: '部分符合', deviation: '明显偏差', unknown: '无法判断' };
@@ -22,6 +23,8 @@ let confirming = false;
 let confirmedRevision = null;
 let saveQueue = Promise.resolve();
 let workingQueue = Promise.resolve();
+let libraryHandoffBusy = false;
+let sidepanelReady = false;
 const imageUrls = new Map();
 
 function node(tag, className, text) {
@@ -332,6 +335,10 @@ async function analyzeReference(refId) {
     result.modules = result.modules.map(module => builder.bindings[module.key] === refId
       ? previous?.modules.find(item => item.key === module.key) || module : module);
     ref.result = result;
+    if (Number.isSafeInteger(ref.captureDownloadId)) {
+      const summary = result.modules.find(module => module.key === 'reference_summary')?.value;
+      if (summary) await request('capture.description.save', { downloadId: ref.captureDownloadId, description: summary.slice(0,1000), previousDescription: '' }).catch(() => {});
+    }
     await persistBuilder();
     referenceMessages.set(refId, { text: '分析完成，可编辑并加入需要的维度', tone: 'success' });
   } catch (error) {
@@ -345,20 +352,12 @@ async function confirmPrompt() {
     await renderReferences();
     await persistBuilder();
     const payload = { builderId: builder.builderId, compiledPrompt: promptText(), confirmed: true, baseVersionId: builder.versionId };
-    let response;
-    try { response = await request('builder.confirm', payload); }
-    catch (error) {
-      if (error.code !== 'SCHEME_LIMIT') throw error;
-      if (!confirm('最多保留 5 份。是否移出最旧的“' + error.oldest.name + '”，保存这份提示词？')) return;
-      response = await request('builder.confirm', { ...payload, replaceOldestId: error.oldest.schemeId });
-    }
+    const response = await request('builder.confirm', payload);
     builder.confirmedPrompt = response.version.compiledPrompt;
     builder.versionId = response.version.versionId;
     await persistBuilder();
     await loadLibrary();
-    feedback('copy-feedback', response.cleanupWarning
-      ? '提示词已确认，可以复制；旧方案图片清理未完成，请稍后重试清理。'
-      : '已加入最近确认的提示词库，现在可以复制', 'success');
+    feedback('copy-feedback', '已确认并保存，现在可以复制', 'success');
   } finally { confirming = false; await renderReferences(); }
 }
 async function copy(text, fallbackId, feedbackId) {
@@ -382,13 +381,80 @@ async function newBuilder() {
   $('prompt-name').value = ''; $('copy-fallback').hidden = true;
   await persistBuilder(); feedback('copy-feedback'); await renderReferences();
 }
+async function handleLibraryHandoff(handoff) {
+  if ((!handoff?.schemeId && !handoff?.sourceReferenceId) || libraryHandoffBusy) return;
+  libraryHandoffBusy = true;
+  try {
+    if (handoff.mode === 'capture') {
+      if (analysisJobs.size || editingImage || confirming) throw new Error('请等待当前图片处理完成后再从图库打开');
+      if (!state.privacyAccepted) throw new Error('请先确认图片处理说明，然后重新点击生成完整提示词');
+      let ref = builder.references.find(item => !item.sourceReferenceId);
+      if (!ref && builder.references.length < 3) { ref = freshReference(); builder.references.push(ref); }
+      if (!ref) {
+        if (!confirm('当前已有三张参考图。重新构建这张图库图片的提示词？已确认方案仍保留。')) return;
+        builder = freshBuilder(); ref = builder.references[0];
+      }
+      const record = await getSourceImage(handoff.sourceReferenceId);
+      const wasEmpty = !builder.modules.some(module => module.value);
+      switchStage('analysis');
+      await acceptReference([new File([record.blob], handoff.name || '图库参考图', { type: record.blob.type })], ref.id);
+      ref.captureDownloadId = handoff.downloadId ?? null;
+      await analyzeReference(ref.id);
+      if (ref.result && wasEmpty) {
+        builder.modules = normalizeIntentModules(ref.result.modules);
+        builder.bindings = Object.fromEntries(builder.modules.filter(module => module.enabled).map(module => [module.key, ref.id]));
+        builder.name ||= handoff.name || '图库参考图'; $('prompt-name').value = builder.name;
+        await persistBuilder(); await renderReferences();
+      }
+    } else if (handoff.mode === 'builder') {
+      const currentHasWork = builder && (builder.name.trim() || builder.references.some(ref => ref.sourceReferenceId)
+        || builder.modules.some(module => module.enabled && module.value));
+      if (currentHasWork && builder.confirmedPrompt !== promptText() && builder.builderId !== handoff.schemeId
+          && !confirm('切换到素材库中的方案？当前未确认的构建内容将被替换。')) return;
+      const response = await request('scheme.open', { schemeId: handoff.schemeId });
+      const scheme = normalizePromptScheme(response.scheme);
+      state.scheme = scheme; state.working = response.workingDraft; state.evaluation = null;
+      const references = scheme.sourceReferences.slice(0, 3).map(ref => ({
+        id: crypto.randomUUID(), sourceReferenceId: ref.sourceReferenceId,
+        name: ref.displayName, result: null,
+      }));
+      if (!references.length) references.push(freshReference());
+      const bindings = {};
+      for (const module of scheme.modules) {
+        if (!module.enabled || !module.value) continue;
+        const chosen = references.find(ref => ref.name === module.sourceHint?.displayName) || references[0];
+        if (chosen?.sourceReferenceId) bindings[module.key] = chosen.id;
+      }
+      builder = {
+        builderId: scheme.schemeId, name: scheme.name, references,
+        modules: normalizeIntentModules(scheme.modules), principleText: scheme.principleText,
+        bindings, confirmedPrompt: scheme.currentPrompt, versionId: scheme.currentVersionId,
+      };
+      focusedReference = references[0].id;
+      $('prompt-name').value = builder.name;
+      await persistBuilder();
+      await renderReferences();
+      switchStage('analysis');
+      feedback('builder-feedback', '已从素材库载入方案；修改后请重新整体确认。', 'success');
+    } else {
+      switchStage('optimize');
+      await openScheme(handoff.schemeId);
+      feedback('evaluation-feedback', '已从素材库选择方案。导入生成图后可开始评估。', 'success');
+    }
+  } catch (error) {
+    feedback('builder-feedback', error.message, 'error');
+  } finally {
+    await chrome.storage.session.remove(STORAGE.libraryHandoffV4);
+    libraryHandoffBusy = false;
+  }
+}
 async function loadLibrary() {
   const response = await request('scheme.list');
   state.schemes = response.schemes;
   $('library-list').replaceChildren();
   const select = $('scheme-select');
   select.replaceChildren(new Option('从最近确认的提示词库中选择', ''));
-  for (const scheme of state.schemes) {
+  for (const scheme of state.schemes.slice(0, 5)) {
     select.add(new Option(scheme.name, scheme.schemeId));
     const row = node('div', 'draft-item');
     const info = node('div');
@@ -405,6 +471,9 @@ async function loadLibrary() {
     row.append(info, actions); $('library-list').append(row);
   }
   if (!state.schemes.length) $('library-list').append(node('p', 'section-note', '整体确认一份提示词后，会出现在这里。'));
+  if (state.scheme && ![...select.options].some(option => option.value === state.scheme.schemeId)) {
+    select.add(new Option(state.scheme.name, state.scheme.schemeId));
+  }
   select.value = state.scheme?.schemeId || '';
   renderEvaluationControls();
 }
@@ -423,7 +492,6 @@ async function openScheme(schemeId) {
   state.evaluation = evaluation.evaluationSession;
   confirmedRevision = null;
   $('scheme-select').value = schemeId;
-  $('evaluation-consent').checked = false;
   feedback('revision-feedback');
   renderGenerated(); renderEvaluation();
 }
@@ -437,11 +505,10 @@ function renderGenerated() {
   renderEvaluationControls();
 }
 function renderEvaluationControls() {
-  $('run-evaluation').disabled = evaluating || !state.generated || !state.scheme?.currentVersionId || !state.backendReady || !$('evaluation-consent').checked;
+  $('run-evaluation').disabled = evaluating || !state.generated || !state.scheme?.currentVersionId || !state.backendReady;
   $('run-evaluation').textContent = evaluating ? '评估中…' : '开始评估';
   $('scheme-select').disabled = evaluating;
   $('generated-choose').disabled = evaluating;
-  $('evaluation-consent').disabled = evaluating;
   $('baseline-details').hidden = !state.scheme;
   $('baseline-prompt').textContent = state.scheme?.currentPrompt || '';
 }
@@ -453,8 +520,7 @@ async function acceptGenerated(files) {
     mimeType: file.type, base64: dataUrl.slice(dataUrl.indexOf(',') + 1), byteSize: file.size, displayName: file.name,
   } });
   state.generated = response.generatedResult; state.evaluation = null; confirmedRevision = null;
-  $('evaluation-consent').checked = false;
-  feedback('evaluation-feedback', '效果图已就绪，请选择基本提示词并确认发送');
+  feedback('evaluation-feedback', '效果图已就绪，选择基本提示词后可开始评估');
   renderGenerated(); renderEvaluation();
 }
 async function evaluate() {
@@ -467,7 +533,7 @@ async function evaluate() {
   try {
     const result = await request('evaluation.run', {
       schemeId: state.scheme.schemeId, versionId: state.scheme.currentVersionId,
-      generatedResultId: state.generated.generatedResultId, consentConfirmed: $('evaluation-consent').checked,
+      generatedResultId: state.generated.generatedResultId, consentConfirmed: true,
     });
     state.evaluation = result.evaluationSession;
     state.working = (await request('scheme.working.get', { schemeId: state.scheme.schemeId })).workingDraft;
@@ -588,30 +654,82 @@ async function refreshBackend() {
   $('session-status').dataset.state = state.backendReady ? 'online' : 'offline';
   await renderReferences(); renderEvaluationControls();
 }
-function renderCapture() {
-  $('capture-image').hidden = !state.selection;
-  $('capture-preview').classList.toggle('is-empty', !state.selection);
-  if (state.selection) $('capture-image').src = state.selection.imagePayload;
-  $('capture-caption').textContent = state.selection?.displayName || '选择一张图片';
-  $('download-current').disabled = !state.selection;
-  $('show-download').disabled = !state.lastDownload;
-  $('last-download-path').textContent = state.lastDownload?.filename || state.lastDownload?.relativePath || '';
+function availableTypes() {
+  return orderedProjectTypes(state.customTypes, state.hiddenTypes, state.typeOrder);
 }
 function populateTypes() {
-  $('preset-type').replaceChildren();
-  for (const type of [...new Set([...PRESET_TYPES, ...state.customTypes])]) $('preset-type').add(new Option(type, type));
-  $('preset-type').value = state.projectType;
-}
-async function captureFile(files) {
-  const file = await imageFile(files);
-  await request('image.paste', { dataUrl: await fileDataUrl(file), title: file.name, sourceType: 'file' });
-  await refreshCapture();
+  const target = $('project-type-list');
+  target.replaceChildren();
+  for (const type of availableTypes()) {
+    const row = node('div', 'project-type-row');
+    row.setAttribute('role', 'listitem');
+    row.draggable = true;
+    const grip = node('span', 'type-grip', '⠿');
+    grip.title = '拖动调整顺序';
+    row.append(grip);
+    row.addEventListener('dragstart', event => {
+      event.dataTransfer.setData('text/plain', type);
+      event.dataTransfer.effectAllowed = 'move';
+      row.classList.add('is-dragging');
+    });
+    row.addEventListener('dragend', () => row.classList.remove('is-dragging'));
+    row.addEventListener('dragover', event => { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; });
+    row.addEventListener('drop', async event => {
+      event.preventDefault();
+      const from = event.dataTransfer.getData('text/plain');
+      if (from === type || !availableTypes().includes(from)) return;
+      const next = availableTypes().filter(value => value !== from);
+      next.splice(next.indexOf(type), 0, from);
+      try {
+        await chrome.storage.local.set({ [STORAGE.projectTypeOrderV4]: next });
+        state.typeOrder = next;
+        populateTypes();
+      } catch (error) { feedback('type-feedback', error.message, 'error'); }
+    });
+    const rename = button('改名', async () => {
+      const name = prompt('修改项目类型名称', type);
+      if (name === null) return;
+      await request('project-types.rename', { from: type, name });
+      await reloadTypes();
+    }, 'type-rename', 'type-feedback');
+    row.append(rename);
+    const choose = node('button', 'type-choice' + (type === state.projectType ? ' is-selected' : ''), type);
+    choose.type = 'button';
+    choose.setAttribute('aria-label', type + (type === state.projectType ? '，当前默认类型' : '，设为默认类型'));
+    choose.addEventListener('click', async () => {
+      state.projectType = type;
+      await chrome.storage.local.set({ [STORAGE.projectType]: type });
+      populateTypes();
+      feedback('type-feedback', '默认类型已设为' + type, 'success');
+    });
+    const remove = node('button', 'type-remove', '删除');
+    remove.type = 'button';
+    remove.setAttribute('aria-label', '删除项目类型' + type);
+    remove.addEventListener('click', async () => {
+      if (availableTypes().length === 1) {
+        feedback('type-feedback', '至少保留一个项目类型', 'error');
+        return;
+      }
+      if (PRESET_TYPES.includes(type)) state.hiddenTypes = [...new Set([...state.hiddenTypes, type])];
+      state.customTypes = state.customTypes.filter(value => value !== type);
+      if (state.projectType === type) state.projectType = availableTypes()[0];
+      await chrome.storage.local.set({
+        [STORAGE.customTypes]: state.customTypes,
+        [STORAGE.hiddenProjectTypesV4]: state.hiddenTypes,
+        [STORAGE.projectType]: state.projectType,
+      });
+      populateTypes();
+      feedback('type-feedback', '已移除类型“' + type + '”；已保存图片不受影响', 'success');
+    });
+    row.append(choose, remove);
+    target.append(row);
+  }
 }
 async function refreshCapture() {
   const session = await chrome.storage.session.get([STORAGE.selection, STORAGE.lastDownload]);
   state.selection = session[STORAGE.selection]; state.lastDownload = session[STORAGE.lastDownload];
-  renderCapture();
 }
+
 async function useCapture() {
   if (!state.selection || !builder || !state.privacyAccepted || editingImage || confirming) return;
   const refId = focusedReference || builder.references[0].id;
@@ -621,9 +739,14 @@ async function useCapture() {
 document.querySelectorAll('.tab').forEach(tab => action(tab, () => switchStage(tab.dataset.tab)));
 $('privacy-check').addEventListener('change', () => { $('privacy-accept').disabled = !$('privacy-check').checked; });
 action($('privacy-accept'), async () => {
-  await chrome.storage.local.set({ [STORAGE.privacyAccepted]: true }); state.privacyAccepted = true;
+  await request('assets.consent', { enabled: true }); $('asset-ai-toggle').checked = true; state.privacyAccepted = true;
   document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true; await refreshBackend();
   if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
+});
+action($('asset-ai-toggle'), async () => {
+  const enabled = $('asset-ai-toggle').checked;
+  if (enabled && !confirm('新下载图片将自动发送预览生成描述；语义检索会发送查询与库内描述/提示词给 ArchBuddy 与 DeepSeek。确认开启？')) { $('asset-ai-toggle').checked = false; return; }
+  await request('assets.consent', { enabled });
 });
 action($('add-reference'), async () => {
   if (builder.references.length >= 3 || confirming || editingImage) return;
@@ -632,6 +755,31 @@ action($('add-reference'), async () => {
   document.querySelector('[data-reference="' + ref.id + '"]').scrollIntoView({ block: 'start', behavior: 'smooth' });
 });
 action($('new-builder'), newBuilder);
+async function importFolders(files) {
+  const control = $('import-local-folder');
+  if (control.disabled) return;
+  control.disabled = true;
+  feedback('import-feedback', '正在复制图片到本地图词库…');
+  try {
+    const result = await importLocalFolder(files, message => feedback('import-feedback', message));
+    await reloadTypes();
+    feedback('import-feedback', importSummary(result), 'success');
+  } catch (error) {
+    feedback('import-feedback', '导入失败：' + error.message, 'error');
+  } finally { control.disabled = false; }
+}
+action($('import-local-folder'), () => $('local-folder-files').click(), 'import-feedback');
+$('local-folder-files').addEventListener('change', event => {
+  const files = [...event.currentTarget.files]; event.currentTarget.value = '';
+  if (files.length) void importFolders(files);
+});
+wireFolderDrop($('folder-import-drop'), importFolders,
+  error => feedback('import-feedback', '导入失败：' + error.message, 'error'),
+  () => { if ($('import-local-folder').disabled) return false; feedback('import-feedback', '正在读取所拖入的文件夹…'); });
+action($('open-library'), async () => {
+  const tab = await chrome.tabs.create({ url: chrome.runtime.getURL('library.html') });
+  await chrome.sidePanel.close({ windowId: tab.windowId });
+});
 $('prompt-name').addEventListener('input', () => {
   builder.name = $('prompt-name').value; invalidateBuilder(); renderPrompt(); void persistBuilder();
 });
@@ -646,48 +794,37 @@ $('generated-file').addEventListener('change', () => {
   acceptGenerated([...$('generated-file').files]).catch(error => feedback('evaluation-feedback', error.message, 'error')); $('generated-file').value = '';
 });
 wireDrop($('generated-preview'), acceptGenerated, 'evaluation-feedback');
-$('evaluation-consent').addEventListener('change', renderEvaluationControls);
 action($('run-evaluation'), evaluate, 'evaluation-feedback');
 action($('confirm-revision'), confirmRevision, 'revision-feedback');
 action($('copy-revision'), () => confirmedRevision && copy(confirmedRevision, 'revision-copy-fallback', 'revision-feedback'), 'revision-feedback');
-action($('capture-choose'), () => $('capture-file').click(), 'download-feedback');
-$('capture-file').addEventListener('change', () => {
-  captureFile([...$('capture-file').files]).catch(error => feedback('download-feedback', error.message, 'error')); $('capture-file').value = '';
-});
-wireDrop($('capture-preview'), captureFile, 'download-feedback');
-action($('continue-analysis'), async () => {
-  if (!state.selection) return;
-  switchStage('analysis');
-  await useCapture();
-});
-$('preset-type').addEventListener('change', async () => {
-  state.projectType = $('preset-type').value;
-  await chrome.storage.local.set({ [STORAGE.projectType]: state.projectType });
-});
 action($('save-type'), async () => {
-  const type = normalizeProjectType($('custom-type').value);
+  const type = normalizeProjectType($('custom-type').value).slice(0, 40);
   if (!type) throw new Error('请输入分类名称');
-  state.customTypes = [...new Set([...state.customTypes, type])]; state.projectType = type;
-  await chrome.storage.local.set({ [STORAGE.customTypes]: state.customTypes, [STORAGE.projectType]: type });
-  $('custom-type').value = ''; populateTypes(); feedback('type-feedback', '分类已保存');
+  if (PRESET_TYPES.includes(type)) state.hiddenTypes = state.hiddenTypes.filter(value => value !== type);
+  else state.customTypes = [...new Set([...state.customTypes, type])];
+  state.projectType = type;
+  await chrome.storage.local.set({
+    [STORAGE.customTypes]: state.customTypes,
+    [STORAGE.hiddenProjectTypesV4]: state.hiddenTypes,
+    [STORAGE.projectType]: type,
+  });
+  $('custom-type').value = '';
+  populateTypes();
+  feedback('type-feedback', '分类已新增并设为默认', 'success');
 }, 'type-feedback');
-action($('download-current'), async () => {
-  if (!state.selection) return;
-  const response = await request('download.image', { dataUrl: state.selection.imagePayload, mimeType: state.selection.mimeType,
-    title: state.selection.displayName, pageTitle: state.selection.displayName, category: state.projectType });
-  state.lastDownload = response.download; renderCapture();
-  feedback('download-feedback', '已保存到 ' + response.filename, 'success');
-}, 'download-feedback');
-action($('show-download'), () => request('download.show', { downloadId: state.lastDownload?.downloadId }), 'download-feedback');
+$('custom-type').addEventListener('keydown', event => {
+  if (event.key === 'Enter') $('save-type').click();
+});
 $('analytics-toggle').addEventListener('change', () => request('analytics.consent.set', { enabled: $('analytics-toggle').checked }).catch(error => feedback('builder-feedback', error.message, 'error')));
 document.addEventListener('paste', event => {
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || !state.privacyAccepted) return;
   const files = [...event.clipboardData.files];
   if (!files.some(file => file.type.startsWith('image/'))) return;
   event.preventDefault();
-  const operation = state.stage === 'optimize' ? acceptGenerated(files) : state.stage === 'download' ? captureFile(files)
+  if (state.stage === 'download') switchStage('analysis');
+  const operation = state.stage === 'optimize' ? acceptGenerated(files)
     : acceptReference(files, focusedReference || builder.references[0].id);
-  operation.catch(error => feedback(state.stage === 'optimize' ? 'evaluation-feedback' : state.stage === 'download' ? 'download-feedback' : 'builder-feedback', error.message, 'error'));
+  operation.catch(error => feedback(state.stage === 'optimize' ? 'evaluation-feedback' : 'builder-feedback', error.message, 'error'));
 });
 chrome.runtime.onMessage.addListener(message => {
   if (message?.type === 'selection.changed' || message?.type === 'download.changed') {
@@ -696,14 +833,42 @@ chrome.runtime.onMessage.addListener(message => {
     }).catch(error => feedback('builder-feedback', error.message, 'error'));
   }
 });
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes[STORAGE.assetAIConsent]) $('asset-ai-toggle').checked = changes[STORAGE.assetAIConsent].newValue === true;
+  if (area === 'local' && changes[STORAGE.privacyAccepted]?.newValue) {
+    state.privacyAccepted = true; document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true;
+  }
+  if (sidepanelReady && area === 'local' && [STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectType].some(key => changes[key])) {
+    void reloadTypes().catch(error => feedback('type-feedback', error.message, 'error'));
+  }
+  if (sidepanelReady && area === 'session' && changes[STORAGE.requestedStageV4]?.newValue) {
+    void handleRequestedStage(changes[STORAGE.requestedStageV4].newValue);
+  }
+  if (sidepanelReady && area === 'session' && changes[STORAGE.libraryHandoffV4]?.newValue) {
+    void handleLibraryHandoff(changes[STORAGE.libraryHandoffV4].newValue);
+  }
+});
+async function handleRequestedStage(stage) {
+  if (!['analysis', 'optimize'].includes(stage)) return;
+  switchStage(stage);
+  await chrome.storage.session.remove(STORAGE.requestedStageV4);
+}
 window.addEventListener('beforeunload', releaseImageUrls);
 async function init() {
   const [local, session] = await Promise.all([
-    chrome.storage.local.get([STORAGE.privacyAccepted, STORAGE.projectType, STORAGE.customTypes, STORAGE.analyticsConsent]),
+    chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.privacyAccepted, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.analyticsConsent]),
     chrome.storage.session.get([STORAGE.builderV3, STORAGE.generatedResultV3]),
   ]);
   state.privacyAccepted = Boolean(local[STORAGE.privacyAccepted]);
-  state.projectType = local[STORAGE.projectType] || PRESET_TYPES[0]; state.customTypes = local[STORAGE.customTypes] || [];
+  $('asset-ai-toggle').checked = local[STORAGE.assetAIConsent] === true;
+  state.projectType = normalizeProjectType(local[STORAGE.projectType]) || PRESET_TYPES[0];
+  state.customTypes = Array.isArray(local[STORAGE.customTypes]) ? local[STORAGE.customTypes] : [];
+  state.hiddenTypes = Array.isArray(local[STORAGE.hiddenProjectTypesV4]) ? local[STORAGE.hiddenProjectTypesV4] : [];
+  state.typeOrder = Array.isArray(local[STORAGE.projectTypeOrderV4]) ? local[STORAGE.projectTypeOrderV4] : [];
+  if (!availableTypes().includes(state.projectType)) {
+    state.projectType = availableTypes()[0] || PRESET_TYPES[0];
+    await chrome.storage.local.set({ [STORAGE.projectType]: state.projectType });
+  }
   $('analytics-toggle').checked = local[STORAGE.analyticsConsent]?.enabled === true;
   document.body.classList.toggle('needs-consent', !state.privacyAccepted); $('privacy-gate').hidden = state.privacyAccepted;
   builder = session[STORAGE.builderV3] || freshBuilder();
@@ -718,6 +883,19 @@ async function init() {
   await refreshCapture(); await renderReferences(); await loadLibrary(); renderGenerated();
   if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
   switchStage(sessionStorage.getItem('archbuddy-active-stage') || 'analysis');
+  sidepanelReady = true;
+  const handoff = await chrome.storage.session.get([STORAGE.libraryHandoffV4, STORAGE.requestedStageV4]);
+  if (handoff[STORAGE.libraryHandoffV4]) await handleLibraryHandoff(handoff[STORAGE.libraryHandoffV4]);
+  if (handoff[STORAGE.requestedStageV4]) await handleRequestedStage(handoff[STORAGE.requestedStageV4]);
   await refreshBackend();
 }
 init().catch(error => feedback('builder-feedback', error.message, 'error'));
+
+async function reloadTypes() {
+  const local = await chrome.storage.local.get([STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4]);
+  state.customTypes = local[STORAGE.customTypes] || [];
+  state.hiddenTypes = local[STORAGE.hiddenProjectTypesV4] || [];
+  state.typeOrder = local[STORAGE.projectTypeOrderV4] || [];
+  state.projectType = local[STORAGE.projectType] || availableTypes()[0];
+  populateTypes();
+}

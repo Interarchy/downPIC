@@ -4,24 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ArchBuddy</title>
-  <link rel="stylesheet" href="sidepanel.css?v=0.5.2" />
+  <link rel="stylesheet" href="sidepanel.css?v=0.6.0" />
 </head>
 <body class="needs-consent">
+  <div class="sticky-header">
   <header class="app-header">
     <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span class="beta">Beta</span></div>
-    <p id="session-status">正在连接</p>
+    <div class="header-actions"><p id="session-status">正在连接</p></div>
   </header>
   <nav class="tabs">
-    <button class="tab" type="button" data-tab="download">图片采集</button>
-    <button class="tab is-active" type="button" data-tab="analysis">提示词构建</button>
-    <button class="tab" type="button" data-tab="optimize">效果优化</button>
+    <button class="tab" type="button" data-tab="download">图词库</button>
+    <button class="tab is-active" type="button" data-tab="analysis">提示词生成</button>
+    <button class="tab" type="button" data-tab="optimize">提示词优化</button>
   </nav>
+  </div>
   <main>
     <section id="analysis-panel" class="panel">
       <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
         <h1>开始使用前确认</h1>
         <label class="check-row onboarding-check"><input id="privacy-check" type="checkbox" />
-          <span><strong>我同意发送所选图片用于分析</strong><small>仅在点击“开始分析”时发送给 ArchBuddy 与 DeepSeek；我确认有权使用该图片。</small></span>
+          <span><strong>我同意图片与图库 AI 处理</strong><small>新下载图片自动发送预览以生成视觉描述；语义检索发送查询与库内描述/提示词；分析和评估发送所选图片及相关提示词给 ArchBuddy 与 DeepSeek。我确认有权处理这些内容。</small></span>
         </label>
         <div class="onboarding-actions"><a href="privacy.html" target="_blank">隐私说明</a><button id="privacy-accept" class="primary-button" disabled>确认</button></div>
       </section>
@@ -41,40 +43,31 @@
         <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
         <p id="copy-feedback" class="section-note"></p>
       </section>
-      <details class="drafts-block drafts-panel">
-        <summary>最近确认的提示词库</summary>
-        <p class="section-note">整体确认后保存在本机，最多 5 份。</p>
-        <div id="library-list" class="draft-list"></div>
-      </details>
+
       <details class="details-panel">
         <summary>详细说明</summary>
         <p class="section-note">在参考图的各维度中编辑，点击“加入”或“替换”汇入整体预览。已选内容继续编辑时，预览同步更新。整体确认后再复制。</p>
         <label class="check-row"><input id="analytics-toggle" type="checkbox" />允许匿名功能统计（不包含图片和提示词）</label>
+        <label class="check-row"><input id="asset-ai-toggle" type="checkbox" />下载后自动描述与图库语义检索</label>
         <a href="privacy.html" target="_blank">隐私说明</a>
       </details>
     </section>
     <section id="download-panel" class="panel" hidden>
-      <h1>图片采集</h1>
-      <p class="section-note">选择网页图片，或拖入、粘贴本地图片。</p>
-      <figure id="capture-preview" class="preview is-empty" tabindex="0">
-        <img id="capture-image" hidden alt="待保存图片" />
-        <figcaption id="capture-caption">选择一张图片</figcaption>
-        <button id="capture-choose" class="secondary-button compact">选择文件</button>
-        <input id="capture-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
-      </figure>
-      <section class="field-group">
-        <label for="preset-type">项目类型</label><select id="preset-type"></select>
-        <div class="key-row"><input id="custom-type" maxlength="40" placeholder="新建分类" /><button id="save-type" class="secondary-button">设为默认</button></div>
-        <p id="type-feedback" class="section-note"></p>
-      </section>
-      <section class="current-download">
-        <button id="download-current" class="primary-button" disabled>保存图片</button>
-        <p id="download-feedback" class="section-note"></p>
-        <div class="prompt-actions"><button id="continue-analysis" class="secondary-button">用于构建</button><button id="show-download" class="secondary-button" disabled>定位文件</button></div>
-        <p id="last-download-path" class="section-note"></p>
+      <button id="open-library" type="button" class="primary-button open-library-button">打开图词库 <span aria-hidden="true">↗</span></button>
+      <div class="folder-import"><div id="folder-import-drop" class="folder-import-drop"><button id="import-local-folder" type="button" class="secondary-button">导入本地文件夹</button><span>或将多个文件夹一起拖到这里</span></div><input id="local-folder-files" type="file" webkitdirectory directory multiple hidden /><p id="import-feedback" class="section-note" role="status"></p></div>
+      <section class="type-manager">
+        <div class="section-title"><h2>项目类型</h2><span>点击类型设为默认</span></div>
+        <div id="project-type-list" class="project-type-list" role="list"></div>
+        <label for="custom-type">新建分类</label>
+        <div class="key-row"><input id="custom-type" maxlength="40" placeholder="输入项目类型名称" /><button id="save-type" class="secondary-button">新增</button></div>
+        <p id="type-feedback" class="section-note" aria-live="polite"></p>
       </section>
     </section>
     <section id="optimize-panel" class="panel optimize-panel" hidden>
+      <nav class="render-services" aria-label="前往 AI 生图网站">
+        <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="icons/gemini.png" alt="" /><span><strong>Gemini</strong><small>gemini.google.com</small></span><span class="external-arrow" aria-hidden="true">↗</span></a>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="icons/chatgpt.svg" alt="" /><span><strong>ChatGPT</strong><small>chatgpt.com</small></span><span class="external-arrow" aria-hidden="true">↗</span></a>
+      </nav>
       <div class="section-title"><h2>生成效果图</h2><span>粘贴、拖入或选择文件</span></div>
       <figure id="generated-preview" class="preview is-empty" tabindex="0">
         <img id="generated-image" hidden alt="生成效果图" />
@@ -87,8 +80,7 @@
         <select id="scheme-select"><option value="">从最近确认的提示词库中选择</option></select>
         <details id="baseline-details" hidden><summary>查看原文</summary><pre id="baseline-prompt"></pre></details>
       </section>
-      <label class="check-row evaluation-consent"><input id="evaluation-consent" type="checkbox" /><span>确认发送此生成图与所选提示词进行评估</span></label>
-      <button id="run-evaluation" class="primary-button" disabled>开始评估</button>
+      <button id="run-evaluation" title="点击后发送生成图与所选提示词给 ArchBuddy 与 DeepSeek 进行评估" class="primary-button" disabled>开始评估</button>
       <p id="evaluation-feedback" class="section-note"></p>
       <section id="evaluation-report" hidden>
         <div class="section-title"><h2>评估与调整</h2><span>在原文中直接编辑</span></div>
@@ -98,6 +90,10 @@
         <textarea id="revision-copy-fallback" class="copy-fallback" readonly hidden></textarea>
         <p id="revision-feedback" class="section-note"></p>
       </section>
+      <details class="drafts-block drafts-panel">
+        <summary>最近确认的提示词库</summary>
+        <div id="library-list" class="draft-list"></div>
+      </details>
     </section>
   </main>
   <script type="module" src="sidepanel.mjs"></script>

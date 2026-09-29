@@ -19,7 +19,10 @@ import {
   revisionPreview,
   compileIntentPrompt,
   normalizeProjectType,
+  normalizeLibraryTags,
   sanitizePathSegment,
+  orderedProjectTypes,
+  resolveProjectType,
 } from './shared.mjs';
 import {
   deleteSourceImagesByScheme,
@@ -230,9 +233,9 @@ async function fetchBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_T
 }
 
 async function requestBackend(path, options = {}) {
-  const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/events'];
+  const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed', '/api/events'];
   if (!authenticatedPaths.includes(path)) return fetchBackend(path, options);
-  const requestId = options.requestId || (['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate'].includes(path) ? crypto.randomUUID() : undefined);
+  const requestId = options.requestId || (['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed'].includes(path) ? crypto.randomUUID() : undefined);
   let token = await anonymousToken();
   try {
     return await fetchBackend(path, { ...options, token, requestId });
@@ -473,8 +476,7 @@ async function draftState() {
   const stored = await chrome.storage.local.get([STORAGE.intentDraftsV2, STORAGE.activeIntentDraftIdV2]);
   const drafts = (Array.isArray(stored[STORAGE.intentDraftsV2]) ? stored[STORAGE.intentDraftsV2] : [])
     .map(item => normalizePromptScheme(item))
-    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
-    .slice(0, 5);
+    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   const activeDraftId = typeof stored[STORAGE.activeIntentDraftIdV2] === 'string'
     ? stored[STORAGE.activeIntentDraftIdV2]
     : null;
@@ -485,9 +487,7 @@ async function saveDraft(input) {
   const { drafts } = await draftState();
   const now = new Date().toISOString();
   const existing = drafts.find(item => item.draftId === (input.draftId ?? input.schemeId));
-  if (!existing && drafts.length >= 5) {
-    throw categorizedError('SCHEME_LIMIT', '最多保留 5 份方案；请先确认移出最旧方案', 'invalid_input');
-  }
+
   const draft = normalizePromptScheme({
     ...(existing ?? {}),
     ...input,
@@ -498,8 +498,7 @@ async function saveDraft(input) {
     updatedAt: now,
   }, now);
   const next = [draft, ...drafts.filter(item => item.draftId !== draft.draftId)]
-    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
-    .slice(0, 5);
+    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   await chrome.storage.local.set({
     [STORAGE.intentDraftsV2]: next,
     [STORAGE.activeIntentDraftIdV2]: draft.draftId,
@@ -599,8 +598,7 @@ async function readSchemeCollection() {
   const stored = await chrome.storage.local.get([STORAGE.promptSchemesV3, STORAGE.activeSchemeIdV3]);
   const raw = Array.isArray(stored[STORAGE.promptSchemesV3]) ? stored[STORAGE.promptSchemesV3] : [];
   const schemes = raw.map(item => normalizePromptScheme(item))
-    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
-    .slice(0, 5);
+    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   return {
     raw,
     schemes,
@@ -613,8 +611,7 @@ async function writeSchemeInCollection(scheme) {
   const normalized = normalizePromptScheme(scheme);
   const next = [normalized, ...raw.filter(item => (item.schemeId ?? item.draftId) !== normalized.schemeId)]
     .map(item => item.schemeId === normalized.schemeId ? normalized : item)
-    .sort((left, right) => String(right.updatedAt || '').localeCompare(String(left.updatedAt || '')))
-    .slice(0, 5);
+    .sort((left, right) => String(right.updatedAt || '').localeCompare(String(left.updatedAt || '')));
   await chrome.storage.local.set({
     [STORAGE.promptSchemesV3]: next,
     [STORAGE.activeSchemeIdV3]: normalized.schemeId,
@@ -688,6 +685,55 @@ async function listSchemes() {
   };
 }
 
+async function saveLibraryMetadata(payload = {}) {
+  const schemeId = String(payload.schemeId || '');
+  const projectName = String(payload.projectName ?? '').trim();
+  const category = String(payload.category ?? '').trim();
+  const rawTags = Array.isArray(payload.tags) ? payload.tags : [];
+  if (projectName.length > 80 || category.length > 40 || rawTags.length > 5
+      || rawTags.some(tag => typeof tag !== 'string' || tag.trim().length > 24)) {
+    throw categorizedError('INVALID_INPUT', '项目、分类或标签超出允许长度', 'invalid_input');
+  }
+  const stored = await chrome.storage.local.get(STORAGE.promptSchemesV3);
+  const raw = Array.isArray(stored[STORAGE.promptSchemesV3]) ? stored[STORAGE.promptSchemesV3] : [];
+  const source = raw.find(item => (item.schemeId ?? item.draftId) === schemeId);
+  if (!source) throw categorizedError('SCHEME_NOT_FOUND', '这份方案已不存在', 'invalid_input');
+  const scheme = normalizePromptScheme(source);
+  if (!scheme.overallConfirmedAt && !scheme.versions.some(version => version.origin !== 'legacy-baseline')) {
+    throw categorizedError('SCHEME_NOT_FOUND', '这份方案尚未确认', 'invalid_input');
+  }
+  const sourceReferenceId = String(payload.sourceReferenceId || '');
+  if (sourceReferenceId && !scheme.sourceReferences.some(ref => ref.sourceReferenceId === sourceReferenceId)) {
+    throw categorizedError('OWNERSHIP_MISMATCH', '这张图片不属于所选方案', 'invalid_input');
+  }
+  const updated = normalizePromptScheme({
+    ...scheme,
+    projectName,
+    category,
+    sourceReferences: scheme.sourceReferences.map(ref => ref.sourceReferenceId === sourceReferenceId
+      ? { ...ref, tags: normalizeLibraryTags(rawTags) } : ref),
+  });
+  await chrome.storage.local.set({
+    [STORAGE.promptSchemesV3]: raw.map(item => (item.schemeId ?? item.draftId) === schemeId ? updated : item),
+  });
+  return { ok: true, scheme: updated };
+}
+
+async function resumeLibraryScheme(payload = {}) {
+  const schemeId = String(payload.schemeId || '');
+  const mode = payload.mode === 'builder' ? 'builder' : 'optimize';
+  const { raw } = await readSchemeCollection();
+  const source = raw.find(item => (item.schemeId ?? item.draftId) === schemeId);
+  if (!source) throw categorizedError('SCHEME_NOT_FOUND', '这份方案已不存在', 'invalid_input');
+  const scheme = normalizePromptScheme(source);
+  if (!scheme.overallConfirmedAt && !scheme.versions.some(version => version.origin !== 'legacy-baseline')) {
+    throw categorizedError('SCHEME_NOT_FOUND', '这份方案尚未确认', 'invalid_input');
+  }
+  await chrome.storage.session.set({
+    [STORAGE.libraryHandoffV4]: { schemeId, mode, nonce: crypto.randomUUID() },
+  });
+  return { ok: true, schemeId, mode };
+}
 async function attachSchemeSource(payload = {}) {
   const collection = await readSchemeCollection();
   const found = collection.raw.find(item => (item.schemeId ?? item.draftId) === payload.schemeId);
@@ -723,6 +769,7 @@ async function attachSchemeSource(payload = {}) {
     analysisId: String(payload.analysisId || target?.analysisId || '') || null,
     selectionId: selection.selectionId,
     displayName: String(payload.displayName || selection.displayName || target?.displayName || '参考图'),
+    tags: target?.tags || [],
     sourceType: selection.sourceType,
     mimeType: selection.mimeType,
     byteSize: selection.byteSize,
@@ -850,7 +897,7 @@ async function commitSchemeVersion(payload = {}) {
   const nextScheme = normalizePromptScheme({
     ...scheme,
     modules,
-    versions: [...scheme.versions, version].slice(-5),
+    versions: [...scheme.versions, version],
     currentVersionId: version.versionId,
     updatedAt: version.createdAt,
     overallConfirmedAt: payload.confirmed ? version.createdAt : scheme.overallConfirmedAt,
@@ -991,6 +1038,39 @@ async function clearEvaluation(payload = {}) {
   return { ok: true };
 }
 
+let captureArchiveQueue = Promise.resolve();
+
+async function recordCaptureDownload(downloadId, entry) {
+  const stored = await chrome.storage.local.get(STORAGE.captureCatalogV4);
+  const catalog = stored[STORAGE.captureCatalogV4] && typeof stored[STORAGE.captureCatalogV4] === 'object'
+    ? stored[STORAGE.captureCatalogV4] : {};
+  await chrome.storage.local.set({ [STORAGE.captureCatalogV4]: { ...catalog, [downloadId]: entry } });
+}
+
+async function archiveCapturedImage(downloadId, url) {
+  if (!/^https?:\/\//i.test(url) && !/^data:image\/(?:png|jpeg|webp|gif|avif);base64,/i.test(url)) return;
+  const response = await fetch(url, {
+    credentials: 'omit',
+    cache: 'force-cache',
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!response.ok) return;
+  const blob = await response.blob();
+  if (blob.size < 1 || blob.size > MAX_IMAGE_BYTES) return;
+  const bitmap = await createImageBitmap(blob);
+  const ratio = Math.min(1, 640 / Math.max(bitmap.width, bitmap.height));
+  const canvas = new OffscreenCanvas(Math.max(1, Math.round(bitmap.width * ratio)), Math.max(1, Math.round(bitmap.height * ratio)));
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  const previewBlob = await canvas.convertToBlob({ type: 'image/webp', quality: 0.72 });
+  const captureId = crypto.randomUUID();
+  await putSourceImage({ sourceReferenceId: captureId, schemeId: captureId, blob: previewBlob });
+  const stored = await chrome.storage.local.get(STORAGE.capturePreviewsV4);
+  const previews = stored[STORAGE.capturePreviewsV4] && typeof stored[STORAGE.capturePreviewsV4] === 'object'
+    ? stored[STORAGE.capturePreviewsV4] : {};
+  await chrome.storage.local.set({ [STORAGE.capturePreviewsV4]: { ...previews, [downloadId]: captureId } });
+}
+
 async function downloadImage(payload) {
   const category = normalizeProjectType(payload.category) || PRESET_TYPES[0];
   const project = sanitizePathSegment(payload.pageTitle || payload.title, '未命名项目');
@@ -1003,9 +1083,44 @@ async function downloadImage(payload) {
   const downloadId = await chrome.downloads.download({ url, filename, conflictAction: 'uniquify', saveAs: false });
   const download = { downloadId, filename, category, createdAt: new Date().toISOString() };
   await chrome.storage.session.set({ [STORAGE.lastDownload]: download });
+  captureArchiveQueue = captureArchiveQueue.catch(() => {}).then(async () => {
+    await recordCaptureDownload(downloadId, {
+      category: sanitizePathSegment(category, '未分类'), project, name: title, filename,
+      createdAt: download.createdAt, descriptionStatus: 'pending',
+    });
+    await archiveCapturedImage(downloadId, url).catch(() => {});
+    const saved = await chrome.storage.local.get(STORAGE.capturePreviewsV4);
+    if (!saved[STORAGE.capturePreviewsV4]?.[downloadId]) {
+      await patchCaptureStatus(downloadId, { descriptionStatus: 'preview-missing', descriptionError: '图片预览未能保存，请先关联图片预览；原文件下载不受影响' });
+    }
+  });
+  await captureArchiveQueue.catch(() => {});
+  void drainCaptureDescriptions();
   chrome.runtime.sendMessage({ type: 'download.changed', download }).catch(() => {});
   return { ok: true, downloadId, filename, download };
 }
+
+async function forgetCapturedDownload(downloadId) {
+  const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4]);
+  const catalog = stored[STORAGE.captureCatalogV4] || {};
+  const previews = stored[STORAGE.capturePreviewsV4] || {};
+  const captureId = previews[downloadId];
+  if (!catalog[downloadId] && !captureId) return;
+  if (captureId) await deleteSourceImagesByScheme(captureId);
+  const nextCatalog = { ...catalog };
+  const nextPreviews = { ...previews };
+  delete nextCatalog[downloadId];
+  delete nextPreviews[downloadId];
+  await chrome.storage.local.set({
+    [STORAGE.captureCatalogV4]: nextCatalog,
+    [STORAGE.capturePreviewsV4]: nextPreviews,
+  });
+}
+
+chrome.downloads.onErased.addListener(downloadId => {
+  captureArchiveQueue = captureArchiveQueue.catch(() => {}).then(() => forgetCapturedDownload(downloadId));
+  void captureArchiveQueue.catch(() => {});
+});
 
 async function showDownload(payload) {
   const downloadId = Number(payload.downloadId);
@@ -1043,10 +1158,7 @@ async function confirmBuilder(payload = {}) {
   if (payload.compiledPrompt !== prompt) throw categorizedError('PROMPT_MISMATCH', '预览已变化，请重新确认', 'invalid_input');
   const collection = await readSchemeCollection();
   const existing = collection.schemes.find(scheme => scheme.schemeId === builder.builderId);
-  const oldest = [...collection.schemes].sort((a, b) => a.updatedAt.localeCompare(b.updatedAt))[0];
-  if (!existing && collection.schemes.length >= 5 && payload.replaceOldestId !== oldest?.schemeId) {
-    return { ok: false, code: 'SCHEME_LIMIT', error: '最多保留 5 份已确认提示词', oldest: { schemeId: oldest.schemeId, name: oldest.name } };
-  }
+
   const now = new Date().toISOString();
   const references = [];
   for (const ref of (builder.references || []).slice(0, 3)) {
@@ -1056,7 +1168,8 @@ async function confirmBuilder(payload = {}) {
     references.push({
       sourceReferenceId: ref.sourceReferenceId, schemeId: builder.builderId,
       analysisId: ref.result?.analysisId, selectionId: ref.sourceReferenceId,
-      displayName: ref.name, sourceType: 'file', mimeType: record.mimeType,
+      displayName: ref.name, tags: existing?.sourceReferences.find(old => old.sourceReferenceId === ref.sourceReferenceId)?.tags || [],
+      sourceType: 'file', mimeType: record.mimeType,
       byteSize: record.byteSize, assetState: 'available', createdAt: record.createdAt, capturedAt: now,
     });
   }
@@ -1082,21 +1195,74 @@ async function confirmBuilder(payload = {}) {
     sourceReferences: [...(existing?.sourceReferences || []).filter(old => !references.some(ref => ref.sourceReferenceId === old.sourceReferenceId)), ...references],
     versions: [...(existing?.versions || []), version], currentVersionId: version.versionId,
   });
-  // 新记录成功写入后再清理被用户明确同意移出的方案图片。
-  const evictedId = !existing && collection.schemes.length >= 5 ? oldest.schemeId : null;
-  const next = [scheme, ...collection.raw.filter(item => (item.schemeId ?? item.draftId) !== scheme.schemeId
-    && (item.schemeId ?? item.draftId) !== evictedId)].slice(0, 5);
-  await chrome.storage.local.set({ [STORAGE.promptSchemesV3]: next, [STORAGE.activeSchemeIdV3]: scheme.schemeId });
-  let cleanupWarning = false;
-  if (evictedId) {
-    try { await deleteSourceImagesByScheme(evictedId); } catch { cleanupWarning = true; }
-  }
-  return { ok: true, scheme, version, cleanupWarning };
+  const saved = await writeSchemeInCollection(scheme);
+  return { ok: true, scheme: saved.scheme, version };
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const run = async () => {
+    if (['capture.describe', 'capture.describe.missing', 'capture.description.save', 'capture.delete', 'capture.folder.move', 'project-types.rename', 'capture.resume', 'library.image.resume', 'library.semantic', 'library.embed', 'assets.consent', 'assets.vectorConsent'].includes(message?.type)
+        && ![chrome.runtime.getURL('library.html'), chrome.runtime.getURL('sidepanel.html')].includes(sender.url?.split('?')[0])) {
+      throw new Error('请在 ArchBuddy 图词库中操作');
+    }
     switch (message?.type) {
+      case 'assets.consent':
+        await chrome.storage.local.set({ [STORAGE.assetAIConsent]: message.payload?.enabled === true, ...(!message.payload?.enabled ? { [STORAGE.assetVectorConsent]: false } : { [STORAGE.privacyAccepted]: true }) });
+        void drainCaptureDescriptions();
+        return { ok: true };
+      case 'assets.vectorConsent': {
+        const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+        if (!consent[STORAGE.assetAIConsent] || message.payload?.enabled !== true) throw new Error('请先开启图库 AI 并确认向量处理范围');
+        await chrome.storage.local.set({ [STORAGE.assetVectorConsent]: true });
+        return { ok: true };
+      }
+      case 'library.embed': {
+        const consent = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
+        if (!consent[STORAGE.assetAIConsent] || !consent[STORAGE.assetVectorConsent]) throw new Error('请先确认本地向量检索处理说明');
+        const result = await requestBackend('/api/library/embed', { method: 'POST', body: message.payload });
+        return { ok: true, model: result.model, vectors: result.vectors };
+      }
+      case 'library.semantic': {
+        const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+        if (!consent[STORAGE.assetAIConsent]) throw new Error('请先确认图库 AI 处理说明');
+        const result = await requestBackend('/api/library/search', { method: 'POST', body: message.payload });
+        return { ok: true, matches: result.matches };
+      }
+      case 'library.image.resume': {
+        const { schemes } = await readSchemeCollection();
+        const scheme = schemes.find(item => item.schemeId === message.payload?.schemeId);
+        const ref = scheme?.sourceReferences.find(item => item.sourceReferenceId === message.payload?.sourceReferenceId);
+        if (!ref) throw new Error('来源图已不存在');
+        const record = await getSourceImage(ref.sourceReferenceId);
+        if (record.schemeId !== scheme.schemeId) throw new Error('图片归属不一致');
+        await chrome.storage.session.set({ [STORAGE.libraryHandoffV4]: {
+          mode: 'capture', sourceReferenceId: ref.sourceReferenceId, name: ref.displayName, nonce: crypto.randomUUID(),
+        } });
+        return { ok: true };
+      }
+      case 'capture.resume': {
+        if (typeof message.payload?.downloadId === 'string' && message.payload.downloadId.startsWith('local:')) {
+          const imported = await importedCaptureRecord(message.payload.downloadId);
+          await chrome.storage.session.set({ [STORAGE.libraryHandoffV4]: {
+            mode: 'capture', sourceReferenceId: imported.id, name: imported.name, nonce: crypto.randomUUID(),
+          } });
+          return { ok: true };
+        }
+        const id = Number(message.payload?.downloadId);
+        const { stored } = await captureRecord(id);
+        const sourceReferenceId = stored[STORAGE.capturePreviewsV4]?.[id];
+        if (!sourceReferenceId) throw new Error('请先关联图片预览');
+        await chrome.storage.session.set({ [STORAGE.libraryHandoffV4]: {
+          mode: 'capture', downloadId: id, sourceReferenceId, name: stored[STORAGE.captureCatalogV4]?.[id]?.name || '图库参考图', nonce: crypto.randomUUID(),
+        } });
+        return { ok: true };
+      }
+      case 'capture.describe': return describeCapture(message.payload ?? {});
+      case 'capture.describe.missing': return describeMissingCaptureDescriptions();
+      case 'capture.description.save': return queueCaptureMutation(() => saveCaptureDescription(message.payload ?? {}));
+      case 'capture.delete': return queueCaptureMutation(() => deleteCaptures(message.payload ?? {}));
+      case 'capture.folder.move': return queueCaptureMutation(() => moveCaptureFolder(message.payload ?? {}));
+      case 'project-types.rename': return queueCaptureMutation(() => renameProjectType(message.payload ?? {}));
       case 'builder.analyze': return analyzeBuilderReference(message.payload ?? {});
       case 'builder.confirm': return confirmBuilder(message.payload ?? {});
       case 'page.activate': return activatePage(message.tabId);
@@ -1105,6 +1271,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'image.paste': return selectPastedImage(message.payload ?? {});
       case 'analysis.run': return analyzeSelection(message.payload ?? {});
       case 'intent.add': return addCandidate(message.payload ?? {});
+      case 'library.metadata.save': return saveLibraryMetadata(message.payload ?? {});
+      case 'library.resume': return resumeLibraryScheme(message.payload ?? {});
       case 'scheme.list': return listSchemes();
       case 'scheme.open': return openScheme(message.schemeId ?? message.payload?.schemeId);
       case 'scheme.delete': return deleteScheme(message.payload ?? message);
@@ -1154,8 +1322,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           privacyAccepted: Boolean(local[STORAGE.privacyAccepted]),
           drafts: (Array.isArray(local[STORAGE.intentDraftsV2]) ? local[STORAGE.intentDraftsV2] : [])
             .map(item => normalizePromptScheme(item))
-            .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
-            .slice(0, 5),
+            .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)),
           activeDraftId: typeof local[STORAGE.activeIntentDraftIdV2] === 'string'
             ? local[STORAGE.activeIntentDraftIdV2]
             : null,
@@ -1185,3 +1352,392 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }));
   return true;
 });
+
+function queueCaptureMutation(operation) {
+  const pending = captureArchiveQueue.catch(() => {}).then(operation);
+  captureArchiveQueue = pending;
+  return pending;
+}
+
+async function renameProjectType(payload) {
+  const from = normalizeProjectType(payload.from);
+  const name = normalizeProjectType(payload.name);
+  if (!name || name.length > 40 || /[<>:"/\\|?*\x00-\x1f]/.test(name)) throw new Error('请输入 1–40 字的有效分类名称');
+  const stored = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4, STORAGE.projectType]);
+  const custom = stored[STORAGE.customTypes] || [];
+  const hidden = stored[STORAGE.hiddenProjectTypesV4] || [];
+  const types = orderedProjectTypes(custom, hidden, stored[STORAGE.projectTypeOrderV4] || []);
+  if (!types.includes(from)) throw new Error('这个分类已变化，请刷新后重试');
+  if (name === from) return { ok: true };
+  if (types.some(type => type.toLocaleLowerCase() === name.toLocaleLowerCase())) throw new Error('已有同名分类');
+  const oldAliases = stored[STORAGE.projectTypeAliasesV4] || {};
+  const aliases = Object.fromEntries(Object.keys(oldAliases).filter(key => key !== name)
+    .map(key => [key, resolveProjectType(key, oldAliases) === from ? name : resolveProjectType(key, oldAliases)]));
+  Object.defineProperty(aliases, from, { value: name, enumerable: true, configurable: true, writable: true });
+  await chrome.storage.local.set({
+    [STORAGE.customTypes]: [...new Set([...custom.filter(type => type !== from), ...(!PRESET_TYPES.includes(name) ? [name] : [])])],
+    [STORAGE.hiddenProjectTypesV4]: [...new Set([...hidden.filter(type => type !== name), ...(PRESET_TYPES.includes(from) ? [from] : [])])],
+    [STORAGE.projectTypeOrderV4]: types.map(type => type === from ? name : type),
+    [STORAGE.projectTypeAliasesV4]: aliases,
+    [STORAGE.projectType]: stored[STORAGE.projectType] === from ? name : stored[STORAGE.projectType] || types[0],
+  });
+  return { ok: true };
+}
+
+async function captureRecord(downloadId) {
+  if (!Number.isSafeInteger(downloadId) || downloadId < 0) throw new Error('图片标识无效');
+  const [download] = await chrome.downloads.search({ id: downloadId });
+  if (!download || download.byExtensionId !== chrome.runtime.id || download.state !== 'complete'
+      || !String(download.filename).split(/[\\/]/).includes('ArchBuddy')) throw new Error('图片已不存在，或不属于 ArchBuddy 下载');
+  const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.captureHiddenV4]);
+  if ((stored[STORAGE.captureHiddenV4] || []).includes(downloadId)) throw new Error('图片已移出图库');
+  return { download, stored };
+}
+
+async function importedCaptureRecord(value) {
+  const id = String(value || '').replace(/^local:/, '');
+  if (!/^local:[0-9a-f-]{36}$/i.test(String(value || ''))) throw new Error('导入图片标识无效');
+  const stored = await chrome.storage.local.get(STORAGE.importedAssetsV4);
+  const imported = (stored[STORAGE.importedAssetsV4] || []).find(item => item.id === id);
+  if (!imported) throw new Error('导入图片已不存在');
+  const image = await getSourceImage(id);
+  if (image.schemeId !== id) throw new Error('导入图片归属不一致');
+  return imported;
+}
+
+async function saveCaptureDescription(payload) {
+  if (typeof payload.downloadId === 'string' && payload.downloadId.startsWith('local:')) {
+    const imported = await importedCaptureRecord(payload.downloadId);
+    const description = String(payload.description || '').trim();
+    if (description.length > 4000) throw new Error('视觉描述最多 4000 字');
+    if (payload.previousDescription !== undefined && String(imported.description || '') !== payload.previousDescription)
+      throw new Error('描述已在其他窗口更新，请刷新后再保存');
+    const stored = await chrome.storage.local.get(STORAGE.importedAssetsV4);
+    const next = (stored[STORAGE.importedAssetsV4] || []).map(item => item.id === imported.id
+      ? { ...item, description, descriptionUpdatedAt: new Date().toISOString() } : item);
+    await chrome.storage.local.set({ [STORAGE.importedAssetsV4]: next });
+    return { ok: true, description };
+  }
+  const id = Number(payload.downloadId);
+  const { stored } = await captureRecord(id);
+  const description = String(payload.description || '').trim();
+  if (description.length > 4000) throw new Error('视觉描述最多 4000 字');
+  const catalog = stored[STORAGE.captureCatalogV4] || {};
+  const current = catalog[id] || {};
+  if (payload.previousDescription !== undefined && String(current.description || '') !== payload.previousDescription) {
+    throw new Error('描述已在其他窗口更新，请刷新后再保存');
+  }
+  await chrome.storage.local.set({ [STORAGE.captureCatalogV4]: {
+    ...catalog, [id]: { ...current, description, descriptionUpdatedAt: new Date().toISOString() },
+  } });
+  return { ok: true, description };
+}
+
+// Visual descriptions do not need original resolution. Smaller uploads reduce network latency.
+async function compressImageForDescription(blob, { maxEdge = 1536, quality = 0.85 } = {}) {
+  try {
+    const bitmap = await createImageBitmap(blob);
+    const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+    if (!(scale > 0) || scale >= 1) {
+      bitmap.close();
+      return blob;
+    }
+    const canvas = new OffscreenCanvas(
+      Math.max(1, Math.round(bitmap.width * scale)),
+      Math.max(1, Math.round(bitmap.height * scale)),
+    );
+    const context = canvas.getContext('2d');
+    context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const compressed = await canvas.convertToBlob({ type: 'image/webp', quality });
+    return compressed.size < blob.size ? compressed : blob;
+  } catch {
+    return blob;
+  }
+}
+
+const captureDescriptionJobs = new Set();
+const descriptionJobKey = value => 'capture-description:' + value;
+async function patchImportedStatus(id, fields) {
+  const stored = await chrome.storage.local.get(STORAGE.importedAssetsV4);
+  await chrome.storage.local.set({ [STORAGE.importedAssetsV4]: (stored[STORAGE.importedAssetsV4] || []).map(item => item.id === id
+    ? { ...item, ...fields } : item) });
+}
+async function describeCapture(payload) {
+  const value = payload.downloadId;
+  const importedId = typeof value === 'string' && value.startsWith('local:') ? value : null;
+  const id = importedId ?? Number(value);
+  const jobKey = descriptionJobKey(id);
+  const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+  if (!consent[STORAGE.assetAIConsent]) throw new Error('请先确认图库 AI 处理说明');
+  if (captureDescriptionJobs.has(jobKey)) throw new Error('这张图片正在生成描述');
+  captureDescriptionJobs.add(jobKey);
+  try {
+    let image, previousDescription = '', sourceReferenceId;
+    if (importedId) {
+      const imported = await importedCaptureRecord(importedId);
+      previousDescription = imported.description || '';
+      sourceReferenceId = imported.id;
+      image = await getSourceImage(imported.id);
+      if (image.schemeId !== imported.id) throw new Error('图片归属不一致');
+    } else {
+      const { stored } = await captureRecord(id);
+      sourceReferenceId = stored[STORAGE.capturePreviewsV4]?.[id];
+      if (!sourceReferenceId) throw new Error('请先补齐这张图片的本地预览');
+      previousDescription = stored[STORAGE.captureCatalogV4]?.[id]?.description || '';
+      image = await getSourceImage(sourceReferenceId);
+      if (image.schemeId !== sourceReferenceId) throw new Error('图片归属不一致');
+    }
+    const uploadBlob = await compressImageForDescription(image.blob);
+    const data = await blobAsDataUrl(uploadBlob);
+    const result = await requestBackend('/api/library/describe', { method: 'POST', body: {
+      image: { mimeType: uploadBlob.type, base64: data.split(',')[1] },
+    } });
+    if (!result.description?.trim()) throw new Error('未取得有效视觉描述');
+    await queueCaptureMutation(async () => {
+      await saveCaptureDescription({ downloadId: id, description: result.description,
+        previousDescription });
+      if (importedId) await patchImportedStatus(importedId, {
+        descriptionStatus: 'ready', descriptionError: null, descriptionCompletedAt: Date.now(),
+      });
+      else await patchCaptureStatus(id, { descriptionStatus: 'ready', descriptionError: null, descriptionCompletedAt: Date.now() });
+    });
+    await queueCaptureMutation(() => bumpDescriptionProgress({ succeeded: 1 }));
+    return { ok: true, description: result.description };
+  } finally { captureDescriptionJobs.delete(jobKey); }
+}
+const DESCRIPTION_MAX_ATTEMPTS = 2;
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function bumpDescriptionProgress({ succeeded = 0, failed = 0, failedId = null } = {}) {
+  const stored = await chrome.storage.local.get(STORAGE.descriptionProgressV4);
+  const progress = stored[STORAGE.descriptionProgressV4];
+  if (!progress || !Number.isFinite(progress.total) || progress.total < 1
+      || progress.done >= progress.total) return;
+  const failedIds = failed > 0 && failedId !== null
+    ? [...new Set([...(Array.isArray(progress.failedIds) ? progress.failedIds : []), String(failedId)])]
+    : (Array.isArray(progress.failedIds) ? progress.failedIds : []);
+  const nextFailed = Math.min(progress.total, Number(progress.failed || 0) + failed);
+  const nextDone = Math.min(progress.total, Number(progress.done || 0) + succeeded + failed);
+  await chrome.storage.local.set({ [STORAGE.descriptionProgressV4]: {
+    ...progress, done: nextDone, failed: nextFailed, failedIds, updatedAt: Date.now(),
+  } });
+}
+async function describeMissingCaptureDescriptions() {
+  if (descriptionsRunning) throw new Error('已有描述生成任务正在运行，请稍后查看');
+  const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+  if (!consent[STORAGE.assetAIConsent]) throw new Error('请先开启图库 AI');
+  const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
+  let queued = 0;
+  for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
+    if (item.description || !stored[STORAGE.capturePreviewsV4]?.[id]
+        || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
+    await queueCaptureMutation(() => patchCaptureStatus(Number(id), {
+      descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
+    }));
+    queued++;
+  }
+  for (const item of stored[STORAGE.importedAssetsV4] || []) {
+    if (item.description || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
+    await queueCaptureMutation(() => patchImportedStatus(item.id, {
+      descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
+    }));
+    queued++;
+  }
+  if (queued) {
+    await queueCaptureMutation(() => chrome.storage.local.set({
+      [STORAGE.descriptionProgressV4]: {
+        total: queued, done: 0, failed: 0, startedAt: Date.now(), updatedAt: Date.now(),
+      },
+    }));
+    void drainCaptureDescriptions();
+  } else {
+    await chrome.storage.local.remove(STORAGE.descriptionProgressV4);
+  }
+  return { ok: true, queued };
+}
+
+// 所有目录更新串行；模型调用在队列外，不阻塞下载、删除或手工描述编辑。
+async function patchCaptureStatus(id, fields) {
+  const stored = await chrome.storage.local.get(STORAGE.captureCatalogV4);
+  const catalog = stored[STORAGE.captureCatalogV4] || {};
+  if (!catalog[id]) return;
+  await chrome.storage.local.set({ [STORAGE.captureCatalogV4]: { ...catalog, [id]: { ...catalog[id], ...fields } } });
+}
+let descriptionsRunning = false;
+async function drainCaptureDescriptions() {
+  if (descriptionsRunning) return;
+  descriptionsRunning = true;
+  try {
+    const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+    if (!consent[STORAGE.assetAIConsent]) return;
+    const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
+    const tasks = [];
+    for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
+      if (item.description || !['pending', 'preview-missing'].includes(item.descriptionStatus) || !stored[STORAGE.capturePreviewsV4]?.[id]
+          || (item.descriptionRetryAt || 0) > Date.now()) continue;
+      tasks.push({ downloadId: Number(id), imported: false });
+    }
+    for (const item of stored[STORAGE.importedAssetsV4] || []) {
+      if (item.description || !['pending'].includes(item.descriptionStatus)
+          || (item.descriptionRetryAt || 0) > Date.now()) continue;
+      tasks.push({ downloadId: 'local:' + item.id, imported: true, importedId: item.id });
+    }
+    if (!tasks.length) return;
+
+    // Six parallel calls; local development service uses the same cap; saves remain serialized.
+    const descriptionConcurrency = 6;
+    const nonRetryableCodes = new Set(['USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT', 'TEST_LIMIT_REACHED',
+      'QUOTA_REACHED', 'NOT_CONFIGURED', 'ANALYSIS_PAUSED', 'INVALID_IMAGE', 'IMAGE_TOO_LARGE']);
+    let cursor = 0, stop = false;
+    const runTask = async () => {
+      while (cursor < tasks.length && !stop) {
+        const task = tasks[cursor++];
+        const markStatus = fields => queueCaptureMutation(() => task.imported
+          ? patchImportedStatus(task.importedId, fields)
+          : patchCaptureStatus(task.downloadId, fields));
+        for (let attempt = 1; attempt <= DESCRIPTION_MAX_ATTEMPTS; attempt++) {
+          const currentConsent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+          if (!currentConsent[STORAGE.assetAIConsent]) { stop = true; return; }
+          try {
+            if (task.imported) await importedCaptureRecord(task.downloadId);
+            else await captureRecord(task.downloadId);
+          } catch (error) {
+            await markStatus({ descriptionStatus: 'failed', descriptionError: error.message });
+            await queueCaptureMutation(() => bumpDescriptionProgress({ failed: 1, failedId: task.downloadId }));
+            break;
+          }
+          await markStatus({ descriptionStatus: 'processing', descriptionStartedAt: Date.now() });
+          try {
+            await describeCapture({ downloadId: task.downloadId });
+            break;
+          } catch (error) {
+            const nonRetryable = nonRetryableCodes.has(error?.code);
+            if (nonRetryable || attempt >= DESCRIPTION_MAX_ATTEMPTS) {
+              await markStatus({
+                descriptionStatus: 'failed', descriptionError: error.message, descriptionRetryAt: null,
+              });
+              await queueCaptureMutation(() => bumpDescriptionProgress({ failed: 1, failedId: task.downloadId }));
+              if (nonRetryable && ['USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT', 'TEST_LIMIT_REACHED', 'QUOTA_REACHED'].includes(error?.code)) stop = true;
+              break;
+            }
+            await markStatus({
+              descriptionStatus: 'pending', descriptionError: error.message, descriptionRetryAt: null,
+            });
+            await delay(['RATE_LIMITED', 'BUSY'].includes(error?.code) ? 2500 : 1200);
+          }
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(descriptionConcurrency, tasks.length) }, runTask));
+  } catch { /* 保留已持久化任务，下次唤醒恢复。 */ }
+  finally { descriptionsRunning = false; }
+}
+chrome.downloads.onChanged.addListener(change => {
+  if (change.state?.current === 'complete') void drainCaptureDescriptions();
+});
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && (changes[STORAGE.assetAIConsent]?.newValue || changes[STORAGE.capturePreviewsV4])) void drainCaptureDescriptions();
+});
+chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'archbuddy-descriptions') void recoverDescriptionQueue(); });
+async function recoverDescriptionQueue() {
+  if (descriptionsRunning) return;
+  await queueCaptureMutation(async () => {
+    const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.importedAssetsV4]);
+    for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
+      if (item.descriptionStatus === 'processing' && Date.now() - item.descriptionStartedAt > 180000) {
+        // 中断的付费请求结果未知：有结果则收尾，没有结果不自动重复计费。
+        await patchCaptureStatus(id, item.description
+          ? { descriptionStatus: 'ready', descriptionError: null }
+          : { descriptionStatus: 'failed', descriptionError: '生成中断，可重新生成或填写视觉描述' });
+      }
+    }
+    const imported = [...(stored[STORAGE.importedAssetsV4] || [])];
+    let importedChanged = false;
+    for (const [index, item] of imported.entries()) {
+      if (item.descriptionStatus === 'processing' && Date.now() - item.descriptionStartedAt > 180000) {
+        imported[index] = item.description
+          ? { ...item, descriptionStatus: 'ready', descriptionError: null }
+          : { ...item, descriptionStatus: 'failed', descriptionError: '生成中断，可重新生成或填写视觉描述' };
+        importedChanged = true;
+      }
+    }
+    if (importedChanged) await chrome.storage.local.set({ [STORAGE.importedAssetsV4]: imported });
+  });
+  await drainCaptureDescriptions();
+}
+void chrome.alarms.create('archbuddy-descriptions', { periodInMinutes: 1 }).then(() => recoverDescriptionQueue());
+
+async function moveCaptureFolder(payload) {
+  const { fromType, project, targetType } = payload;
+  const ids = [...new Set(Array.isArray(payload.ids) ? payload.ids : [])];
+  if (!ids.length || typeof project !== 'string' || !project || fromType === targetType) throw new Error('项目文件夹无效');
+  const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.importedAssetsV4, STORAGE.customTypes,
+    STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4]);
+  const aliases = stored[STORAGE.projectTypeAliasesV4] || {};
+  const types = orderedProjectTypes(stored[STORAGE.customTypes] || [], stored[STORAGE.hiddenProjectTypesV4] || [], stored[STORAGE.projectTypeOrderV4] || []);
+  if (!types.includes(targetType) || !types.includes(fromType)) throw new Error('项目类型已变化，请刷新后再试');
+  const catalog = { ...(stored[STORAGE.captureCatalogV4] || {}) };
+  const imported = [...(stored[STORAGE.importedAssetsV4] || [])];
+  for (const id of ids) {
+    if (typeof id === 'string' && id.startsWith('local:')) {
+      const item = await importedCaptureRecord(id);
+      if (resolveProjectType(item.type, aliases) !== fromType || item.project !== project) throw new Error('项目内容已变化，请刷新后再试');
+      const index = imported.findIndex(row => row.id === item.id);
+      imported[index] = { ...imported[index], type: targetType };
+    } else {
+      const { download } = await captureRecord(id);
+      const parts = String(download.filename || '').split(/[\\/]/).filter(Boolean);
+      const root = parts.lastIndexOf('ArchBuddy');
+      const saved = catalog[id] || {};
+      const currentType = resolveProjectType(saved.virtualType || saved.category || parts[root + 1], aliases);
+      const currentProject = saved.project || parts[root + 2];
+      if (currentType !== fromType || currentProject !== project) throw new Error('项目内容已变化，请刷新后再试');
+      catalog[id] = { ...saved, category: saved.category || parts[root + 1], project: currentProject,
+        name: saved.name || parts.slice(root + 3).join(' / ').replace(/^[0-9]{8}-[0-9]{6}_/, ''), virtualType: targetType };
+    }
+  }
+  await chrome.storage.local.set({ [STORAGE.captureCatalogV4]: catalog, [STORAGE.importedAssetsV4]: imported });
+  return { ok: true, moved: ids.length };
+}
+
+async function deleteCaptures(payload) {
+  if (payload.confirmed !== true) throw new Error('请确认删除范围');
+  const ids = [...new Set(Array.isArray(payload.downloadIds) ? payload.downloadIds : [])];
+  if (!ids.length || ids.some(id => !(Number.isSafeInteger(id) && id >= 0)
+      && !(typeof id === 'string' && /^local:[0-9a-f-]{36}$/i.test(id)))) throw new Error('请选择要删除的图片');
+  const deleted = [], failed = [], viewerCopiesKept = [];
+  for (const id of ids) {
+    try {
+      if (typeof id === 'string') {
+        const item = await importedCaptureRecord(id);
+        const stored = await chrome.storage.local.get([STORAGE.importedAssetsV4, STORAGE.systemViewerExportsV4]);
+        const exports = { ...(stored[STORAGE.systemViewerExportsV4] || {}) };
+        const viewerId = exports[id]?.downloadId;
+        await chrome.storage.local.set({ [STORAGE.importedAssetsV4]: (stored[STORAGE.importedAssetsV4] || []).filter(row => row.id !== item.id) });
+        await deleteSourceImagesByScheme(item.id);
+        if (Number.isSafeInteger(viewerId)) {
+          try {
+            const [download] = await chrome.downloads.search({ id: viewerId });
+            const ownedViewer = download?.byExtensionId === chrome.runtime.id
+              && String(download.url || '').startsWith('blob:' + chrome.runtime.getURL(''));
+            if (ownedViewer && download.exists !== false) await chrome.downloads.removeFile(viewerId);
+            if (ownedViewer) await chrome.downloads.erase({ id: viewerId });
+          } catch { viewerCopiesKept.push(id); }
+          delete exports[id];
+          await chrome.storage.local.set({ [STORAGE.systemViewerExportsV4]: exports });
+        }
+        deleted.push(id);
+        continue;
+      }
+      const { download } = await captureRecord(id);
+      if (payload.deleteOriginal === true && download.exists !== false) {
+        await chrome.downloads.removeFile(id);
+      }
+      const stored = await chrome.storage.local.get(STORAGE.captureHiddenV4);
+      await chrome.storage.local.set({ [STORAGE.captureHiddenV4]: [...new Set([...(stored[STORAGE.captureHiddenV4] || []), id])] });
+      await forgetCapturedDownload(id);
+      deleted.push(id);
+    } catch (error) { failed.push({ id, error: error.message }); }
+  }
+  return { ok: true, deleted, failed, viewerCopiesKept };
+}

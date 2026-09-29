@@ -123,11 +123,33 @@ export class DeepSeekVisionAnalyzer {
     };
   }
 
-  async #request({ buffer, mimeType, signal, userText = '分析这张参考图，按要求输出中文结构化生图提示词。' } = {}) {
-    if (!Buffer.isBuffer(buffer) || buffer.length === 0) {
+  async describe({ buffer, mimeType, signal }) {
+    const result = await this.#request({ buffer, mimeType, signal, userText: '用 80–160 字描述图片的核心视觉特征。只写可见主体、空间、材质、视角、光线与环境，不写标题或建议，不推测具体地点。' });
+    if (result.truncated || result.text.length > 1200) throw new VisionAnalysisError('MODEL_RESPONSE_INVALID', '视觉描述不完整');
+    return { ...result, description: result.text.trim() };
+  }
+
+  async semanticSearch({ query, documents, signal }) {
+    const result = await this.#request({ textOnly: true, signal,
+      userText: JSON.stringify({ query, documents }) });
+    let parsed;
+    try { parsed = JSON.parse(result.text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')); }
+    catch { throw new VisionAnalysisError('MODEL_RESPONSE_INVALID', '语义检索结果无法解析'); }
+    const allowed = new Set(documents.map(item => item.id));
+    const seen = new Set();
+    if (result.truncated || !Array.isArray(parsed.matches) || parsed.matches.length > documents.length
+      || parsed.matches.some(item => !allowed.has(item.id) || seen.has(item.id) || !seen.add(item.id)
+        || !Number.isFinite(item.score) || item.score < 0 || item.score > 1)) {
+      throw new VisionAnalysisError('MODEL_RESPONSE_INVALID', '语义检索结果不完整');
+    }
+    return { ...result, matches: parsed.matches.filter(item => item.score >= .6).map(({ id, score }) => ({ id, score })) };
+  }
+
+  async #request({ buffer, mimeType, signal, textOnly = false, userText = '分析这张参考图，按要求输出中文结构化生图提示词。' } = {}) {
+    if (!textOnly && (!Buffer.isBuffer(buffer) || buffer.length === 0)) {
       throw new VisionAnalysisError('IMAGE_REJECTED', '图片内容为空');
     }
-    if (!SUPPORTED_MEDIA_TYPES.has(mimeType)) {
+    if (!textOnly && !SUPPORTED_MEDIA_TYPES.has(mimeType)) {
       throw new VisionAnalysisError('IMAGE_REJECTED', `不支持的图片格式：${mimeType ?? '(未提供)'}`);
     }
 
@@ -153,7 +175,7 @@ export class DeepSeekVisionAnalyzer {
           messages: [{
             role: 'user',
             content: [
-              { type: 'image', source: { type: 'base64', media_type: mimeType, data: buffer.toString('base64') } },
+              ...(!textOnly ? [{ type: 'image', source: { type: 'base64', media_type: mimeType, data: buffer.toString('base64') } }] : []),
               { type: 'text', text: userText },
             ],
           }],

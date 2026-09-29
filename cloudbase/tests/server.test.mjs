@@ -113,7 +113,7 @@ test('并发请求被限制，成功后释放槽位', async () => {
     release();
     assert.equal((await first).status, 200);
     assert.equal((await post()).status, 200);
-  }, { analyzerFactory: () => ({ analyze: async () => { entered(); await pending; return result; } }) });
+  }, { environment: { ARCHBUDDY_MAX_CONCURRENT: '1' }, analyzerFactory: () => ({ analyze: async () => { entered(); await pending; return result; } }) });
 });
 
 test('分钟限流及时间窗口重置', async () => {

@@ -6,7 +6,7 @@ New-Item -ItemType Directory -Path $buildRoot -Force | Out-Null
 $target = Join-Path $buildRoot ('archbuddy-api-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
 New-Item -ItemType Directory -Path $target | Out-Null
 $files = @(
-  'cloudbase/server.mjs', 'cloudbase/start.mjs',
+  'cloudbase/server.mjs', 'cloudbase/embedding.mjs', 'cloudbase/start.mjs',
   'cloudbase/quota.mjs', 'cloudbase/cloudbase-store.mjs', 'cloudbase/session.mjs', 'cloudbase/package.json', 'cloudbase/package-lock.json',
   'plugin-prototype/vision-analyzer.mjs', 'plugin-prototype/developer-settings.mjs',
   'plugin-prototype/analysis-contract.mjs', 'plugin-prototype/prompt-model.mjs',

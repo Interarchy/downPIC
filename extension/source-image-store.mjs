@@ -38,7 +38,7 @@ async function transaction(mode, operation) {
       const store = tx.objectStore(STORE_NAME);
       let result;
       try { result = operation(store, tx); } catch (error) { reject(error); return; }
-      tx.oncomplete = () => resolve(result?.result ?? result);
+      tx.oncomplete = () => resolve(result instanceof IDBRequest ? result.result : result);
       tx.onerror = () => reject(storeError(
         tx.error?.name === 'QuotaExceededError' ? 'QUOTA_EXCEEDED' : 'TRANSACTION_FAILED',
         tx.error?.name === 'QuotaExceededError' ? '本地图片空间不足' : '本地来源图操作失败',

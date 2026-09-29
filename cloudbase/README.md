@@ -54,6 +54,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/start-loca
 | `PORT` | `8080` |
 | `DEEPSEEK_API_KEY` | 在云端配置现有 DeepSeek Key |
 | `DEEPSEEK_MODEL` | `deepseek-flash` |
+| `ARCHBUDDY_EMBEDDING_API_KEY` | 本地混合检索使用的 TokenHub 专属 Key；未配置时只显示关键词结果，不得放入扩展或仓库 |
+| `ARCHBUDDY_EMBEDDING_CALLS_PER_MINUTE` | 向量批次独立速率上限，默认 `20`；仍共用 20/200 每日调用额度 |
 | `ARCHBUDDY_TEST_TOKEN` | 管理员生成的独立随机令牌，至少 32 个可打印 ASCII 字符；不能复用 DeepSeek Key |
 | `ARCHBUDDY_SESSION_SECRET` | 匿名会话签名密钥，独立随机值，至少 32 个可打印 ASCII 字符；只放服务环境变量，不能复用其他 Key |
 | `ARCHBUDDY_ANALYTICS_ENABLED` | `false`；完成集合权限、30 天 TTL、隔离、日志与公开披露验证前不得改为 `true` |
@@ -76,7 +78,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "F:\MelyAI-CODEX\downPIC-plu
 
 ## 数据处理
 
-服务只接收上传图片的 Base64，不接收图片 URL，不提供静态文件或本地归档接口。图片及结果只在请求内存中处理，不缓存、不落盘，不在应用日志记录请求正文、提示词或模型错误原文。图片格式校验检查文件签名，不代替完整的解码校验。模型供应商的数据处理按其政策执行。
+图片分析接口只接收上传图片的 Base64，不接收图片 URL；向量接口只接收已获用户单独同意的图片名称/描述、提示词文本或查询，不接收图片字节或路径。不提供静态文件或本地归档接口。图片及结果只在请求内存中处理，不缓存、不落盘，不在应用日志记录请求正文、提示词或模型错误原文。图片格式校验检查文件签名，不代替完整的解码校验。模型供应商的数据处理按其政策执行。
 
 云托管平台可能另行记录访问日志；正式发布前需结合控制台日志配置更新隐私披露。
 
@@ -108,3 +110,23 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "F:\MelyAI-CODEX\downPIC-plu
 - [HTTP 访问云托管](https://docs.cloudbase.net/service/access-cloudrun)：网关路径与服务绑定。
 - [云托管与身份认证](https://docs.cloudbase.net/faq/knowledge/cloudrun-authentication-integration)：后续采用用户令牌；管理员 API Key 不得进入客户端。
 - [默认域名限制](https://docs.cloudbase.net/service/alias)：默认域名仅用于开发测试，正式使用准备已备案的自定义域名。
+
+## 本地混合检索（B 方向，本地接口已验证）
+
+`POST /api/library/embed` 复用已有匿名身份、项目 20/200 日额度和请求 ID 去重，仅代理 TokenHub `kinfra-text-embedding-0.6b` 文本向量计算。每次最多 32 条、单条最多 2000 字；Key 仅配置在 `archbuddy-api` 服务环境变量。向量索引与文本版本摘要在浏览器 IndexedDB，服务不保存素材、查询或向量。插件输入时只做关键词匹配；确认后首次分批为素材建索引，后续仅重算新增或变化的文本；回车生成一次查询向量，再在本地余弦排序与关键词结果合并。
+
+TokenHub 专属 Key 已在本机加密配置并通过真实合成文本调用验证；此接口仍未部署云端。不能沿用 `DEEPSEEK_API_KEY` 或将凭据发给插件。发布前继续核对真实图库召回/延迟、成本、云端专属凭据、跨项目边界和公开隐私页。向量批次与查询目前共同占用现有 AI 调用额度；大图库首次建索引可能触及额度，独立向量预算尚未实现。
+
+### 本地 Key 配置与诊断（Windows）
+
+用户已完成 TokenHub 开通和真实 Key 验证。配置开发机时在 PowerShell 执行一条脚本命令即可（不把 Key 粘进命令或聊天）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "F:\MelyAI-CODEX\downPIC-plugin\cloudbase\scripts\configure-embedding.ps1"
+```
+
+脚本优先使用当前窗口的 `ARCHBUDDY_EMBEDDING_API_KEY`，其次读取本项目已有的本地密文；都没有时隐藏输入。需要更换 Key 时加 `-PromptKey`。它先校验格式，再调用与服务端相同的 Node 适配器发送一条固定合成文字，30 秒超时，不自动重试；只输出成功状态、维度与耗时，或安全的 HTTP/网络错误标识。该探针直接使用开发者 Key，因此可能消耗 TokenHub 额度，不经过插件的本地进程调用计数。
+
+成功后只把 Windows 当前用户可解密的 DPAPI 密文存入 `plugin-prototype/runtime/embedding-settings.json`。该目录已被 Git 忽略，并未列入插件或服务端部署白名单。它不会把 Key 配置到 CloudBase。之后按上文运行 `start-local-v3.ps1`，脚本会在未显式设置环境变量时自动解密加载；仅该子进程可用。Key 保留在本机，其他机器/用户需要重新配置。旧 PowerShell 与 PowerShell 7 均显式加载自身 Security 模块，避免跨版本继承问题。
+
+`GET http://127.0.0.1:8080/api/status` 中 `embeddingConfigured=true` 仅表示配置格式与鉴权前提齐备；必须以真实向量成功返回为接口验收依据。2026-09-28 本地匿名接口已返回 5 条合成描述及 1 条查询的有效 1024 维结果，分别耗时 364ms 与 322ms；不代表真实图库整体延迟或线上已部署。

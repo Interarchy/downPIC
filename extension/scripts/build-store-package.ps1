@@ -43,12 +43,20 @@ $requiredFiles = @(
   'sidepanel.html',
   'sidepanel.css',
   'sidepanel.mjs',
+  'library.html',
+  'library.css',
+  'library.mjs',
+  'library-search.mjs',
+  'library-vector-index.mjs',
+  'folder-import.mjs',
   'privacy.html',
   'icons\icon-16.png',
   'icons\icon-32.png',
   'icons\icon-48.png',
   'icons\icon-128.png',
-  'icons\logo.svg'
+  'icons\logo.svg',
+  'icons\gemini.png',
+  'icons\chatgpt.svg'
 )
 
 foreach ($relativePath in $requiredFiles) {

@@ -140,3 +140,22 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 ## 用于其他新项目
 
 新项目建立自己的 `AGENTS.md` 和资源登记文件，选择唯一项目标识，并在用户维护的 CloudBase 项目清单中登记。共享环境 ID 可以相同；服务、业务集合、对象路径、凭据和业务预算不能直接复用 ArchBuddy 的配置。本仓库规则不会自动覆盖未来其他仓库，应在创建新项目时显式加入。
+
+
+### 2026-09-28 本地服务代码影响登记
+
+新增语义检索和短描述接口只在本地运行；未来发布仍属于 archbuddy / development / archbuddy-api，复用 archbuddy_dev_quotas 与 archbuddy_dev_requests，不新增集合、对象存储、身份或统计空间。请求正文包含用户主动开启的图片预览或检索文字，禁止写入日志与额度记录。共用原个人 20 / 项目 200 次每日限制，不改变现有预算。此次未访问或修改共享云端资源，云端接口及隔离运行证据须在独立部署阶段补充。
+
+### 2026-09-28：B 方向本地向量索引与 TokenHub 计算登记（仅源码）
+
+- 项目/阶段/环境/服务：`archbuddy` / `development` / 已登记共享环境 / `archbuddy-api`。新增接口 `/api/library/embed` 仅在本项目服务内；不新建 CloudBase 向量库、数据库集合、存储路径、身份、日志主题或缓存。
+- 新外部处理方：腾讯云 TokenHub 文本 Embedding；仅在用户单独同意后传入图库名称、分类、视觉描述、提示词文本或单次查询。图片字节、原文件路径、来源网址和本地索引不传。向量只存插件 IndexedDB；请求正文不写服务日志或额度集合。
+- 新服务端凭据名 `ARCHBUDDY_EMBEDDING_API_KEY`，计划仅配置在 `archbuddy-api` 的 development 环境，当前未配置、未验证；不得复用其他项目密钥。额度仍走已登记 `archbuddy_dev_quotas`、`archbuddy_dev_requests`，个人每日 20 / 项目每日 200，批量建索引和查询各按实际模型调用计次；另设默认每分钟 20 次向量接口速率保护。TokenHub 账户级支出与共享账号预算尚未核验。
+- 本轮只修改本地源码及隐私文案，没有创建或访问云端资源、没有部署。部署前核对专属密钥作用域、TokenHub 开通与费用、公开隐私站更新、真实匿名调用、已有项目额度不串用、其他项目无法通过本接口访问本地索引。未完成这些检查前不得标为云端隔离验收通过。
+
+### 2026-09-28：本地 TokenHub 凭据验证补充
+
+- 用户已开通 TokenHub 并创建项目专用 Key，本地已用真实 API 核验 1024 维响应；只发送合成文字，未发送用户图片、路径或素材库。
+- 凭据以当前 Windows 用户 DPAPI 密文保存于已忽略的 plugin-prototype/runtime/embedding-settings.json，归属 archbuddy/development/tokenhub。仅本地启动脚本读取到本进程环境；不进入扩展、Git 或部署包。
+- 服务端源码仍沿用已登记额度，没有增加额度上限或创建新预算资源。本地 process-test 只计当前进程，首次批量索引仍可能用完测试调用额度；线上预算拆分待单独决定。
+- CloudBase 中 ARCHBUDDY_EMBEDDING_API_KEY 仍未配置，云端接口未部署；费用、云端 Key 权限范围和共享账号预算未独立核验。本轮没有修改其他项目或共享云配置。
