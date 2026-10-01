@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-10-01T06:22:07.388Z",
+  "modelCalls": 0,
+  "images": [
+    {
+      "file": "marquee-promo-1400x560.png",
+      "width": 1400,
+      "height": 560,
+      "channels": 3,
+      "hasAlpha": false
+    },
+    {
+      "file": "small-promo-440x280.png",
+      "width": 440,
+      "height": 280,
+      "channels": 3,
+      "hasAlpha": false
+    }
+  ]
+}

@@ -8,6 +8,7 @@ const state = { schemes: [], items: [], selectedKey: null, urls: new Map(), pend
 let toastTimer;
 let recentSearches = [];
 let selectedCaptureId = null;
+let captureSearchReturn = null;
 let deletionSelection = [];
 let failedDescriptionsOnly = false;
 let descriptionTaskFailedIds = new Set();
@@ -194,6 +195,7 @@ function renderCaptureFolders() {
   }
   const all = button('', 'capture-all' + (state.showAllCaptures ? ' is-selected' : ''), () => {
     state.showAllCaptures = true;
+    captureSearchReturn = null;
     failedDescriptionsOnly = false;
     state.selectedFolder = null;
     selectedCaptureId = null;
@@ -210,6 +212,7 @@ function renderCaptureFolders() {
     const total = [...projects.values()].reduce((count, images) => count + images.length, 0);
     const heading = button(type + ' · ' + total, 'folder-type' + (type === state.selectedType && !state.showAllCaptures ? ' is-selected' : ''), () => {
       state.selectedType = type;
+      captureSearchReturn = null;
       state.showAllCaptures = false;
       state.typeChosenByUser = true;
       $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
@@ -270,6 +273,7 @@ function renderCaptureFolders() {
         const key = folderKey(images[0]);
         const folder = button(project + ' (' + images.length + ')',
           'folder-project' + (key === state.selectedFolder ? ' is-selected' : ''), () => {
+            captureSearchReturn = null;
             $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
             selectedCaptureId = null;
             state.selectedType = type;
@@ -321,6 +325,12 @@ function scrollFolderListWhileDragging() {
 }
 
 function openCaptureProject(item) {
+  const query = $('capture-search').value.trim();
+  captureSearchReturn = query ? {
+    query, searchQuery: captureSearch.query, ids: [...captureSearch.ids],
+    status: captureSearch.busy ? '已恢复关键词结果；按回车继续语义搜索' : captureSearch.status,
+    selectedId: selectedCaptureId, scrollY: window.scrollY, folder: folderKey(item)
+  } : null;
   state.showAllCaptures = false;
   state.selectedType = item.type;
   state.typeChosenByUser = true;
@@ -410,6 +420,8 @@ function renderCaptureGrid() {
       : allImages ? state.captures : folderImages;
   const showImages = failedOnly || insideFolder || allImages || Boolean(query);
   $('capture-back').hidden = !(failedOnly || insideFolder || query);
+  $('capture-back').textContent = insideFolder && captureSearchReturn?.folder === state.selectedFolder
+    ? '← 返回搜索结果' : '← 返回项目';
   $('capture-view-switch').hidden = showImages || projects.size === 0;
   $('capture-view-small').setAttribute('aria-pressed', String(state.captureProjectView === 'small'));
   $('capture-view-large').setAttribute('aria-pressed', String(state.captureProjectView === 'large'));
@@ -1263,12 +1275,20 @@ async function setCaptureProjectView(view) {
 $('capture-view-small').addEventListener('click', () => { void setCaptureProjectView('small'); });
 $('capture-view-large').addEventListener('click', () => { void setCaptureProjectView('large'); });
 $('capture-back').addEventListener('click', () => {
-  $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
-  selectedCaptureId = null;
+  const previous = captureSearchReturn?.folder === state.selectedFolder ? captureSearchReturn : null;
+  captureSearchReturn = null;
+  captureSearch.clear();
+  $('capture-search').value = previous?.query || '';
+  captureSearch.query = previous?.searchQuery || '';
+  captureSearch.ids = previous?.ids || [];
+  captureSearch.status = previous?.status || '';
+  $('capture-search-status').textContent = captureSearch.status;
+  selectedCaptureId = previous?.selectedId ?? null;
   failedDescriptionsOnly = false;
   state.selectedFolder = null;
   renderCaptureFolders();
   renderCaptureGrid();
+  if (previous) requestAnimationFrame(() => window.scrollTo(0, previous.scrollY));
 });
 $('description-progress-failed').addEventListener('click', () => {
   failedDescriptionsOnly = true;
@@ -1469,6 +1489,7 @@ function wireSemanticSearch(inputId, buttonId, statusId, search, documents, rend
   });
   const update = () => { status.textContent = search.status; render(); };
   input.addEventListener('input', () => {
+    if (inputId === 'capture-search') captureSearchReturn = null;
     queuedQuery = null;
     search.clear();
     const count = keywordMatches(documents(), input.value, item => item.text).length;

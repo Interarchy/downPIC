@@ -159,3 +159,10 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 - 凭据以当前 Windows 用户 DPAPI 密文保存于已忽略的 plugin-prototype/runtime/embedding-settings.json，归属 archbuddy/development/tokenhub。仅本地启动脚本读取到本进程环境；不进入扩展、Git 或部署包。
 - 服务端源码仍沿用已登记额度，没有增加额度上限或创建新预算资源。本地 process-test 只计当前进程，首次批量索引仍可能用完测试调用额度；线上预算拆分待单独决定。
 - CloudBase 中 ARCHBUDDY_EMBEDDING_API_KEY 仍未配置，云端接口未部署；费用、云端 Key 权限范围和共享账号预算未独立核验。本轮没有修改其他项目或共享云配置。
+
+### 2026-10-01：V4 专属隐私站同步
+
+- 项目/阶段/环境/资源：ArchBuddy / development / dev-mel-d9guu8bpu44029179 / 已登记 archbuddy-privacy，固定文件前缀 archbuddy/privacy/index.html。只有公开政策 HTML，无图片、用户记录、密钥或执行脚本。
+- 从源目录作为 shell 工作目录执行命名应用的纯静态部署，保持原 /archbuddy/privacy 路径；明确只上传 1 个文件。没有创建新站、修改域名/网关/权限、覆盖共享根目录或操作其他项目。首次 --cwd 扫描范围异常被立即中止，随后查询该固定前缀确认仍只有 index.html。
+- 公开 HTTPS 返回 200，含 DeepSeek 和 TokenHub 的 V4 数据流说明，正文 SHA-256 与本地 HTML 一致。CLI 应用记录仍保留原 metadata，本次是现有静态文件更新，不宣称新建构建版本。
+- 未涉及集合、对象素材、身份、日志、密钥、额度、预算或运行角色调整；既有角色和日志/TTL 的未核验项仍保留。生成的本地环境配置已移除，模型请求未发生。

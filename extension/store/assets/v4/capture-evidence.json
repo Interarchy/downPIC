@@ -1,0 +1,22 @@
+{
+  "version": "0.6.0",
+  "createdAt": "2026-10-01T02:24:50.638Z",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "extensionOrigin": "chrome-extension://pnocikkgaaalnkmajdfloplnmmdpclje",
+  "method": "real-unpacked-extension-isolated-profile",
+  "data": "hand-authored-demo-only",
+  "sourceArtwork": "prototype/assets/architecture-board.png",
+  "modelRequests": 0,
+  "blockedModelCalls": 0,
+  "pageErrors": [],
+  "publicFiles": [
+    "01-project-library-1280x800.png",
+    "02-image-description-1280x800.png",
+    "03-prompt-library-1280x800.png",
+    "04-prompt-builder-1280x800.png",
+    "05-prompt-optimization-1280x800.png"
+  ]
+}

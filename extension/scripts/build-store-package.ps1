@@ -72,28 +72,24 @@ if (Test-Path -LiteralPath $archivePath) {
   Remove-Item -LiteralPath $archivePath -Force
 }
 
-$stagingDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ('downpic-package-' + [guid]::NewGuid().ToString('N'))
-New-Item -ItemType Directory -Path $stagingDirectory | Out-Null
-
+# ZipArchive uses forward slashes so icons resolve on every platform and in Chrome Web Store.
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$archive = [System.IO.Compression.ZipFile]::Open($archivePath, [System.IO.Compression.ZipArchiveMode]::Create)
 try {
   foreach ($relativePath in $requiredFiles) {
     $sourcePath = Join-Path $extensionDirectory $relativePath
-    $targetPath = Join-Path $stagingDirectory $relativePath
-    $targetParent = Split-Path -Parent $targetPath
-    if (-not (Test-Path -LiteralPath $targetParent)) {
-      New-Item -ItemType Directory -Path $targetParent -Force | Out-Null
+    $entryName = $relativePath.Replace('\', '/')
+    $entry = $archive.CreateEntry($entryName, [System.IO.Compression.CompressionLevel]::Optimal)
+    $source = [System.IO.File]::OpenRead($sourcePath)
+    $destination = $entry.Open()
+    try { $source.CopyTo($destination) }
+    finally {
+      $destination.Dispose()
+      $source.Dispose()
     }
-    Copy-Item -LiteralPath $sourcePath -Destination $targetPath
   }
-  Compress-Archive -Path (Join-Path $stagingDirectory '*') -DestinationPath $archivePath -CompressionLevel Optimal
 } finally {
-  if (Test-Path -LiteralPath $stagingDirectory) {
-    $resolvedStaging = [System.IO.Path]::GetFullPath($stagingDirectory)
-    $expectedPrefix = [System.IO.Path]::GetFullPath((Join-Path ([System.IO.Path]::GetTempPath()) 'downpic-package-'))
-    if ($resolvedStaging.StartsWith($expectedPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
-      Remove-Item -LiteralPath $resolvedStaging -Recurse -Force
-    }
-  }
+  $archive.Dispose()
 }
-
 Write-Output ('Created Chrome Web Store package: ' + $archivePath)

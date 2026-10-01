@@ -1,0 +1,42 @@
+[
+  {
+    "name": "01-project-library-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "format": "png",
+    "channels": 3,
+    "hasAlpha": false
+  },
+  {
+    "name": "02-image-description-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "format": "png",
+    "channels": 3,
+    "hasAlpha": false
+  },
+  {
+    "name": "03-prompt-library-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "format": "png",
+    "channels": 3,
+    "hasAlpha": false
+  },
+  {
+    "name": "04-prompt-builder-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "format": "png",
+    "channels": 3,
+    "hasAlpha": false
+  },
+  {
+    "name": "05-prompt-optimization-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "format": "png",
+    "channels": 3,
+    "hasAlpha": false
+  }
+]
