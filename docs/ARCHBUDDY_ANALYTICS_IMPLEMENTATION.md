@@ -38,7 +38,7 @@
 
 两份候选产物均在忽略目录内，不进入Git：extension/dist/archbuddy-beta-0.7.0.zip；cloudbase/dist/archbuddy-api-20261007-012425-838.zip。后端打包脚本校验Linux路径与源文件SHA-256；扩展包按显式白名单校验新增模块和资源。合成输入与核验摘要保存在cloudbase/dist/analytics-verification-20261007；[合成周报](ARCHBUDDY_METRICS_SYNTHETIC_REPORT.md)可阅读，不代表真实用户表现。
 
-本地代码尚未提交、未推送。原分支与现有线上版本保持原状态。
+本地实现原先未提交；2026-10-07用户补充后，已提交为d3e81ff并推送origin/codex/metrics-evaluation。原分支与现有线上版本保持原状态。
 
 
 ## 每周如何分析
@@ -106,3 +106,6 @@ CloudBase官方灰度说明要求验证后将流量切至新版本，或取消�
 Git核对：origin为Interarchy/downPIC，远端原有master与direction/plugin，新分支此前仅在本地，ls-remote未发现codex/metrics-evaluation。仓库没有.github/workflows及生效的本地提交/推送钩子，既有CloudBase流程为手工上传ZIP。此次仅向origin的指定开发分支推送，不更新另外的downpic-cc远端、不合并主分支；最终提交与远端同步结果以Git核对及本次交接消息为准。
 
 本轮额外尝试只读GET已登记服务的/healthz和/api/status，浏览工具无法访问，终端请求也未取得有效响应；未上传内容、未使用模型或改变配置。当前实时可用性及版本配置未确认，不据此宣称故障或声称线上验收通过；进一步支持只准备、不部署的决策。
+
+
+同步结果：源码提交d3e81ff已推送至[GitHub独立分支](https://github.com/Interarchy/downPIC/tree/codex/metrics-evaluation)，上游origin/codex/metrics-evaluation已建立。后续交接以独立文档提交同步，候选ZIP仍保存在本地忽略目录；Git推送不是部署或商店发布。
