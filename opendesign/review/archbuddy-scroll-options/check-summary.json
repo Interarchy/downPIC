@@ -1,0 +1,1015 @@
+{
+  "generated": "2026-10-06T12:23:06.450Z",
+  "scope": "仅本地三动效预览；独立无头Chrome临时上下文，未部署、安装插件或调用模型",
+  "cases": [
+    {
+      "width": 1440,
+      "mode": "reveal",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "reveal",
+        "headings": 5,
+        "stages": 5,
+        "width": 1440,
+        "viewport": 1440
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": -39.921875,
+          "headingBottom": 140.859375,
+          "stageTop": 176.859375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 283,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": -40.140625,
+          "headingBottom": 140.640625,
+          "stageTop": 176.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 704,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": -40.359375,
+          "headingBottom": 140.421875,
+          "stageTop": 162.421875,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 502.125,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": -40.453125,
+          "headingBottom": 84.4375,
+          "stageTop": 120.4375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 124.890625,
+          "stageHeight": 1308.421875,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": 28.859375,
+          "headingBottom": 209.640625,
+          "stageTop": 241.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 458.171875,
+          "nativeWheelDelta": 91
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 328
+      },
+      "replay": {
+        "before": 4940,
+        "after": 271,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.4054",
+          "transform": "matrix(0.9568, 0, 0, 0.9568, 0, 28.77)",
+          "y": 762
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1154
+        },
+        {
+          "opacity": "0.4364",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.27)",
+          "y": 784
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 422.859375,
+        "header": 84
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 1440
+    },
+    {
+      "width": 1440,
+      "mode": "focus",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "focus",
+        "headings": 5,
+        "stages": 5,
+        "width": 1440,
+        "viewport": 1440
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": -39.921875,
+          "headingBottom": 140.859375,
+          "stageTop": 176.859375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 283,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": -40.140625,
+          "headingBottom": 140.640625,
+          "stageTop": 176.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 704,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": -40.359375,
+          "headingBottom": 140.421875,
+          "stageTop": 162.421875,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 502.125,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": -40.453125,
+          "headingBottom": 84.4375,
+          "stageTop": 120.4375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 124.890625,
+          "stageHeight": 1308.421875,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": 28.859375,
+          "headingBottom": 209.640625,
+          "stageTop": 241.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 180.78125,
+          "stageHeight": 458.171875,
+          "nativeWheelDelta": 91
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 357
+      },
+      "replay": {
+        "before": 4938,
+        "after": 271,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.4054",
+          "transform": "matrix(0.9568, 0, 0, 0.9568, 0, 28.77)",
+          "y": 762
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1154
+        },
+        {
+          "opacity": "0.4364",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.27)",
+          "y": 784
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 422.859375,
+        "header": 84
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 1440
+    },
+    {
+      "width": 1440,
+      "mode": "chapter",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "chapter",
+        "headings": 5,
+        "stages": 5,
+        "width": 1440,
+        "viewport": 1440
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": 84,
+          "headingBottom": 284.78125,
+          "stageTop": 196.859375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 200.78125,
+          "stageHeight": 283,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": 84,
+          "headingBottom": 284.78125,
+          "stageTop": 196.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 200.78125,
+          "stageHeight": 704,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": 84,
+          "headingBottom": 284.78125,
+          "stageTop": 182.421875,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 200.78125,
+          "stageHeight": 502.125,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": 84,
+          "headingBottom": 228.890625,
+          "stageTop": 140.4375,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 144.890625,
+          "stageHeight": 1308.421875,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": 84,
+          "headingBottom": 284.78125,
+          "stageTop": 241.640625,
+          "headerBottom": 84,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 1440,
+          "viewport": 1440,
+          "headingHeight": 200.78125,
+          "stageHeight": 458.171875,
+          "nativeWheelDelta": 111
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 328
+      },
+      "replay": {
+        "before": 4940,
+        "after": 271,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.4054",
+          "transform": "matrix(0.9568, 0, 0, 0.9568, 0, 28.77)",
+          "y": 762
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1154
+        },
+        {
+          "opacity": "0.4364",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.27)",
+          "y": 784
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 422.859375,
+        "header": 84
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 1440
+    },
+    {
+      "width": 390,
+      "mode": "reveal",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "reveal",
+        "headings": 5,
+        "stages": 5,
+        "width": 390,
+        "viewport": 390
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": -39.6875,
+          "headingBottom": 108.09375,
+          "stageTop": 134.09375,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 931,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": -39.90625,
+          "headingBottom": 107.875,
+          "stageTop": 133.875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 1418,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": -40.125,
+          "headingBottom": 107.65625,
+          "stageTop": 127.65625,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 421.375,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": -39.96875,
+          "headingBottom": 54.96875,
+          "stageTop": 80.96875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 94.9375,
+          "stageHeight": 1842.0625,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": -39.96875,
+          "headingBottom": 107.8125,
+          "stageTop": 133.8125,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 795.21875,
+          "nativeWheelDelta": 160
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 815
+      },
+      "replay": {
+        "before": 6871,
+        "after": 771,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.38",
+          "transform": "matrix(0.955, 0, 0, 0.955, 0, 30)",
+          "y": 1435
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1787
+        },
+        {
+          "opacity": "0.4368",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.25)",
+          "y": 1475
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 487.21124267578125,
+        "header": 72
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 390
+    },
+    {
+      "width": 390,
+      "mode": "focus",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "focus",
+        "headings": 5,
+        "stages": 5,
+        "width": 390,
+        "viewport": 390
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": -39.6875,
+          "headingBottom": 108.09375,
+          "stageTop": 134.09375,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 931,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": -39.90625,
+          "headingBottom": 107.875,
+          "stageTop": 133.875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 1418,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": -40.125,
+          "headingBottom": 107.65625,
+          "stageTop": 127.65625,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 421.375,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": -39.96875,
+          "headingBottom": 54.96875,
+          "stageTop": 80.96875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 94.9375,
+          "stageHeight": 1842.0625,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": -39.96875,
+          "headingBottom": 107.8125,
+          "stageTop": 133.8125,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "static",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 147.78125,
+          "stageHeight": 795.21875,
+          "nativeWheelDelta": 160
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 815
+      },
+      "replay": {
+        "before": 6871,
+        "after": 772,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.38",
+          "transform": "matrix(0.955, 0, 0, 0.955, 0, 30)",
+          "y": 1434
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1787
+        },
+        {
+          "opacity": "0.4368",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.25)",
+          "y": 1475
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 515.3712158203125,
+        "header": 72
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 390
+    },
+    {
+      "width": 390,
+      "mode": "chapter",
+      "httpStatus": 200,
+      "entry": {
+        "mode": "chapter",
+        "headings": 5,
+        "stages": 5,
+        "width": 390,
+        "viewport": 390
+      },
+      "chapters": [
+        {
+          "index": 1,
+          "text": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+          "id": "problem-title",
+          "section": "problem-section container",
+          "headingTop": 72,
+          "headingBottom": 231.78125,
+          "stageTop": 146.09375,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 159.78125,
+          "stageHeight": 931,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 2,
+          "text": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+          "id": "workflow-title",
+          "section": "workflow-section container",
+          "headingTop": 72,
+          "headingBottom": 231.78125,
+          "stageTop": 145.875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 159.78125,
+          "stageHeight": 1418,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 3,
+          "text": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+          "id": "concept-title",
+          "section": "concept-section",
+          "headingTop": 72,
+          "headingBottom": 231.78125,
+          "stageTop": 139.65625,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 159.78125,
+          "stageHeight": 421.375,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 4,
+          "text": "04三大功能三大功能支撑两条业务链路",
+          "id": "features-title",
+          "section": "features-section",
+          "headingTop": 72,
+          "headingBottom": 178.9375,
+          "stageTop": 92.96875,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 106.9375,
+          "stageHeight": 1842.0625,
+          "nativeWheelDelta": 160
+        },
+        {
+          "index": 5,
+          "text": "05下载与安装把创作的循环，放进你的浏览器。",
+          "id": "install-title",
+          "section": "install-section container",
+          "headingTop": 72,
+          "headingBottom": 231.78125,
+          "stageTop": 145.8125,
+          "headerBottom": 72,
+          "headingOpacity": "1",
+          "stageOpacity": "1",
+          "headingPosition": "sticky",
+          "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+          "width": 390,
+          "viewport": 390,
+          "headingHeight": 159.78125,
+          "stageHeight": 795.21875,
+          "nativeWheelDelta": 160
+        }
+      ],
+      "checks": [
+        {
+          "name": "章节可读/无横溢出 1",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 2",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 3",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 4",
+          "pass": true
+        },
+        {
+          "name": "章节可读/无横溢出 5",
+          "pass": true
+        }
+      ],
+      "pageErrors": [],
+      "switchToFocus": {
+        "mode": "focus",
+        "query": "focus",
+        "pressed": "true",
+        "y": 827
+      },
+      "replay": {
+        "before": 6871,
+        "after": 771,
+        "pass": true
+      },
+      "focusReverse": [
+        {
+          "opacity": "0.38",
+          "transform": "matrix(0.955, 0, 0, 0.955, 0, 30)",
+          "y": 1435
+        },
+        {
+          "opacity": "0.9577",
+          "transform": "matrix(0.9969, 0, 0, 0.9969, 0, 2.05)",
+          "y": 1787
+        },
+        {
+          "opacity": "0.4368",
+          "transform": "matrix(0.9591, 0, 0, 0.9591, 0, 27.25)",
+          "y": 1475
+        }
+      ],
+      "installAnchor": {
+        "hash": "#install",
+        "heading": 487.21124267578125,
+        "header": 72
+      },
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "finalWidth": 390
+    }
+  ],
+  "errors": []
+}

@@ -20,7 +20,7 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 | 数据库集合或表 | `archbuddy_dev_quotas`、`archbuddy_dev_requests` | 用户已确认按 ADMINONLY 创建，并报告每日额度脚本测试成功；TTL 自动清理仍待配置和验证 |
 | 云存储对象 / 静态托管 | ArchBuddy 独立静态站已部署并公开验证；URL 见 `cloudbase/environment.json` | 隐私政策公开页面；当前图片和结果只在请求内存处理，不落盘 |
 | 业务身份与使用统计 | 匿名安装会话已部署；计划集合 `archbuddy_dev_events` 尚未创建、尚未验证、不得启用 | 原始安装 ID 只在浏览器；可选统计默认关闭，只处理不可逆项目内主体和白名单事件 |
-| 调用额度 | 每日 20 / 200 | CloudBase 事务版已部署并由用户报告脚本成功；普通用户不取得具体余额，金额预算尚未设定 |
+| 调用额度 | 当前个人每日50 / 项目共享500；环境变量配置 | 用户2026-10-06指定；014版本及服务配置核对50/500，normal与100%流量已验证；未配置时兼容默认20/200，普通用户不取得具体余额，金额预算尚未设定 |
 | 日志 | 服务输出已有就绪和启动失败事件 | 腾讯云日志主题、访问日志、保留期和权限尚未在本次检查中核验 |
 | 服务凭据 | `DEEPSEEK_API_KEY`、`ARCHBUDDY_TEST_TOKEN`、`ARCHBUDDY_SESSION_SECRET` 等 | 仅登记变量名，不登记值；其他项目不得默认复用本项目令牌 |
 
@@ -166,3 +166,229 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 - 从源目录作为 shell 工作目录执行命名应用的纯静态部署，保持原 /archbuddy/privacy 路径；明确只上传 1 个文件。没有创建新站、修改域名/网关/权限、覆盖共享根目录或操作其他项目。首次 --cwd 扫描范围异常被立即中止，随后查询该固定前缀确认仍只有 index.html。
 - 公开 HTTPS 返回 200，含 DeepSeek 和 TokenHub 的 V4 数据流说明，正文 SHA-256 与本地 HTML 一致。CLI 应用记录仍保留原 metadata，本次是现有静态文件更新，不宣称新建构建版本。
 - 未涉及集合、对象素材、身份、日志、密钥、额度、预算或运行角色调整；既有角色和日志/TTL 的未核验项仍保留。生成的本地环境配置已移除，模型请求未发生。
+
+### 2026-10-05：公网展示站资源预登记（尚未创建）
+
+- 用户授权：为 ArchBuddy 建立临时公开展示网页，提供已交付插件 ZIP 下载、既有五页项目案例及三条工作链路说明；优先使用 CloudBase。
+- 计划资源：静态应用 archbuddy-dev-showcase；项目 archbuddy，阶段 development，地域 ap-shanghai，环境沿用 cloudbase/environment.json 已登记值。唯一云端文件前缀 archbuddy/dev/showcase/；预期域名采用该静态应用的独立 webapps.tcloudbase.com 子域名。状态：尚未查询、尚未创建、尚未部署、尚未验证。
+- 数据类型与权限：公开中文 HTML/CSS/JS、现有演示截图/Logo、ArchBuddy 0.6.0 白名单 ZIP。公众仅读取网页和下载；发布凭据只供已有本地 CLI 使用，不写入源码或站点。不收集表单、账号、用户图库、Prompt、行为事件或 Cookie，不提供模型接口。
+- 资源范围：不新增或修改数据库集合、业务身份、模型密钥、后端、额度、日志主题、权限或预算配置；不覆盖静态托管根目录、archbuddy/privacy 或其他项目路径。平台既有访问日志、发布角色可能具有环境级权限，实际日志留存与账户级带宽费用仍为既有未核验项；应用名称与路径不等于权限隔离。
+- 保留与回滚：用于近期展示，后续保留时间由用户决定；回滚仅重新发布本静态应用的白名单站点副本，不清空共享托管。下载只使用 2026-10-05 已核验的 ArchBuddy ZIP，模型调用和既有 20/200 日额度不受网站访问影响。
+- 发布前完成本地引用、语法、敏感内容与实际浏览器检查；创建/发布后只查询该应用与固定前缀，并核验 HTTPS、五页案例、ZIP 字节哈希和原隐私页未改变。最终状态与证据另行追加。
+
+### 2026-10-05：展示站发布与资源隔离核验
+
+- 已创建并发布登记静态应用 archbuddy-dev-showcase，项目 archbuddy / development / ap-shanghai / 已登记共享环境；应用登记 DeployType=static-hosting、LatestStatus=SUCCESS、LatestVersionName=archbuddy-dev-showcase-001、AppPath=/archbuddy/dev/showcase/。独立域名 https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/ 。CurrentVersion为空，纯静态发布不宣称为后端构建版本。
+- 写入资源仅本站静态文件与该应用登记，固定前缀 archbuddy/dev/showcase/。发布从实际仅含18个白名单文件的工作目录执行，16个普通文件和2个入口文件全部上传成功；没有从仓库根目录扫描、没有覆盖根路由或其他前缀。限定查询前缀得到18文件，无用户图库、凭据、环境配置或审阅资料。
+- 两种公开入口（独立域名与默认域名的本站子路径）下全部18个文件均 HTTP 200且SHA-256与本地白名单一致；下载ZIP为179857字节，与用户已核验的0.6.0安装包完全一致。独立浏览器在平台首次访问提示中等待3秒并点击“确定访问”后，实际渲染本站首页，资源均200，未出现HTML下载或循环提醒；后续具体交互与下载结果见展示站复核记录。
+- 原 archbuddy-privacy 在发布前后均 HTTP 200且正文SHA-256相同：D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8。没有修改后端、集合、模型凭据、业务身份、统计、AI日额度、日志主题、共享网关配置或其他项目资源。站点不调用模型，访问与下载不扣AI额度。
+- CloudBase 默认测试域名对新访客显示平台风险提醒，是本次演示的实际访问限制；没有绕过该平台机制或更改共享设置。CLI生成的本地cloudbaserc.json未上传且已移除，真实环境文件仍由Git忽略。平台访问日志、发布角色的环境级权限及账号级带宽费用仍未独立审计，不宣称物理环境隔离。
+- 证据：docs/ARCHBUDDY_SHOWCASE_SITE.md、opendesign/review/archbuddy-showcase/verification.md，以及忽略目录cloudbase/dist/showcase-20261005的发布日志/白名单/两种公网哈希/原隐私页哈希。本站回滚或清理仅限该具体应用与前缀，保留时长待用户决定，不清空共享托管。
+
+
+### 2026-10-05：单页改版与图片测试集资源预登记
+
+- 用户明确授权修改既有展示站为连续滚动单页，并公开下载所提供的 ArchBuddy测试集.7z。只更新 archbuddy / development / archbuddy-dev-showcase 的 archbuddy/dev/showcase/ 前缀。新增下载对象为 archbuddy/dev/showcase/downloads/ArchBuddy-test-images.7z，状态：已本地核对，尚未上传或验证公网。
+- 数据类型：用户主动提供的建筑参考图片测试集原压缩包，12020913字节，SHA-256 18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD。公众读取和下载，不收集访客资料，不把文件内容作为指令或执行其中内容；只读列举归档路径，未提取或运行。与访客本机图库、业务身份、模型调用和每日20/200额度分离。
+- 既有0.6.0安装包、历史五页路径保留；旧版本站源码和发布清单留存供限定回滚。本次发布前后核对原隐私站哈希，只从19文件白名单目录发布，不改变根路由、共享权限、后端、密钥、集合、统计或预算。平台既有日志与账号带宽费用仍未独立核验。
+
+
+### 2026-10-05：单页改版与测试集发布核验完成
+
+- 已在原archbuddy-dev-showcase应用与archbuddy/dev/showcase/前缀发布第二版，新增测试集对象仅为预登记的downloads/ArchBuddy-test-images.7z。固定前缀精确19文件、15938286字节；应用LatestStatus=SUCCESS、LatestVersionName=archbuddy-dev-showcase-002，不把静态应用记录表述为后端版本。
+- 主域名19资源HTTP200、逐文件SHA-256与白名单一致；备用路径首页和双下载一致。原隐私站哈希发布前后未变。独立真实浏览器正常确认平台提示后渲染新单页，插件ZIP和用户测试集7z实际下载的字节数和SHA-256匹配；页面错误0，没有执行归档或调用模型。
+- 上传只从19文件白名单工作目录，CLI临时cloudbaserc.json未上传且已移除；环境登记仅更新showcaseSite状态和下载记录，后端012、集合、模型凭据、身份、额度、日志主题、网关、预算及其他项目均未改。平台日志留存、环境级发布角色和账号带宽成本仍未独立审计。
+- 回滚素材保留首版源码归档和旧18文件发布清单，不执行整个环境删除或重置。最终证据见docs/ARCHBUDDY_SHOWCASE_SITE.md、opendesign/review/archbuddy-showcase-scroll和忽略的cloudbase/dist/showcase-revision-20261005。
+
+
+### 2026-10-05：两条业务链路与Lucide视觉改版预登记
+
+- 用户授权继续更新原公网展示页：两条业务场景链路、三大功能支撑、分析图、章节标题、白底绿字品牌和透明渐变固定导航；以Lucide官方图标替换小图标。只更新archbuddy / development / archbuddy-dev-showcase / archbuddy/dev/showcase/，不新建应用。
+- 新增公开静态资源预登记：assets/lucide.svg（仅所用官方图标的SVG sprite）、assets/lucide-LICENSE.txt（许可原文）、assets/favicon.svg（官方drafting-compass图标，仅品牌色设置）。项目archbuddy、阶段development，数据为公开图形/许可证，公众只读，无身份、业务数据、模型调用、密钥或统计。当前尚未上传或验证公网。
+- 既有插件ZIP和图片测试集原字节保持；旧19文件发布产物和站点源码留存回滚。发布前核验官方来源、引用/语法/双下载哈希、真实浏览器布局与滚动导航；发布后限定列举该前缀、核验全部22文件与原隐私页哈希。不存在根托管或跨项目配置变更；既有平台日志、角色权限和账号带宽费用仍未独立审计。
+
+### 2026-10-05：两条业务链路与Lucide改版发布核验完成
+
+- 预登记的assets/lucide.svg、assets/lucide-LICENSE.txt、assets/favicon.svg已随第三版发布并验证，只写入archbuddy / development / archbuddy-dev-showcase / archbuddy/dev/showcase/。固定前缀精确22文件、15967942字节；应用LatestStatus=SUCCESS、LatestVersionName=archbuddy-dev-showcase-003，不表述为后端版本。临时配置未上传且已移除，无根路由或跨项目配置修改。
+- 主域名全部22文件HTTP200且SHA-256与白名单一致；备用本站路径首页及双下载一致。原archbuddy-privacy发布前后HTTP200、6364字节与SHA-256 D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8保持一致。
+- 公网独立浏览器50项检查全通过，正常平台确认后渲染HTML200，无附件下载或循环提醒；桌面与手机无溢出，站点错误0。两个实际下载的字节数和SHA-256均匹配插件与用户测试集原件，未执行归档或发送模型请求。
+- 环境文件仅更新showcaseSite部署/验收状态；后端012、集合、模型凭据、身份、业务日志、额度20/200、共享网关、预算及其他项目未修改。既有平台日志留存、环境级发布角色与账号带宽费用仍未独立审计。前两版源码与发布产物保留供限定回滚，未提交或推送Git。
+- 最终证据：docs/ARCHBUDDY_SHOWCASE_SITE.md、opendesign/review/archbuddy-showcase-two-workflows/review.md及public-check-summary.json；忽略目录cloudbase/dist/showcase-two-workflows-20261005的部署白名单、日志、资源范围及公网/隐私哈希记录。
+
+### 2026-10-05：第四版闭环图与品牌修订预登记
+
+- 用户授权更新现有展示页的问题路径、产品词语、两条完整闭环、Logo、章节数字、导航与冗余说明。仅archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，不新建应用，不修改后端、其他项目或共享配置。
+- 新增assets/brand-mark.svg：从extension/icons/logo.svg复用既有A形路径，仅将底色设置为白色、字形设为主题深绿；公开品牌图形，无用户数据、身份、模型、密钥或统计。当前仅登记、未发布。其余22公开文件继续白名单管理，插件与测试集原字节保持。
+- 第三版源码与22文件发布产物保留；本轮发布目录showcase-closed-loops-20261005，仅23公开文件。上线前独立检查流程位置与大小环、桌面/手机排版及图标交互；上线后只查询固定应用/前缀并核验23资源、双下载与原隐私站哈希。平台默认域名提示和既有日志/角色/带宽边界不变。
+
+### 2026-10-05：第四版闭环与品牌修订发布核验完成
+
+- 预登记assets/brand-mark.svg已随本轮23文件发布并核验，复用原A字形路径，仅白底深绿配色。只更新archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，21普通文件+2入口、15969494字节，LatestStatus=SUCCESS、LatestVersionName=archbuddy-dev-showcase-004，不宣称后端版本。固定前缀精确白名单，CLI临时配置未上传且已移除。
+- 23主域名资源逐一HTTP200/SHA-256匹配，备用本站路径首页与双下载匹配；原隐私站发布前后200/6364字节及SHA-256 D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8不变。本轮独立公网72项全部通过，实际下载字节/哈希与原件一致，网页异常0，正常平台确认后实际HTML渲染。
+- 环境登记仅更新showcaseSite版本/23文件/metadata004/浏览器下载通过状态；后端012、集合、密钥、身份、用户数据、业务日志/统计、每日20与200额度、预算、共享网关及其他项目未改，无模型调用、Git提交或推送。既有平台日志、环境级发布角色与账号带宽费用未独立审计，不宣称物理环境隔离。
+- 第三版源码与22文件发布产物单独保留，前三版均可在本站限定范围回滚。最终证据为docs/ARCHBUDDY_SHOWCASE_SITE.md、opendesign/review/archbuddy-showcase-closed-loops及忽略目录cloudbase/dist/showcase-closed-loops-20261005。
+
+### 2026-10-05：第五版产品机会展示修订登记
+
+- 用户授权重排章节、标注两条链路的产品机会并简化AI图和功能标题。仅更新archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，复用现有A标志与Lucide资源，不新增云端资源、数据、身份或统计；23公开文件白名单不变。当前第五版尚未发布。
+- 第四版源码归档archbuddy-showcase-v4，旧23文件发布产物保留；本轮输出showcase-product-opportunities-20261005。上线前核验章节顺序/机会标注/外部生图边界/两闭环/手机排版；上线后限定前缀和逐项HTTP哈希、双下载、原隐私站保护。后端012、每日20/200、密钥、共享配置及其他项目不变，不调用模型。
+
+### 2026-10-05：第五版产品机会展示发布核验完成
+
+- 只更新现有archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，复用原A与Lucide资源，无新增云端资源。21普通+2入口、23文件15971456字节，LatestStatus=SUCCESS、LatestVersionName=archbuddy-dev-showcase-005，不表述为服务012版本。固定前缀精确白名单，临时配置未上传且已移除。
+- 23主域名资源逐项HTTP200/SHA-256匹配，备用本站首页/双下载匹配，原隐私页发布前后200/6364字节及SHA-256 D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8不变。独立本轮公网65项全通过、网站异常0，正常平台确认后实际HTML与双下载基准一致。
+- 环境登记只更新showcaseSite第五版/23文件/metadata005/浏览器下载完成；插件、服务012、数据库/身份/用户数据/密钥/业务日志/统计/每日20与200额度/预算/共享网关与其他项目未改，没有模型调用或Git提交推送。平台日志、环境级角色和账号带宽成本仍未独立审计，前四版素材保留供本站限定回滚。
+- 证据：docs/ARCHBUDDY_SHOWCASE_SITE.md、opendesign/review/archbuddy-showcase-product-opportunities，以及忽略目录cloudbase/dist/showcase-product-opportunities-20261005的发布/白名单/资源范围/逐项哈希及原隐私保护记录。
+
+### 2026-10-05：第六版并排链路与外部完整步骤修订登记
+
+- 用户授权优化02两链路版式、品牌机会色块与完整外部生图框。只更新archbuddy/development/archbuddy-dev-showcase和archbuddy/dev/showcase/，既有23公开文件白名单不变，不新建应用或资源。模型调用、插件、服务012、数据/身份/密钥/共享配置/统计/预算和其他项目不变。
+- 第五版源文件与23文件发布产物保留；当前第六版本地输出showcase-parallel-workflows-20261005，未发布。上线前独立核验桌面并排/手机重排、参考3步/AI5步、2+4品牌高亮与外部未介入、大环/小环与实际交互；上线后限定应用/前缀、23资源HTTP哈希、双下载与原隐私站保护。
+
+### 第六版发布阶段核验
+
+- 2026-10-05T11:15:47.238Z仅原archbuddy-dev-showcase应用与archbuddy/dev/showcase/前缀发布21普通+2入口，共23文件15971645字节。LatestStatus=SUCCESS，LatestVersionName=archbuddy-dev-showcase-006。23主域名资源与备用首页/双下载HTTP200且逐项SHA-256匹配；固定前缀精确白名单，无临时配置上传，CLI生成的本地精确cloudbaserc.json已移除。
+- 发布前后原隐私页均HTTP200/6364字节，原SHA-256不变。双归档保持原件；本轮无模型调用、插件/后端012/身份/数据库/存储数据/密钥/每日20与200额度/共享配置/其他项目改变。
+- showcaseSite只更新本站第六版登记，状态为HTTP通过、浏览器待复核。本轮真实公网独立复核正在进行，不能将第五版结果当作第六版证据。日志、白名单、公网哈希与范围证据在cloudbase/dist/showcase-parallel-workflows-20261005；独立浏览器证据在opendesign/review/archbuddy-showcase-parallel-workflows。
+
+### 第六版最终验收
+
+- 独立公网71项检查全部通过、16张证据截图，1440/390/360px无横向溢出，站点页面/控制台/网络异常0。已核对parallel-workflows-20261005当前版本；本地1440/1024/390/360px的44项布局与61项交互/实际下载通过，未沿用第五版验收。
+- 桌面两面板并排等宽等高，手机依次展示。8真实步骤框等高；方案链3框2机会，AI链5框4机会；外部生图是五环节的第三个完整框，明确“外部工具完成 / ArchBuddy 未介入”，人工创作无品牌机会。六个玫红块与01断点同色，A与ArchBuddy品牌在上、具体贡献在下、完整处于大步骤框内，未拥挤/交叠/孤字。参考/AI大环及生成↔迭代小环清晰，04单句、原章序/导航/截图/复制保持。
+- 三个全新浏览器context正常等待CloudBase3秒后确认，正式Document均200/text-html/无附件头，HTML下载0、无循环提醒；平台初始404单列。ZIP实际179857字节与测试集12020913字节均原SHA-256匹配，未执行归档或调用模型。
+- 发布于2026-10-05T11:15:47.238Z，原固定应用/前缀23文件15971645字节，元数据archbuddy-dev-showcase-006、SUCCESS。主域23文件与备用首页/双下载3文件HTTP200且SHA-256一致，固定前缀精确白名单，无临时配置；原隐私页200/6364字节/原哈希不变。
+- 最终证据：opendesign/review/archbuddy-showcase-parallel-workflows/review.md、local-browser-summary.json、interaction-download-summary.json、public-check-summary.json；忽略目录cloudbase/dist/showcase-parallel-workflows-20261005保留发布清单/日志/公网哈希/限定范围/隐私保护。showcaseSite登记为006/23文件/浏览器及下载通过，OpenDesign完整索引重建，静态语法/构建/引用检查通过。
+- 仅修改静态展示站。插件0.6.0、后端012、用户图词数据、身份、模型/密钥、每日20与200额度、共享配置和其他项目保持；前五版源码/发布清单与历史五页保留。本次无Git提交或推送。原网址可刷新展示，平台默认域名首次提示仍适用。
+
+## 2026-10-05 第七版：首页价值表达与Chrome商店入口（开始，未发布）
+
+用户选择Slogan“打通创作断点，让设计思路一路向前。”，提供已上架ArchBuddy商品链接https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN。仅替换首页大标题与顶部/下载区两处“下载 Chrome 插件”的链接，按钮名称不变；移除download属性使其普通导航到商店，测试集不变。按用户“只替换链接”保留安装说明。已授权发布原展示站，不涉及插件安装或商店设置操作。
+
+只写既有archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，23公开文件不变，旧ZIP保留但不是主页面两按钮目标。第六版发布清单/产物留存，第七版输出cloudbase/dist/showcase-store-entry-20261005。新标识store-entry-20261005，独立布局/入口及公网验证待完成；后端、数据、密钥、AI额度、共享配置和其他项目保持。
+
+### 第七版发布阶段核验
+
+2026-10-05T15:58:13.380Z固定原应用/前缀发布21普通+2入口，共23文件15971700字节，CLI退出0。元数据archbuddy-dev-showcase-007、SUCCESS；23主域资源及备用首页/历史ZIP/测试集HTTP200且逐项SHA-256一致，固定前缀精确白名单、无临时配置。原隐私页200/6364字节/原哈希不变；环境只更新本站第七版与商店入口登记，浏览器最终复核待完成。独立商店单次访问已成功HTTP200，标题ArchBuddy - Chrome应用商店，商品版本0.6.0并显示添加至Chrome；未登录或安装，证据opendesign/review/archbuddy-showcase-store-entry/store-check-summary.json。
+
+### 第七版最终验收（2026-10-06北京时间）
+
+- 新Slogan为“打通创作断点，让设计思路一路向前。”，沿用三行首屏与原绿色/字号。顶部及下载区两处“下载 Chrome 插件”保持名称，精确跳转用户提供的Chrome商店商品URL（保留authuser=0与hl=zh-CN），移除download属性。测试集两入口和安装说明按用户限定保持，旧ZIP资源仅留存历史，未删除共享云端对象。
+- 本地1440/390/360px独立首屏目视及19项定向检查通过；本轮真实公网23项全部通过、6张截图、站点异常0，新版store-entry-20261005已核对，标题无孤字/裁切/横向溢出，两商店按钮/两测试集链接正确。全新浏览器正常平台3秒确认后实际Document200/text-html/无附件头，不用旧版结果替代；未复跑无改动的画廊/复杂流程或安装归档。
+- 商店单次独立浏览器访问HTTP200，用户精确URL保持，标题“ArchBuddy - Chrome 应用商店”，显示0.6.0及添加至Chrome；未登录/安装。此前web/Node网络读取失败以此真实浏览器结果补齐，不称商店包与本地ZIP字节相等。
+- 2026-10-05T15:58:13.380Z在原archbuddy-dev-showcase与archbuddy/dev/showcase/发布23文件15971700字节，CLI退出0、archbuddy-dev-showcase-007/SUCCESS。23主域资源与备用首页/历史ZIP/测试集HTTP200且逐项哈希一致，限定前缀精确白名单、无临时配置。原隐私页200/6364字节与原哈希不变；23文件中仅index.html字节变化，CSS/JS/图解/下载原字节保持。
+- 静态构建/引用/语法、精确改动范围与git diff --check通过。最终证据opendesign/review/archbuddy-showcase-store-entry/review.md、local-check-summary.json、public-check-summary.json、store-check-summary.json；发布/清单/范围/公网哈希/隐私基线留存在忽略目录cloudbase/dist/showcase-store-entry-20261005。OpenDesign完整索引已重建。
+- 环境仅showcaseSite更新第七版/007/商店入口及验收状态。仅静态介绍与链接变化，插件/后端012/用户数据/身份/密钥/每日20与200额度/共享配置/其他项目未改，模型调用0，未提交或推送Git。第六版发布23文件与本轮改前index.html留存可限定回滚。商店安装不在本轮授权范围内，未执行。
+
+### 2026-10-06 第八版：02机会色块柔化（已实现，未发布）
+
+用户认为02两链路红色过重，要求与绿色更协调。6个产品机会块改为浅暖粉#EEDFD9、柔和边框#D9C4BC、深绿品牌字#153B2D与说明#4F6557；01断点原红保持。仅CSS颜色与HTML缓存版本变化，布局/流程/文案/Slogan/商店链接/测试集不变，23公开文件白名单保持。沿用OpenDesign与ArchBuddy视觉规范，独立定向目视待完成。发布仅archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/，无新资源/数据/身份/统计/密钥/模型/额度或共享配置改变。第七版产物保留，本轮输出cloudbase/dist/showcase-soft-opportunities-20261006，版本soft-opportunities-20261006。
+
+第八版发布阶段：2026-10-05T16:12:27.410Z（北京时间10月6日）仅原应用/前缀上传23文件15971718字节，CLI退出0，archbuddy-dev-showcase-008/SUCCESS。23主域资源及备用3文件逐项HTTP200/哈希通过，限定前缀精确白名单，无临时配置，原隐私页200/6364字节/哈希不变。环境仅本站版本/元数据/状态更新，真实公网颜色定向验收待完成。
+
+### 第八版最终验收（2026-10-06）
+
+- 02六处产品机会块为浅暖粉#EEDFD9、柔和边框#D9C4BC、深绿品牌#153B2D与说明#4F6557；独立目视1440/390/360px确认色彩减重、与浅绿步骤协调、品牌与说明清楚、无溢出。01断点原红、版式/流程/Slogan/商店与测试集入口保持。
+- 本地25项、公网29项定向检查全过，各9张证据截图，站点异常0，当前soft-opportunities-20261006已核对。三个全新context正常平台确认后实际Document200/text-html/无附件，完整DOM/CSS/品牌图就绪后核验。首轮过早读取的默认样式记录单独保留，不是网站修复；最终以本轮就绪后结果为准，不用旧版代替。
+- 固定原应用/前缀23文件15971718字节，元数据archbuddy-dev-showcase-008/SUCCESS，23主域资源与备用3资源哈希匹配，精确白名单、无临时配置，原隐私页哈希不变。构建/引用/语法/精确颜色改动及git diff --check通过；本轮只CSS颜色与HTML缓存标识变化，未改插件/后端/数据/密钥/AI额度/共享配置或其他项目，无模型调用与Git提交推送。
+- 最终证据opendesign/review/archbuddy-showcase-soft-opportunities/review.md、local-check-summary.json、public-check-summary.json；发布/范围/哈希/隐私保护留存在忽略的cloudbase/dist/showcase-soft-opportunities-20261006，第七版产物及改前CSS保留。环境仅更新本站第八版/008/浏览器验收状态；现有商店登记保持，没有再登录/访问商店/安装或执行归档。
+
+### 2026-10-06 第九版：05改商店安装说明（已实现，未发布）
+
+用户要求05采用线上商店版本说明。改为打开商品页→添加至Chrome并确认→固定ArchBuddy图标，从功能菜单进入图库/提示词工具；官方Chrome帮助与当前插件manifest/popup核对。删除ZIP/开发者模式/加载目录/扩展地址复制及相应JS监听，更新下载附注和联网FAQ，保留本机数据说明与测试集导入。两商店按钮名称/URL、Slogan、02浅暖粉配色不变，旧ZIP只留历史。
+
+沿用OpenDesign与ArchBuddy视觉规范，23公开文件白名单不变，本轮输出cloudbase/dist/showcase-store-install-20261006，版本store-install-20261006。仅原archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/；不实际安装扩展、不调用模型，不改插件/后端/数据/身份/密钥/额度/共享配置/其他项目。第八版发布产物及改前HTML/JS保留，独立目视和公网核验待完成。
+
+第九版发布阶段：2026-10-05T16:43:46.392Z（北京时间10月6日）仅原应用/前缀23文件15970932字节，CLI退出0、archbuddy-dev-showcase-009/SUCCESS。23主域资源与备用3文件HTTP200且逐项哈希一致，固定前缀精确白名单、无临时配置，原隐私页200/6364字节/原哈希保持。环境只更新本站第九版状态，公网真实浏览器定向复核待完成。
+
+### 第九版最终验收（2026-10-06）
+
+- 05改为打开商店商品页→添加至Chrome并确认添加扩展程序→固定图标，从功能菜单进入图词库/提示词工具；依据Chrome官方帮助和当前插件入口核对。移除旧ZIP/开发者模式/加载目录/扩展地址复制说明，删除无元素的JS监听；附注改商店安装与桌面Chrome，FAQ改AI联网/本机数据说明。测试集下载、解压导入以及两商店按钮名称/精确URL保持，Slogan/02配色/其余流程不变。
+- 独立本地37项、公网41项全部通过，各6张定向截图，1440/390/360px完整05及展开FAQ清楚无溢出，站点异常0。新版本store-install-20261006已核对；两画廊切换往返、放大关闭正常，无删除监听后的pageerror。正常平台3秒确认并等待完整DOM/CSS/必要图与字体后，三个正式Document200/text-html/无附件，不使用旧结果替代。
+- 固定原应用/前缀23文件15970932字节，archbuddy-dev-showcase-009/SUCCESS；23主域资源与备用3资源逐项HTTP200/哈希一致，精确白名单、无临时配置，原隐私页200/6364字节/原哈希不变。构建/语法/引用/精确范围及git diff --check通过，23资源中仅index.html与app.js变化，CSS/品牌/图解/归档保持原字节。
+- 最终证据opendesign/review/archbuddy-showcase-store-install/review.md、local-check-summary.json、public-check-summary.json；发布/清单/范围/HTTP哈希/隐私保护在忽略的cloudbase/dist/showcase-store-install-20261006，第八版及改前HTML/JS留存。OpenDesign完整索引已重建，环境只更新本站第九版/009/浏览器验收状态。未实际安装扩展、登录/修改商店、执行归档或调用模型；插件/后端012/用户数据/密钥/身份/20与200日额度/共享配置/其他项目保持，未提交或推送Git。
+
+### 2026-10-06 第十版：01核心痛点总结（已上线并验收）
+
+用户要求在01流程图下用大字红色总结三条痛点。文案为机械保存图片，打断创作思路；提示词从零编写，难以完整表达设计意图；过程素材不断堆积，却难以再次复用。原节点小提示归拢到图下，真实五步骤与四断点不变。桌面三列、手机竖排，沿用#A55442。仅静态HTML/CSS变化，其余章节/入口/下载资源保持。
+
+仅原archbuddy/development/archbuddy-dev-showcase与archbuddy/dev/showcase/的23公开白名单；输出cloudbase/dist/showcase-pain-summary-20261006。第九版保留；独立定向本地及公网验收待完成。无插件/后端/数据/身份/密钥/额度/模型/共享配置/其他项目变化。
+
+第十版发布阶段：2026-10-05T17:06:15.229Z（北京时间10月6日）固定原应用/前缀发布23文件15971923字节，CLI退出0、archbuddy-dev-showcase-010/SUCCESS。主域23资源与备用3资源HTTP200且逐项哈希一致，限定前缀精确白名单、无临时配置；原隐私页200/6364字节/原哈希保持。独立本地33项及8张截图通过，1440/1024/390/360px文字与布局无问题，异常0；本轮真实公网浏览器复核待完成，环境仅本站版本/元数据/验收状态更新。
+
+### 第十版最终验收（2026-10-06）
+
+- 01流程图下归拢三条核心痛点：机械保存图片，打断创作思路；提示词从零编写，难以完整表达设计意图；过程素材不断堆积，却难以再次复用。桌面三列27px（1024px为22px）、手机竖排24px，统一断点红#A55442，以细线连接视觉层级；原节点三处小提示移入总结，五步四断点与多轮优化保持。
+- 独立本地33项、公网38项全通过，各8张本版截图。1440/1024/390/360px无孤字、重叠、裁切或横向溢出，异常0。四个全新context正常平台3秒确认并等待DOM/CSS/必要图与字体就绪，正式Document均200/text-html/无附件；平台初始提醒响应单列。02浅暖粉、Slogan、商店/测试集入口和05线上安装快速断言通过。
+- 2026-10-05T17:06:15.229Z固定原应用/前缀发布23文件15971923字节，CLI退出0，archbuddy-dev-showcase-010/SUCCESS。主域23资源/备用3资源HTTP200且逐项哈希一致，限定前缀精确白名单/无临时配置，原隐私页200/6364字节/原哈希不变。仅index.html与styles.css公开字节变化，01外仅缓存标识变化；构建/引用/语法与改动范围检查通过。
+- 最终证据opendesign/review/archbuddy-showcase-pain-summary/review.md、local-check-summary.json、public-check-summary.json；发布清单/日志/HTTP哈希/范围/隐私基线在忽略目录cloudbase/dist/showcase-pain-summary-20261006。第九版产物和改前HTML/CSS留存，OpenDesign完整索引重建，环境仅更新本站010/第十版/验收状态。未改插件、后端012、用户数据、身份、密钥、20与200日额度、共享配置或其他项目，模型调用0，无安装归档/登录或Git提交推送。
+
+### 2026-10-06 第十一版：01对应分区暖白一体图（已上线并验收）
+
+用户三轮预览后选定对应分区结构/暖白统一配色，明确方框不描边并授权同步公网。首句为逐张机械保存，打断创作思路；其余两痛点与五步四断点/多轮优化保持，括线按保存-方案、提示词-生图、成果复用对应。上下一致#F4F2EC，流程深绿、痛点原红，去外框/分区/节点边框，保留功能性括线和箭头；手机按关联阶段依次穿插结论。
+
+仅01 HTML/作用域CSS与缓存标识，原23公开白名单。输出cloudbase/dist/showcase-unified-pains-20261006，只发布登记的archbuddy/development/archbuddy-dev-showcase及archbuddy/dev/showcase/；前十版保留。独立定向本地/公网检查待完成。无插件/后端/数据/身份/密钥/模型/20与200日额度/共享配置或其他项目改变。
+
+第十一版发布阶段：独立本地1440/390/360px选中版25项/3截图通过，首句/无框线/统一暖白/括线对应与手机顺序正确，异常0。2026-10-05T18:02:00.633Z固定原应用/前缀23文件15974878字节，CLI退出0、archbuddy-dev-showcase-011/SUCCESS。主域23资源与备用3资源HTTP200且逐项哈希一致，精确白名单、无临时配置，原隐私页200/6364字节/原哈希不变。环境仅更新本站011/版本/验收状态，本轮公网真实浏览器复核待完成。
+
+### 第十一版最终验收（2026-10-06）
+
+- 用户三轮预览后选择对应分区/暖白统一，明确去框线并授权同步公网。01流程、断点与三痛点共用#F4F2EC底色，深绿步骤/原红痛点；无整体、节点和痛点区描边，保留功能性括线与Lucide断点箭头。首句为逐张机械保存，打断创作思路；另两句意图表达/素材复用含义保持，桌面按区段对应、手机按关联阶段穿插，五步四断点与多轮优化完整。
+- 最终选中版独立本地25项/公网29项全通过，各3张新截图已目视。1440/390/360px无孤字、重叠、裁切或横向溢出，异常0；三个新context正常平台3秒确认并等待DOM/CSS/图字体就绪，正式Document均200/text-html/无附件下载，平台初始提醒单列。02配色/Slogan/商店与测试集/05安装快检保持。三色比较73项/9截图是选择前证据，未替代本版新验收。
+- 2026-10-05T18:02:00.633Z固定原应用/前缀发布23文件15974878字节，CLI退出0、archbuddy-dev-showcase-011/SUCCESS。主域23资源与备用3资源HTTP200且逐项哈希一致，精确白名单/无临时配置，原隐私页200/6364字节/原哈希不变。公开只index.html/styles.css变化，01外仅缓存标识，旧CSS前缀保持；构建/相对引用/语法/改动范围与diff格式检查通过。
+- 证据opendesign/review/archbuddy-showcase-unified-pains/review.md及local/public-check-summary.json；发布/范围/HTTP哈希/隐私基线留存在忽略目录cloudbase/dist/showcase-unified-pains-20261006。第十版与改前HTML/CSS及两轮本地候选完整留存，OpenDesign索引重建，环境仅更新本站011/本版/验收状态。无插件/后端012/用户数据/身份/密钥/模型/20与200日额度/共享配置或其他项目改变，无Git提交推送。
+
+### 2026-10-06：每日限额环境变量登记（本地已实现，云端待发布）
+
+- 用户授权将每日上限改为可配置参数；目标仅为 archbuddy / development / 已登记环境 / archbuddy-api。新增两个非敏感服务变量 ARCHBUDDY_USER_DAILY_LIMIT=20、ARCHBUDDY_PROJECT_DAILY_LIMIT=200，保留既有每日预算，不创建其他资源。
+- 参数由启动入口传给额度服务，只允许正整数，错误值阻止启动；不接受客户端指定额度、项目、阶段或集合。所有服务版本继续共享 archbuddy_dev_quotas / archbuddy_dev_requests；修改配置不重置当日计数。
+- 部署只更新本项目既有服务与白名单后端代码包，在内存中合并两个变量，保留其他变量和全部资源/访问配置。不得输出或保存密钥、令牌及签名上传地址。插件0.6.0、静态站、其他项目资源保持；不触发真实模型验收或清理数据库。
+- 本地 quota.mjs / start.mjs 语法检查、既有 10 项额度回归和白名单 ZIP 路径/哈希检查已通过；未新增测试文件或框架。本轮云端版本及配置尚未发布，实际配置和切流证据完成后另行追加。
+- 平台角色权限、日志留存及 TTL 仍为已有未核验项；此次不扩大权限或数据范围。环境变量版本绑定参考官方 https://docs.cloudbase.net/run/deploy/configuring/environment/envs 。
+
+### 2026-10-06：每日限额环境变量发布完成
+
+- 范围为archbuddy / development / archbuddy-api；后端013 normal、100%流量，发布任务2292869 finished。新增的两个非敏感服务变量显式20/200，沿用现有预算，不新增集合、身份、日志、存储、资源规格或其他项目配置。
+- 发布只发送EnvParam差异和已核验16文件白名单包；所有原变量内容摘要一致，服务其他配置内容摘要一致（OpenAccessTypes按集合语义核对）。签名上传/下载地址和凭据仅在调用进程内存，不落盘或输出。
+- 云端013源码ZIP哈希与45927字节本地包一致（0B1A3F3FA90CD4D0ACD016A0E2E87D10048406B7773C4B381AD77B08685B433D）。全量服务/healthz和/api/status均200，daily/Asia-Shanghai、匿名及向量配置正常；未触发模型、未读写用户数据库或其他项目。
+- 默认20/200保留、参数正整数验证和额度事务/请求去重保持，未改变匿名余额隐藏。后续改配置保留当日计数，降低上限须先暂停AI再完成全量生效；同一服务新旧版本不分配独立项目预算。
+- 证据在cloudbase/dist/quota-env-20261006/；角色最小权限、TTL、日志留存仍为原未核验项。没有清空数据、放宽共享权限或操作展示/隐私站。
+
+### 2026-10-06：每日额度调高到50/500（配置发布登记）
+
+- 用户最新指定个人每日50次、ArchBuddy项目每日共享500次。仅调整已登记的archbuddy / development / archbuddy-api两个非敏感环境变量ARCHBUDDY_USER_DAILY_LIMIT与ARCHBUDDY_PROJECT_DAILY_LIMIT，兼容代码默认20/200保留。
+- 复用已核验的013镜像，保留其他环境变量、服务规格、访问控制及原数据库集合；不创建资源、不重置计数，不为其他版本或实例分配独立预算。该调整只扩大ArchBuddy既定每日次数预算，不改变其他项目的配额或共享环境配置。
+- 先灰度发布新配置，核对目标版本与其他配置一致后全量切流；发布结果另行追加。模型调用0，无真实用户计数读取。
+
+
+### 2026-10-06：50/500配置发布完成核验
+
+- 限定archbuddy / development / archbuddy-api，仅两个已登记非敏感额度变量由20/200改为50/500。任务2292889 finished、archbuddy-api-014 normal、流量100%，目标版本与服务配置值一致；复用013镜像，其他变量与服务资源配置摘要保持。
+- 没有操作共享权限、其他项目、展示/隐私站、数据库集合或业务身份；不清空计数、不新增实例独立预算。模型调用0，不读取用户计数。公开健康与状态HTTP200，daily与Asia/Shanghai正常，匿名额度数字继续隐藏。
+- 安全证据保存在忽略目录cloudbase/dist/quota-env-20261006/的50-500发布/验证文件；本地登记更新后端014和当前额度，其他站点字段保留。角色最小权限、TTL及日志留存仍为原未审计项。
+
+### 2026-10-06 第十二版：首屏图片右边缘对齐（实现及验收中）
+
+用户要求图片右侧与顶部导航/下载体验右边界对齐。1500px以上取消右侧负margin70px，使图片外框回到内容区内；仅这条CSS和缓存标识改变。23文件白名单、原应用archbuddy-dev-showcase及前缀archbuddy/dev/showcase/不变。三种章节滚动动效另行本地预览，未选定前不加入正式站。保留后端014及50/500配置，本轮不改变后端/数据/身份/密钥/模型/额度/共享配置或其他项目。独立定向本地/公网验收待完成。
+
+
+第十二版最终验收（2026-10-06）：2026-10-06T12:15:58.144Z固定原应用/前缀发布23文件15974840字节，CLI退出0，archbuddy-dev-showcase-012/SUCCESS。主域23资源与备用3资源HTTP200且逐项哈希一致，限定前缀精确白名单、无临时配置；原隐私页200/6364字节/原哈希保持。仅index.html缓存标识和styles.css宽屏负margin改变，其余21资源字节不变。
+
+独立本地1920/1600/1440/390px的27项/4截图及公网1920/1440/390px的22项/3截图通过，7图均实际目视，站点异常0；图片外框与顶部下载体验/内容区右边界误差0px，修前宽屏70px已收回。放大关闭可用，无溢出碰撞。公网三个全新context正常3秒确认后正式Document200/text-html/无附件，平台初始404单列。最终证据opendesign/review/archbuddy-showcase-hero-align/review.md及local/public-check-summary.json；发布与23清单/哈希/范围/隐私基线在cloudbase/dist/showcase-hero-align-20261006，前版与改前源留存。
+
+环境只更新showcaseSite，后端014及50/500每日额度保持。三种章节动效只在本地候选，未发布；本轮无用户数据/身份/密钥/模型/共享配置/其他项目修改，无Git提交推送。
+
+
+## 2026-10-06 第十三版：方案1轻量进入（实现与验收中）
+
+用户已选方案1。01–05标题与正文首次进入视口依次淡入并轻微上移，沿用已验收预览的参数；回滚已出现内容不重播，保留正常滚轮、导航与原图解/图库/下载。正式版不带比较控制，仅补03锚点与原生JS/CSS及缓存标识。23公开文件白名单、原应用和前缀保持，输出cloudbase/dist/showcase-scroll-reveal-20261006。独立本地/公网验收待完成；后端014和50/500配置不变，无插件/数据/身份/密钥/模型/共享配置/其他项目变化，无Git提交。
+
+
+第十三版发布阶段：2026-10-06T12:39:10.123Z原应用/前缀发布23文件15977184字节，CLI退出0，archbuddy-dev-showcase-013/SUCCESS。主域23资源与备用3资源均HTTP200且逐项哈希一致，精确白名单、无临时配置；原隐私页200/6364字节/原哈希保持。本地1440/390px两场景独立验收通过：10包装/五章、首次淡入轻移与回滚不重播、自然滚动/导航/图库/弹图、首屏右缘0px、无比较控制/缩放/停驻、脚本异常0。真实公网定向复核进行中；仅showcaseSite更新，其他环境字段摘要一致，后端014及50/500配置保持。
+
+
+### 第十三版最终验收（2026-10-06）
+
+- 用户已选择方案1。01–05标题与正文首次进入视口依次浮现，标题/正文淡入0.68s/移动0.78s，正文错开80ms；桌面26px、手机14px上移，回滚保持可见不重播。原生IntersectionObserver，正式站无方案比较控制、缩放或标题停驻，正常滚轮/导航、原图解/字号/配色和首屏对齐保持。03补concept锚点，公开仅HTML/JS/CSS变化，其余20资源原哈希保持，无新依赖或测试框架。
+- 独立本地与公网各1440/390px两场景、共8关键截图及目视通过，五章/10包装完整，异常0、横溢出0。首次淡入/回滚不重播、导航/图库切换/弹图、精确商店链接/测试集属性、首屏右缘误差0px通过。公网两个全新context正常3.2秒确认后正式Document200/text-html/无附件；平台初始404单列。证据opendesign/review/archbuddy-showcase-scroll-reveal/review.md、local/public-check-summary.json、static-check-summary.json。
+- 2026-10-06T12:39:10.123Z固定原应用/前缀23文件15977184字节，CLI退出0、archbuddy-dev-showcase-013/SUCCESS。主域23及备用3资源HTTP200/逐项哈希一致、前缀精确白名单/无临时配置、原隐私站200/6364字节/原哈希保持。构建/语法/引用/源码范围与diff格式检查通过；发布证据在cloudbase/dist/showcase-scroll-reveal-20261006，012产物和改前源留存。
+- 只更新环境showcaseSite，其余环境字段摘要一致，后端014及每日50/500保持；本轮无插件/数据/身份/密钥/模型/共享配置/其他项目变化，无Git提交或推送。OpenDesign完整清单重建；已选轻量进入正式上线，其余候选留在本地比较。

@@ -1,0 +1,4 @@
+const descriptions={one:'暖白通底，深绿流程与砖红痛点，整体更轻、更连贯。',two:'浅绿通底，棕红标出断点与痛点，结论居中对齐各自的流程区段。',three:'深绿通底，浅暖色强调痛点；结论字号略放大，适合现场展示。'};
+function selectVariant(){const requested=location.hash.slice(1);const active=Object.hasOwn(descriptions,requested)?requested:'one';document.querySelectorAll('.variant').forEach(section=>{section.hidden=section.id!==active;});document.querySelectorAll('[data-option]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.option===active));});document.getElementById('variant-description').textContent=descriptions[active];}
+document.querySelectorAll('[data-option]').forEach(button=>button.addEventListener('click',()=>{history.replaceState(null,'','#'+button.dataset.option);selectVariant();}));
+window.addEventListener('hashchange',selectVariant);selectVariant();

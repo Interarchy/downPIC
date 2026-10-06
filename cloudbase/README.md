@@ -14,9 +14,9 @@
 
 V2 代码还准备了默认关闭的可选匿名事件接口 `POST /api/events`。`ARCHBUDDY_ANALYTICS_ENABLED` 必须保持 `false`，直到 `archbuddy_dev_events` 已在 ArchBuddy development 范围内按 ADMINONLY 创建，并完成 30 天 TTL、隔离、日志和公开隐私披露验证。关闭时不写入事件；不得复用其他项目集合。
 
-V3 新增 `POST /api/v3/evaluate`，复用同一匿名会话、请求去重和 20/200 日额度，只接收一张生成图与当前版本中启用的可观察模块。它不接收方案名、来源原图、历史版本、路径或 URL。2026-09-25 已部署为 `archbuddy-api` 版本 `008` 并完成全量切流；只验证公开健康与状态接口，未创建任何新数据库集合、存储路径、身份配置、日志主题或预算，也未在本轮发送图片调用模型。
+V3 新增 `POST /api/v3/evaluate`，复用同一匿名会话、请求去重和统一日额度（当前环境变量50/500），只接收一张生成图与当前版本中启用的可观察模块。它不接收方案名、来源原图、历史版本、路径或 URL。2026-09-25 已部署为 `archbuddy-api` 版本 `008` 并完成全量切流；只验证公开健康与状态接口，未创建任何新数据库集合、存储路径、身份配置、日志主题或预算，也未在本轮发送图片调用模型。
 
-2026-09-15 用户已确定每日额度：个人 20 次、整个 ArchBuddy 200 次；详见 [反推额度规则](../docs/ARCHBUDDY_QUOTA_POLICY.md)。CloudBase 事务计数已部署并完成一次真实测试。匿名会话版也已部署，`/api/status` 与一次不调用模型的 `/api/session` 签发检查通过，用户随后确认真实 Chrome 免登录反推可用。
+2026-10-06 用户最新确定每日额度：个人 50 次、整个 ArchBuddy 共享500次，取代原20/200，通过环境变量配置；已发布到后端014并核对100%流量、normal、任务finished及公开健康正常；详见 [反推额度规则](../docs/ARCHBUDDY_QUOTA_POLICY.md)。CloudBase 事务计数已部署并完成一次真实测试。匿名会话版也已部署，`/api/status` 与一次不调用模型的 `/api/session` 签发检查通过，用户随后确认真实 Chrome 免登录反推可用。
 
 用户完成真实浏览器反推后决定不向普通用户展示或返回具体剩余额度。隐私收紧版本已重新部署，公开状态检查确认不再包含个人或项目限额字段；用户也确认重新加载后的插件界面正常。仅管理员测试身份可在分析响应中取得剩余数字，额度后台规则本身不变。
 
@@ -55,14 +55,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/start-loca
 | `DEEPSEEK_API_KEY` | 在云端配置现有 DeepSeek Key |
 | `DEEPSEEK_MODEL` | `deepseek-flash` |
 | `ARCHBUDDY_EMBEDDING_API_KEY` | 本地混合检索使用的 TokenHub 专属 Key；未配置时只显示关键词结果，不得放入扩展或仓库 |
-| `ARCHBUDDY_EMBEDDING_CALLS_PER_MINUTE` | 向量批次独立速率上限，默认 `20`；仍共用 20/200 每日调用额度 |
+| `ARCHBUDDY_EMBEDDING_CALLS_PER_MINUTE` | 向量批次独立速率上限，默认 `20`；仍共用环境变量配置的每日额度（当前50/500） |
 | `ARCHBUDDY_TEST_TOKEN` | 管理员生成的独立随机令牌，至少 32 个可打印 ASCII 字符；不能复用 DeepSeek Key |
 | `ARCHBUDDY_SESSION_SECRET` | 匿名会话签名密钥，独立随机值，至少 32 个可打印 ASCII 字符；只放服务环境变量，不能复用其他 Key |
 | `ARCHBUDDY_ANALYTICS_ENABLED` | `false`；完成集合权限、30 天 TTL、隔离、日志与公开披露验证前不得改为 `true` |
-| `ARCHBUDDY_MAX_CALLS_PER_PROCESS` | `20` |
+| `ARCHBUDDY_QUOTA_MODE` | 云端为 `cloudbase`；本地 `process-test` 仅按进程计数 |
+| `ARCHBUDDY_USER_DAILY_LIMIT` | 云端个人每日上限，当前配置 `50`，未配置时兼容默认 `20`；须为正整数 |
+| `ARCHBUDDY_PROJECT_DAILY_LIMIT` | 云端项目共享每日总上限，当前配置 `500`，未配置时兼容默认 `200`；须为正整数 |
+| `ARCHBUDDY_MAX_CALLS_PER_PROCESS` | `20`；仅 `process-test` 模式使用，不控制云端每日额度 |
 | `ARCHBUDDY_MAX_CONCURRENT` | `3`（支持三张参考图同时分析；已有云端显式配置须在发布时核对） |
 | `ARCHBUDDY_CALLS_PER_MINUTE` | `3` |
 | `ARCHBUDDY_TIMEOUT_MS` | `60000` |
+
+每日限额在服务启动时读取。首次部署支持环境变量的后端后，后续可在 archbuddy-api 的服务设置中修改上述两个每日上限，并按控制台流程发布配置、使所有承接流量的实例生效；可复用该镜像，无需重新打包插件或源码。改额度保留当日计数；降低额度时先暂停 AI 调用并完成全量切流。显式空值、0、负数、小数和非数字会阻止每日额度服务启动，避免错误配置绕过保护。配置及发布状态见 [每日额度部署说明](DAILY_QUOTA_DEPLOYMENT.md) 与交接记录。
 
 可在本机生成签名密钥并只复制到剪贴板（不会打印或写入文件）：
 
@@ -113,7 +118,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "F:\MelyAI-CODEX\downPIC-plu
 
 ## 本地混合检索（B 方向，本地接口已验证）
 
-`POST /api/library/embed` 复用已有匿名身份、项目 20/200 日额度和请求 ID 去重，仅代理 TokenHub `kinfra-text-embedding-0.6b` 文本向量计算。每次最多 32 条、单条最多 2000 字；Key 仅配置在 `archbuddy-api` 服务环境变量。向量索引与文本版本摘要在浏览器 IndexedDB，服务不保存素材、查询或向量。插件输入时只做关键词匹配；确认后首次分批为素材建索引，后续仅重算新增或变化的文本；回车生成一次查询向量，再在本地余弦排序与关键词结果合并。
+`POST /api/library/embed` 复用已有匿名身份、统一每日额度（当前50/500）和请求 ID 去重，仅代理 TokenHub `kinfra-text-embedding-0.6b` 文本向量计算。每次最多 32 条、单条最多 2000 字；Key 仅配置在 `archbuddy-api` 服务环境变量。向量索引与文本版本摘要在浏览器 IndexedDB，服务不保存素材、查询或向量。插件输入时只做关键词匹配；确认后首次分批为素材建索引，后续仅重算新增或变化的文本；回车生成一次查询向量，再在本地余弦排序与关键词结果合并。
 
 TokenHub 专属 Key 已在本机加密配置并通过真实合成文本调用验证；此接口仍未部署云端。不能沿用 `DEEPSEEK_API_KEY` 或将凭据发给插件。发布前继续核对真实图库召回/延迟、成本、云端专属凭据、跨项目边界和公开隐私页。向量批次与查询目前共同占用现有 AI 调用额度；大图库首次建索引可能触及额度，独立向量预算尚未实现。
 

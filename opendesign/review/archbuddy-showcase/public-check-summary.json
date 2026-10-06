@@ -1,0 +1,611 @@
+{
+  "date": "2026-10-05",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "scope": "仅实际公网静态站；未读取用户浏览器资料、访问CloudBase控制台或调用模型",
+  "platformNotice": {
+    "title": "风险提醒",
+    "status": 404,
+    "shown": true,
+    "confirmation": "平台3秒倒计时结束后点击确定访问",
+    "confirmed": true
+  },
+  "platformNoticeErrors": [
+    {
+      "kind": "http",
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404
+    },
+    {
+      "kind": "console",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "checks": [
+    {
+      "name": "公网首页实际渲染",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "h1": "让参考图，\n成为下一次\n设计的起点。",
+        "response": {
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "kind": "document",
+          "contentType": "text/html",
+          "contentDisposition": null
+        },
+        "unexpectedDownloadBeforeZIP": []
+      }
+    },
+    {
+      "name": "确认后未触发HTML下载",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "公网第二链路切换",
+      "pass": true,
+      "detail": {
+        "label": "反推与迭代提示词",
+        "image": "case-study/assets/04-prompt-builder-1280x800.png"
+      }
+    },
+    {
+      "name": "公网效果迭代截图",
+      "pass": true,
+      "detail": "case-study/assets/05-prompt-optimization-1280x800.png"
+    },
+    {
+      "name": "公网真实ZIP下载",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D"
+      }
+    },
+    {
+      "name": "公网五页案例 index.html",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/index.html",
+        "title": "项目概览 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "公网五页案例 problem.html",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/problem.html",
+        "title": "问题与机会 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "公网五页案例 workflow.html",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/workflow.html",
+        "title": "核心体验 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "公网五页案例 decisions.html",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/decisions.html",
+        "title": "产品判断 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "公网五页案例 outcomes.html",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/outcomes.html",
+        "title": "迭代与验证 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "确认后公网页面与网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "kind": "document",
+      "contentType": "text/html; charset=utf-8",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/index.html",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/styles.css?v=2",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/app.js?v=2",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/tokens.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/problem.html",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/styles.css?v=2",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/app.js?v=2",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/tokens.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/workflow.html",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/styles.css?v=2",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/app.js?v=2",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/tokens.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/decisions.html",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/styles.css?v=2",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/app.js?v=2",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/tokens.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/outcomes.html",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/app.js?v=2",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/styles.css?v=2",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/tokens.css",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    }
+  ],
+  "downloads": [
+    "ArchBuddy-0.6.0-Chrome.zip"
+  ],
+  "pass": true,
+  "downloadsBeforeZIP": []
+}

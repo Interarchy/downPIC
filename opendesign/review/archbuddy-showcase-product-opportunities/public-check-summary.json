@@ -1,0 +1,1692 @@
+{
+  "date": "2026-10-05T10:45:26.036Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "version": "product-opportunities-20261005",
+  "scope": "第五版隔离公网新访客；不调用模型、不读日常profile、不执行下载",
+  "checks": [
+    {
+      "name": "1440 新版真实HTML且无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=product-opportunities-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "1440 新五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "1440 六机会标记归属且真实A图片",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 430,
+            "y": 1749.765625,
+            "bottom": 1779.765625,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 271,
+            "y": 1654.921875,
+            "bottom": 1798.921875,
+            "w": 409,
+            "h": 144
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 919,
+            "y": 1951.765625,
+            "bottom": 1981.765625,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 760,
+            "y": 1856.921875,
+            "bottom": 2000.921875,
+            "w": 409,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 353,
+            "y": 2285.046875,
+            "bottom": 2315.046875,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 137,
+            "y": 2190.203125,
+            "bottom": 2334.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 1000.5625,
+            "y": 2285.046875,
+            "bottom": 2315.046875,
+            "w": 81.859375,
+            "h": 30
+          },
+          "parent": {
+            "x": 780,
+            "y": 2190.203125,
+            "bottom": 2334.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 1000.5625,
+            "y": 2533.046875,
+            "bottom": 2563.046875,
+            "w": 81.859375,
+            "h": 30
+          },
+          "parent": {
+            "x": 780,
+            "y": 2438.203125,
+            "bottom": 2582.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 353,
+            "y": 2533.046875,
+            "bottom": 2563.046875,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 137,
+            "y": 2438.203125,
+            "bottom": 2582.203125,
+            "w": 523,
+            "h": 144
+          }
+        }
+      ]
+    },
+    {
+      "name": "1440 机会标记不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 430,
+            "y": 1749.765625,
+            "bottom": 1779.765625,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 271,
+            "y": 1654.921875,
+            "bottom": 1798.921875,
+            "w": 409,
+            "h": 144
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 919,
+            "y": 1951.765625,
+            "bottom": 1981.765625,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 760,
+            "y": 1856.921875,
+            "bottom": 2000.921875,
+            "w": 409,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 353,
+            "y": 2285.046875,
+            "bottom": 2315.046875,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 137,
+            "y": 2190.203125,
+            "bottom": 2334.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 1000.5625,
+            "y": 2285.046875,
+            "bottom": 2315.046875,
+            "w": 81.859375,
+            "h": 30
+          },
+          "parent": {
+            "x": 780,
+            "y": 2190.203125,
+            "bottom": 2334.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 1000.5625,
+            "y": 2533.046875,
+            "bottom": 2563.046875,
+            "w": 81.859375,
+            "h": 30
+          },
+          "parent": {
+            "x": 780,
+            "y": 2438.203125,
+            "bottom": 2582.203125,
+            "w": 523,
+            "h": 144
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 353,
+            "y": 2533.046875,
+            "bottom": 2563.046875,
+            "w": 91,
+            "h": 30
+          },
+          "parent": {
+            "x": 137,
+            "y": 2438.203125,
+            "bottom": 2582.203125,
+            "w": 523,
+            "h": 144
+          }
+        }
+      ]
+    },
+    {
+      "name": "1440 参考三框等高无人工机会",
+      "pass": true,
+      "detail": [
+        {
+          "text": "采集参考图",
+          "opportunities": 1,
+          "x": 271,
+          "y": 1654.921875,
+          "bottom": 1798.921875,
+          "w": 409,
+          "h": 144
+        },
+        {
+          "text": "方案创作",
+          "opportunities": 0,
+          "x": 760,
+          "y": 1654.921875,
+          "bottom": 1798.921875,
+          "w": 409,
+          "h": 144
+        },
+        {
+          "text": "沉淀参考图库",
+          "opportunities": 1,
+          "x": 760,
+          "y": 1856.921875,
+          "bottom": 2000.921875,
+          "w": 409,
+          "h": 144
+        }
+      ]
+    },
+    {
+      "name": "1440 AI四框矩形大循环",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 137,
+          "y": 2190.203125,
+          "bottom": 2334.203125,
+          "w": 523,
+          "h": 144
+        },
+        {
+          "text": "反推提示词",
+          "x": 780,
+          "y": 2190.203125,
+          "bottom": 2334.203125,
+          "w": 523,
+          "h": 144
+        },
+        {
+          "text": "迭代提示词",
+          "x": 780,
+          "y": 2438.203125,
+          "bottom": 2582.203125,
+          "w": 523,
+          "h": 144
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 137,
+          "y": 2438.203125,
+          "bottom": 2582.203125,
+          "w": 523,
+          "h": 144
+        }
+      ]
+    },
+    {
+      "name": "1440 再生成先进入外部连接",
+      "pass": true,
+      "detail": {
+        "external": {
+          "text": "外部生图",
+          "x": 1004.5,
+          "y": 2370.203125,
+          "bottom": 2397.796875,
+          "w": 74,
+          "h": 27.59375
+        },
+        "retry": {
+          "x": 1041.5,
+          "y": 2352.203125,
+          "bottom": 2438.203125,
+          "w": 209.203125,
+          "h": 86
+        },
+        "left": {
+          "x": 1032.5,
+          "y": 2340.203125,
+          "bottom": 2366.203125,
+          "w": 26,
+          "h": 26
+        },
+        "down": {
+          "x": 1027.5,
+          "y": 2410.203125,
+          "bottom": 2438.203125,
+          "w": 28,
+          "h": 28
+        },
+        "iterate": {
+          "x": 780,
+          "y": 2438.203125,
+          "bottom": 2582.203125,
+          "w": 523,
+          "h": 144
+        }
+      }
+    },
+    {
+      "name": "1440 04主结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "43px"
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 55,
+        "bad": []
+      }
+    },
+    {
+      "name": "1440 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "1440 #workflow新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 264.859375,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 #features新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 261.109375,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 #install新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 409.421875,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 prompt正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 assets截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 assets正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 复制地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "公网实际下载ArchBuddy-0.6.0-Chrome.zip",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+        "failure": null
+      }
+    },
+    {
+      "name": "公网实际下载ArchBuddy-test-images.7z",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+        "failure": null
+      }
+    },
+    {
+      "name": "390 新版真实HTML且无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=product-opportunities-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 新五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "390 六机会标记归属且真实A图片",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2146.203125,
+            "bottom": 2174.203125,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2054.609375,
+            "bottom": 2200.609375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 239.5,
+            "y": 2340.203125,
+            "bottom": 2368.203125,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2248.609375,
+            "bottom": 2394.609375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2641.9375,
+            "bottom": 2669.9375,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2550.34375,
+            "bottom": 2696.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 243.6875,
+            "y": 2641.9375,
+            "bottom": 2669.9375,
+            "w": 74.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2550.34375,
+            "bottom": 2696.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 243.6875,
+            "y": 2891.9375,
+            "bottom": 2919.9375,
+            "w": 74.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2800.34375,
+            "bottom": 2946.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2891.9375,
+            "bottom": 2919.9375,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2800.34375,
+            "bottom": 2946.34375,
+            "w": 144,
+            "h": 146
+          }
+        }
+      ]
+    },
+    {
+      "name": "390 机会标记不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2146.203125,
+            "bottom": 2174.203125,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2054.609375,
+            "bottom": 2200.609375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 239.5,
+            "y": 2340.203125,
+            "bottom": 2368.203125,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2248.609375,
+            "bottom": 2394.609375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2641.9375,
+            "bottom": 2669.9375,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2550.34375,
+            "bottom": 2696.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 243.6875,
+            "y": 2641.9375,
+            "bottom": 2669.9375,
+            "w": 74.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2550.34375,
+            "bottom": 2696.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 243.6875,
+            "y": 2891.9375,
+            "bottom": 2919.9375,
+            "w": 74.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 209,
+            "y": 2800.34375,
+            "bottom": 2946.34375,
+            "w": 144,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 67.5,
+            "y": 2891.9375,
+            "bottom": 2919.9375,
+            "w": 83,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2800.34375,
+            "bottom": 2946.34375,
+            "w": 144,
+            "h": 146
+          }
+        }
+      ]
+    },
+    {
+      "name": "390 参考三框等高无人工机会",
+      "pass": true,
+      "detail": [
+        {
+          "text": "采集参考图",
+          "opportunities": 1,
+          "x": 37,
+          "y": 2054.609375,
+          "bottom": 2200.609375,
+          "w": 144,
+          "h": 146
+        },
+        {
+          "text": "方案创作",
+          "opportunities": 0,
+          "x": 209,
+          "y": 2054.609375,
+          "bottom": 2200.609375,
+          "w": 144,
+          "h": 146
+        },
+        {
+          "text": "沉淀参考图库",
+          "opportunities": 1,
+          "x": 209,
+          "y": 2248.609375,
+          "bottom": 2394.609375,
+          "w": 144,
+          "h": 146
+        }
+      ]
+    },
+    {
+      "name": "390 AI四框矩形大循环",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 37,
+          "y": 2550.34375,
+          "bottom": 2696.34375,
+          "w": 144,
+          "h": 146
+        },
+        {
+          "text": "反推提示词",
+          "x": 209,
+          "y": 2550.34375,
+          "bottom": 2696.34375,
+          "w": 144,
+          "h": 146
+        },
+        {
+          "text": "迭代提示词",
+          "x": 209,
+          "y": 2800.34375,
+          "bottom": 2946.34375,
+          "w": 144,
+          "h": 146
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 37,
+          "y": 2800.34375,
+          "bottom": 2946.34375,
+          "w": 144,
+          "h": 146
+        }
+      ]
+    },
+    {
+      "name": "390 再生成先进入外部连接",
+      "pass": true,
+      "detail": {
+        "external": {
+          "text": "外部生图",
+          "x": 250,
+          "y": 2732.34375,
+          "bottom": 2758.53125,
+          "w": 62,
+          "h": 26.1875
+        },
+        "retry": {
+          "x": 281,
+          "y": 2714.34375,
+          "bottom": 2800.34375,
+          "w": 57.609375,
+          "h": 86
+        },
+        "left": {
+          "x": 272,
+          "y": 2703.34375,
+          "bottom": 2727.34375,
+          "w": 24,
+          "h": 24
+        },
+        "down": {
+          "x": 267,
+          "y": 2772.34375,
+          "bottom": 2800.34375,
+          "w": 28,
+          "h": 28
+        },
+        "iterate": {
+          "x": 209,
+          "y": 2800.34375,
+          "bottom": 2946.34375,
+          "w": 144,
+          "h": 146
+        }
+      }
+    },
+    {
+      "name": "390 04主结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "25.35px"
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 55,
+        "bad": []
+      }
+    },
+    {
+      "name": "390 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "390 #features新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 209.5,
+        "header": 72
+      }
+    },
+    {
+      "name": "390 #install新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 211.5,
+        "header": 72
+      }
+    },
+    {
+      "name": "390 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "390 prompt正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 assets截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "390 assets正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 复制地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "360 新版真实HTML且无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=product-opportunities-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 新五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "360 六机会标记归属且真实A图片",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2090.140625,
+            "bottom": 2118.140625,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 1999.25,
+            "bottom": 2145.25,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 218,
+            "y": 2284.140625,
+            "bottom": 2312.140625,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2193.25,
+            "bottom": 2339.25,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2585.875,
+            "bottom": 2613.875,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2494.984375,
+            "bottom": 2640.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 222.1875,
+            "y": 2585.875,
+            "bottom": 2613.875,
+            "w": 72.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2494.984375,
+            "bottom": 2640.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 222.1875,
+            "y": 2835.875,
+            "bottom": 2863.875,
+            "w": 72.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2744.984375,
+            "bottom": 2890.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2835.875,
+            "bottom": 2863.875,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2744.984375,
+            "bottom": 2890.984375,
+            "w": 129,
+            "h": 146
+          }
+        }
+      ]
+    },
+    {
+      "name": "360 机会标记不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2090.140625,
+            "bottom": 2118.140625,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 1999.25,
+            "bottom": 2145.25,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "reference-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 218,
+            "y": 2284.140625,
+            "bottom": 2312.140625,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2193.25,
+            "bottom": 2339.25,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-capture",
+          "text": "采集提效",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2585.875,
+            "bottom": 2613.875,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2494.984375,
+            "bottom": 2640.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "text": "AI 反推",
+          "natural": 150,
+          "box": {
+            "x": 222.1875,
+            "y": 2585.875,
+            "bottom": 2613.875,
+            "w": 72.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2494.984375,
+            "bottom": 2640.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "text": "AI 评估",
+          "natural": 150,
+          "box": {
+            "x": 222.1875,
+            "y": 2835.875,
+            "bottom": 2863.875,
+            "w": 72.625,
+            "h": 28
+          },
+          "parent": {
+            "x": 194,
+            "y": 2744.984375,
+            "bottom": 2890.984375,
+            "w": 129,
+            "h": 146
+          }
+        },
+        {
+          "type": "ai-library",
+          "text": "沉淀复用",
+          "natural": 150,
+          "box": {
+            "x": 61,
+            "y": 2835.875,
+            "bottom": 2863.875,
+            "w": 81,
+            "h": 28
+          },
+          "parent": {
+            "x": 37,
+            "y": 2744.984375,
+            "bottom": 2890.984375,
+            "w": 129,
+            "h": 146
+          }
+        }
+      ]
+    },
+    {
+      "name": "360 参考三框等高无人工机会",
+      "pass": true,
+      "detail": [
+        {
+          "text": "采集参考图",
+          "opportunities": 1,
+          "x": 37,
+          "y": 1999.25,
+          "bottom": 2145.25,
+          "w": 129,
+          "h": 146
+        },
+        {
+          "text": "方案创作",
+          "opportunities": 0,
+          "x": 194,
+          "y": 1999.25,
+          "bottom": 2145.25,
+          "w": 129,
+          "h": 146
+        },
+        {
+          "text": "沉淀参考图库",
+          "opportunities": 1,
+          "x": 194,
+          "y": 2193.25,
+          "bottom": 2339.25,
+          "w": 129,
+          "h": 146
+        }
+      ]
+    },
+    {
+      "name": "360 AI四框矩形大循环",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 37,
+          "y": 2494.984375,
+          "bottom": 2640.984375,
+          "w": 129,
+          "h": 146
+        },
+        {
+          "text": "反推提示词",
+          "x": 194,
+          "y": 2494.984375,
+          "bottom": 2640.984375,
+          "w": 129,
+          "h": 146
+        },
+        {
+          "text": "迭代提示词",
+          "x": 194,
+          "y": 2744.984375,
+          "bottom": 2890.984375,
+          "w": 129,
+          "h": 146
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 37,
+          "y": 2744.984375,
+          "bottom": 2890.984375,
+          "w": 129,
+          "h": 146
+        }
+      ]
+    },
+    {
+      "name": "360 再生成先进入外部连接",
+      "pass": true,
+      "detail": {
+        "external": {
+          "text": "外部生图",
+          "x": 227.5,
+          "y": 2676.984375,
+          "bottom": 2703.171875,
+          "w": 62,
+          "h": 26.1875
+        },
+        "retry": {
+          "x": 258.5,
+          "y": 2658.984375,
+          "bottom": 2744.984375,
+          "w": 51.609375,
+          "h": 86
+        },
+        "left": {
+          "x": 249.5,
+          "y": 2647.984375,
+          "bottom": 2671.984375,
+          "w": 24,
+          "h": 24
+        },
+        "down": {
+          "x": 244.5,
+          "y": 2716.984375,
+          "bottom": 2744.984375,
+          "w": 28,
+          "h": 28
+        },
+        "iterate": {
+          "x": 194,
+          "y": 2744.984375,
+          "bottom": 2890.984375,
+          "w": 129,
+          "h": 146
+        }
+      }
+    },
+    {
+      "name": "360 04主结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "23.4px"
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 55,
+        "bad": []
+      }
+    },
+    {
+      "name": "360 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "360 #features新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 210,
+        "header": 72
+      }
+    },
+    {
+      "name": "360 #install新导航位置无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 212.234375,
+        "header": 72
+      }
+    },
+    {
+      "name": "360 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "360 prompt正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 assets截图切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "360 assets正确放大与关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 复制地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "三个实际Document200/text-html无附件",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点异常0",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 1440
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 390
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 390
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 360
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 360
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "errors": [],
+  "downloads": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "filename": "ArchBuddy-0.6.0-Chrome.zip",
+      "bytes": 179857,
+      "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+      "failure": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+      "filename": "ArchBuddy测试集.7z",
+      "bytes": 12020913,
+      "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+      "failure": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-platform-warning.png",
+    "public-1440-header-scrolled.png",
+    "public-1440-reference-cycle.png",
+    "public-1440-ai-cycle.png",
+    "public-1440-workflow-heading.png",
+    "public-390-platform-warning.png",
+    "public-390-header-scrolled.png",
+    "public-390-reference-cycle.png",
+    "public-390-ai-cycle.png",
+    "public-390-workflow-heading.png",
+    "public-360-platform-warning.png",
+    "public-360-header-scrolled.png",
+    "public-360-reference-cycle.png",
+    "public-360-ai-cycle.png",
+    "public-360-workflow-heading.png"
+  ],
+  "pass": true,
+  "count": {
+    "checks": 65,
+    "screenshots": 15,
+    "errors": 0
+  }
+}

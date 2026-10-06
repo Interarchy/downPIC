@@ -1,0 +1,255 @@
+{
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "checks": [
+    {
+      "name": "1440 AI入口连续下接且对齐生成",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "x": 141,
+          "y": 681.96875,
+          "width": 547,
+          "height": 123.59375,
+          "cx": 414.5
+        },
+        "down": {
+          "x": 141,
+          "y": 805.5625,
+          "width": 547,
+          "height": 30,
+          "cx": 414.5
+        },
+        "generation": {
+          "x": 141,
+          "y": 835.5625,
+          "width": 547,
+          "height": 162,
+          "cx": 414.5
+        },
+        "entries": [
+          {
+            "text": "收集参考图",
+            "y": 681.96875
+          },
+          {
+            "text": "反推提示词",
+            "y": 758.765625
+          }
+        ],
+        "scrollWidth": 1440,
+        "width": 1440
+      }
+    },
+    {
+      "name": "1440 当前可见Lucide图标",
+      "pass": true,
+      "detail": {
+        "visible": 63,
+        "hidden": [
+          "assets/lucide.svg#x"
+        ],
+        "bad": []
+      }
+    },
+    {
+      "name": "1440 放大弹窗X图标",
+      "pass": true,
+      "detail": {
+        "href": "assets/lucide.svg#x",
+        "width": 12,
+        "height": 12
+      }
+    },
+    {
+      "name": "1024 AI入口连续下接且对齐生成",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "x": 69,
+          "y": 682,
+          "width": 411,
+          "height": 114.28125,
+          "cx": 274.5
+        },
+        "down": {
+          "x": 69,
+          "y": 796.28125,
+          "width": 411,
+          "height": 30,
+          "cx": 274.5
+        },
+        "generation": {
+          "x": 69,
+          "y": 826.28125,
+          "width": 411,
+          "height": 162,
+          "cx": 274.5
+        },
+        "entries": [
+          {
+            "text": "收集参考图",
+            "y": 682
+          },
+          {
+            "text": "反推提示词",
+            "y": 755.140625
+          }
+        ],
+        "scrollWidth": 1024,
+        "width": 1024
+      }
+    },
+    {
+      "name": "1024 当前可见Lucide图标",
+      "pass": true,
+      "detail": {
+        "visible": 62,
+        "hidden": [
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#x"
+        ],
+        "bad": []
+      }
+    },
+    {
+      "name": "1024 放大弹窗X图标",
+      "pass": true,
+      "detail": {
+        "href": "assets/lucide.svg#x",
+        "width": 12,
+        "height": 12
+      }
+    },
+    {
+      "name": "390 AI入口连续下接且对齐生成",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "x": 39,
+          "y": 624.6875,
+          "width": 145,
+          "height": 99,
+          "cx": 111.5
+        },
+        "down": {
+          "x": 39,
+          "y": 723.6875,
+          "width": 145,
+          "height": 28,
+          "cx": 111.5
+        },
+        "generation": {
+          "x": 39,
+          "y": 751.6875,
+          "width": 145,
+          "height": 151,
+          "cx": 111.5
+        },
+        "entries": [
+          {
+            "text": "收集参考图",
+            "y": 624.6875
+          },
+          {
+            "text": "反推提示词",
+            "y": 684.1875
+          }
+        ],
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "name": "390 当前可见Lucide图标",
+      "pass": true,
+      "detail": {
+        "visible": 63,
+        "hidden": [
+          "assets/lucide.svg#x"
+        ],
+        "bad": []
+      }
+    },
+    {
+      "name": "390 放大弹窗X图标",
+      "pass": true,
+      "detail": {
+        "href": "assets/lucide.svg#x",
+        "width": 12,
+        "height": 12
+      }
+    },
+    {
+      "name": "360 AI入口连续下接且对齐生成",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "x": 39,
+          "y": 625.171875,
+          "width": 130,
+          "height": 99,
+          "cx": 104
+        },
+        "down": {
+          "x": 39,
+          "y": 724.171875,
+          "width": 130,
+          "height": 28,
+          "cx": 104
+        },
+        "generation": {
+          "x": 39,
+          "y": 752.171875,
+          "width": 130,
+          "height": 151,
+          "cx": 104
+        },
+        "entries": [
+          {
+            "text": "收集参考图",
+            "y": 625.171875
+          },
+          {
+            "text": "反推提示词",
+            "y": 684.671875
+          }
+        ],
+        "scrollWidth": 360,
+        "width": 360
+      }
+    },
+    {
+      "name": "360 当前可见Lucide图标",
+      "pass": true,
+      "detail": {
+        "visible": 62,
+        "hidden": [
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#x"
+        ],
+        "bad": []
+      }
+    },
+    {
+      "name": "360 放大弹窗X图标",
+      "pass": true,
+      "detail": {
+        "href": "assets/lucide.svg#x",
+        "width": 12,
+        "height": 12
+      }
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "1440-ai-cycle-recheck.png",
+    "1440-reference-cycle-recheck.png",
+    "1024-ai-cycle-recheck.png",
+    "1024-reference-cycle-recheck.png",
+    "390-ai-cycle-recheck.png",
+    "390-reference-cycle-recheck.png",
+    "360-ai-cycle-recheck.png",
+    "360-reference-cycle-recheck.png"
+  ],
+  "pass": true
+}

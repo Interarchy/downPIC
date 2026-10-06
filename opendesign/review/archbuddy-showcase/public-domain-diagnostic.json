@@ -1,0 +1,14 @@
+{
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "status": 404,
+  "title": "风险提醒",
+  "bodyText": "页面访问提示\n当前域名 archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com 是由腾讯云 CloudBase 提供的测试域名，仅供开发测试使用，内容可能处于未审核状态\n请谨慎浏览，请勿泄露个人信息、账号密码或进行涉及财产的操作\n环境ID：dev-mel-d9guu8bpu44029179\n页面路径：/\n我是开发者，如何去掉当前页面？\n确定访问 (3s)",
+  "htmlStart": "\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>风险提醒</title>\n    <style>\n      body {\n        padding: 0;\n        margin: 0;\n      }\n      .redirect-page-container {\n        margin: 24px;\n        height: 100vh;\n      }\n\n      .redirect-page-header__logo {\n        height: 32px;\n      }\n\n      .redirect-page-content {\n        width: 100%;\n        height: 100%;\n        display: flex;\n        justify-content: center;\n      }\n\n      .redirect-page-wrapper {\n        width: 820px;\n        min-height: 360px;\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        margin-bottom: 200px;\n        line-height: 1.7\n      }\n\n      .redirect-page__content,\n      .redirect-page__icon {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n      }\n\n      .redirect-page__icon {\n        width: 32px;\n        height: 32px;\n      }\n\n      .redirect-page__title {\n        font-size: 16px;\n        font-weight: 500;\n        height: 22px;\n        line-height: 22px;\n        color: rgba(0, 0, 0, 0.9);\n        padding: 20px 0;\n      }\n\n      .redirect-page__desc {\n        font-size: 14px;\n        color: rgba(0, 0, 0, 0.7);\n      }\n\n      .redirect-page__desc span {\n        font-weight: 600;\n      }\n\n      .redirect-page__tip {\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        margin: 20px 0;\n        background-color: rgba(242, 244, 248, 1);\n        padding: 20px;\n       ",
+  "events": [
+    {
+      "kind": "response",
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404
+    }
+  ]
+}

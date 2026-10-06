@@ -1,0 +1,997 @@
+{
+  "date": "2026-10-05",
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "scope": "新隔离Chromium仅访问本地静态站；未调用模型、读取日常profile或执行任何归档",
+  "checks": [
+    {
+      "name": "1440 首页 HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "sectionOrder": [
+          "hero",
+          "problem",
+          "concept-section",
+          "workflow",
+          "features",
+          "install"
+        ],
+        "chainCount": 3,
+        "featureGroups": [
+          {
+            "title": "01 采集参考图",
+            "count": 2,
+            "features": [
+              "网页图片采集",
+              "多文件夹导入"
+            ]
+          },
+          {
+            "title": "02 反推与迭代提示词",
+            "count": 4,
+            "features": [
+              "多图意图组合",
+              "结构化提示词编辑",
+              "生成图偏差评估",
+              "提示词版本确认"
+            ]
+          },
+          {
+            "title": "03 沉淀图词资产",
+            "count": 2,
+            "features": [
+              "图词资产整理",
+              "关键词与语义检索"
+            ]
+          }
+        ],
+        "nav": [
+          {
+            "text": "工作链路",
+            "href": "#workflow"
+          },
+          {
+            "text": "具体功能",
+            "href": "#features"
+          },
+          {
+            "text": "下载体验\n↓",
+            "href": "#install"
+          }
+        ],
+        "loop": {
+          "entry": "采集\n→",
+          "nodes": [
+            "构建",
+            "评估",
+            "找回",
+            "复用"
+          ],
+          "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+          "return": "复用已有资产，回到构建"
+        },
+        "images": [
+          {
+            "id": "",
+            "loaded": true,
+            "width": 20,
+            "height": 20,
+            "natural": [
+              150,
+              150
+            ]
+          },
+          {
+            "id": "hero-image",
+            "loaded": true,
+            "width": 676,
+            "height": 423,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "capture-image",
+            "loaded": true,
+            "width": 712,
+            "height": 445,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "prompt-image",
+            "loaded": true,
+            "width": 712,
+            "height": 445,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "assets-image",
+            "loaded": true,
+            "width": 712,
+            "height": 445,
+            "natural": [
+              1280,
+              800
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 三条链路连续可读",
+      "pass": true,
+      "detail": [
+        "hero",
+        "problem",
+        "concept-section",
+        "workflow",
+        "features",
+        "install"
+      ]
+    },
+    {
+      "name": "1440 八功能三归属",
+      "pass": true,
+      "detail": [
+        {
+          "title": "01 采集参考图",
+          "count": 2,
+          "features": [
+            "网页图片采集",
+            "多文件夹导入"
+          ]
+        },
+        {
+          "title": "02 反推与迭代提示词",
+          "count": 4,
+          "features": [
+            "多图意图组合",
+            "结构化提示词编辑",
+            "生成图偏差评估",
+            "提示词版本确认"
+          ]
+        },
+        {
+          "title": "03 沉淀图词资产",
+          "count": 2,
+          "features": [
+            "图词资产整理",
+            "关键词与语义检索"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1440 闭环文案",
+      "pass": true,
+      "detail": {
+        "entry": "采集\n→",
+        "nodes": [
+          "构建",
+          "评估",
+          "找回",
+          "复用"
+        ],
+        "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+        "return": "复用已有资产，回到构建"
+      }
+    },
+    {
+      "name": "1440 不再提供五页首页导航",
+      "pass": true,
+      "detail": [
+        {
+          "text": "工作链路",
+          "href": "#workflow"
+        },
+        {
+          "text": "具体功能",
+          "href": "#features"
+        },
+        {
+          "text": "下载体验\n↓",
+          "href": "#install"
+        }
+      ]
+    },
+    {
+      "name": "1440 可选截图切换 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "caption": "实际评估入口 · 演示资料"
+      }
+    },
+    {
+      "name": "1440 可选截图切换 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png",
+        "caption": "实际图片详情 · 演示资料"
+      }
+    },
+    {
+      "name": "390 首页 HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "sectionOrder": [
+          "hero",
+          "problem",
+          "concept-section",
+          "workflow",
+          "features",
+          "install"
+        ],
+        "chainCount": 3,
+        "featureGroups": [
+          {
+            "title": "01 采集参考图",
+            "count": 2,
+            "features": [
+              "网页图片采集",
+              "多文件夹导入"
+            ]
+          },
+          {
+            "title": "02 反推与迭代提示词",
+            "count": 4,
+            "features": [
+              "多图意图组合",
+              "结构化提示词编辑",
+              "生成图偏差评估",
+              "提示词版本确认"
+            ]
+          },
+          {
+            "title": "03 沉淀图词资产",
+            "count": 2,
+            "features": [
+              "图词资产整理",
+              "关键词与语义检索"
+            ]
+          }
+        ],
+        "nav": [
+          {
+            "text": "工作链路",
+            "href": "#workflow"
+          },
+          {
+            "text": "具体功能",
+            "href": "#features"
+          },
+          {
+            "text": "下载体验\n↓",
+            "href": "#install"
+          }
+        ],
+        "loop": {
+          "entry": "采集\n→",
+          "nodes": [
+            "构建",
+            "评估",
+            "找回",
+            "复用"
+          ],
+          "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+          "return": "复用已有资产，回到构建"
+        },
+        "images": [
+          {
+            "id": "",
+            "loaded": true,
+            "width": 18,
+            "height": 18,
+            "natural": [
+              150,
+              150
+            ]
+          },
+          {
+            "id": "hero-image",
+            "loaded": true,
+            "width": 348,
+            "height": 218,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "capture-image",
+            "loaded": true,
+            "width": 348,
+            "height": 218,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "prompt-image",
+            "loaded": true,
+            "width": 348,
+            "height": 218,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "assets-image",
+            "loaded": true,
+            "width": 348,
+            "height": 218,
+            "natural": [
+              1280,
+              800
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 三条链路连续可读",
+      "pass": true,
+      "detail": [
+        "hero",
+        "problem",
+        "concept-section",
+        "workflow",
+        "features",
+        "install"
+      ]
+    },
+    {
+      "name": "390 八功能三归属",
+      "pass": true,
+      "detail": [
+        {
+          "title": "01 采集参考图",
+          "count": 2,
+          "features": [
+            "网页图片采集",
+            "多文件夹导入"
+          ]
+        },
+        {
+          "title": "02 反推与迭代提示词",
+          "count": 4,
+          "features": [
+            "多图意图组合",
+            "结构化提示词编辑",
+            "生成图偏差评估",
+            "提示词版本确认"
+          ]
+        },
+        {
+          "title": "03 沉淀图词资产",
+          "count": 2,
+          "features": [
+            "图词资产整理",
+            "关键词与语义检索"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 闭环文案",
+      "pass": true,
+      "detail": {
+        "entry": "采集\n→",
+        "nodes": [
+          "构建",
+          "评估",
+          "找回",
+          "复用"
+        ],
+        "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+        "return": "复用已有资产，回到构建"
+      }
+    },
+    {
+      "name": "390 不再提供五页首页导航",
+      "pass": true,
+      "detail": [
+        {
+          "text": "工作链路",
+          "href": "#workflow"
+        },
+        {
+          "text": "具体功能",
+          "href": "#features"
+        },
+        {
+          "text": "下载体验\n↓",
+          "href": "#install"
+        }
+      ]
+    },
+    {
+      "name": "390 可选截图切换 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "caption": "实际评估入口 · 演示资料"
+      }
+    },
+    {
+      "name": "390 可选截图切换 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png",
+        "caption": "实际图片详情 · 演示资料"
+      }
+    },
+    {
+      "name": "360 首页 HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "clientWidth": 360,
+        "scrollWidth": 360,
+        "sectionOrder": [
+          "hero",
+          "problem",
+          "concept-section",
+          "workflow",
+          "features",
+          "install"
+        ],
+        "chainCount": 3,
+        "featureGroups": [
+          {
+            "title": "01 采集参考图",
+            "count": 2,
+            "features": [
+              "网页图片采集",
+              "多文件夹导入"
+            ]
+          },
+          {
+            "title": "02 反推与迭代提示词",
+            "count": 4,
+            "features": [
+              "多图意图组合",
+              "结构化提示词编辑",
+              "生成图偏差评估",
+              "提示词版本确认"
+            ]
+          },
+          {
+            "title": "03 沉淀图词资产",
+            "count": 2,
+            "features": [
+              "图词资产整理",
+              "关键词与语义检索"
+            ]
+          }
+        ],
+        "nav": [
+          {
+            "text": "工作链路",
+            "href": "#workflow"
+          },
+          {
+            "text": "具体功能",
+            "href": "#features"
+          },
+          {
+            "text": "下载体验\n↓",
+            "href": "#install"
+          }
+        ],
+        "loop": {
+          "entry": "采集\n→",
+          "nodes": [
+            "构建",
+            "评估",
+            "找回",
+            "复用"
+          ],
+          "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+          "return": "复用已有资产，回到构建"
+        },
+        "images": [
+          {
+            "id": "",
+            "loaded": true,
+            "width": 16,
+            "height": 16,
+            "natural": [
+              150,
+              150
+            ]
+          },
+          {
+            "id": "hero-image",
+            "loaded": true,
+            "width": 318,
+            "height": 199,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "capture-image",
+            "loaded": true,
+            "width": 318,
+            "height": 199,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "prompt-image",
+            "loaded": true,
+            "width": 318,
+            "height": 199,
+            "natural": [
+              1280,
+              800
+            ]
+          },
+          {
+            "id": "assets-image",
+            "loaded": true,
+            "width": 318,
+            "height": 199,
+            "natural": [
+              1280,
+              800
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 三条链路连续可读",
+      "pass": true,
+      "detail": [
+        "hero",
+        "problem",
+        "concept-section",
+        "workflow",
+        "features",
+        "install"
+      ]
+    },
+    {
+      "name": "360 八功能三归属",
+      "pass": true,
+      "detail": [
+        {
+          "title": "01 采集参考图",
+          "count": 2,
+          "features": [
+            "网页图片采集",
+            "多文件夹导入"
+          ]
+        },
+        {
+          "title": "02 反推与迭代提示词",
+          "count": 4,
+          "features": [
+            "多图意图组合",
+            "结构化提示词编辑",
+            "生成图偏差评估",
+            "提示词版本确认"
+          ]
+        },
+        {
+          "title": "03 沉淀图词资产",
+          "count": 2,
+          "features": [
+            "图词资产整理",
+            "关键词与语义检索"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 闭环文案",
+      "pass": true,
+      "detail": {
+        "entry": "采集\n→",
+        "nodes": [
+          "构建",
+          "评估",
+          "找回",
+          "复用"
+        ],
+        "label": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环",
+        "return": "复用已有资产，回到构建"
+      }
+    },
+    {
+      "name": "360 不再提供五页首页导航",
+      "pass": true,
+      "detail": [
+        {
+          "text": "工作链路",
+          "href": "#workflow"
+        },
+        {
+          "text": "具体功能",
+          "href": "#features"
+        },
+        {
+          "text": "下载体验\n↓",
+          "href": "#install"
+        }
+      ]
+    },
+    {
+      "name": "360 可选截图切换 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "caption": "实际评估入口 · 演示资料"
+      }
+    },
+    {
+      "name": "360 可选截图切换 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png",
+        "caption": "实际图片详情 · 演示资料"
+      }
+    },
+    {
+      "name": "放大截图 hero-image",
+      "pass": false
+    },
+    {
+      "name": "关闭截图 hero-image",
+      "pass": true
+    },
+    {
+      "name": "放大截图 capture-image",
+      "pass": false
+    },
+    {
+      "name": "关闭截图 capture-image",
+      "pass": true
+    },
+    {
+      "name": "放大截图 prompt-image",
+      "pass": false
+    },
+    {
+      "name": "关闭截图 prompt-image",
+      "pass": true
+    },
+    {
+      "name": "放大截图 assets-image",
+      "pass": false
+    },
+    {
+      "name": "关闭截图 assets-image",
+      "pass": true
+    },
+    {
+      "name": "Escape关闭",
+      "pass": true
+    },
+    {
+      "name": "实际复制安装地址",
+      "pass": true,
+      "detail": "已复制，请粘贴到 Chrome 地址栏。"
+    },
+    {
+      "name": "实际下载哈希 插件",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D"
+      }
+    },
+    {
+      "name": "实际下载哈希 测试集",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD"
+      }
+    },
+    {
+      "name": "手机弹窗完整在视口",
+      "pass": true
+    },
+    {
+      "name": "手机弹窗关闭",
+      "pass": true
+    },
+    {
+      "name": "页面控制台和网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "screenshots": [
+    "1440-full.png",
+    "1440-hero.png",
+    "1440-problem.png",
+    "1440-concept.png",
+    "1440-capture.png",
+    "1440-prompt.png",
+    "1440-assets.png",
+    "1440-features.png",
+    "1440-install.png",
+    "1440-prompt-alternate.png",
+    "1440-assets-alternate.png",
+    "390-full.png",
+    "390-hero.png",
+    "390-problem.png",
+    "390-concept.png",
+    "390-capture.png",
+    "390-prompt.png",
+    "390-assets.png",
+    "390-features.png",
+    "390-install.png",
+    "390-prompt-alternate.png",
+    "390-assets-alternate.png",
+    "360-full.png",
+    "360-hero.png",
+    "360-problem.png",
+    "360-concept.png",
+    "360-capture.png",
+    "360-prompt.png",
+    "360-assets.png",
+    "360-features.png",
+    "360-install.png",
+    "360-prompt-alternate.png",
+    "360-assets-alternate.png",
+    "360-dialog-viewport.png"
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    }
+  ],
+  "pass": false,
+  "count": {
+    "checks": 39,
+    "screenshots": 34,
+    "errors": 0
+  }
+}

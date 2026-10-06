@@ -12,7 +12,7 @@ let eventWriter = null;
 if (mode === 'cloudbase') {
   const { createEventWriter, initializeCloudBaseStore } = await import('./cloudbase-store.mjs');
   const store = initializeCloudBaseStore();
-  quota = createQuotaService(store);
+  quota = createQuotaService(store, { environment });
   eventWriter = createEventWriter(store);
 }
 const server = createAnalysisServer({ environment, quota, eventWriter });

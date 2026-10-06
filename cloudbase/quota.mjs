@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 
+// 未配置环境变量时，沿用用户确认的默认每日额度。
 export const USER_DAILY_LIMIT = 20;
 export const PROJECT_DAILY_LIMIT = 200;
 export const PROJECT_ID = 'archbuddy';
@@ -42,8 +43,20 @@ function count(doc) {
   return doc.count;
 }
 
+function dailyLimit(environment, name, fallback) {
+  if (environment[name] === undefined) return fallback;
+  const raw = String(environment[name]).trim();
+  const value = Number(raw);
+  if (!/^[1-9]\d*$/.test(raw) || !Number.isSafeInteger(value)) {
+    throw new Error(`${name} must be a positive safe integer`);
+  }
+  return value;
+}
+
 // store.transaction(callback) commits all writes together; no model calls inside it.
-export function createQuotaService(store, { now = Date.now } = {}) {
+export function createQuotaService(store, { now = Date.now, environment = {} } = {}) {
+  const userLimit = dailyLimit(environment, 'ARCHBUDDY_USER_DAILY_LIMIT', USER_DAILY_LIMIT);
+  const projectLimit = dailyLimit(environment, 'ARCHBUDDY_PROJECT_DAILY_LIMIT', PROJECT_DAILY_LIMIT);
   const base = { projectId: PROJECT_ID, stage: STAGE };
   return {
     async reserve(actor, requestId) {
@@ -64,15 +77,15 @@ export function createQuotaService(store, { now = Date.now } = {}) {
           if (previous) throw new QuotaError('DUPLICATE_REQUEST', '此请求已受理，不会重复调用或扣次；需要再次分析请新建请求', 409);
           const project = count(await tx.get('counters', projectKey));
           const user = count(await tx.get('counters', userKey));
-          if (project >= PROJECT_DAILY_LIMIT) throw new QuotaError('PROJECT_DAILY_LIMIT', '今日 ArchBuddy 反推总额度已用完，北京时间零点恢复');
-          if (user >= USER_DAILY_LIMIT) throw new QuotaError('USER_DAILY_LIMIT', '今日 20 次反推额度已用完，北京时间零点恢复');
+          if (project >= projectLimit) throw new QuotaError('PROJECT_DAILY_LIMIT', '今日 ArchBuddy 反推总额度已用完，北京时间零点恢复');
+          if (user >= userLimit) throw new QuotaError('USER_DAILY_LIMIT', '今日个人反推额度已用完，北京时间零点恢复');
           await tx.set('counters', projectKey, { ...base, day, count: project + 1, expiresAt });
           await tx.set('counters', userKey, { ...base, day, actorHash, count: user + 1, expiresAt });
           await tx.set('requests', receiptId, {
             ...base, day, actorHash, projectKey, userKey, status: 'reserved',
             createdAt: at, expiresAt, usage: null, usageRecorded: false,
           });
-          return { receiptId, day, userRemaining: USER_DAILY_LIMIT - user - 1, projectRemaining: PROJECT_DAILY_LIMIT - project - 1 };
+          return { receiptId, day, userRemaining: userLimit - user - 1, projectRemaining: projectLimit - project - 1 };
         });
       } catch (error) {
         if (error instanceof QuotaError) throw error;

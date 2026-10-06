@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-05",
+  "checks": [
+    {
+      "name": "放大原图 hero-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "按钮关闭 hero-image",
+      "pass": true
+    },
+    {
+      "name": "放大原图 capture-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "按钮关闭 capture-image",
+      "pass": true
+    },
+    {
+      "name": "放大原图 prompt-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png"
+      }
+    },
+    {
+      "name": "按钮关闭 prompt-image",
+      "pass": true
+    },
+    {
+      "name": "放大原图 assets-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png"
+      }
+    },
+    {
+      "name": "按钮关闭 assets-image",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "note": "首次完整检查将绝对src与相对属性比较，误报四项；此记录对比浏览器DOM完整URL并确认原图相同。"
+}

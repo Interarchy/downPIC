@@ -1,0 +1,12 @@
+:root {
+  --paper: #f5f7f4;
+  --white: #ffffff;
+  --ink: #24332d;
+  --muted: #63746a;
+  --green: #25634b;
+  --forest: #194a38;
+  --sage: #e8f0ec;
+  --line: #d8e1da;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --sans: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+}

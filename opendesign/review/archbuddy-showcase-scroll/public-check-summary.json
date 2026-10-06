@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-05",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "scope": "本轮连续单页与两个下载；新隔离Chromium正常确认平台提示，不读日常profile、不调用模型、不执行归档、不访问历史五页",
+  "checks": [
+    {
+      "name": "公网Document正常HTML渲染",
+      "pass": true,
+      "detail": {
+        "documentResponse": {
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "kind": "document",
+          "contentType": "text/html",
+          "contentDisposition": null
+        },
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "downloadsBeforeZIP": []
+      }
+    },
+    {
+      "name": "无意外HTML下载",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "公网新理念标题",
+      "pass": true,
+      "detail": "把断开的步骤，\n接成可复用的闭环。"
+    },
+    {
+      "name": "公网三链路直接连续可读",
+      "pass": true,
+      "detail": [
+        {
+          "id": "chain-capture",
+          "title": "看到喜欢的图，\n顺手留下来。",
+          "display": "grid"
+        },
+        {
+          "id": "chain-prompt",
+          "title": "从画面到意图，\n再对照效果修改。",
+          "display": "grid"
+        },
+        {
+          "id": "chain-assets",
+          "title": "让这次的成果，\n接住下一次设计。",
+          "display": "grid"
+        }
+      ]
+    },
+    {
+      "name": "公网八功能三归属",
+      "pass": true,
+      "detail": [
+        {
+          "title": "01 采集参考图",
+          "count": 2
+        },
+        {
+          "title": "02 反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "03 沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "公网首页不再有五页导航",
+      "pass": true,
+      "detail": [
+        "#workflow",
+        "#features",
+        "#install"
+      ]
+    },
+    {
+      "name": "公网可选截图 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "公网放大原图 prompt",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "large": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "公网关闭原图 prompt",
+      "pass": true
+    },
+    {
+      "name": "公网可选截图 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "公网放大原图 assets",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "large": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "公网关闭原图 assets",
+      "pass": true
+    },
+    {
+      "name": "公网安装地址实际复制",
+      "pass": true,
+      "detail": {
+        "clipboard": "chrome://extensions/",
+        "feedback": "已复制，请粘贴到 Chrome 地址栏。"
+      }
+    },
+    {
+      "name": "公网真实下载 插件",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D"
+      }
+    },
+    {
+      "name": "公网真实下载 测试集",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD"
+      }
+    },
+    {
+      "name": "1440 公网无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440
+      }
+    },
+    {
+      "name": "390 公网无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "clientWidth": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "360 公网无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "平台确认后页面与网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "kind": "document",
+      "contentType": "text/html; charset=utf-8",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "kind": "document",
+      "contentType": "text/html",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=scroll-20261005",
+      "status": 200,
+      "kind": "stylesheet",
+      "contentType": "text/css",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=scroll-20261005",
+      "status": 200,
+      "kind": "script",
+      "contentType": "application/javascript",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200,
+      "kind": "other",
+      "contentType": "image/svg+xml",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+      "status": 200,
+      "kind": "image",
+      "contentType": "image/png",
+      "contentDisposition": null
+    }
+  ],
+  "downloads": [
+    "ArchBuddy-0.6.0-Chrome.zip",
+    "ArchBuddy测试集.7z"
+  ],
+  "platformNotice": {
+    "title": "风险提醒",
+    "status": 404,
+    "shown": true,
+    "flow": "正常等待平台3秒倒计时后点击确定访问",
+    "confirmed": true
+  },
+  "platformNoticeErrors": [
+    {
+      "kind": "http",
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404
+    },
+    {
+      "kind": "console",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pass": true,
+  "count": {
+    "checks": 19,
+    "errors": 0
+  }
+}

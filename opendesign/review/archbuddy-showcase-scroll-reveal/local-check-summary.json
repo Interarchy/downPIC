@@ -1,0 +1,517 @@
+{
+  "generated": "2026-10-06T12:37:32.337Z",
+  "scope": "local",
+  "cases": [
+    {
+      "width": 1440,
+      "initialHttp": 200,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "chapters": [
+        {
+          "index": 1,
+          "first": {
+            "opacity": "1",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0.00945394)",
+            "revealed": true,
+            "width": 1440,
+            "textLength": 110,
+            "height": 283
+          }
+        },
+        {
+          "index": 2,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0.00116594)",
+            "revealed": true,
+            "width": 1440,
+            "textLength": 357,
+            "height": 704.0000610351562
+          }
+        },
+        {
+          "index": 3,
+          "first": {
+            "opacity": "0.0128023",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 1440,
+            "textLength": 109,
+            "height": 502.125
+          }
+        },
+        {
+          "index": 4,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "04三大功能三大功能支撑两条业务链路",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0.127761)",
+            "revealed": true,
+            "width": 1440,
+            "textLength": 361,
+            "height": 1308.421875
+          }
+        },
+        {
+          "index": 5,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "05下载与安装把创作的循环，放进你的浏览器。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 1440,
+            "textLength": 409,
+            "height": 458.171875
+          }
+        }
+      ],
+      "entry": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+        "motion": "reveal",
+        "parts": 10,
+        "headings": 5,
+        "stages": 5,
+        "comparisonControls": 0,
+        "cache": [
+          "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-reveal-20261006",
+          "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-reveal-20261006"
+        ],
+        "width": 1440,
+        "initial": [
+          {
+            "opacity": "1",
+            "revealed": true
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498048",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498048",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498048",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          }
+        ]
+      },
+      "alignment": {
+        "imageRight": 1340,
+        "downloadRight": 1340
+      },
+      "backscroll": [
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        }
+      ],
+      "nav": {
+        "hash": "#features",
+        "titleTop": 261.546875,
+        "headerBottom": 84
+      },
+      "promptVariant": "case-study/assets/05-prompt-optimization-1280x800.png",
+      "assetVariant": "case-study/assets/02-image-description-1280x800.png",
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "links": {
+        "chrome": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          }
+        ],
+        "testset": [
+          {
+            "text": "下载图片测试集",
+            "href": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "finalWidth": 1440
+      }
+    },
+    {
+      "width": 390,
+      "initialHttp": 200,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "chapters": [
+        {
+          "index": 1,
+          "first": {
+            "opacity": "0.276038",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "01方案创作中的断点方案创作是连续的，工作流程却常常断开。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 390,
+            "textLength": 110,
+            "height": 931
+          }
+        },
+        {
+          "index": 2,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "02工作链路与产品机会在两条业务链路中，找到产品的介入点。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 390,
+            "textLength": 357,
+            "height": 1418
+          }
+        },
+        {
+          "index": 3,
+          "first": {
+            "opacity": "2.47242e-05",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "03我们的产品思路让参考、意图与成果，在一条链路里流动。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 390,
+            "textLength": 109,
+            "height": 421.375
+          }
+        },
+        {
+          "index": 4,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "04三大功能三大功能支撑两条业务链路",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0.00504206)",
+            "revealed": true,
+            "width": 390,
+            "textLength": 361,
+            "height": 1842.062255859375
+          }
+        },
+        {
+          "index": 5,
+          "first": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "stageStart": {
+            "opacity": "0",
+            "revealed": true
+          },
+          "settled": {
+            "headingText": "05下载与安装把创作的循环，放进你的浏览器。",
+            "headingOpacity": "1",
+            "stageOpacity": "1",
+            "headingPosition": "static",
+            "stageTransform": "matrix(1, 0, 0, 1, 0, 0)",
+            "revealed": true,
+            "width": 390,
+            "textLength": 409,
+            "height": 795.21875
+          }
+        }
+      ],
+      "entry": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+        "motion": "reveal",
+        "parts": 10,
+        "headings": 5,
+        "stages": 5,
+        "comparisonControls": 0,
+        "cache": [
+          "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=scroll-reveal-20261006",
+          "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=scroll-reveal-20261006"
+        ],
+        "width": 390,
+        "initial": [
+          {
+            "opacity": "0.498325",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498325",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498325",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          },
+          {
+            "opacity": "0.498325",
+            "revealed": false
+          },
+          {
+            "opacity": "0",
+            "revealed": false
+          }
+        ]
+      },
+      "alignment": {
+        "imageRight": 370,
+        "downloadRight": 370
+      },
+      "backscroll": [
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        },
+        {
+          "revealed": true,
+          "opacity": "1"
+        }
+      ],
+      "nav": {
+        "hash": "#features",
+        "titleTop": 259.03125,
+        "headerBottom": 72
+      },
+      "promptVariant": "case-study/assets/05-prompt-optimization-1280x800.png",
+      "assetVariant": "case-study/assets/02-image-description-1280x800.png",
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "links": {
+        "chrome": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          }
+        ],
+        "testset": [
+          {
+            "text": "下载图片测试集",
+            "href": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "finalWidth": 390
+      }
+    }
+  ],
+  "errors": []
+}

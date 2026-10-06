@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-05",
+  "checks": [
+    {
+      "name": "1440 理念标题定向复核",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "title": "把断开的步骤，\n接成可复用的闭环。",
+        "loopLabel": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环"
+      }
+    },
+    {
+      "name": "390 理念标题定向复核",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "title": "把断开的步骤，\n接成可复用的闭环。",
+        "loopLabel": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环"
+      }
+    },
+    {
+      "name": "360 理念标题定向复核",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "title": "把断开的步骤，\n接成可复用的闭环。",
+        "loopLabel": "采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环"
+      }
+    }
+  ],
+  "pass": true
+}

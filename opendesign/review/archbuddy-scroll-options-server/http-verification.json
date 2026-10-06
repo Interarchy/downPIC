@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-10-06T12:07:39.517Z",
+  "scope": "仅本地 opendesign 预览，不涉及云端资源",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8766/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 6562,
+      "validContent": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 23426,
+      "validContent": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8",
+      "bytes": 30965,
+      "validContent": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/%2e%2e%5cAGENTS.md",
+      "status": 403,
+      "contentType": null,
+      "bytes": 9,
+      "validContent": true
+    }
+  ],
+  "pass": true
+}

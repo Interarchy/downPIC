@@ -1,0 +1,102 @@
+{
+  "generated": "2026-10-06T12:43:29.813Z",
+  "sections": [
+    {
+      "id": "mockups",
+      "label": "Mockups",
+      "groups": [
+        {
+          "slug": "archbuddy-case-study",
+          "files": [
+            {
+              "label": "decisions.html",
+              "path": "mockups/archbuddy-case-study/decisions.html"
+            },
+            {
+              "label": "index.html",
+              "path": "mockups/archbuddy-case-study/index.html"
+            },
+            {
+              "label": "outcomes.html",
+              "path": "mockups/archbuddy-case-study/outcomes.html"
+            },
+            {
+              "label": "problem.html",
+              "path": "mockups/archbuddy-case-study/problem.html"
+            },
+            {
+              "label": "workflow.html",
+              "path": "mockups/archbuddy-case-study/workflow.html"
+            }
+          ]
+        },
+        {
+          "slug": "archbuddy-problem-options",
+          "files": [
+            {
+              "label": "index.html",
+              "path": "mockups/archbuddy-problem-options/index.html"
+            }
+          ]
+        },
+        {
+          "slug": "archbuddy-scroll-options",
+          "files": [
+            {
+              "label": "index.html",
+              "path": "mockups/archbuddy-scroll-options/index.html"
+            }
+          ]
+        },
+        {
+          "slug": "archbuddy-showcase",
+          "files": [
+            {
+              "label": "case-study/decisions.html",
+              "path": "mockups/archbuddy-showcase/case-study/decisions.html"
+            },
+            {
+              "label": "case-study/index.html",
+              "path": "mockups/archbuddy-showcase/case-study/index.html"
+            },
+            {
+              "label": "case-study/outcomes.html",
+              "path": "mockups/archbuddy-showcase/case-study/outcomes.html"
+            },
+            {
+              "label": "case-study/problem.html",
+              "path": "mockups/archbuddy-showcase/case-study/problem.html"
+            },
+            {
+              "label": "case-study/workflow.html",
+              "path": "mockups/archbuddy-showcase/case-study/workflow.html"
+            },
+            {
+              "label": "index.html",
+              "path": "mockups/archbuddy-showcase/index.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "design-systems",
+      "label": "Design Systems",
+      "groups": [
+        {
+          "slug": "archbuddy-portfolio",
+          "files": [
+            {
+              "label": "colors_and_type.css",
+              "path": "design-systems/archbuddy-portfolio/colors_and_type.css"
+            },
+            {
+              "label": "SKILL.md",
+              "path": "design-systems/archbuddy-portfolio/SKILL.md"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="ArchBuddy">
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#fff"/>
+  <path fill="#153b2d" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z"/>
+</svg>

@@ -1,0 +1,120 @@
+[
+  {
+    "id": "workflow",
+    "width": 1440,
+    "position": "middle",
+    "scrollY": 1872,
+    "headingTop": 84,
+    "headingBottom": 284.78125,
+    "headerBottom": 84,
+    "containerBottom": 605.640625,
+    "textLength": 394,
+    "stageHeight": 704
+  },
+  {
+    "id": "workflow",
+    "width": 1440,
+    "position": "end",
+    "headingTop": -357.140625,
+    "headerBottom": 84
+  },
+  {
+    "id": "features",
+    "width": 1440,
+    "position": "middle",
+    "scrollY": 4093,
+    "headingTop": 84,
+    "headingBottom": 228.890625,
+    "headerBottom": 84,
+    "containerBottom": 902.859375,
+    "textLength": 387,
+    "stageHeight": 1308.421875
+  },
+  {
+    "id": "features",
+    "width": 1440,
+    "position": "end",
+    "headingTop": -297.03125,
+    "headerBottom": 84
+  },
+  {
+    "id": "install",
+    "width": 1440,
+    "position": "lower",
+    "steps": [
+      "打开商店页面",
+      "添加到 Chrome",
+      "固定并开始使用"
+    ],
+    "buttons": [
+      {
+        "text": "下载 Chrome 插件",
+        "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+      },
+      {
+        "text": "下载图片测试集",
+        "href": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z"
+      }
+    ],
+    "widthActual": 1440
+  },
+  {
+    "id": "workflow",
+    "width": 390,
+    "position": "middle",
+    "scrollY": 2764,
+    "headingTop": 72,
+    "headingBottom": 231.78125,
+    "headerBottom": 72,
+    "containerBottom": 936.875,
+    "textLength": 394,
+    "stageHeight": 1418
+  },
+  {
+    "id": "workflow",
+    "width": 390,
+    "position": "end",
+    "headingTop": -275.90625,
+    "headerBottom": 72
+  },
+  {
+    "id": "features",
+    "width": 390,
+    "position": "middle",
+    "scrollY": 5336,
+    "headingTop": 72,
+    "headingBottom": 178.9375,
+    "headerBottom": 72,
+    "containerBottom": 1141.03125,
+    "textLength": 387,
+    "stageHeight": 1842.0625
+  },
+  {
+    "id": "features",
+    "width": 390,
+    "position": "end",
+    "headingTop": -222.90625,
+    "headerBottom": 72
+  },
+  {
+    "id": "install",
+    "width": 390,
+    "position": "lower",
+    "steps": [
+      "打开商店页面",
+      "添加到 Chrome",
+      "固定并开始使用"
+    ],
+    "buttons": [
+      {
+        "text": "下载 Chrome 插件",
+        "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+      },
+      {
+        "text": "下载图片测试集",
+        "href": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z"
+      }
+    ],
+    "widthActual": 390
+  }
+]

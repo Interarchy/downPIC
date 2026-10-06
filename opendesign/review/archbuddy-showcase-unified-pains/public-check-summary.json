@@ -1,0 +1,1953 @@
+{
+  "date": "2026-10-05T18:02:36.042Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "unified-pains-20261006",
+  "scope": "仅选中暖白01文本、无框线、统一底色、功能括线与手机排序，及既有内容快速断言；不验证归档/模型/商店/安装/画廊",
+  "checks": [
+    {
+      "name": "1440 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=unified-pains-20261006",
+        "app.js?v=unified-pains-20261006"
+      ]
+    },
+    {
+      "name": "1440 精确新文案与五步四断点",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          }
+        ],
+        "note": "多轮优化"
+      }
+    },
+    {
+      "name": "1440 上下暖白统一及指定字色字号",
+      "pass": true,
+      "detail": {
+        "colors": {
+          "board": "rgb(244, 242, 236)",
+          "panels": [
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)"
+          ],
+          "nodes": [
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)"
+          ]
+        },
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "26px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 整体分区节点无描边或框阴影",
+      "pass": true,
+      "detail": [
+        {
+          "class": "problem-analysis",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-save",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-design",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-prompt",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-generate",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-reuse",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-one",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-two",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-three",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "1440 文本无孤字及实际容器裁切",
+      "pass": true,
+      "detail": [
+        {
+          "text": "方案创作是连续的，工作流程却常常断开。",
+          "lines": [
+            {
+              "y": 845,
+              "text": "方案创作是连续的，"
+            },
+            {
+              "y": 901,
+              "text": "工作流程却常常断开。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "保存图片",
+          "lines": [
+            {
+              "y": 1048,
+              "text": "保存图片"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "参考难以复用",
+          "lines": [
+            {
+              "y": 1070,
+              "text": "参考难以复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "方案创作",
+          "lines": [
+            {
+              "y": 1048,
+              "text": "方案创作"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "说不清意图",
+          "lines": [
+            {
+              "y": 1070,
+              "text": "说不清意图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "编写参考图提示词",
+          "lines": [
+            {
+              "y": 1034,
+              "text": "编写参考图"
+            },
+            {
+              "y": 1063,
+              "text": "提示词"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "修改缺少依据",
+          "lines": [
+            {
+              "y": 1070,
+              "text": "修改缺少依据"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "生成AI效果图",
+          "lines": [
+            {
+              "y": 1021,
+              "text": "生成AI"
+            },
+            {
+              "y": 1050,
+              "text": "效果图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "图词难以沉淀",
+          "lines": [
+            {
+              "y": 1070,
+              "text": "图词难以沉淀"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "成果复用",
+          "lines": [
+            {
+              "y": 1048,
+              "text": "成果复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "逐张机械保存，打断创作思路。",
+          "lines": [
+            {
+              "y": 1171,
+              "text": "逐张机械保存，"
+            },
+            {
+              "y": 1210,
+              "text": "打断创作思路。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "提示词从零编写，难以完整表达设计意图。",
+          "lines": [
+            {
+              "y": 1171,
+              "text": "提示词从零编写，"
+            },
+            {
+              "y": 1210,
+              "text": "难以完整表达设计意图。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "过程素材不断堆积，却难以再次复用。",
+          "lines": [
+            {
+              "y": 1171,
+              "text": "过程素材不断堆积，"
+            },
+            {
+              "y": 1210,
+              "text": "却难以再次复用。"
+            }
+          ],
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "1440 对应括线或手机顺序及有效箭头",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "nodes": [
+            {
+              "left": 100,
+              "right": 244,
+              "top": 993.859375,
+              "bottom": 1141.859375
+            },
+            {
+              "left": 334,
+              "right": 478,
+              "top": 993.859375,
+              "bottom": 1141.859375
+            },
+            {
+              "left": 568,
+              "right": 728,
+              "top": 993.859375,
+              "bottom": 1141.859375
+            },
+            {
+              "left": 818,
+              "right": 978,
+              "top": 993.859375,
+              "bottom": 1141.859375
+            },
+            {
+              "left": 1068,
+              "right": 1340,
+              "top": 993.859375,
+              "bottom": 1141.859375
+            }
+          ],
+          "breaks": [
+            {
+              "left": 244,
+              "right": 334,
+              "top": 1040.359375,
+              "bottom": 1087.359375
+            },
+            {
+              "left": 478,
+              "right": 568,
+              "top": 1040.359375,
+              "bottom": 1087.359375
+            },
+            {
+              "left": 728,
+              "right": 818,
+              "top": 1040.359375,
+              "bottom": 1087.359375
+            },
+            {
+              "left": 978,
+              "right": 1068,
+              "top": 1040.359375,
+              "bottom": 1087.359375
+            }
+          ],
+          "pains": [
+            {
+              "left": 100,
+              "right": 478,
+              "top": 1141.859375,
+              "bottom": 1276.859375
+            },
+            {
+              "left": 478,
+              "right": 978,
+              "top": 1141.859375,
+              "bottom": 1276.859375
+            },
+            {
+              "left": 978,
+              "right": 1340,
+              "top": 1141.859375,
+              "bottom": 1276.859375
+            }
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "block",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "block",
+              "bottom": "1px",
+              "stem": "1px"
+            }
+          ],
+          "order": [
+            "analysis-save",
+            "analysis-design",
+            "analysis-prompt",
+            "analysis-generate",
+            "analysis-reuse",
+            "analysis-save-break",
+            "analysis-intent-break",
+            "analysis-evaluate-break",
+            "analysis-asset-break",
+            "analysis-pain-one",
+            "analysis-pain-two",
+            "analysis-pain-three"
+          ]
+        },
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ],
+        "tracks": [
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 其余既有内容快速断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          "ArchBuddy测试集.7z",
+          "ArchBuddy测试集.7z"
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "1440 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=unified-pains-20261006",
+        "app.js?v=unified-pains-20261006"
+      ]
+    },
+    {
+      "name": "390 精确新文案与五步四断点",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          }
+        ],
+        "note": "多轮优化"
+      }
+    },
+    {
+      "name": "390 上下暖白统一及指定字色字号",
+      "pass": true,
+      "detail": {
+        "colors": {
+          "board": "rgb(244, 242, 236)",
+          "panels": [
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)"
+          ],
+          "nodes": [
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)"
+          ]
+        },
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "24px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 整体分区节点无描边或框阴影",
+      "pass": true,
+      "detail": [
+        {
+          "class": "problem-analysis",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-save",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-design",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-prompt",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-generate",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-reuse",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-one",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-two",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-three",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "390 文本无孤字及实际容器裁切",
+      "pass": true,
+      "detail": [
+        {
+          "text": "方案创作是连续的，工作流程却常常断开。",
+          "lines": [
+            {
+              "y": 891,
+              "text": "方案创作是连续的，"
+            },
+            {
+              "y": 934,
+              "text": "工作流程却常常断开。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "保存图片",
+          "lines": [
+            {
+              "y": 1026,
+              "text": "保存图片"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "参考难以复用",
+          "lines": [
+            {
+              "y": 1091,
+              "text": "参考难以复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "方案创作",
+          "lines": [
+            {
+              "y": 1148,
+              "text": "方案创作"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "说不清意图",
+          "lines": [
+            {
+              "y": 1333,
+              "text": "说不清意图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "编写参考图提示词",
+          "lines": [
+            {
+              "y": 1390,
+              "text": "编写参考图提示词"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "修改缺少依据",
+          "lines": [
+            {
+              "y": 1455,
+              "text": "修改缺少依据"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "生成AI效果图",
+          "lines": [
+            {
+              "y": 1505,
+              "text": "生成AI效果图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "图词难以沉淀",
+          "lines": [
+            {
+              "y": 1710,
+              "text": "图词难以沉淀"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "成果复用",
+          "lines": [
+            {
+              "y": 1767,
+              "text": "成果复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "逐张机械保存，打断创作思路。",
+          "lines": [
+            {
+              "y": 1222,
+              "text": "逐张机械保存，"
+            },
+            {
+              "y": 1258,
+              "text": "打断创作思路。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "提示词从零编写，难以完整表达设计意图。",
+          "lines": [
+            {
+              "y": 1599,
+              "text": "提示词从零编写，"
+            },
+            {
+              "y": 1635,
+              "text": "难以完整表达设计意图。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "过程素材不断堆积，却难以再次复用。",
+          "lines": [
+            {
+              "y": 1841,
+              "text": "过程素材不断堆积，"
+            },
+            {
+              "y": 1877,
+              "text": "却难以再次复用。"
+            }
+          ],
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "390 对应括线或手机顺序及有效箭头",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "nodes": [
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1004.09375,
+              "bottom": 1074.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1126.09375,
+              "bottom": 1196.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1368.09375,
+              "bottom": 1438.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1490.09375,
+              "bottom": 1573.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1745.09375,
+              "bottom": 1815.09375
+            }
+          ],
+          "breaks": [
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1074.09375,
+              "bottom": 1126.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1316.09375,
+              "bottom": 1368.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1438.09375,
+              "bottom": 1490.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1693.09375,
+              "bottom": 1745.09375
+            }
+          ],
+          "pains": [
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1196.09375,
+              "bottom": 1316.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1573.09375,
+              "bottom": 1693.09375
+            },
+            {
+              "left": 20,
+              "right": 370,
+              "top": 1815.09375,
+              "bottom": 1935.09375
+            }
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            }
+          ],
+          "order": [
+            "analysis-save",
+            "analysis-save-break",
+            "analysis-design",
+            "analysis-pain-one",
+            "analysis-intent-break",
+            "analysis-prompt",
+            "analysis-evaluate-break",
+            "analysis-generate",
+            "analysis-pain-two",
+            "analysis-asset-break",
+            "analysis-reuse",
+            "analysis-pain-three"
+          ]
+        },
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ],
+        "tracks": [
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 其余既有内容快速断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          "ArchBuddy测试集.7z",
+          "ArchBuddy测试集.7z"
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "390 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=unified-pains-20261006",
+        "app.js?v=unified-pains-20261006"
+      ]
+    },
+    {
+      "name": "360 精确新文案与五步四断点",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          }
+        ],
+        "note": "多轮优化"
+      }
+    },
+    {
+      "name": "360 上下暖白统一及指定字色字号",
+      "pass": true,
+      "detail": {
+        "colors": {
+          "board": "rgb(244, 242, 236)",
+          "panels": [
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)",
+            "rgb(244, 242, 236)"
+          ],
+          "nodes": [
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)",
+            "rgb(21, 59, 45)"
+          ]
+        },
+        "pains": [
+          {
+            "text": "逐张机械保存，打断创作思路。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          },
+          {
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          },
+          {
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "color": "rgb(165, 84, 66)",
+            "font": "23px"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 整体分区节点无描边或框阴影",
+      "pass": true,
+      "detail": [
+        {
+          "class": "problem-analysis",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-save",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-design",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-prompt",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-generate",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-node analysis-reuse",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-one",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-two",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        },
+        {
+          "class": "analysis-pain analysis-pain-three",
+          "widths": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "360 文本无孤字及实际容器裁切",
+      "pass": true,
+      "detail": [
+        {
+          "text": "方案创作是连续的，工作流程却常常断开。",
+          "lines": [
+            {
+              "y": 852,
+              "text": "方案创作是连续的，"
+            },
+            {
+              "y": 891,
+              "text": "工作流程却常常断开。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "保存图片",
+          "lines": [
+            {
+              "y": 978,
+              "text": "保存图片"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "参考难以复用",
+          "lines": [
+            {
+              "y": 1044,
+              "text": "参考难以复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "方案创作",
+          "lines": [
+            {
+              "y": 1100,
+              "text": "方案创作"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "说不清意图",
+          "lines": [
+            {
+              "y": 1283,
+              "text": "说不清意图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "编写参考图提示词",
+          "lines": [
+            {
+              "y": 1339,
+              "text": "编写参考图提示词"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "修改缺少依据",
+          "lines": [
+            {
+              "y": 1405,
+              "text": "修改缺少依据"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "生成AI效果图",
+          "lines": [
+            {
+              "y": 1455,
+              "text": "生成AI效果图"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "图词难以沉淀",
+          "lines": [
+            {
+              "y": 1657,
+              "text": "图词难以沉淀"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "成果复用",
+          "lines": [
+            {
+              "y": 1713,
+              "text": "成果复用"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "逐张机械保存，打断创作思路。",
+          "lines": [
+            {
+              "y": 1174,
+              "text": "逐张机械保存，"
+            },
+            {
+              "y": 1208,
+              "text": "打断创作思路。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "提示词从零编写，难以完整表达设计意图。",
+          "lines": [
+            {
+              "y": 1548,
+              "text": "提示词从零编写，"
+            },
+            {
+              "y": 1582,
+              "text": "难以完整表达设计意图。"
+            }
+          ],
+          "contained": true
+        },
+        {
+          "text": "过程素材不断堆积，却难以再次复用。",
+          "lines": [
+            {
+              "y": 1787,
+              "text": "过程素材不断堆积，"
+            },
+            {
+              "y": 1821,
+              "text": "却难以再次复用。"
+            }
+          ],
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "360 对应括线或手机顺序及有效箭头",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "nodes": [
+            {
+              "left": 20,
+              "right": 340,
+              "top": 956.515625,
+              "bottom": 1026.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1078.515625,
+              "bottom": 1148.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1317.515625,
+              "bottom": 1387.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1439.515625,
+              "bottom": 1522.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1691.515625,
+              "bottom": 1761.515625
+            }
+          ],
+          "breaks": [
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1026.515625,
+              "bottom": 1078.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1265.515625,
+              "bottom": 1317.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1387.515625,
+              "bottom": 1439.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1639.515625,
+              "bottom": 1691.515625
+            }
+          ],
+          "pains": [
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1148.515625,
+              "bottom": 1265.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1522.515625,
+              "bottom": 1639.515625
+            },
+            {
+              "left": 20,
+              "right": 340,
+              "top": 1761.515625,
+              "bottom": 1878.515625
+            }
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            },
+            {
+              "display": "none",
+              "bottom": "1px",
+              "stem": "1px"
+            }
+          ],
+          "order": [
+            "analysis-save",
+            "analysis-save-break",
+            "analysis-design",
+            "analysis-pain-one",
+            "analysis-intent-break",
+            "analysis-prompt",
+            "analysis-evaluate-break",
+            "analysis-generate",
+            "analysis-pain-two",
+            "analysis-asset-break",
+            "analysis-reuse",
+            "analysis-pain-three"
+          ]
+        },
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ],
+        "tracks": [
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          },
+          {
+            "width": "2px",
+            "style": "dashed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 其余既有内容快速断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          "ArchBuddy测试集.7z",
+          "ArchBuddy测试集.7z"
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "360 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "三个正式Document200/text-html无附件",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点页面控制台网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 360,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 360,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "public-1440-problem.png",
+    "public-390-problem.png",
+    "public-360-problem.png"
+  ],
+  "count": {
+    "checks": 29,
+    "screenshots": 3,
+    "errors": 0
+  },
+  "pass": true,
+  "visualReview": {
+    "reviewer": "independent-verifier",
+    "viewports": [
+      1440,
+      390,
+      360
+    ],
+    "screenshotsActuallyViewed": true,
+    "pass": true,
+    "findings": []
+  }
+}

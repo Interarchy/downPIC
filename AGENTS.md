@@ -40,4 +40,4 @@
 
 ## 已确定的反推额度
 
-2026-09-15 用户指定：个人每天 20 次、整个 ArchBuddy 每天 200 次。后续实现和部署遵循 `docs/ARCHBUDDY_QUOTA_POLICY.md`，不能沿用此前建议的 5 / 100 或把当前进程内测试限额误称为每日配额。
+2026-10-06 用户最新指定：个人每天 50 次、整个 ArchBuddy 每天共享 500 次，取代 2026-09-15 的 20 / 200。通过 archbuddy-api 的 ARCHBUDDY_USER_DAILY_LIMIT=50 与 ARCHBUDDY_PROJECT_DAILY_LIMIT=500 配置，未配置时兼容默认值仍为 20 / 200。后续实现和部署遵循 `docs/ARCHBUDDY_QUOTA_POLICY.md`，不能把进程内测试限额误称为每日配额。

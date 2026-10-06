@@ -1,0 +1,722 @@
+{
+  "date": "2026-10-05T09:25:31.029Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "scope": "第三版真实公网页面；隔离新访客、不调用模型、不执行下载包",
+  "checks": [
+    {
+      "name": "1440 实际HTML渲染且无HTML附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "unexpectedDownloads": []
+      }
+    },
+    {
+      "name": "1440 新版五章节与两业务循环",
+      "pass": true,
+      "detail": {
+        "sections": [
+          "01问题与机会",
+          "02我们的产品思路",
+          "03两条工作链路",
+          "04三大功能",
+          "05下载与安装"
+        ],
+        "cycles": [
+          "设计参考链路",
+          "AI 效果图迭代链路"
+        ]
+      }
+    },
+    {
+      "name": "1440 三功能八能力资产底座",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "1440 AI入口修正连续下接",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 414.5,
+          "y": 3183.96875
+        },
+        "down": {
+          "cx": 414.5,
+          "y": 3307.5625
+        },
+        "generation": {
+          "cx": 414.5,
+          "y": 3337.5625
+        },
+        "entries": [
+          3183.96875,
+          3260.765625
+        ],
+        "client": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 414.5,
+          "y": 3183.96875
+        },
+        "down": {
+          "cx": 414.5,
+          "y": 3307.5625
+        },
+        "generation": {
+          "cx": 414.5,
+          "y": 3337.5625
+        },
+        "entries": [
+          3183.96875,
+          3260.765625
+        ],
+        "client": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 可见Lucide实际渲染",
+      "pass": true,
+      "detail": {
+        "visible": 63,
+        "bad": []
+      }
+    },
+    {
+      "name": "1440 白底绿字Logo",
+      "pass": true,
+      "detail": {
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(37, 99, 75)"
+      }
+    },
+    {
+      "name": "1440 滚动固定渐变blur阴影",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "1440 导航#workflow无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 256.21875,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 导航#features无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 251.5625,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 导航#install无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 255.765625,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 assets截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 放大URL与关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "width": 12,
+          "height": 12
+        }
+      }
+    },
+    {
+      "name": "1440 关闭弹窗",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 复制安装地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "公网实际下载 ArchBuddy-0.6.0-Chrome.zip",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+        "failure": null
+      }
+    },
+    {
+      "name": "公网实际下载 ArchBuddy-test-images.7z",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+        "failure": null
+      }
+    },
+    {
+      "name": "390 实际HTML渲染且无HTML附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "unexpectedDownloads": []
+      }
+    },
+    {
+      "name": "390 新版五章节与两业务循环",
+      "pass": true,
+      "detail": {
+        "sections": [
+          "01问题与机会",
+          "02我们的产品思路",
+          "03两条工作链路",
+          "04三大功能",
+          "05下载与安装"
+        ],
+        "cycles": [
+          "设计参考链路",
+          "AI 效果图迭代链路"
+        ]
+      }
+    },
+    {
+      "name": "390 三功能八能力资产底座",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "390 AI入口修正连续下接",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 111.5,
+          "y": 3453.6875
+        },
+        "down": {
+          "cx": 111.5,
+          "y": 3552.6875
+        },
+        "generation": {
+          "cx": 111.5,
+          "y": 3580.6875
+        },
+        "entries": [
+          3453.6875,
+          3513.1875
+        ],
+        "client": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 111.5,
+          "y": 3453.6875
+        },
+        "down": {
+          "cx": 111.5,
+          "y": 3552.6875
+        },
+        "generation": {
+          "cx": 111.5,
+          "y": 3580.6875
+        },
+        "entries": [
+          3453.6875,
+          3513.1875
+        ],
+        "client": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 可见Lucide实际渲染",
+      "pass": true,
+      "detail": {
+        "visible": 63,
+        "bad": []
+      }
+    },
+    {
+      "name": "390 白底绿字Logo",
+      "pass": true,
+      "detail": {
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(37, 99, 75)"
+      }
+    },
+    {
+      "name": "390 滚动固定渐变blur阴影",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "390 导航#features无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 201.875,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "390 导航#install无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 203.90625,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "390 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "390 assets截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "390 放大URL与关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "width": 12,
+          "height": 12
+        }
+      }
+    },
+    {
+      "name": "390 关闭弹窗",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 复制安装地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "360 实际HTML渲染且无HTML附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "unexpectedDownloads": []
+      }
+    },
+    {
+      "name": "360 新版五章节与两业务循环",
+      "pass": true,
+      "detail": {
+        "sections": [
+          "01问题与机会",
+          "02我们的产品思路",
+          "03两条工作链路",
+          "04三大功能",
+          "05下载与安装"
+        ],
+        "cycles": [
+          "设计参考链路",
+          "AI 效果图迭代链路"
+        ]
+      }
+    },
+    {
+      "name": "360 三功能八能力资产底座",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "360 AI入口修正连续下接",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 104,
+          "y": 3406.171875
+        },
+        "down": {
+          "cx": 104,
+          "y": 3505.171875
+        },
+        "generation": {
+          "cx": 104,
+          "y": 3533.171875
+        },
+        "entries": [
+          3406.171875,
+          3465.671875
+        ],
+        "client": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "entry": {
+          "cx": 104,
+          "y": 3406.171875
+        },
+        "down": {
+          "cx": 104,
+          "y": 3505.171875
+        },
+        "generation": {
+          "cx": 104,
+          "y": 3533.171875
+        },
+        "entries": [
+          3406.171875,
+          3465.671875
+        ],
+        "client": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 可见Lucide实际渲染",
+      "pass": true,
+      "detail": {
+        "visible": 62,
+        "bad": []
+      }
+    },
+    {
+      "name": "360 白底绿字Logo",
+      "pass": true,
+      "detail": {
+        "bg": "rgb(255, 255, 255)",
+        "color": "rgb(37, 99, 75)"
+      }
+    },
+    {
+      "name": "360 滚动固定渐变blur阴影",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "360 导航#features无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 200.96875,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "360 导航#install无遮挡",
+      "pass": true,
+      "detail": {
+        "headingTop": 202.578125,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "360 prompt截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "360 assets截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "360 放大URL与关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "width": 12,
+          "height": 12
+        }
+      }
+    },
+    {
+      "name": "360 关闭弹窗",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 复制安装地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "实际Document HTML200且无附件头",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点无页面控制台网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 1440
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 390
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 390
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 360
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 360
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "errors": [],
+  "downloads": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "filename": "ArchBuddy-0.6.0-Chrome.zip",
+      "bytes": 179857,
+      "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+      "failure": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+      "filename": "ArchBuddy测试集.7z",
+      "bytes": 12020913,
+      "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+      "failure": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-platform-warning.png",
+    "public-1440-scrolled.png",
+    "public-1440-ai-cycle.png",
+    "public-390-platform-warning.png",
+    "public-390-scrolled.png",
+    "public-390-ai-cycle.png",
+    "public-360-platform-warning.png",
+    "public-360-scrolled.png",
+    "public-360-ai-cycle.png"
+  ],
+  "pass": true,
+  "count": {
+    "checks": 50,
+    "screenshots": 9,
+    "errors": 0
+  }
+}

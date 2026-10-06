@@ -1,0 +1,4 @@
+const descriptions={one:'沿用首轮方案一，流程与三条痛点合在一张紧凑的分析图中。',two:'红色括线将三条痛点与对应流程区段绑定，重点说明问题发生在哪里。',three:'上方交代完整流程，下方用三行连续大字集中传达核心痛点。'};
+function selectVariant(){const requested=location.hash.slice(1);const active=Object.hasOwn(descriptions,requested)?requested:'one';document.querySelectorAll('.variant').forEach(section=>{section.hidden=section.id!==active;});document.querySelectorAll('[data-option]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.option===active));});document.getElementById('variant-description').textContent=descriptions[active];}
+document.querySelectorAll('[data-option]').forEach(button=>button.addEventListener('click',()=>{history.replaceState(null,'','#'+button.dataset.option);selectVariant();}));
+window.addEventListener('hashchange',selectVariant);selectVariant();

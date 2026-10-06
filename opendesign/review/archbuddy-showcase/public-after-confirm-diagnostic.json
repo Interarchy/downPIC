@@ -1,0 +1,45 @@
+{
+  "initial": {
+    "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+    "title": "风险提醒",
+    "buttons": [
+      "确定访问 (3s)"
+    ]
+  },
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+  "h1": [
+    "让参考图，成为下一次设计的起点。"
+  ],
+  "body": "ArchBuddy\n工作链路\n项目案例\n下载插件\n↓\n\n建筑设计师的参考图与提示词助手\n\n让参考图，\n成为下一次\n设计的起点。\n\n从网页采集，到提示词迭代，再到自己的图词库。让灵感、设计意图与修改记录，接成一条工作链路。\n\n下载 Chrome 插件\n↓\n浏览完整案例 ↗\n\nChrome 141+ · 本地资产管理 · AI 按需参与\n\n实际插件界面 · 独立演示资料\n点击查看大图 ↗\n\n面向方案研究与效果表达\n\n灵感不该\n停在收藏夹。\n\n为日常研究案例、积累参考图，并使用 AI 辅助效果表达的建筑设计师而做。\n\n保存打断思路\n逐张下载、命名和归档，让浏览变成整理。\n\n想法难以表达\n喜欢一张图，仍要从零把画面翻译成提示词。\n\n成果难以复用\n图和修改记录散落各处，下一次又重新开始。\n\n三条工作链路\n\n每一步的产出，\n都能接着用。\n\nAI 帮助理解与起稿，\n设计师选择、修改并确认。\n\n01\n采集参考图\n把浏览中的灵感留下来\n→\n02\n反推与迭代提示词\n从画面到意图，再对照效果\n→\n03\n沉淀图词资产\n成为自己的参考图库和提示词库\n\n采集参考图\n\n看到喜欢的图，\n顺手留下来。\n\n浏览网页时采集，也能导入已有文件夹。按项目整理素材，让研究思路继续往前。\n\n网页图片浮框，按项目保存原图\n已有本地文件夹，一次导入多个\n项目归属与图片描述，继续保留\n深入看这一流程\n↗\n采集后的项目图库\n放大查看 ↗\n实际插件界面 · 独立演示资料\n\n参考图\n→\n确认 Prompt\n→\n外部工具生图\n→\n对照效果迭代\n→\n确认入库\n\n完整项目展示\n\n从建筑师的经验，\n到 AI 产品的判断。\n\n问题如何定义，链路如何连接，\n哪些能力先做，价值如何继续验证。\n\n从项目概览开始\n↗\n\n行业问题识别 · 产品设计与取舍 · 迭代验收\n借助 AI 开发工具协作实现\n\n01\n项目概览\n\n从参考图，到可复用的设计意图\n\n↗\n02\n问题与机会\n\n保存、表达与复用在哪里断开\n\n↗\n03\n核心体验\n\n真实插件界面与完整操作流程\n\n↗\n04\n产品判断\n\nAI、规则与设计师如何分工\n\n↗\n05\n迭代与验证\n\n已有证据，以及下一步要验证的价值\n\n↗\n\n开始体验\n\n把这条工作链路，\n放进你的浏览器。\n下载插件 ZIP\n↓\n\nArchBuddy 0.6.0 · 约 176 KB · Chrome 141+\n\n1\n下载并解压\n\n把",
+  "events": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js",
+      "status": 200
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css",
+      "status": 200
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/logo.svg",
+      "status": 200
+    }
+  ]
+}

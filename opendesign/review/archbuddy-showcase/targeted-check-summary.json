@@ -1,0 +1,117 @@
+{
+  "checks": [
+    {
+      "name": "390 可见链路图片 prompt",
+      "pass": true,
+      "detail": "case-study/assets/04-prompt-builder-1280x800.png"
+    },
+    {
+      "name": "390 可见变体图片 prompt",
+      "pass": true,
+      "detail": "case-study/assets/05-prompt-optimization-1280x800.png"
+    },
+    {
+      "name": "390 可见链路图片 assets",
+      "pass": true,
+      "detail": "case-study/assets/03-prompt-library-1280x800.png"
+    },
+    {
+      "name": "390 可见变体图片 assets",
+      "pass": true,
+      "detail": "case-study/assets/02-image-description-1280x800.png"
+    },
+    {
+      "name": "360 可见链路图片 prompt",
+      "pass": true,
+      "detail": "case-study/assets/04-prompt-builder-1280x800.png"
+    },
+    {
+      "name": "360 可见变体图片 prompt",
+      "pass": true,
+      "detail": "case-study/assets/05-prompt-optimization-1280x800.png"
+    },
+    {
+      "name": "360 可见链路图片 assets",
+      "pass": true,
+      "detail": "case-study/assets/03-prompt-library-1280x800.png"
+    },
+    {
+      "name": "360 可见变体图片 assets",
+      "pass": true,
+      "detail": "case-study/assets/02-image-description-1280x800.png"
+    },
+    {
+      "name": "首页真实深链 capture",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html#step-1",
+        "title": "先让素材有归属。"
+      }
+    },
+    {
+      "name": "首页真实深链 prompt",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html#step-3",
+        "title": "只借鉴需要的部分。"
+      }
+    },
+    {
+      "name": "首页真实深链 assets",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html#step-5",
+        "title": "让下一次不必重来。"
+      }
+    },
+    {
+      "name": "360 案例宽度 index.html",
+      "pass": true,
+      "detail": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "360 案例宽度 problem.html",
+      "pass": true,
+      "detail": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "360 案例宽度 workflow.html",
+      "pass": true,
+      "detail": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "360 案例宽度 decisions.html",
+      "pass": true,
+      "detail": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "360 案例宽度 outcomes.html",
+      "pass": true,
+      "detail": {
+        "clientWidth": 360,
+        "scrollWidth": 360
+      }
+    },
+    {
+      "name": "定向复核页面异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "pass": true,
+  "errors": [],
+  "explanation": "首次图片检查发生于 lazy 图片进入视口之前；逐张滚动到图片后实际加载成功。第三深链首次检查使用同页面 hash 跳转；改用首页真实入口三项全部通过。",
+  "date": "2026-10-05"
+}

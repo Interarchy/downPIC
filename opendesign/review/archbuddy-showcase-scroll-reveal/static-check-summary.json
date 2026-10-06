@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-06T12:36:49.276Z",
+  "version": "scroll-reveal-20261006",
+  "changed": [
+    "index.html",
+    "styles.css",
+    "app.js"
+  ],
+  "remaining20ResourcesUnchanged": true,
+  "htmlScope": true,
+  "cssPrefix": true,
+  "jsPrefix": true,
+  "allTargets": true,
+  "noCompareControls": true,
+  "manifestRebuilt": true
+}

@@ -1,0 +1,758 @@
+{
+  "date": "2026-10-05T16:44:30.170Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "store-install-20261006",
+  "scope": "仅05商店安装/FAQ/附注，保留链接和轻配色快速断言，以及画廊切换和放大关闭；不执行实际安装/登录/AI/下载或重跑流程图",
+  "checks": [
+    {
+      "name": "1440 当前版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-install-20261006",
+        "app.js?v=store-install-20261006"
+      ]
+    },
+    {
+      "name": "1440 商店安装三步与菜单入口",
+      "pass": true,
+      "detail": [
+        {
+          "title": "打开商店页面",
+          "text": "在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。"
+        },
+        {
+          "title": "添加到 Chrome",
+          "text": "点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。"
+        },
+        {
+          "title": "固定并开始使用",
+          "text": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+        }
+      ]
+    },
+    {
+      "name": "1440 旧本地插件安装与复制说明已移除",
+      "pass": true,
+      "detail": {
+        "oldCopyElements": 0,
+        "installText": " 05下载与安装把创作的循环，放进你的浏览器。 下载 Chrome 插件 Chrome 商店安装 · 适用于桌面 Chrome下载图片测试集 7z 压缩包 · 约 11.5 MB · 37 张建筑参考图 1打开商店页面在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。2添加到 Chrome点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。3固定并开始使用在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。 用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。 AI 功能需要联网吗？安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。图片和提示词存在哪里？图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。 "
+      }
+    },
+    {
+      "name": "1440 测试集解压导入说明保留",
+      "pass": true,
+      "detail": "用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。"
+    },
+    {
+      "name": "1440 FAQ符合联网与本机资料边界",
+      "pass": true,
+      "detail": [
+        {
+          "title": "AI 功能需要联网吗？",
+          "text": "安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。"
+        },
+        {
+          "title": "图片和提示词存在哪里？",
+          "text": "图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。"
+        }
+      ]
+    },
+    {
+      "name": "1440 两商店测试集入口及slogan保持",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 02轻配色保持",
+      "pass": true,
+      "detail": [
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        }
+      ]
+    },
+    {
+      "name": "1440 两FAQ展开正常",
+      "pass": true,
+      "detail": [
+        {
+          "open": true,
+          "visible": true
+        },
+        {
+          "open": true,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "1440 展开FAQ无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 prompt画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/04-prompt-builder-1280x800.png",
+          "alt": "ArchBuddy 提示词构建实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1440 assets画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/03-prompt-library-1280x800.png",
+          "alt": "ArchBuddy 提示词库实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1440 放大与关闭正常",
+      "pass": true,
+      "detail": {
+        "source": "case-study/assets/03-prompt-library-1280x800.png",
+        "opened": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/03-prompt-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "1440 本站HTML无下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 当前版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-install-20261006",
+        "app.js?v=store-install-20261006"
+      ]
+    },
+    {
+      "name": "390 商店安装三步与菜单入口",
+      "pass": true,
+      "detail": [
+        {
+          "title": "打开商店页面",
+          "text": "在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。"
+        },
+        {
+          "title": "添加到 Chrome",
+          "text": "点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。"
+        },
+        {
+          "title": "固定并开始使用",
+          "text": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+        }
+      ]
+    },
+    {
+      "name": "390 旧本地插件安装与复制说明已移除",
+      "pass": true,
+      "detail": {
+        "oldCopyElements": 0,
+        "installText": " 05下载与安装把创作的循环，放进你的浏览器。 下载 Chrome 插件 Chrome 商店安装 · 适用于桌面 Chrome下载图片测试集 7z 压缩包 · 约 11.5 MB · 37 张建筑参考图 1打开商店页面在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。2添加到 Chrome点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。3固定并开始使用在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。 用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。 AI 功能需要联网吗？安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。图片和提示词存在哪里？图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。 "
+      }
+    },
+    {
+      "name": "390 测试集解压导入说明保留",
+      "pass": true,
+      "detail": "用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。"
+    },
+    {
+      "name": "390 FAQ符合联网与本机资料边界",
+      "pass": true,
+      "detail": [
+        {
+          "title": "AI 功能需要联网吗？",
+          "text": "安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。"
+        },
+        {
+          "title": "图片和提示词存在哪里？",
+          "text": "图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。"
+        }
+      ]
+    },
+    {
+      "name": "390 两商店测试集入口及slogan保持",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 02轻配色保持",
+      "pass": true,
+      "detail": [
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        }
+      ]
+    },
+    {
+      "name": "390 两FAQ展开正常",
+      "pass": true,
+      "detail": [
+        {
+          "open": true,
+          "visible": true
+        },
+        {
+          "open": true,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "390 展开FAQ无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 prompt画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/04-prompt-builder-1280x800.png",
+          "alt": "ArchBuddy 提示词构建实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 assets画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/03-prompt-library-1280x800.png",
+          "alt": "ArchBuddy 提示词库实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 放大与关闭正常",
+      "pass": true,
+      "detail": {
+        "source": "case-study/assets/03-prompt-library-1280x800.png",
+        "opened": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/03-prompt-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "390 本站HTML无下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 当前版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-install-20261006",
+        "app.js?v=store-install-20261006"
+      ]
+    },
+    {
+      "name": "360 商店安装三步与菜单入口",
+      "pass": true,
+      "detail": [
+        {
+          "title": "打开商店页面",
+          "text": "在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。"
+        },
+        {
+          "title": "添加到 Chrome",
+          "text": "点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。"
+        },
+        {
+          "title": "固定并开始使用",
+          "text": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+        }
+      ]
+    },
+    {
+      "name": "360 旧本地插件安装与复制说明已移除",
+      "pass": true,
+      "detail": {
+        "oldCopyElements": 0,
+        "installText": " 05下载与安装把创作的循环，放进你的浏览器。 下载 Chrome 插件 Chrome 商店安装 · 适用于桌面 Chrome下载图片测试集 7z 压缩包 · 约 11.5 MB · 37 张建筑参考图 1打开商店页面在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。2添加到 Chrome点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。3固定并开始使用在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。 用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。 AI 功能需要联网吗？安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。图片和提示词存在哪里？图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。 "
+      }
+    },
+    {
+      "name": "360 测试集解压导入说明保留",
+      "pass": true,
+      "detail": "用测试集开始：解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。"
+    },
+    {
+      "name": "360 FAQ符合联网与本机资料边界",
+      "pass": true,
+      "detail": [
+        {
+          "title": "AI 功能需要联网吗？",
+          "text": "安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。"
+        },
+        {
+          "title": "图片和提示词存在哪里？",
+          "text": "图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。"
+        }
+      ]
+    },
+    {
+      "name": "360 两商店测试集入口及slogan保持",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 02轻配色保持",
+      "pass": true,
+      "detail": [
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        },
+        {
+          "bg": "rgb(238, 223, 217)",
+          "brand": "rgb(21, 59, 45)",
+          "caption": "rgb(79, 101, 87)"
+        }
+      ]
+    },
+    {
+      "name": "360 两FAQ展开正常",
+      "pass": true,
+      "detail": [
+        {
+          "open": true,
+          "visible": true
+        },
+        {
+          "open": true,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "360 展开FAQ无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 prompt画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/04-prompt-builder-1280x800.png",
+          "alt": "ArchBuddy 提示词构建实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 assets画廊切换往返",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "pressed": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "src": "case-study/assets/03-prompt-library-1280x800.png",
+          "alt": "ArchBuddy 提示词库实际界面",
+          "pressed": [
+            "true",
+            "false"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 放大与关闭正常",
+      "pass": true,
+      "detail": {
+        "source": "case-study/assets/03-prompt-library-1280x800.png",
+        "opened": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/03-prompt-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "360 本站HTML无下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "三个正式Document200/text-html无附件",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点页面控制台网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 360,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 360,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-install.png",
+    "public-1440-steps.png",
+    "public-390-install.png",
+    "public-390-steps.png",
+    "public-360-install.png",
+    "public-360-steps.png"
+  ],
+  "count": {
+    "checks": 41,
+    "screenshots": 6,
+    "errors": 0
+  },
+  "pass": true
+}

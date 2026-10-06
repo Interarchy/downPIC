@@ -1,0 +1,6203 @@
+{
+  "date": "2026-10-05T17:49:57.504Z",
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=3",
+  "contentVersion": "problem-options-color-20261006",
+  "scope": "仅第三轮对应分区的三种统一底色、可读性与微排版，保持语义及hash/切换；不读取旧归档、不改正式站或部署",
+  "checks": [
+    {
+      "name": "1440 one 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#one",
+        "visible": [
+          "one"
+        ],
+        "pressed": [
+          "one"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1440 one 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "43px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 364,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 509,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "12px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 531,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 509,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "12px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 531,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 494,
+                "text": "编写参考图"
+              },
+              {
+                "y": 523,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "12px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 531,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 481,
+                "text": "生成AI"
+              },
+              {
+                "y": 510,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "12px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 531,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 509,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "26px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 632,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 671,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "26px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 632,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 671,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "26px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 632,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 671,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 one 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 one 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(244, 242, 236)",
+        "panels": [
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)"
+        ],
+        "stages": [
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          148,
+          148,
+          148,
+          148,
+          148
+        ]
+      }
+    },
+    {
+      "name": "1440 one 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "pains": [],
+          "phasePains": [
+            {
+              "left": 101,
+              "right": 478.34375,
+              "top": 602.296875,
+              "bottom": 738.296875,
+              "width": 377.34375,
+              "height": 136
+            },
+            {
+              "left": 478.34375,
+              "right": 977.609375,
+              "top": 602.296875,
+              "bottom": 738.296875,
+              "width": 499.265625,
+              "height": 136
+            },
+            {
+              "left": 977.609375,
+              "right": 1339,
+              "top": 602.296875,
+              "bottom": 738.296875,
+              "width": 361.390625,
+              "height": 136
+            }
+          ],
+          "stages": [
+            {
+              "left": 101,
+              "right": 244.671875,
+              "top": 454.296875,
+              "bottom": 602.296875,
+              "width": 143.671875,
+              "height": 148
+            },
+            {
+              "left": 334.671875,
+              "right": 478.34375,
+              "top": 454.296875,
+              "bottom": 602.296875,
+              "width": 143.671875,
+              "height": 148
+            },
+            {
+              "left": 568.34375,
+              "right": 727.96875,
+              "top": 454.296875,
+              "bottom": 602.296875,
+              "width": 159.625,
+              "height": 148
+            },
+            {
+              "left": 817.96875,
+              "right": 977.609375,
+              "top": 454.296875,
+              "bottom": 602.296875,
+              "width": 159.640625,
+              "height": 148
+            },
+            {
+              "left": 1067.609375,
+              "right": 1339,
+              "top": 454.296875,
+              "bottom": 602.296875,
+              "width": 271.390625,
+              "height": 148
+            }
+          ],
+          "breaks": [
+            {
+              "left": 244.671875,
+              "right": 334.671875,
+              "top": 500.796875,
+              "bottom": 547.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 478.34375,
+              "right": 568.34375,
+              "top": 500.796875,
+              "bottom": 547.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 727.96875,
+              "right": 817.96875,
+              "top": 500.796875,
+              "bottom": 547.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 977.609375,
+              "right": 1067.609375,
+              "top": 500.796875,
+              "bottom": 547.796875,
+              "width": 90,
+              "height": 47
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "26px",
+            "lines": [
+              {
+                "y": 632,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 671,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "26px",
+            "lines": [
+              {
+                "y": 632,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 671,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "26px",
+            "lines": [
+              {
+                "y": 632,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 671,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 one 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#two",
+          "visible": [
+            "two"
+          ],
+          "pressed": [
+            "two"
+          ],
+          "description": "浅绿通底，棕红标出断点与痛点，结论居中对齐各自的流程区段。"
+        },
+        "returned": "#one"
+      }
+    },
+    {
+      "name": "1440 two 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#two",
+        "visible": [
+          "two"
+        ],
+        "pressed": [
+          "two"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1440 two 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "43px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 364,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 516,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "12px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 538,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 516,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "12px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 538,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 501,
+                "text": "编写参考图"
+              },
+              {
+                "y": 530,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "12px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 538,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 488,
+                "text": "生成AI"
+              },
+              {
+                "y": 517,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "12px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 538,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 516,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "25px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 649,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 688,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "25px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 649,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 688,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "25px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 649,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 688,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 two 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 two 上下统一底色及步骤字色微排版",
+      "pass": true,
+      "detail": {
+        "board": "rgb(234, 240, 232)",
+        "panels": [
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)"
+        ],
+        "stages": [
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)"
+        ],
+        "align": [
+          "center",
+          "center",
+          "center"
+        ],
+        "heights": [
+          162,
+          162,
+          162,
+          162,
+          162
+        ]
+      }
+    },
+    {
+      "name": "1440 two 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 101,
+              "right": 478.34375,
+              "top": 616.296875,
+              "bottom": 754.796875,
+              "width": 377.34375,
+              "height": 138.5
+            },
+            {
+              "left": 478.34375,
+              "right": 977.609375,
+              "top": 616.296875,
+              "bottom": 754.796875,
+              "width": 499.265625,
+              "height": 138.5
+            },
+            {
+              "left": 977.609375,
+              "right": 1339,
+              "top": 616.296875,
+              "bottom": 754.796875,
+              "width": 361.390625,
+              "height": 138.5
+            }
+          ],
+          "stages": [
+            {
+              "left": 101,
+              "right": 244.671875,
+              "top": 454.296875,
+              "bottom": 616.296875,
+              "width": 143.671875,
+              "height": 162
+            },
+            {
+              "left": 334.671875,
+              "right": 478.34375,
+              "top": 454.296875,
+              "bottom": 616.296875,
+              "width": 143.671875,
+              "height": 162
+            },
+            {
+              "left": 568.34375,
+              "right": 727.96875,
+              "top": 454.296875,
+              "bottom": 616.296875,
+              "width": 159.625,
+              "height": 162
+            },
+            {
+              "left": 817.96875,
+              "right": 977.609375,
+              "top": 454.296875,
+              "bottom": 616.296875,
+              "width": 159.640625,
+              "height": 162
+            },
+            {
+              "left": 1067.609375,
+              "right": 1339,
+              "top": 454.296875,
+              "bottom": 616.296875,
+              "width": 271.390625,
+              "height": 162
+            }
+          ],
+          "breaks": [
+            {
+              "left": 244.671875,
+              "right": 334.671875,
+              "top": 507.796875,
+              "bottom": 554.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 478.34375,
+              "right": 568.34375,
+              "top": 507.796875,
+              "bottom": 554.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 727.96875,
+              "right": 817.96875,
+              "top": 507.796875,
+              "bottom": 554.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 977.609375,
+              "right": 1067.609375,
+              "top": 507.796875,
+              "bottom": 554.796875,
+              "width": 90,
+              "height": 47
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 649,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 688,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 649,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 688,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 649,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 688,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 two 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#three",
+          "visible": [
+            "three"
+          ],
+          "pressed": [
+            "three"
+          ],
+          "description": "深绿通底，浅暖色强调痛点；结论字号略放大，适合现场展示。"
+        },
+        "returned": "#two"
+      }
+    },
+    {
+      "name": "1440 three 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#three",
+        "visible": [
+          "three"
+        ],
+        "pressed": [
+          "three"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1440 three 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "43px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 364,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 512,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "12px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 534,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 512,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "12px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 534,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 497,
+                "text": "编写参考图"
+              },
+              {
+                "y": 526,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "12px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 534,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 484,
+                "text": "生成AI"
+              },
+              {
+                "y": 513,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "12px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 534,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 512,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "28px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 638,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 679,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "28px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 638,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 679,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "28px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 638,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 679,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 three 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 three 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(29, 59, 47)",
+        "panels": [
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)"
+        ],
+        "stages": [
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          154,
+          154,
+          154,
+          154,
+          154
+        ]
+      }
+    },
+    {
+      "name": "1440 three 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 101,
+              "right": 478.34375,
+              "top": 608.296875,
+              "bottom": 750.484375,
+              "width": 377.34375,
+              "height": 142.1875
+            },
+            {
+              "left": 478.34375,
+              "right": 977.609375,
+              "top": 608.296875,
+              "bottom": 750.484375,
+              "width": 499.265625,
+              "height": 142.1875
+            },
+            {
+              "left": 977.609375,
+              "right": 1339,
+              "top": 608.296875,
+              "bottom": 750.484375,
+              "width": 361.390625,
+              "height": 142.1875
+            }
+          ],
+          "stages": [
+            {
+              "left": 101,
+              "right": 244.671875,
+              "top": 454.296875,
+              "bottom": 608.296875,
+              "width": 143.671875,
+              "height": 154
+            },
+            {
+              "left": 334.671875,
+              "right": 478.34375,
+              "top": 454.296875,
+              "bottom": 608.296875,
+              "width": 143.671875,
+              "height": 154
+            },
+            {
+              "left": 568.34375,
+              "right": 727.96875,
+              "top": 454.296875,
+              "bottom": 608.296875,
+              "width": 159.625,
+              "height": 154
+            },
+            {
+              "left": 817.96875,
+              "right": 977.609375,
+              "top": 454.296875,
+              "bottom": 608.296875,
+              "width": 159.640625,
+              "height": 154
+            },
+            {
+              "left": 1067.609375,
+              "right": 1339,
+              "top": 454.296875,
+              "bottom": 608.296875,
+              "width": 271.390625,
+              "height": 154
+            }
+          ],
+          "breaks": [
+            {
+              "left": 244.671875,
+              "right": 334.671875,
+              "top": 503.796875,
+              "bottom": 550.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 478.34375,
+              "right": 568.34375,
+              "top": 503.796875,
+              "bottom": 550.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 727.96875,
+              "right": 817.96875,
+              "top": 503.796875,
+              "bottom": 550.796875,
+              "width": 90,
+              "height": 47
+            },
+            {
+              "left": 977.609375,
+              "right": 1067.609375,
+              "top": 503.796875,
+              "bottom": 550.796875,
+              "width": 90,
+              "height": 47
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "28px",
+            "lines": [
+              {
+                "y": 638,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 679,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "28px",
+            "lines": [
+              {
+                "y": 638,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 679,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "28px",
+            "lines": [
+              {
+                "y": 638,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 679,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 three 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#one",
+          "visible": [
+            "one"
+          ],
+          "pressed": [
+            "one"
+          ],
+          "description": "暖白通底，深绿流程与砖红痛点，整体更轻、更连贯。"
+        },
+        "returned": "#three"
+      }
+    },
+    {
+      "name": "1024 one 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#one",
+        "visible": [
+          "one"
+        ],
+        "pressed": [
+          "one"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1024 one 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "38px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 358,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "18px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 498,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "11px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 518,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "18px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 498,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "11px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 518,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "18px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 485,
+                "text": "编写参考图"
+              },
+              {
+                "y": 511,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "11px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 518,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "18px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 472,
+                "text": "生成AI"
+              },
+              {
+                "y": 498,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "11px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 518,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "18px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 498,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "22px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 619,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 652,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "22px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 619,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 652,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "22px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 619,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 652,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 one 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 one 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(244, 242, 236)",
+        "panels": [
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)"
+        ],
+        "stages": [
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          148,
+          148,
+          148,
+          148,
+          148
+        ]
+      }
+    },
+    {
+      "name": "1024 one 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "pains": [],
+          "phasePains": [
+            {
+              "left": 29,
+              "right": 320.40625,
+              "top": 590.109375,
+              "bottom": 714.109375,
+              "width": 291.40625,
+              "height": 124
+            },
+            {
+              "left": 320.40625,
+              "right": 715.3125,
+              "top": 590.109375,
+              "bottom": 714.109375,
+              "width": 394.90625,
+              "height": 124
+            },
+            {
+              "left": 715.3125,
+              "right": 994.984375,
+              "top": 590.109375,
+              "bottom": 714.109375,
+              "width": 279.671875,
+              "height": 124
+            }
+          ],
+          "stages": [
+            {
+              "left": 29,
+              "right": 134.703125,
+              "top": 442.109375,
+              "bottom": 590.109375,
+              "width": 105.703125,
+              "height": 148
+            },
+            {
+              "left": 214.703125,
+              "right": 320.40625,
+              "top": 442.109375,
+              "bottom": 590.109375,
+              "width": 105.703125,
+              "height": 148
+            },
+            {
+              "left": 400.40625,
+              "right": 517.859375,
+              "top": 442.109375,
+              "bottom": 590.109375,
+              "width": 117.453125,
+              "height": 148
+            },
+            {
+              "left": 597.859375,
+              "right": 715.3125,
+              "top": 442.109375,
+              "bottom": 590.109375,
+              "width": 117.453125,
+              "height": 148
+            },
+            {
+              "left": 795.3125,
+              "right": 994.984375,
+              "top": 442.109375,
+              "bottom": 590.109375,
+              "width": 199.671875,
+              "height": 148
+            }
+          ],
+          "breaks": [
+            {
+              "left": 134.703125,
+              "right": 214.703125,
+              "top": 489.359375,
+              "bottom": 534.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 320.40625,
+              "right": 400.40625,
+              "top": 489.359375,
+              "bottom": 534.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 517.859375,
+              "right": 597.859375,
+              "top": 489.359375,
+              "bottom": 534.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 715.3125,
+              "right": 795.3125,
+              "top": 489.359375,
+              "bottom": 534.859375,
+              "width": 80,
+              "height": 45.5
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 619,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 652,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 619,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 652,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 619,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 652,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 one 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#two",
+          "visible": [
+            "two"
+          ],
+          "pressed": [
+            "two"
+          ],
+          "description": "浅绿通底，棕红标出断点与痛点，结论居中对齐各自的流程区段。"
+        },
+        "returned": "#one"
+      }
+    },
+    {
+      "name": "1024 two 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#two",
+        "visible": [
+          "two"
+        ],
+        "pressed": [
+          "two"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1024 two 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "38px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 358,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "18px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 505,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "11px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 525,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "18px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 505,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "11px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 525,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "18px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 492,
+                "text": "编写参考图"
+              },
+              {
+                "y": 518,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "11px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 525,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "18px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 479,
+                "text": "生成AI"
+              },
+              {
+                "y": 505,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "11px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 525,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "18px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 505,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "22px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 637,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 671,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "22px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 637,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 671,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "22px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 637,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 671,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 two 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 two 上下统一底色及步骤字色微排版",
+      "pass": true,
+      "detail": {
+        "board": "rgb(234, 240, 232)",
+        "panels": [
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)"
+        ],
+        "stages": [
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)"
+        ],
+        "align": [
+          "center",
+          "center",
+          "center"
+        ],
+        "heights": [
+          162,
+          162,
+          162,
+          162,
+          162
+        ]
+      }
+    },
+    {
+      "name": "1024 two 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 29,
+              "right": 320.40625,
+              "top": 604.109375,
+              "bottom": 733.296875,
+              "width": 291.40625,
+              "height": 129.1875
+            },
+            {
+              "left": 320.40625,
+              "right": 715.3125,
+              "top": 604.109375,
+              "bottom": 733.296875,
+              "width": 394.90625,
+              "height": 129.1875
+            },
+            {
+              "left": 715.3125,
+              "right": 994.984375,
+              "top": 604.109375,
+              "bottom": 733.296875,
+              "width": 279.671875,
+              "height": 129.1875
+            }
+          ],
+          "stages": [
+            {
+              "left": 29,
+              "right": 134.703125,
+              "top": 442.109375,
+              "bottom": 604.109375,
+              "width": 105.703125,
+              "height": 162
+            },
+            {
+              "left": 214.703125,
+              "right": 320.40625,
+              "top": 442.109375,
+              "bottom": 604.109375,
+              "width": 105.703125,
+              "height": 162
+            },
+            {
+              "left": 400.40625,
+              "right": 517.859375,
+              "top": 442.109375,
+              "bottom": 604.109375,
+              "width": 117.453125,
+              "height": 162
+            },
+            {
+              "left": 597.859375,
+              "right": 715.3125,
+              "top": 442.109375,
+              "bottom": 604.109375,
+              "width": 117.453125,
+              "height": 162
+            },
+            {
+              "left": 795.3125,
+              "right": 994.984375,
+              "top": 442.109375,
+              "bottom": 604.109375,
+              "width": 199.671875,
+              "height": 162
+            }
+          ],
+          "breaks": [
+            {
+              "left": 134.703125,
+              "right": 214.703125,
+              "top": 496.359375,
+              "bottom": 541.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 320.40625,
+              "right": 400.40625,
+              "top": 496.359375,
+              "bottom": 541.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 517.859375,
+              "right": 597.859375,
+              "top": 496.359375,
+              "bottom": 541.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 715.3125,
+              "right": 795.3125,
+              "top": 496.359375,
+              "bottom": 541.859375,
+              "width": 80,
+              "height": 45.5
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 637,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 671,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 637,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 671,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "22px",
+            "lines": [
+              {
+                "y": 637,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 671,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 two 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#three",
+          "visible": [
+            "three"
+          ],
+          "pressed": [
+            "three"
+          ],
+          "description": "深绿通底，浅暖色强调痛点；结论字号略放大，适合现场展示。"
+        },
+        "returned": "#two"
+      }
+    },
+    {
+      "name": "1024 three 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#three",
+        "visible": [
+          "three"
+        ],
+        "pressed": [
+          "three"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1024 three 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "38px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 311,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 358,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "18px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 501,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "11px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 521,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "18px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 501,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "11px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 521,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "18px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 488,
+                "text": "编写参考图"
+              },
+              {
+                "y": 514,
+                "text": "提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "11px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 521,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "18px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 475,
+                "text": "生成AI"
+              },
+              {
+                "y": 501,
+                "text": "效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "11px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 521,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "18px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 501,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "24px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 626,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 661,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "24px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 626,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 661,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "24px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 626,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 661,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 three 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 three 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(29, 59, 47)",
+        "panels": [
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)"
+        ],
+        "stages": [
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          154,
+          154,
+          154,
+          154,
+          154
+        ]
+      }
+    },
+    {
+      "name": "1024 three 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 29,
+              "right": 320.40625,
+              "top": 596.109375,
+              "bottom": 726.703125,
+              "width": 291.40625,
+              "height": 130.59375
+            },
+            {
+              "left": 320.40625,
+              "right": 715.3125,
+              "top": 596.109375,
+              "bottom": 726.703125,
+              "width": 394.90625,
+              "height": 130.59375
+            },
+            {
+              "left": 715.3125,
+              "right": 994.984375,
+              "top": 596.109375,
+              "bottom": 726.703125,
+              "width": 279.671875,
+              "height": 130.59375
+            }
+          ],
+          "stages": [
+            {
+              "left": 29,
+              "right": 134.703125,
+              "top": 442.109375,
+              "bottom": 596.109375,
+              "width": 105.703125,
+              "height": 154
+            },
+            {
+              "left": 214.703125,
+              "right": 320.40625,
+              "top": 442.109375,
+              "bottom": 596.109375,
+              "width": 105.703125,
+              "height": 154
+            },
+            {
+              "left": 400.40625,
+              "right": 517.859375,
+              "top": 442.109375,
+              "bottom": 596.109375,
+              "width": 117.453125,
+              "height": 154
+            },
+            {
+              "left": 597.859375,
+              "right": 715.3125,
+              "top": 442.109375,
+              "bottom": 596.109375,
+              "width": 117.453125,
+              "height": 154
+            },
+            {
+              "left": 795.3125,
+              "right": 994.984375,
+              "top": 442.109375,
+              "bottom": 596.109375,
+              "width": 199.671875,
+              "height": 154
+            }
+          ],
+          "breaks": [
+            {
+              "left": 134.703125,
+              "right": 214.703125,
+              "top": 492.359375,
+              "bottom": 537.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 320.40625,
+              "right": 400.40625,
+              "top": 492.359375,
+              "bottom": 537.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 517.859375,
+              "right": 597.859375,
+              "top": 492.359375,
+              "bottom": 537.859375,
+              "width": 80,
+              "height": 45.5
+            },
+            {
+              "left": 715.3125,
+              "right": 795.3125,
+              "top": 492.359375,
+              "bottom": 537.859375,
+              "width": 80,
+              "height": 45.5
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-design",
+            "phase-prompt",
+            "phase-generate",
+            "phase-reuse",
+            "phase-save-break",
+            "phase-intent-break",
+            "phase-evaluate-break",
+            "phase-asset-break",
+            "phase-pain-one",
+            "phase-pain-two",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "block",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 626,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 661,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 626,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 661,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 626,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 661,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 three 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#one",
+          "visible": [
+            "one"
+          ],
+          "pressed": [
+            "one"
+          ],
+          "description": "暖白通底，深绿流程与砖红痛点，整体更轻、更连贯。"
+        },
+        "returned": "#three"
+      }
+    },
+    {
+      "name": "390 one 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#one",
+        "visible": [
+          "one"
+        ],
+        "pressed": [
+          "one"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "390 one 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "33px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 347,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 438,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 504,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 560,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 748,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 804,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 870,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 920,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1124,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 1180,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "24px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 672,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "24px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1012,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1048,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "24px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1256,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1292,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 one 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 one 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(244, 242, 236)",
+        "panels": [
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)"
+        ],
+        "stages": [
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "390 one 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "pains": [],
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 608.5,
+              "bottom": 730.5,
+              "width": 348,
+              "height": 122
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 984.5,
+              "bottom": 1106.5,
+              "width": 348,
+              "height": 122
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1228.5,
+              "bottom": 1349.5,
+              "width": 348,
+              "height": 121
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 416.5,
+              "bottom": 486.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 538.5,
+              "bottom": 608.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 782.5,
+              "bottom": 852.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 904.5,
+              "bottom": 984.5,
+              "width": 348,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1158.5,
+              "bottom": 1228.5,
+              "width": 348,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 486.5,
+              "bottom": 538.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 730.5,
+              "bottom": 782.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 852.5,
+              "bottom": 904.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1106.5,
+              "bottom": 1158.5,
+              "width": 348,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 672,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 1012,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1048,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 1256,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1292,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 one 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#two",
+          "visible": [
+            "two"
+          ],
+          "pressed": [
+            "two"
+          ],
+          "description": "浅绿通底，棕红标出断点与痛点，结论居中对齐各自的流程区段。"
+        },
+        "returned": "#one"
+      }
+    },
+    {
+      "name": "390 two 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#two",
+        "visible": [
+          "two"
+        ],
+        "pressed": [
+          "two"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "390 two 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "33px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 347,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 438,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 504,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 560,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 748,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 804,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 870,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 920,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1124,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 1180,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "24px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 672,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "24px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1012,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1048,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "24px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1256,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1292,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 two 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 two 上下统一底色及步骤字色微排版",
+      "pass": true,
+      "detail": {
+        "board": "rgb(234, 240, 232)",
+        "panels": [
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)"
+        ],
+        "stages": [
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)"
+        ],
+        "align": [
+          "center",
+          "center",
+          "center"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "390 two 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 608.5,
+              "bottom": 730.5,
+              "width": 348,
+              "height": 122
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 984.5,
+              "bottom": 1106.5,
+              "width": 348,
+              "height": 122
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1228.5,
+              "bottom": 1349.5,
+              "width": 348,
+              "height": 121
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 416.5,
+              "bottom": 486.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 538.5,
+              "bottom": 608.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 782.5,
+              "bottom": 852.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 904.5,
+              "bottom": 984.5,
+              "width": 348,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1158.5,
+              "bottom": 1228.5,
+              "width": 348,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 486.5,
+              "bottom": 538.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 730.5,
+              "bottom": 782.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 852.5,
+              "bottom": 904.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1106.5,
+              "bottom": 1158.5,
+              "width": 348,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 672,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 1012,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1048,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "24px",
+            "lines": [
+              {
+                "y": 1256,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1292,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 two 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#three",
+          "visible": [
+            "three"
+          ],
+          "pressed": [
+            "three"
+          ],
+          "description": "深绿通底，浅暖色强调痛点；结论字号略放大，适合现场展示。"
+        },
+        "returned": "#two"
+      }
+    },
+    {
+      "name": "390 three 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#three",
+        "visible": [
+          "three"
+        ],
+        "pressed": [
+          "three"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "390 three 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "33px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 347,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 438,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 504,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 560,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 751,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 807,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 873,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 923,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1130,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 1186,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "25px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 673,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "25px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1015,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1052,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "25px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1262,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1299,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 three 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 three 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(29, 59, 47)",
+        "panels": [
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)"
+        ],
+        "stages": [
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "390 three 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 608.5,
+              "bottom": 733.5,
+              "width": 348,
+              "height": 125
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 987.5,
+              "bottom": 1112.5,
+              "width": 348,
+              "height": 125
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1234.5,
+              "bottom": 1358.5,
+              "width": 348,
+              "height": 124
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 416.5,
+              "bottom": 486.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 538.5,
+              "bottom": 608.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 785.5,
+              "bottom": 855.5,
+              "width": 348,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 907.5,
+              "bottom": 987.5,
+              "width": 348,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1164.5,
+              "bottom": 1234.5,
+              "width": 348,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 369,
+              "top": 486.5,
+              "bottom": 538.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 733.5,
+              "bottom": 785.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 855.5,
+              "bottom": 907.5,
+              "width": 348,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 369,
+              "top": 1112.5,
+              "bottom": 1164.5,
+              "width": 348,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 636,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 673,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 1015,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1052,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "25px",
+            "lines": [
+              {
+                "y": 1262,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1299,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 three 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#one",
+          "visible": [
+            "one"
+          ],
+          "pressed": [
+            "one"
+          ],
+          "description": "暖白通底，深绿流程与砖红痛点，整体更轻、更连贯。"
+        },
+        "returned": "#three"
+      }
+    },
+    {
+      "name": "360 one 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#one",
+        "visible": [
+          "one"
+        ],
+        "pressed": [
+          "one"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "360 one 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "30px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 344,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 431,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 496,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 553,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 737,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 794,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 859,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 909,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1110,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(21, 59, 45)",
+            "lines": [
+              {
+                "y": 1167,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "23px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "23px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "23px",
+            "color": "rgb(165, 84, 66)",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 one 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 one 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(244, 242, 236)",
+        "panels": [
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)",
+          "rgb(244, 242, 236)"
+        ],
+        "stages": [
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)",
+          "rgb(21, 59, 45)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "360 one 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "pains": [],
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 601,
+              "bottom": 720,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 974,
+              "bottom": 1093,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1215,
+              "bottom": 1333,
+              "width": 318,
+              "height": 118
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 409,
+              "bottom": 479,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 531,
+              "bottom": 601,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 772,
+              "bottom": 842,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 894,
+              "bottom": 974,
+              "width": 318,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1145,
+              "bottom": 1215,
+              "width": 318,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 479,
+              "bottom": 531,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 720,
+              "bottom": 772,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 842,
+              "bottom": 894,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1093,
+              "bottom": 1145,
+              "width": 318,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 one 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#two",
+          "visible": [
+            "two"
+          ],
+          "pressed": [
+            "two"
+          ],
+          "description": "浅绿通底，棕红标出断点与痛点，结论居中对齐各自的流程区段。"
+        },
+        "returned": "#one"
+      }
+    },
+    {
+      "name": "360 two 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#two",
+        "visible": [
+          "two"
+        ],
+        "pressed": [
+          "two"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "360 two 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "30px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 344,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 431,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 496,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 553,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 737,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 794,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 859,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 909,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1110,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(33, 72, 50)",
+            "lines": [
+              {
+                "y": 1167,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "23px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "23px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "23px",
+            "color": "rgb(156, 91, 73)",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 two 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 two 上下统一底色及步骤字色微排版",
+      "pass": true,
+      "detail": {
+        "board": "rgb(234, 240, 232)",
+        "panels": [
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)",
+          "rgb(234, 240, 232)"
+        ],
+        "stages": [
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)",
+          "rgb(33, 72, 50)"
+        ],
+        "align": [
+          "center",
+          "center",
+          "center"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "360 two 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 601,
+              "bottom": 720,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 974,
+              "bottom": 1093,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1215,
+              "bottom": 1333,
+              "width": 318,
+              "height": 118
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 409,
+              "bottom": 479,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 531,
+              "bottom": 601,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 772,
+              "bottom": 842,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 894,
+              "bottom": 974,
+              "width": 318,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1145,
+              "bottom": 1215,
+              "width": 318,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 479,
+              "bottom": 531,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 720,
+              "bottom": 772,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 842,
+              "bottom": 894,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1093,
+              "bottom": 1145,
+              "width": 318,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 two 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#three",
+          "visible": [
+            "three"
+          ],
+          "pressed": [
+            "three"
+          ],
+          "description": "深绿通底，浅暖色强调痛点；结论字号略放大，适合现场展示。"
+        },
+        "returned": "#two"
+      }
+    },
+    {
+      "name": "360 three 本版直达hash与准确内容",
+      "pass": true,
+      "detail": {
+        "hash": "#three",
+        "visible": [
+          "three"
+        ],
+        "pressed": [
+          "three"
+        ],
+        "version": [
+          "styles.css?v=problem-options-color-20261006",
+          "app.js?v=problem-options-color-20261006"
+        ],
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "pains": [
+          "机械保存图片，打断创作思路。",
+          "提示词从零编写，难以完整表达设计意图。",
+          "过程素材不断堆积，却难以再次复用。"
+        ],
+        "notes": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "360 three 对应字色可读换行与真实Lucide图标",
+      "pass": true,
+      "detail": {
+        "glyphs": [
+          {
+            "kind": "H2",
+            "text": "方案创作是连续的，工作流程却常常断开。",
+            "font": "30px",
+            "color": "rgb(36, 51, 45)",
+            "lines": [
+              {
+                "y": 306,
+                "text": "方案创作是连续的，"
+              },
+              {
+                "y": 344,
+                "text": "工作流程却常常断开。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "保存图片",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 431,
+                "text": "保存图片"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "参考难以复用",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 496,
+                "text": "参考难以复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "方案创作",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 553,
+                "text": "方案创作"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "说不清意图",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 737,
+                "text": "说不清意图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "编写参考图提示词",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 794,
+                "text": "编写参考图提示词"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "修改缺少依据",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 859,
+                "text": "修改缺少依据"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "生成AI效果图",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 909,
+                "text": "生成AI效果图"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "P",
+            "text": "图词难以沉淀",
+            "font": "13px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1110,
+                "text": "图词难以沉淀"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "H3",
+            "text": "成果复用",
+            "font": "20px",
+            "color": "rgb(237, 244, 236)",
+            "lines": [
+              {
+                "y": 1167,
+                "text": "成果复用"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "机械保存图片，打断创作思路。",
+            "font": "23px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "提示词从零编写，难以完整表达设计意图。",
+            "font": "23px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ],
+            "contained": true
+          },
+          {
+            "kind": "pain",
+            "text": "过程素材不断堆积，却难以再次复用。",
+            "font": "23px",
+            "color": "rgb(229, 199, 180)",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ],
+            "contained": true
+          }
+        ],
+        "icons": [
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#unlink",
+            "rendered": true
+          },
+          {
+            "symbol": "assets/lucide.svg#chevron-right",
+            "rendered": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 three 无重叠或横向溢出",
+      "pass": true,
+      "detail": {
+        "overlaps": [],
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 three 上下统一底色及步骤字色微排版",
+      "pass": false,
+      "detail": {
+        "board": "rgb(29, 59, 47)",
+        "panels": [
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)",
+          "rgb(29, 59, 47)"
+        ],
+        "stages": [
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)",
+          "rgb(237, 244, 236)"
+        ],
+        "align": [
+          "start",
+          "start",
+          "start"
+        ],
+        "heights": [
+          70,
+          70,
+          70,
+          80,
+          70
+        ]
+      }
+    },
+    {
+      "name": "360 three 版本结构与对应阶段布局",
+      "pass": true,
+      "detail": {
+        "mapping": {
+          "phasePains": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 601,
+              "bottom": 720,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 974,
+              "bottom": 1093,
+              "width": 318,
+              "height": 119
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1215,
+              "bottom": 1333,
+              "width": 318,
+              "height": 118
+            }
+          ],
+          "stages": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 409,
+              "bottom": 479,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 531,
+              "bottom": 601,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 772,
+              "bottom": 842,
+              "width": 318,
+              "height": 70
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 894,
+              "bottom": 974,
+              "width": 318,
+              "height": 80
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1145,
+              "bottom": 1215,
+              "width": 318,
+              "height": 70
+            }
+          ],
+          "breaks": [
+            {
+              "left": 21,
+              "right": 339,
+              "top": 479,
+              "bottom": 531,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 720,
+              "bottom": 772,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 842,
+              "bottom": 894,
+              "width": 318,
+              "height": 52
+            },
+            {
+              "left": 21,
+              "right": 339,
+              "top": 1093,
+              "bottom": 1145,
+              "width": 318,
+              "height": 52
+            }
+          ],
+          "physicalOrder": [
+            "phase-save",
+            "phase-save-break",
+            "phase-design",
+            "phase-pain-one",
+            "phase-intent-break",
+            "phase-prompt",
+            "phase-evaluate-break",
+            "phase-generate",
+            "phase-pain-two",
+            "phase-asset-break",
+            "phase-reuse",
+            "phase-pain-three"
+          ],
+          "brackets": [
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            },
+            {
+              "display": "none",
+              "left": "20px",
+              "right": "20px",
+              "top": "-25px",
+              "bottomBorder": "1px"
+            }
+          ]
+        },
+        "painFontsAndLines": [
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 627,
+                "text": "机械保存图片，"
+              },
+              {
+                "y": 662,
+                "text": "打断创作思路。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1000,
+                "text": "提示词从零编写，"
+              },
+              {
+                "y": 1035,
+                "text": "难以完整表达设计意图。"
+              }
+            ]
+          },
+          {
+            "font": "23px",
+            "lines": [
+              {
+                "y": 1241,
+                "text": "过程素材不断堆积，"
+              },
+              {
+                "y": 1276,
+                "text": "却难以再次复用。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 three 按钮切换与hash往返",
+      "pass": true,
+      "detail": {
+        "switched": {
+          "hash": "#one",
+          "visible": [
+            "one"
+          ],
+          "pressed": [
+            "one"
+          ],
+          "description": "暖白通底，深绿流程与砖红痛点，整体更轻、更连贯。"
+        },
+        "returned": "#three"
+      }
+    },
+    {
+      "name": "页面控制台网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "option-one-desktop.png",
+    "option-two-desktop.png",
+    "option-three-desktop.png",
+    "option-one-390.png",
+    "option-two-390.png",
+    "option-three-390.png",
+    "option-one-360.png",
+    "option-two-360.png",
+    "option-three-360.png"
+  ],
+  "count": {
+    "checks": 73,
+    "screenshots": 9,
+    "errors": 0
+  },
+  "pass": false
+}

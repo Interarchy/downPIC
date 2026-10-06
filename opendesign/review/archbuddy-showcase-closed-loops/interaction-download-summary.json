@@ -1,0 +1,536 @@
+{
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "date": "2026-10-05T10:11:31.113Z",
+  "checks": [
+    {
+      "name": "1440 导航#workflow标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 264.765625,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1440 导航#features标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 261.109375,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1440 导航#install标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 265.3125,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1440 新A品牌图标白字无框",
+      "pass": true,
+      "detail": {
+        "text": "ArchBuddy",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "icon": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/brand-mark.svg",
+        "natural": 150
+      }
+    },
+    {
+      "name": "1440 prompt可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 prompt放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 assets可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 assets放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 hero-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 hero-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 capture-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 capture-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 扩展管理地址复制",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "实际下载ArchBuddy-0.6.0-Chrome.zip",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-0.6.0-Chrome.zip",
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+        "failure": null
+      }
+    },
+    {
+      "name": "实际下载ArchBuddy-test-images.7z",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z",
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+        "failure": null
+      }
+    },
+    {
+      "name": "1024 导航#workflow标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 264.796875,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1024 导航#features标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 261.140625,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1024 导航#install标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 264.890625,
+        "bottom": 84
+      }
+    },
+    {
+      "name": "1024 新A品牌图标白字无框",
+      "pass": true,
+      "detail": {
+        "text": "ArchBuddy",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "icon": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/brand-mark.svg",
+        "natural": 150
+      }
+    },
+    {
+      "name": "1024 prompt可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 prompt放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1024 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024 assets可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 assets放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1024 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024 hero-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 hero-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024 capture-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 capture-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024 扩展管理地址复制",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "390 导航#features标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 209.5,
+        "bottom": 72
+      }
+    },
+    {
+      "name": "390 导航#install标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 212.34375,
+        "bottom": 72
+      }
+    },
+    {
+      "name": "390 新A品牌图标白字无框",
+      "pass": true,
+      "detail": {
+        "text": "ArchBuddy",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "icon": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/brand-mark.svg",
+        "natural": 150
+      }
+    },
+    {
+      "name": "390 prompt可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "390 prompt放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 assets可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "390 assets放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 hero-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "390 hero-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 capture-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "390 capture-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 扩展管理地址复制",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "360 导航#features标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 210,
+        "bottom": 72
+      }
+    },
+    {
+      "name": "360 导航#install标题不被固定栏遮挡",
+      "pass": true,
+      "detail": {
+        "top": 211.8125,
+        "bottom": 72
+      }
+    },
+    {
+      "name": "360 新A品牌图标白字无框",
+      "pass": true,
+      "detail": {
+        "text": "ArchBuddy",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "icon": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/brand-mark.svg",
+        "natural": 150
+      }
+    },
+    {
+      "name": "360 prompt可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "360 prompt放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+          "alt": "ArchBuddy 效果评估入口实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 assets可选截图切换",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "360 assets放大完整源图及关闭图标",
+      "pass": true,
+      "detail": {
+        "dialog": {
+          "src": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+          "alt": "ArchBuddy 参考图详情实际界面",
+          "natural": 1280
+        },
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 hero-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "360 hero-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 capture-image放大",
+      "pass": true,
+      "detail": {
+        "dialog": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "360 capture-imageEsc关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 扩展管理地址复制",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "A路径与插件原Logo一致且白底深绿",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "无站点浏览器与网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "downloads": [
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "filename": "ArchBuddy-0.6.0-Chrome.zip",
+      "bytes": 179857,
+      "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+      "failure": null
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z",
+      "filename": "ArchBuddy测试集.7z",
+      "bytes": 12020913,
+      "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+      "failure": null
+    }
+  ],
+  "pass": true
+}

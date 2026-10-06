@@ -1,0 +1,2045 @@
+{
+  "date": "2026-10-05",
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "scope": "仅本地静态展示站；未访问用户浏览器、模型或云资源",
+  "checks": [
+    {
+      "name": "首页 HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "1440 首页 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              20,
+              20
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              676,
+              423
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              635,
+              397
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 首页 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            20,
+            20
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            676,
+            423
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            635,
+            397
+          ]
+        }
+      ]
+    },
+    {
+      "name": "三条链路切换 prompt",
+      "pass": true,
+      "detail": {
+        "selected": "true",
+        "label": "反推与迭代提示词",
+        "title": "从画面里，\n挑出你要的设计意图。",
+        "link": "case-study/workflow.html#step-3"
+      }
+    },
+    {
+      "name": "链路截图切换 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "label": "效果迭代"
+      }
+    },
+    {
+      "name": "三条链路切换 assets",
+      "pass": true,
+      "detail": {
+        "selected": "true",
+        "label": "沉淀图词资产",
+        "title": "让这次的成果，\n接住下一次设计。",
+        "link": "case-study/workflow.html#step-5"
+      }
+    },
+    {
+      "name": "链路截图切换 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png",
+        "label": "参考图库"
+      }
+    },
+    {
+      "name": "三条链路切换 capture",
+      "pass": true,
+      "detail": {
+        "selected": "true",
+        "label": "采集参考图",
+        "title": "看到喜欢的图，\n顺手留下来。",
+        "link": "case-study/workflow.html#step-1"
+      }
+    },
+    {
+      "name": "首页大图打开",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+    },
+    {
+      "name": "大图按钮关闭",
+      "pass": true
+    },
+    {
+      "name": "大图 Escape 关闭",
+      "pass": true
+    },
+    {
+      "name": "安装地址实际复制",
+      "pass": true,
+      "detail": {
+        "copied": "chrome://extensions/",
+        "feedback": "已复制，请粘贴到 Chrome 地址栏。"
+      }
+    },
+    {
+      "name": "ZIP 实际下载内容",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D"
+      }
+    },
+    {
+      "name": "五页入口 index.html",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/index.html",
+        "title": "项目概览 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "1440 案例 index.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              35,
+              35
+            ]
+          },
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              27,
+              27
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 案例 index.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            35,
+            35
+          ]
+        },
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            27,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "name": "案例返回首页 index.html",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html"
+    },
+    {
+      "name": "五页入口 problem.html",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/problem.html",
+        "title": "问题与机会 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "1440 案例 problem.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              35,
+              35
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 案例 problem.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            35,
+            35
+          ]
+        }
+      ]
+    },
+    {
+      "name": "案例返回首页 problem.html",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html"
+    },
+    {
+      "name": "五页入口 workflow.html",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html",
+        "title": "核心体验 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "1440 案例 workflow.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              35,
+              35
+            ]
+          },
+          {
+            "src": "assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              992,
+              620
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 案例 workflow.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            35,
+            35
+          ]
+        },
+        {
+          "src": "assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            992,
+            620
+          ]
+        }
+      ]
+    },
+    {
+      "name": "案例返回首页 workflow.html",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html"
+    },
+    {
+      "name": "五页入口 decisions.html",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/decisions.html",
+        "title": "产品判断 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "1440 案例 decisions.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              35,
+              35
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 案例 decisions.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            35,
+            35
+          ]
+        }
+      ]
+    },
+    {
+      "name": "案例返回首页 decisions.html",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html"
+    },
+    {
+      "name": "五页入口 outcomes.html",
+      "pass": true,
+      "detail": {
+        "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/outcomes.html",
+        "title": "迭代与验证 · ArchBuddy 产品案例"
+      }
+    },
+    {
+      "name": "1440 案例 outcomes.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              35,
+              35
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "1440 案例 outcomes.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            35,
+            35
+          ]
+        }
+      ]
+    },
+    {
+      "name": "案例返回首页 outcomes.html",
+      "pass": true,
+      "detail": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html"
+    },
+    {
+      "name": "390 首页 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              18,
+              18
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              348,
+              218
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              306,
+              191
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 首页 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            18,
+            18
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            348,
+            218
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            306,
+            191
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 链路 prompt 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              18,
+              18
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              348,
+              218
+            ]
+          },
+          {
+            "src": "case-study/assets/04-prompt-builder-1280x800.png",
+            "loaded": false,
+            "natural": [
+              0,
+              0
+            ],
+            "display": [
+              306,
+              191
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 链路 prompt 图片加载",
+      "pass": false,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            18,
+            18
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            348,
+            218
+          ]
+        },
+        {
+          "src": "case-study/assets/04-prompt-builder-1280x800.png",
+          "loaded": false,
+          "natural": [
+            0,
+            0
+          ],
+          "display": [
+            306,
+            191
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 截图切换 prompt",
+      "pass": true
+    },
+    {
+      "name": "390 链路 assets 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              18,
+              18
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              348,
+              218
+            ]
+          },
+          {
+            "src": "case-study/assets/03-prompt-library-1280x800.png",
+            "loaded": false,
+            "natural": [
+              0,
+              0
+            ],
+            "display": [
+              306,
+              191
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 链路 assets 图片加载",
+      "pass": false,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            18,
+            18
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            348,
+            218
+          ]
+        },
+        {
+          "src": "case-study/assets/03-prompt-library-1280x800.png",
+          "loaded": false,
+          "natural": [
+            0,
+            0
+          ],
+          "display": [
+            306,
+            191
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 截图切换 assets",
+      "pass": true
+    },
+    {
+      "name": "390 手机大图打开",
+      "pass": true
+    },
+    {
+      "name": "390 手机大图关闭",
+      "pass": true
+    },
+    {
+      "name": "360 首页 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              16,
+              16
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              318,
+              199
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              276,
+              173
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "360 首页 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            16,
+            16
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            318,
+            199
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            276,
+            173
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 链路 prompt 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              16,
+              16
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              318,
+              199
+            ]
+          },
+          {
+            "src": "case-study/assets/04-prompt-builder-1280x800.png",
+            "loaded": false,
+            "natural": [
+              0,
+              0
+            ],
+            "display": [
+              276,
+              173
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "360 链路 prompt 图片加载",
+      "pass": false,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            16,
+            16
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            318,
+            199
+          ]
+        },
+        {
+          "src": "case-study/assets/04-prompt-builder-1280x800.png",
+          "loaded": false,
+          "natural": [
+            0,
+            0
+          ],
+          "display": [
+            276,
+            173
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 截图切换 prompt",
+      "pass": true
+    },
+    {
+      "name": "360 链路 assets 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "images": [
+          {
+            "src": "case-study/assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              16,
+              16
+            ]
+          },
+          {
+            "src": "case-study/assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              318,
+              199
+            ]
+          },
+          {
+            "src": "case-study/assets/03-prompt-library-1280x800.png",
+            "loaded": false,
+            "natural": [
+              0,
+              0
+            ],
+            "display": [
+              276,
+              173
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "360 链路 assets 图片加载",
+      "pass": false,
+      "detail": [
+        {
+          "src": "case-study/assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            16,
+            16
+          ]
+        },
+        {
+          "src": "case-study/assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            318,
+            199
+          ]
+        },
+        {
+          "src": "case-study/assets/03-prompt-library-1280x800.png",
+          "loaded": false,
+          "natural": [
+            0,
+            0
+          ],
+          "display": [
+            276,
+            173
+          ]
+        }
+      ]
+    },
+    {
+      "name": "360 截图切换 assets",
+      "pass": true
+    },
+    {
+      "name": "360 手机大图打开",
+      "pass": true
+    },
+    {
+      "name": "360 手机大图关闭",
+      "pass": true
+    },
+    {
+      "name": "390 案例 index.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              31,
+              31
+            ]
+          },
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              26,
+              26
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 案例 index.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            31,
+            31
+          ]
+        },
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            26,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 案例 problem.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              31,
+              31
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 案例 problem.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            31,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 案例 workflow.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              31,
+              31
+            ]
+          },
+          {
+            "src": "assets/01-project-library-1280x800.png",
+            "loaded": true,
+            "natural": [
+              1280,
+              800
+            ],
+            "display": [
+              352,
+              220
+            ]
+          }
+        ],
+        "overflow": [
+          {
+            "tag": "BUTTON",
+            "class": "",
+            "text": "05保存版本↗"
+          },
+          {
+            "tag": "SPAN",
+            "class": "",
+            "text": "05"
+          },
+          {
+            "tag": "STRONG",
+            "class": "",
+            "text": "保存版本"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 案例 workflow.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            31,
+            31
+          ]
+        },
+        {
+          "src": "assets/01-project-library-1280x800.png",
+          "loaded": true,
+          "natural": [
+            1280,
+            800
+          ],
+          "display": [
+            352,
+            220
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 案例 decisions.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              31,
+              31
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 案例 decisions.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            31,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "name": "390 案例 outcomes.html 页面横向宽度",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "images": [
+          {
+            "src": "assets/logo.svg",
+            "loaded": true,
+            "natural": [
+              150,
+              150
+            ],
+            "display": [
+              31,
+              31
+            ]
+          }
+        ],
+        "overflow": []
+      }
+    },
+    {
+      "name": "390 案例 outcomes.html 图片加载",
+      "pass": true,
+      "detail": [
+        {
+          "src": "assets/logo.svg",
+          "loaded": true,
+          "natural": [
+            150,
+            150
+          ],
+          "display": [
+            31,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "name": "第二链路深链",
+      "pass": true,
+      "detail": "只借鉴需要的部分。"
+    },
+    {
+      "name": "第三链路深链",
+      "pass": false,
+      "detail": "只借鉴需要的部分。"
+    },
+    {
+      "name": "网络与页面异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "screenshots": [
+    "desktop-1440-full.png",
+    "desktop-1440-hero.png",
+    "desktop-1440-capture.png",
+    "desktop-1440-prompt-default.png",
+    "desktop-1440-prompt-alternate.png",
+    "desktop-1440-assets-default.png",
+    "desktop-1440-assets-alternate.png",
+    "desktop-1440-dialog.png",
+    "desktop-1440-case-index.png",
+    "desktop-1440-case-problem.png",
+    "desktop-1440-case-workflow.png",
+    "desktop-1440-case-decisions.png",
+    "desktop-1440-case-outcomes.png",
+    "mobile-390-full.png",
+    "mobile-390-hero.png",
+    "mobile-390-prompt.png",
+    "mobile-390-assets.png",
+    "mobile-390-install.png",
+    "mobile-390-dialog.png",
+    "mobile-360-full.png",
+    "mobile-360-hero.png",
+    "mobile-360-prompt.png",
+    "mobile-360-assets.png",
+    "mobile-360-install.png",
+    "mobile-360-dialog.png",
+    "mobile-390-case-index.png",
+    "mobile-390-case-problem.png",
+    "mobile-390-case-workflow.png",
+    "mobile-390-case-decisions.png",
+    "mobile-390-case-outcomes.png"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/problem.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/decisions.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/outcomes.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/index.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/problem.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/decisions.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/outcomes.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/workflow.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/styles.css?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/app.js?v=2",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/tokens.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/logo.svg",
+      "status": 200
+    }
+  ],
+  "pass": false,
+  "count": {
+    "checks": 66,
+    "screenshots": 30,
+    "errors": 0
+  }
+}

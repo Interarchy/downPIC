@@ -1,0 +1,4 @@
+const descriptions={one:'流程与三条痛点放进同一张分析图，适合快速浏览。',two:'每条痛点与对应流程并排，按保存、表达、复用三段连续阅读。',three:'左侧保留完整工作流，右侧放大三个核心判断，适合现场讲解。'};
+function selectVariant(){const requested=location.hash.slice(1);const active=Object.hasOwn(descriptions,requested)?requested:'one';document.querySelectorAll('.variant').forEach(section=>{section.hidden=section.id!==active;});document.querySelectorAll('[data-option]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.option===active));});document.getElementById('variant-description').textContent=descriptions[active];}
+document.querySelectorAll('[data-option]').forEach(button=>button.addEventListener('click',()=>{history.replaceState(null,'','#'+button.dataset.option);selectVariant();}));
+window.addEventListener('hashchange',selectVariant);selectVariant();

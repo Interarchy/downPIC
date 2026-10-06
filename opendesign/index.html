@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArchBuddy · 项目案例</title>
+  <style>
+    :root { color-scheme: light; --paper: #f5f6f2; --ink: #18332a; --muted: #6d786f; --line: #dce2d9; --green: #347354; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+    a { color: inherit; }
+    .shell { width: min(1120px, calc(100% - 64px)); margin: auto; }
+    header { display: flex; align-items: center; justify-content: space-between; min-height: 88px; border-bottom: 1px solid var(--line); }
+    .brand { font-size: 19px; font-weight: 700; letter-spacing: -.5px; text-decoration: none; }
+    .edition { color: var(--muted); font-size: 12px; letter-spacing: .12em; }
+    main { padding: 88px 0 72px; }
+    .eyebrow { font-size: 12px; letter-spacing: .18em; font-weight: 700; color: var(--green); }
+    h1 { font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", "SimSun", serif; font-size: clamp(32px, 5.5vw, 62px); font-weight: 500; line-height: 1.25; margin: 24px 0; }
+    .intro { max-width: 680px; color: var(--muted); font-size: 16px; line-height: 1.95; }
+    .primary { display: inline-flex; align-items: center; gap: 48px; min-height: 50px; margin: 18px 0 64px; padding: 0 22px; text-decoration: none; background: var(--ink); color: white; font-size: 14px; transition: background .2s; }
+    .primary:hover { background: var(--green); }
+    .section-heading { display: flex; align-items: baseline; gap: 18px; padding: 18px 0; border-top: 1px solid var(--ink); }
+    .section-heading h2 { margin: 0; font-size: 17px; font-weight: 600; }
+    .section-heading span { color: var(--muted); font-size: 12px; letter-spacing: .06em; }
+    .pages { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 42px; }
+    .page-link { display: flex; align-items: center; gap: 18px; min-height: 80px; padding: 16px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: color .2s; }
+    .page-link:hover { color: var(--green); }
+    .page-index { min-width: 25px; color: var(--muted); font: 12px "Consolas", monospace; }
+    .page-name { flex: 1; font-size: 15px; }
+    .arrow { font-size: 22px; font-weight: 300; }
+    #status { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    details { margin-top: 56px; color: var(--muted); font-size: 13px; }
+    summary { cursor: pointer; min-height: 44px; }
+    details .page-name { font-size: 13px; }
+    footer { display: flex; justify-content: space-between; padding: 26px 0 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    @media (max-width: 620px) { .shell { width: calc(100% - 40px); } main { padding-top: 54px; } .edition { font-size: 10px; } .pages { grid-template-columns: 1fr; } .primary { margin-bottom: 44px; } footer { gap: 24px; line-height: 1.7; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><a class="brand" href="./">ArchBuddy<span style="color:var(--green)">.</span></a><span class="edition">AI 产品经理 · 项目案例</span></header>
+    <main>
+      <p class="eyebrow">从建筑设计实践，到 AI 产品判断</p>
+      <h1>让参考，成为下一次<br>设计的起点。</h1>
+      <p class="intro">用五个连贯章节，了解 ArchBuddy 的问题洞察、工作流与产品取舍，以及从想法推进到可运行产品的过程。</p>
+      <a class="primary" href="mockups/archbuddy-case-study/index.html">开始阅读项目案例 <span>↗</span></a>
+      <div class="section-heading"><h2>项目章节</h2><span>CASE STUDY / 01 — 05</span></div>
+      <div id="chapters" class="pages"></div>
+      <p id="status">正在读取项目目录…</p>
+      <details id="design-files" hidden><summary>视觉规范与设计文件</summary><div id="systems" class="pages"></div></details>
+    </main>
+    <footer><span>ArchBuddy · 建筑参考图工作流</span><span>本地项目展示</span></footer>
+  </div>
+  <script>
+    const titles = {
+      "index.html": "项目概览 · 从参考到设计资产",
+      "problem.html": "问题与机会 · 识别工作流中的断点",
+      "workflow.html": "核心体验 · 一个任务贯穿完整流程",
+      "decisions.html": "产品判断 · 为什么这样设计",
+      "outcomes.html": "迭代与验证 · 产品已证明了什么"
+    };
+    const order = Object.keys(titles);
+    function addLink(container, file, index) {
+      if (!/^(mockups|design-systems)\//.test(file.path) || file.path.split("/").includes("..")) return;
+      const link = document.createElement("a");
+      link.className = "page-link";
+      link.href = file.path;
+      const number = document.createElement("span");
+      number.className = "page-index";
+      number.textContent = String(index + 1).padStart(2, "0");
+      const name = document.createElement("span");
+      name.className = "page-name";
+      name.textContent = titles[file.label] || file.label.replace(/^\d+\s+/, "");
+      const arrow = document.createElement("span");
+      arrow.className = "arrow";
+      arrow.textContent = "↗";
+      link.append(number, name, arrow);
+      container.append(link);
+    }
+    fetch("manifest.json", { cache: "no-store" })
+      .then(response => { if (!response.ok) throw new Error("manifest"); return response.json(); })
+      .then(manifest => {
+        const mockups = manifest.sections.find(section => section.id === "mockups");
+        const files = (mockups?.groups || []).flatMap(group => group.files);
+        files.sort((a, b) => {
+          const rankA = order.indexOf(a.label), rankB = order.indexOf(b.label);
+          return (rankA < 0 ? 99 : rankA) - (rankB < 0 ? 99 : rankB);
+        });
+        files.forEach((file, index) => addLink(document.getElementById("chapters"), file, index));
+        document.getElementById("status").textContent = files.length ? "" : "项目章节正在准备中。";
+        const systemFiles = (manifest.sections.find(section => section.id === "design-systems")?.groups || []).flatMap(group => group.files);
+        systemFiles.forEach((file, index) => addLink(document.getElementById("systems"), file, index));
+        document.getElementById("design-files").hidden = !systemFiles.length;
+      })
+      .catch(() => { document.getElementById("status").textContent = "项目目录正在更新。可通过上方入口直接进入项目案例。"; });
+  </script>
+</body>
+</html>

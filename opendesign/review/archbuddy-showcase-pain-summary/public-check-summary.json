@@ -1,0 +1,1064 @@
+{
+  "date": "2026-10-05T17:07:02.035Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "pain-summary-20261006",
+  "scope": "仅01五步四断点与图下三痛点总结；其他配色、入口、slogan、商店安装快速断言；不重跑交互/安装/归档/AI/商店访问",
+  "checks": [
+    {
+      "name": "1440 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=pain-summary-20261006",
+        "app.js?v=pain-summary-20261006"
+      ]
+    },
+    {
+      "name": "1440 三痛点文案完整准确",
+      "pass": true,
+      "detail": [
+        "机械保存图片，打断创作思路。",
+        "提示词从零编写，难以完整表达设计意图。",
+        "过程素材不断堆积，却难以再次复用。"
+      ]
+    },
+    {
+      "name": "1440 指定红色与字号",
+      "pass": true,
+      "detail": [
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "27px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "27px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "27px"
+        }
+      ]
+    },
+    {
+      "name": "1440 三列或三行且图文不重叠",
+      "pass": true,
+      "detail": {
+        "horizontal": true,
+        "items": [
+          {
+            "left": 100,
+            "right": 493.328125,
+            "top": 1187.859375,
+            "bottom": 1323.953125
+          },
+          {
+            "left": 523.328125,
+            "right": 916.65625,
+            "top": 1187.859375,
+            "bottom": 1323.953125
+          },
+          {
+            "left": 946.65625,
+            "right": 1340,
+            "top": 1187.859375,
+            "bottom": 1323.953125
+          }
+        ],
+        "mapBottom": 1157.859375,
+        "summaryTop": 1187.859375
+      }
+    },
+    {
+      "name": "1440 总结换行无孤字",
+      "pass": true,
+      "detail": [
+        [
+          {
+            "y": 1245,
+            "text": "机械保存图片，"
+          },
+          {
+            "y": 1285,
+            "text": "打断创作思路。"
+          }
+        ],
+        [
+          {
+            "y": 1245,
+            "text": "提示词从零编写，"
+          },
+          {
+            "y": 1285,
+            "text": "难以完整表达设计意图。"
+          }
+        ],
+        [
+          {
+            "y": 1245,
+            "text": "过程素材不断堆积，"
+          },
+          {
+            "y": 1285,
+            "text": "却难以再次复用。"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "1440 字符无裁切且无横向溢出",
+      "pass": true,
+      "detail": {
+        "charactersContained": [
+          true,
+          true,
+          true
+        ],
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 五步四断点保留且旧三小提示归拢",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "oldCallouts": 0,
+        "iteration": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1440 其他已确认内容快速保持断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "1440 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "1024 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=pain-summary-20261006",
+        "app.js?v=pain-summary-20261006"
+      ]
+    },
+    {
+      "name": "1024 三痛点文案完整准确",
+      "pass": true,
+      "detail": [
+        "机械保存图片，打断创作思路。",
+        "提示词从零编写，难以完整表达设计意图。",
+        "过程素材不断堆积，却难以再次复用。"
+      ]
+    },
+    {
+      "name": "1024 指定红色与字号",
+      "pass": true,
+      "detail": [
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "22px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "22px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "22px"
+        }
+      ]
+    },
+    {
+      "name": "1024 三列或三行且图文不重叠",
+      "pass": true,
+      "detail": {
+        "horizontal": true,
+        "items": [
+          {
+            "left": 28,
+            "right": 336,
+            "top": 1060.890625,
+            "bottom": 1181.984375
+          },
+          {
+            "left": 358,
+            "right": 666,
+            "top": 1060.890625,
+            "bottom": 1181.984375
+          },
+          {
+            "left": 688,
+            "right": 996,
+            "top": 1060.890625,
+            "bottom": 1181.984375
+          }
+        ],
+        "mapBottom": 1030.890625,
+        "summaryTop": 1060.890625
+      }
+    },
+    {
+      "name": "1024 总结换行无孤字",
+      "pass": true,
+      "detail": [
+        [
+          {
+            "y": 1117,
+            "text": "机械保存图片，"
+          },
+          {
+            "y": 1150,
+            "text": "打断创作思路。"
+          }
+        ],
+        [
+          {
+            "y": 1117,
+            "text": "提示词从零编写，"
+          },
+          {
+            "y": 1150,
+            "text": "难以完整表达设计意图。"
+          }
+        ],
+        [
+          {
+            "y": 1117,
+            "text": "过程素材不断堆积，"
+          },
+          {
+            "y": 1150,
+            "text": "却难以再次复用。"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "1024 字符无裁切且无横向溢出",
+      "pass": true,
+      "detail": {
+        "charactersContained": [
+          true,
+          true,
+          true
+        ],
+        "width": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 五步四断点保留且旧三小提示归拢",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "oldCallouts": 0,
+        "iteration": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "1024 其他已确认内容快速保持断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "1024 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=pain-summary-20261006",
+        "app.js?v=pain-summary-20261006"
+      ]
+    },
+    {
+      "name": "390 三痛点文案完整准确",
+      "pass": true,
+      "detail": [
+        "机械保存图片，打断创作思路。",
+        "提示词从零编写，难以完整表达设计意图。",
+        "过程素材不断堆积，却难以再次复用。"
+      ]
+    },
+    {
+      "name": "390 指定红色与字号",
+      "pass": true,
+      "detail": [
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        }
+      ]
+    },
+    {
+      "name": "390 三列或三行且图文不重叠",
+      "pass": true,
+      "detail": {
+        "horizontal": false,
+        "items": [
+          {
+            "left": 20,
+            "right": 370,
+            "top": 1708.09375,
+            "bottom": 1831.1875
+          },
+          {
+            "left": 20,
+            "right": 370,
+            "top": 1855.1875,
+            "bottom": 1978.28125
+          },
+          {
+            "left": 20,
+            "right": 370,
+            "top": 2002.28125,
+            "bottom": 2125.375
+          }
+        ],
+        "mapBottom": 1680.09375,
+        "summaryTop": 1708.09375
+      }
+    },
+    {
+      "name": "390 总结换行无孤字",
+      "pass": true,
+      "detail": [
+        [
+          {
+            "y": 1761,
+            "text": "机械保存图片，"
+          },
+          {
+            "y": 1797,
+            "text": "打断创作思路。"
+          }
+        ],
+        [
+          {
+            "y": 1908,
+            "text": "提示词从零编写，"
+          },
+          {
+            "y": 1944,
+            "text": "难以完整表达设计意图。"
+          }
+        ],
+        [
+          {
+            "y": 2055,
+            "text": "过程素材不断堆积，"
+          },
+          {
+            "y": 2091,
+            "text": "却难以再次复用。"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "390 字符无裁切且无横向溢出",
+      "pass": true,
+      "detail": {
+        "charactersContained": [
+          true,
+          true,
+          true
+        ],
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 五步四断点保留且旧三小提示归拢",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "oldCallouts": 0,
+        "iteration": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "390 其他已确认内容快速保持断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "390 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=pain-summary-20261006",
+        "app.js?v=pain-summary-20261006"
+      ]
+    },
+    {
+      "name": "360 三痛点文案完整准确",
+      "pass": true,
+      "detail": [
+        "机械保存图片，打断创作思路。",
+        "提示词从零编写，难以完整表达设计意图。",
+        "过程素材不断堆积，却难以再次复用。"
+      ]
+    },
+    {
+      "name": "360 指定红色与字号",
+      "pass": true,
+      "detail": [
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        },
+        {
+          "color": "rgb(165, 84, 66)",
+          "fontSize": "24px"
+        }
+      ]
+    },
+    {
+      "name": "360 三列或三行且图文不重叠",
+      "pass": true,
+      "detail": {
+        "horizontal": false,
+        "items": [
+          {
+            "left": 20,
+            "right": 340,
+            "top": 1660.515625,
+            "bottom": 1783.609375
+          },
+          {
+            "left": 20,
+            "right": 340,
+            "top": 1807.609375,
+            "bottom": 1930.703125
+          },
+          {
+            "left": 20,
+            "right": 340,
+            "top": 1954.703125,
+            "bottom": 2077.796875
+          }
+        ],
+        "mapBottom": 1632.515625,
+        "summaryTop": 1660.515625
+      }
+    },
+    {
+      "name": "360 总结换行无孤字",
+      "pass": true,
+      "detail": [
+        [
+          {
+            "y": 1714,
+            "text": "机械保存图片，"
+          },
+          {
+            "y": 1750,
+            "text": "打断创作思路。"
+          }
+        ],
+        [
+          {
+            "y": 1861,
+            "text": "提示词从零编写，"
+          },
+          {
+            "y": 1897,
+            "text": "难以完整表达设计意图。"
+          }
+        ],
+        [
+          {
+            "y": 2008,
+            "text": "过程素材不断堆积，"
+          },
+          {
+            "y": 2044,
+            "text": "却难以再次复用。"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "360 字符无裁切且无横向溢出",
+      "pass": true,
+      "detail": {
+        "charactersContained": [
+          true,
+          true,
+          true
+        ],
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 五步四断点保留且旧三小提示归拢",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          "保存图片",
+          "方案创作",
+          "编写参考图提示词",
+          "生成AI效果图",
+          "成果复用"
+        ],
+        "breaks": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "oldCallouts": 0,
+        "iteration": [
+          "多轮优化"
+        ]
+      }
+    },
+    {
+      "name": "360 其他已确认内容快速保持断言",
+      "pass": true,
+      "detail": {
+        "colors": [
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          },
+          {
+            "bg": "rgb(238, 223, 217)",
+            "border": "rgb(217, 196, 188)",
+            "brand": "rgb(21, 59, 45)",
+            "caption": "rgb(79, 101, 87)"
+          }
+        ],
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "lastStep": "在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。"
+      }
+    },
+    {
+      "name": "360 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "四个正式Document200/text-html无附件",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 1024,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点页面控制台网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 1024,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1024,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1024,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1024,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 360,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 360,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "public-1440-problem.png",
+    "public-1440-summary.png",
+    "public-1024-problem.png",
+    "public-1024-summary.png",
+    "public-390-problem.png",
+    "public-390-summary.png",
+    "public-360-problem.png",
+    "public-360-summary.png"
+  ],
+  "count": {
+    "checks": 38,
+    "screenshots": 8,
+    "errors": 0
+  },
+  "pass": true
+}

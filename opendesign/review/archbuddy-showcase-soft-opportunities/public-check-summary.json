@@ -1,0 +1,711 @@
+{
+  "date": "2026-10-05T16:17:23.747Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "soft-opportunities-20261006",
+  "scope": "仅本轮机会块配色可读性、01原色及既有入口断言；不重跑商店/流程交互/归档下载",
+  "readiness": "新context正常确认平台后等待完整document、stylesheet和六品牌图标加载，再读取样式；修正首轮过早读取时点",
+  "checks": [
+    {
+      "name": "1440 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": [],
+        "readyState": "complete",
+        "stylesheetLoaded": true
+      }
+    },
+    {
+      "name": "1440 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=soft-opportunities-20261006",
+        "app.js?v=soft-opportunities-20261006"
+      ]
+    },
+    {
+      "name": "1440 六机会块浅暖粉背景与边框",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "reference-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-prompt",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-iterate",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        }
+      ]
+    },
+    {
+      "name": "1440 品牌深绿与贡献字色",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "reference-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        },
+        {
+          "id": "ai-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "ai-prompt",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 反推"
+        },
+        {
+          "id": "ai-iterate",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 评估"
+        },
+        {
+          "id": "ai-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        }
+      ]
+    },
+    {
+      "name": "1440 六品牌图标加载与文字边界",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "reference-library",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-prompt",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-iterate",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-library",
+          "imageLoaded": true,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "1440 人工及外部无机会标记",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "1440 01断点原色保持",
+      "pass": true,
+      "detail": {
+        "color": "rgb(165, 84, 66)",
+        "token": "#a55442"
+      }
+    },
+    {
+      "name": "1440 slogan商店及测试集快速断言",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "390 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": [],
+        "readyState": "complete",
+        "stylesheetLoaded": true
+      }
+    },
+    {
+      "name": "390 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=soft-opportunities-20261006",
+        "app.js?v=soft-opportunities-20261006"
+      ]
+    },
+    {
+      "name": "390 六机会块浅暖粉背景与边框",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "reference-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-prompt",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-iterate",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        }
+      ]
+    },
+    {
+      "name": "390 品牌深绿与贡献字色",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "reference-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        },
+        {
+          "id": "ai-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "ai-prompt",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 反推"
+        },
+        {
+          "id": "ai-iterate",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 评估"
+        },
+        {
+          "id": "ai-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        }
+      ]
+    },
+    {
+      "name": "390 六品牌图标加载与文字边界",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "reference-library",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-prompt",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-iterate",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-library",
+          "imageLoaded": true,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "390 人工及外部无机会标记",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "390 01断点原色保持",
+      "pass": true,
+      "detail": {
+        "color": "rgb(165, 84, 66)",
+        "token": "#a55442"
+      }
+    },
+    {
+      "name": "390 slogan商店及测试集快速断言",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "360 实际本站HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": [],
+        "readyState": "complete",
+        "stylesheetLoaded": true
+      }
+    },
+    {
+      "name": "360 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=soft-opportunities-20261006",
+        "app.js?v=soft-opportunities-20261006"
+      ]
+    },
+    {
+      "name": "360 六机会块浅暖粉背景与边框",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "reference-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-capture",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-prompt",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-iterate",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        },
+        {
+          "id": "ai-library",
+          "background": "rgb(238, 223, 217)",
+          "border": "rgb(217, 196, 188)"
+        }
+      ]
+    },
+    {
+      "name": "360 品牌深绿与贡献字色",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "reference-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        },
+        {
+          "id": "ai-capture",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "采集提效"
+        },
+        {
+          "id": "ai-prompt",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 反推"
+        },
+        {
+          "id": "ai-iterate",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "AI 评估"
+        },
+        {
+          "id": "ai-library",
+          "brandColor": "rgb(21, 59, 45)",
+          "captionColor": "rgb(79, 101, 87)",
+          "caption": "沉淀复用"
+        }
+      ]
+    },
+    {
+      "name": "360 六品牌图标加载与文字边界",
+      "pass": true,
+      "detail": [
+        {
+          "id": "reference-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "reference-library",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-capture",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-prompt",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-iterate",
+          "imageLoaded": true,
+          "contained": true
+        },
+        {
+          "id": "ai-library",
+          "imageLoaded": true,
+          "contained": true
+        }
+      ]
+    },
+    {
+      "name": "360 人工及外部无机会标记",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "360 01断点原色保持",
+      "pass": true,
+      "detail": {
+        "color": "rgb(165, 84, 66)",
+        "token": "#a55442"
+      }
+    },
+    {
+      "name": "360 slogan商店及测试集快速断言",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，让设计思路一路向前。",
+        "plugin": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": null
+          }
+        ],
+        "tests": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "三个正式Document200/text-html无附件头",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点无页面控制台网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 360,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 360,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-workflow.png",
+    "public-1440-reference.png",
+    "public-1440-ai.png",
+    "public-390-workflow.png",
+    "public-390-reference.png",
+    "public-390-ai.png",
+    "public-360-workflow.png",
+    "public-360-reference.png",
+    "public-360-ai.png"
+  ],
+  "pass": true,
+  "count": {
+    "checks": 29,
+    "screenshots": 9,
+    "errors": 0
+  }
+}

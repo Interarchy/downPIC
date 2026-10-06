@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-05T15:58:26.497Z",
+  "requestedUrl": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+  "attempts": 1,
+  "scope": "单次隔离新tab访问；未登录、未安装",
+  "reachable": true,
+  "actualUrl": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+  "status": 200,
+  "title": "ArchBuddy - Chrome 应用商店",
+  "bodyExcerpt": "跳到主要内容\nchrome 应用商店\n登录\n探索\n扩展程序\n主题\nArchBuddy\n分享\n扩展程序\n工具\n添加至 Chrome\n概述\n\n面向建筑设计师的图词库：采集与导入参考图，按项目整理并用自然语言搜索，生成和优化中文效果图提示词。\n\nArchBuddy 帮助建筑、室内与景观设计师把分散的参考图整理成可再次找到、可用于生成效果图的设计素材。\n\n浏览网页时，可以通过图片浮框保存参考图并按项目类型、项目名称分类；也可以一次导入多个本地文件夹，在图词库中浏览项目、预览大图和调整分类。下载后的图片在用户开启图库 AI 后可生成简短视觉描述。搜索时，输入过程中即时显示关键词结果；按回车后，结合本地向量索引和关键词结果查找图片与已确认提示词，并可从搜索结果返回所属项目。\n\n侧边栏支持选择最多三张参考图，提取视觉特征，组合、编辑并确认中文效果图提示词。生成效果图后，可对照当前提示词评估偏差、调整内容，确认后保存新版本。图词库可查看已确认方案、来源图和版本，并将提示词图片卡分组整理。\n\n素材图片、提示词方案和向量索引保存在当前浏览器的扩展本地空间；下载原图位于用户的下载目录。AI 分析需用户确认：选择的图片或限宽预览经 ArchBuddy 服务发送至 DeepSeek；语义索引所需的图片名称、分类、视觉描述、提示词文本及用户提交的查询经 ArchBuddy 服务发送至腾讯云 TokenHub 生成文本向量。TokenHub 不接收图片字节、文件路径或来源网址。插件不提供云端图库同步、团队协作或站内生成效果图。\n\n使用前请确认有权保存和处理相关图片。部分网页图片受站点限制，无法直接采集；清除扩展本地数据或卸载扩展可能导致图库记录、提示词和向量索引丢失。\n\n0 星（5 星制）\n无评分\n\n详细了解结果和评价。\n\n查看所有评价\n详情\n版本\n0.6.0\n上次更新日期\n2026年10月5日\n举报问题\n提供方\nmelll\n大小\n178KiB\n语言\n中文（中国）\n开发者\n邮箱\n非交易者\n该开发者尚未将自己标识为交易者。欧盟地区消费者须知：消费者权利可能不适用于您与该开发者达成的合约。\n隐私权\n\n“ArchBuddy”已就收集和使用用户数据披露了以下信息。 如需了解详情，请查看开发者的privacy policy。\n\nArchBuddy会处理以下数据：\n个人身份信息\n网络记录\n用户活动\n网站内容",
+  "screenshot": "store-page.png",
+  "elapsedMs": 2323
+}

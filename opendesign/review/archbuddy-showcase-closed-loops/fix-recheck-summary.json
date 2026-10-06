@@ -1,0 +1,382 @@
+{
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "date": "2026-10-05T10:12:33.611Z",
+  "checks": [
+    {
+      "name": "1440 AI五框等高",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 137,
+          "y": 535.109375,
+          "width": 346,
+          "height": 132,
+          "cx": 310
+        },
+        {
+          "text": "反推提示词",
+          "x": 547,
+          "y": 535.109375,
+          "width": 346,
+          "height": 132,
+          "cx": 720
+        },
+        {
+          "text": "生成 AI效果图\n\n外部生图工具",
+          "x": 957,
+          "y": 535.109375,
+          "width": 346,
+          "height": 132,
+          "cx": 1130
+        },
+        {
+          "text": "迭代提示词",
+          "x": 957,
+          "y": 739.109375,
+          "width": 346,
+          "height": 132,
+          "cx": 1130
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 137,
+          "y": 739.109375,
+          "width": 346,
+          "height": 132,
+          "cx": 310
+        }
+      ]
+    },
+    {
+      "name": "1440 AI向上箭头与回流线同轴",
+      "pass": true,
+      "detail": {
+        "container": {
+          "x": 137,
+          "y": 667.109375,
+          "width": 346,
+          "height": 72,
+          "cx": 310
+        },
+        "icon": {
+          "x": 296,
+          "y": 672.90625,
+          "width": 28,
+          "height": 28,
+          "cx": 310
+        }
+      }
+    },
+    {
+      "name": "1440 第4问题含生图与多轮优化",
+      "pass": true,
+      "detail": [
+        "保存图片\n\n保存打断思路",
+        "方案创作",
+        "编写参考图\n提示词\n\n想法难以表达",
+        "生成 AI\n效果图\n\n多轮优化",
+        "成果复用\n\n成果难以复用"
+      ]
+    },
+    {
+      "name": "1440 新短说明",
+      "pass": true,
+      "detail": {
+        "concept": "把图片、提示词和迭代成果留下来。",
+        "reference": "采集与创作，沉淀为下一轮可用的参考。",
+        "ai": "迭代提示词，确认后沉淀并复用。"
+      }
+    },
+    {
+      "name": "1440 修复后无溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 参考底部标签与连线修复标记",
+      "pass": true,
+      "detail": "<span>复用参考</span>"
+    },
+    {
+      "name": "1024 AI五框等高",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 53,
+          "y": 535.140625,
+          "width": 278,
+          "height": 132,
+          "cx": 192
+        },
+        {
+          "text": "反推提示词",
+          "x": 373,
+          "y": 535.140625,
+          "width": 278,
+          "height": 132,
+          "cx": 512
+        },
+        {
+          "text": "生成 AI效果图\n\n外部生图工具",
+          "x": 693,
+          "y": 535.140625,
+          "width": 278,
+          "height": 132,
+          "cx": 832
+        },
+        {
+          "text": "迭代提示词",
+          "x": 693,
+          "y": 739.140625,
+          "width": 278,
+          "height": 132,
+          "cx": 832
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 53,
+          "y": 739.140625,
+          "width": 278,
+          "height": 132,
+          "cx": 192
+        }
+      ]
+    },
+    {
+      "name": "1024 AI向上箭头与回流线同轴",
+      "pass": true,
+      "detail": {
+        "container": {
+          "x": 53,
+          "y": 667.140625,
+          "width": 278,
+          "height": 72,
+          "cx": 192
+        },
+        "icon": {
+          "x": 178,
+          "y": 672.9375,
+          "width": 28,
+          "height": 28,
+          "cx": 192
+        }
+      }
+    },
+    {
+      "name": "1024 第4问题含生图与多轮优化",
+      "pass": true,
+      "detail": [
+        "保存图片\n\n保存打断思路",
+        "方案创作",
+        "编写参考图\n提示词\n\n想法难以表达",
+        "生成 AI\n效果图\n\n多轮优化",
+        "成果复用\n\n成果难以复用"
+      ]
+    },
+    {
+      "name": "1024 新短说明",
+      "pass": true,
+      "detail": {
+        "concept": "把图片、提示词和迭代成果留下来。",
+        "reference": "采集与创作，沉淀为下一轮可用的参考。",
+        "ai": "迭代提示词，确认后沉淀并复用。"
+      }
+    },
+    {
+      "name": "1024 修复后无溢出",
+      "pass": true,
+      "detail": {
+        "width": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 参考底部标签与连线修复标记",
+      "pass": true,
+      "detail": "<span>复用参考</span>"
+    },
+    {
+      "name": "390 AI五框等高",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 77,
+          "y": 198.5,
+          "width": 270,
+          "height": 108,
+          "cx": 212
+        },
+        {
+          "text": "反推提示词",
+          "x": 77,
+          "y": 342.5,
+          "width": 270,
+          "height": 108,
+          "cx": 212
+        },
+        {
+          "text": "生成 AI效果图\n\n外部生图工具",
+          "x": 77,
+          "y": 486.5,
+          "width": 270,
+          "height": 108,
+          "cx": 212
+        },
+        {
+          "text": "迭代提示词",
+          "x": 77,
+          "y": 652.5,
+          "width": 270,
+          "height": 108,
+          "cx": 212
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 77,
+          "y": 824.5,
+          "width": 270,
+          "height": 108,
+          "cx": 212
+        }
+      ]
+    },
+    {
+      "name": "390 第4问题含生图与多轮优化",
+      "pass": true,
+      "detail": [
+        "保存图片\n\n保存打断思路",
+        "方案创作",
+        "编写参考图提示词\n\n想法难以表达",
+        "生成 AI效果图\n\n多轮优化",
+        "成果复用\n\n成果难以复用"
+      ]
+    },
+    {
+      "name": "390 新短说明",
+      "pass": true,
+      "detail": {
+        "concept": "把图片、提示词和迭代成果留下来。",
+        "reference": "采集与创作，沉淀为下一轮可用的参考。",
+        "ai": "迭代提示词，确认后沉淀并复用。"
+      }
+    },
+    {
+      "name": "390 修复后无溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 参考底部标签与连线修复标记",
+      "pass": true,
+      "detail": "<span>复用参考</span>"
+    },
+    {
+      "name": "360 AI五框等高",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 77,
+          "y": 199,
+          "width": 240,
+          "height": 108,
+          "cx": 197
+        },
+        {
+          "text": "反推提示词",
+          "x": 77,
+          "y": 343,
+          "width": 240,
+          "height": 108,
+          "cx": 197
+        },
+        {
+          "text": "生成 AI效果图\n\n外部生图工具",
+          "x": 77,
+          "y": 487,
+          "width": 240,
+          "height": 108,
+          "cx": 197
+        },
+        {
+          "text": "迭代提示词",
+          "x": 77,
+          "y": 653,
+          "width": 240,
+          "height": 108,
+          "cx": 197
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 77,
+          "y": 825,
+          "width": 240,
+          "height": 108,
+          "cx": 197
+        }
+      ]
+    },
+    {
+      "name": "360 第4问题含生图与多轮优化",
+      "pass": true,
+      "detail": [
+        "保存图片\n\n保存打断思路",
+        "方案创作",
+        "编写参考图提示词\n\n想法难以表达",
+        "生成 AI效果图\n\n多轮优化",
+        "成果复用\n\n成果难以复用"
+      ]
+    },
+    {
+      "name": "360 新短说明",
+      "pass": true,
+      "detail": {
+        "concept": "把图片、提示词和迭代成果留下来。",
+        "reference": "采集与创作，沉淀为下一轮可用的参考。",
+        "ai": "迭代提示词，确认后沉淀并复用。"
+      }
+    },
+    {
+      "name": "360 修复后无溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 参考底部标签与连线修复标记",
+      "pass": true,
+      "detail": "<span>复用参考</span>"
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "1440-problem-final.png",
+    "1440-concept-final.png",
+    "1440-reference-cycle-final.png",
+    "1440-ai-cycle-final.png",
+    "1024-problem-final.png",
+    "1024-concept-final.png",
+    "1024-reference-cycle-final.png",
+    "1024-ai-cycle-final.png",
+    "390-problem-final.png",
+    "390-concept-final.png",
+    "390-reference-cycle-final.png",
+    "390-ai-cycle-final.png",
+    "360-problem-final.png",
+    "360-concept-final.png",
+    "360-reference-cycle-final.png",
+    "360-ai-cycle-final.png"
+  ],
+  "pass": true
+}

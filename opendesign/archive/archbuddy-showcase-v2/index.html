@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ArchBuddy，建筑设计师的参考图与提示词助手。采集参考图，反推并迭代提示词，沉淀自己的图词库。下载 Chrome 插件与图片测试集，体验完整工作链路。">
+  <meta name="theme-color" content="#153b2d">
+  <meta property="og:title" content="ArchBuddy · 从参考图，到可复用的设计意图">
+  <meta property="og:description" content="采集参考图，构建并迭代提示词，沉淀自己的图词库。">
+  <meta property="og:type" content="website">
+  <title>ArchBuddy · 建筑设计师的参考图与提示词助手</title>
+  <link rel="icon" href="case-study/assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=scroll-20261005">
+  <script src="app.js?v=scroll-20261005" defer></script>
+</head>
+<body>
+<header class="site-header"><div class="container header-inner">
+  <a class="brand" href="#top"><span class="brand-icon"><img src="case-study/assets/logo.svg" alt=""></span><strong>ArchBuddy</strong></a>
+  <nav aria-label="网站导航"><a class="workflow-link" href="#workflow">工作链路</a><a href="#features">具体功能</a><a class="header-download" href="#install">下载体验 <span aria-hidden="true">↓</span></a></nav>
+</div></header>
+<main id="top">
+<section class="hero"><div class="container hero-layout">
+  <div class="hero-copy"><p class="eyebrow">建筑设计师的参考图与提示词助手</p><h1>让参考图，<br>成为下一次<br><span>设计的起点。</span></h1><p class="hero-description">从网页采集，到提示词迭代，再到自己的图词库。让灵感、设计意图与修改记录，接成一条工作链路。</p><div class="hero-actions"><a class="button button-light" href="downloads/ArchBuddy-0.6.0-Chrome.zip" download="ArchBuddy-0.6.0-Chrome.zip">下载 Chrome 插件 <span aria-hidden="true">↓</span></a><a class="hero-case-link" href="downloads/ArchBuddy-test-images.7z" download="ArchBuddy测试集.7z">下载图片测试集 <span aria-hidden="true">↓</span></a></div><p class="hero-meta">Chrome 141+ · 本地资产管理 · AI 按需参与</p></div>
+  <figure class="hero-visual"><button class="image-button" type="button" data-enlarge="hero-image" aria-label="放大查看实际图词库界面"><img id="hero-image" src="case-study/assets/01-project-library-1280x800.png" alt="ArchBuddy 实际图词库，按建筑项目整理参考图片" width="1280" height="800" fetchpriority="high"></button><figcaption>实际插件界面 · 演示资料 <span>点击查看大图 ↗</span></figcaption></figure>
+</div></section>
+<section id="problem" class="problem-section container" aria-labelledby="problem-title">
+  <div class="section-heading"><div><p class="eyebrow green">问题与机会</p><h2 id="problem-title">方案创作是连续的，<br>工作流程却常常断开。</h2></div><p>面向用参考图研究方案、<br>用 AI 辅助效果表达的建筑设计师。</p></div>
+  <div class="breakpoints"><p>保存打断思路</p><p>想法难以表达</p><p>成果难以复用</p></div>
+  <ol class="broken-flow" aria-label="现有工作流的断点"><li><span>保存图片</span><small>浏览被打断</small></li><li><span>重写 Prompt</span><small>说不清意图</small></li><li><span>凭印象修改</span><small>偏差难判断</small></li><li><span>下一轮调整</span><small>接不上记录</small></li><li><span>翻找旧参考</span><small>无法沉淀复用</small></li></ol>
+</section>
+<section class="concept-section" aria-labelledby="concept-title"><div class="container">
+  <p class="eyebrow green">我们的产品思路</p><h2 id="concept-title">把断开的步骤，<br>接成可复用的闭环。</h2><p class="concept-description">采集参考图，表达并迭代设计意图，沉淀可找回的图词资产。<br>让这一次的成果，继续参与下一次构建。</p>
+  <div class="loop-diagram" role="img" aria-label="采集进入构建，构建到评估，评估到找回，找回到复用，复用回到构建，形成闭环">
+    <div class="loop-entry"><span>采集</span><b aria-hidden="true">→</b></div>
+    <div class="loop-body"><ol class="loop-nodes"><li>构建</li><li>评估</li><li>找回</li><li>复用</li></ol><div class="loop-return"><span>复用已有资产，回到构建</span></div></div>
+  </div>
+  <p class="loop-note">构建并确认 Prompt 后，用外部工具生图，再回到插件评估。每轮确认的图与词进入资源库。</p>
+</div></section>
+<section id="workflow" class="workflow-section container" aria-labelledby="workflow-title">
+  <div class="section-heading"><div><p class="eyebrow green">三条工作链路</p><h2 id="workflow-title">每一步的产出，<br>都能接着用。</h2></div><p>AI 帮助理解与起稿，<br>设计师选择、修改并确认。</p></div>
+  <article id="chain-capture" class="chain-row"><div class="chain-copy"><p class="chain-number">01 / 采集参考图</p><h3>看到喜欢的图，<br>顺手留下来。</h3><p>网页采集与文件夹导入，把参考图按项目归档。从浏览到构建，让研究思路继续往前。</p><p class="chain-output"><span>留下什么</span>有项目归属的参考图</p></div><figure class="chain-visual"><div class="figure-heading"><strong>采集后的项目图库</strong><button type="button" data-enlarge="capture-image">放大查看 ↗</button></div><button class="image-button" type="button" data-enlarge="capture-image" aria-label="放大项目图库截图"><img id="capture-image" src="case-study/assets/01-project-library-1280x800.png" alt="采集后的项目图库实际界面" width="1280" height="800" loading="lazy"></button><figcaption>实际插件界面 · 演示资料</figcaption></figure></article>
+  <article id="chain-prompt" class="chain-row"><div class="chain-copy"><p class="chain-number">02 / 反推与迭代提示词</p><h3>从画面到意图，<br>再对照效果修改。</h3><p>从参考图反推提示词，组合多图意图。外部生图后评估偏差，修改并确认新的 Prompt 版本。</p><p class="chain-output"><span>留下什么</span>可继续修改和复用的提示词</p></div><figure class="chain-visual" data-gallery="prompt"><div class="figure-heading"><div class="variant-switch" role="group" aria-label="提示词链路界面"><button type="button" data-variant="0" aria-pressed="true">组合意图</button><button type="button" data-variant="1" aria-pressed="false">评估偏差</button></div><button type="button" data-enlarge="prompt-image">放大查看 ↗</button></div><button class="image-button" type="button" data-enlarge="prompt-image" aria-label="放大提示词链路截图"><img id="prompt-image" src="case-study/assets/04-prompt-builder-1280x800.png" alt="ArchBuddy 提示词构建实际界面" width="1280" height="800" loading="lazy"></button><figcaption data-caption>实际侧栏组合截图 · 建筑素材与 Prompt 为演示资料</figcaption></figure></article>
+  <article id="chain-assets" class="chain-row"><div class="chain-copy"><p class="chain-number">03 / 沉淀图词资产</p><h3>让这次的成果，<br>接住下一次设计。</h3><p>保存参考图、确认版本与效果图。按项目、关键词或自然语言找回，复用已有资产，再进入下一轮构建。</p><p class="chain-output"><span>留下什么</span>自己的参考图库与提示词库</p></div><figure class="chain-visual" data-gallery="assets"><div class="figure-heading"><div class="variant-switch" role="group" aria-label="图词资产界面"><button type="button" data-variant="0" aria-pressed="true">提示词库</button><button type="button" data-variant="1" aria-pressed="false">参考图库</button></div><button type="button" data-enlarge="assets-image">放大查看 ↗</button></div><button class="image-button" type="button" data-enlarge="assets-image" aria-label="放大图词资产截图"><img id="assets-image" src="case-study/assets/03-prompt-library-1280x800.png" alt="ArchBuddy 提示词库实际界面" width="1280" height="800" loading="lazy"></button><figcaption data-caption>实际词库界面 · 演示资料</figcaption></figure></article>
+</section>
+<section id="features" class="features-section" aria-labelledby="features-title"><div class="container">
+  <div class="section-heading"><div><p class="eyebrow green">具体功能</p><h2 id="features-title">三条链路，<br>落到这些具体操作。</h2></div></div>
+  <div class="feature-groups">
+    <div class="feature-group"><h3><span>01</span> 采集参考图</h3><ol><li><h4>网页图片采集</h4><p>通过图片浮框，保存到指定项目。</p></li><li><h4>多文件夹导入</h4><p>把已有参考文件夹一起导入图库。</p></li></ol></div>
+    <div class="feature-group"><h3><span>02</span> 反推与迭代提示词</h3><ol start="3"><li><h4>多图意图组合</h4><p>最多三张参考图，选择需要的设计维度。</p></li><li><h4>结构化提示词编辑</h4><p>编辑体量、材料、构图与光线，确认后复制。</p></li><li><h4>生成图偏差评估</h4><p>导回外部生成图，对照意图检查偏差。</p></li><li><h4>提示词版本确认</h4><p>根据评估修改，保留确认版本与效果图。</p></li></ol></div>
+    <div class="feature-group"><h3><span>03</span> 沉淀图词资产</h3><ol start="7"><li><h4>图词资产整理</h4><p>组织项目、来源图片与确认的 Prompt。</p></li><li><h4>关键词与语义检索</h4><p>通过文字找回参考与提示词，继续复用。</p></li></ol></div>
+  </div>
+</div></section>
+<section id="install" class="install-section container" aria-labelledby="install-title">
+  <div class="install-heading"><p class="eyebrow green">开始体验</p><h2 id="install-title">把这条工作链路，<br>放进你的浏览器。</h2></div>
+  <div class="download-options"><div><a class="button button-green" href="downloads/ArchBuddy-0.6.0-Chrome.zip" download="ArchBuddy-0.6.0-Chrome.zip">下载 Chrome 插件 <span aria-hidden="true">↓</span></a><p>ArchBuddy 0.6.0 · 约 176 KB · Chrome 141+</p></div><div><a class="button button-outline" href="downloads/ArchBuddy-test-images.7z" download="ArchBuddy测试集.7z">下载图片测试集 <span aria-hidden="true">↓</span></a><p>7z 压缩包 · 约 11.5 MB · 37 张建筑参考图</p></div></div>
+  <ol class="install-steps"><li><span>1</span><div><h3>下载并解压</h3><p>把插件 ZIP 解压到固定文件夹，保留该文件夹。</p></div></li><li><span>2</span><div><h3>开启开发者模式</h3><p>在 Chrome 地址栏打开 <code>chrome://extensions/</code></p><button class="copy-address" type="button" data-copy-address>复制扩展管理地址</button><span class="copy-feedback" id="copy-feedback" role="status"></span></div></li><li><span>3</span><div><h3>加载文件夹</h3><p>点击“加载已解压的扩展程序”，选择包含 <code>manifest.json</code> 的文件夹。</p></div></li></ol>
+  <p class="testset-guide"><strong>用测试集开始：</strong>解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。</p>
+  <div class="install-notes"><details><summary>需要启动服务器或配置模型 Key 吗？</summary><p>无需安装开发环境或填写 Key。插件连接现有 ArchBuddy 云端服务，AI 功能需联网，并按界面说明确认相关数据处理。这个网页提供介绍与下载，实际操作在 Chrome 插件中进行。</p></details><details><summary>图片和提示词存在哪里？</summary><p>图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。本地加载版与商店版通常使用不同扩展 ID，旧版资料不会自动迁移。</p></details></div>
+</section>
+</main>
+<footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#top">ArchBuddy</a><p>从参考图，到可复用的设计意图。</p><a href="https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/" target="_blank" rel="noopener noreferrer">隐私说明 ↗</a></div></footer>
+<dialog id="image-dialog" class="image-dialog"><div class="dialog-header"><span>ArchBuddy 实际界面 · 演示资料</span><button type="button" data-close-dialog>关闭</button></div><img id="dialog-image" alt="ArchBuddy 实际界面大图"></dialog>
+</body>
+</html>

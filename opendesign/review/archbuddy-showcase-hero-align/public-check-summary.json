@@ -1,0 +1,1180 @@
+{
+  "date": "2026-10-06T12:16:47.279Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "hero-align-20261006",
+  "scope": "仅首屏右边缘对齐、碰撞溢出、原入口与图库放大；本地附修前CSS70px位移对比",
+  "checks": [
+    {
+      "name": "1920 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+      ]
+    },
+    {
+      "name": "1920 首屏图片外框与顶部下载/容器右边对齐",
+      "pass": true,
+      "detail": {
+        "frameToDownload": 0,
+        "frameToContainer": 0,
+        "headerToHeroContainer": 0,
+        "imageToFrame": -1,
+        "marginRight": "0px"
+      }
+    },
+    {
+      "name": "1920 无横向溢出或容器越界",
+      "pass": true,
+      "detail": {
+        "viewport": 1920,
+        "scroll": 1920,
+        "rects": {
+          "viewport": 1920,
+          "scroll": 1920,
+          "cache": [
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+          ],
+          "header": {
+            "x": 340,
+            "y": 0,
+            "left": 340,
+            "right": 1580,
+            "top": 0,
+            "bottom": 84,
+            "width": 1240,
+            "height": 84
+          },
+          "headerDownload": {
+            "x": 1448,
+            "y": 18.953125,
+            "left": 1448,
+            "right": 1580,
+            "top": 18.953125,
+            "bottom": 64.046875,
+            "width": 132,
+            "height": 45.09375
+          },
+          "heroLayout": {
+            "x": 340,
+            "y": 84,
+            "left": 340,
+            "right": 1580,
+            "top": 84,
+            "bottom": 711.140625,
+            "width": 1240,
+            "height": 627.140625
+          },
+          "figure": {
+            "x": 909.796875,
+            "y": 179.75,
+            "left": 909.796875,
+            "right": 1580,
+            "top": 179.75,
+            "bottom": 599.375,
+            "width": 670.203125,
+            "height": 419.625
+          },
+          "frame": {
+            "x": 909.796875,
+            "y": 179.75,
+            "left": 909.796875,
+            "right": 1580,
+            "top": 179.75,
+            "bottom": 599.375,
+            "width": 670.203125,
+            "height": 419.625
+          },
+          "image": {
+            "x": 910.796875,
+            "y": 180.75,
+            "left": 910.796875,
+            "right": 1579,
+            "top": 180.75,
+            "bottom": 598.375,
+            "width": 668.203125,
+            "height": 417.625
+          },
+          "copy": {
+            "x": 340,
+            "y": 158,
+            "left": 340,
+            "right": 839.796875,
+            "top": 158,
+            "bottom": 621.140625,
+            "width": 499.796875,
+            "height": 463.140625
+          },
+          "title": {
+            "x": 340,
+            "y": 203.4375,
+            "left": 340,
+            "right": 839.796875,
+            "top": 203.4375,
+            "bottom": 456.140625,
+            "width": 499.796875,
+            "height": 252.703125
+          },
+          "actions": {
+            "x": 340,
+            "y": 573.140625,
+            "left": 340,
+            "right": 839.796875,
+            "top": 573.140625,
+            "bottom": 621.140625,
+            "width": 499.796875,
+            "height": 48
+          },
+          "brand": {
+            "x": 340,
+            "y": 19.5,
+            "left": 340,
+            "right": 507.359375,
+            "top": 19.5,
+            "bottom": 63.5,
+            "width": 167.359375,
+            "height": 44
+          },
+          "nav": {
+            "x": 1264,
+            "y": 18.953125,
+            "left": 1264,
+            "right": 1580,
+            "top": 18.953125,
+            "bottom": 64.046875,
+            "width": 316,
+            "height": 45.09375
+          },
+          "marginRight": "0px",
+          "text": "打通创作断点，让设计思路一路向前。",
+          "lines": [
+            {
+              "y": 197.4375,
+              "text": "打通创作断点，"
+            },
+            {
+              "y": 281.671875,
+              "text": "让设计思路"
+            },
+            {
+              "y": 365.90625,
+              "text": "一路向前。"
+            }
+          ],
+          "buttons": [
+            {
+              "text": "下载 Chrome 插件",
+              "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+              "download": null,
+              "rect": {
+                "x": 340,
+                "y": 573.140625,
+                "left": 340,
+                "right": 543.8125,
+                "top": 573.140625,
+                "bottom": 621.140625,
+                "width": 203.8125,
+                "height": 48
+              }
+            },
+            {
+              "text": "下载图片测试集",
+              "href": "downloads/ArchBuddy-test-images.7z",
+              "download": "ArchBuddy测试集.7z",
+              "rect": {
+                "x": 565.8125,
+                "y": 579.09375,
+                "left": 565.8125,
+                "right": 695.8125,
+                "top": 579.09375,
+                "bottom": 615.1875,
+                "width": 130,
+                "height": 36.09375
+              }
+            }
+          ],
+          "hero": {
+            "x": 0,
+            "y": 84,
+            "left": 0,
+            "right": 1920,
+            "top": 84,
+            "bottom": 711.140625,
+            "width": 1920,
+            "height": 627.140625
+          }
+        }
+      }
+    },
+    {
+      "name": "1920 标题图框导航按钮不碰撞且无孤字",
+      "pass": true,
+      "detail": {
+        "copy": {
+          "x": 340,
+          "y": 158,
+          "left": 340,
+          "right": 839.796875,
+          "top": 158,
+          "bottom": 621.140625,
+          "width": 499.796875,
+          "height": 463.140625
+        },
+        "frame": {
+          "x": 909.796875,
+          "y": 179.75,
+          "left": 909.796875,
+          "right": 1580,
+          "top": 179.75,
+          "bottom": 599.375,
+          "width": 670.203125,
+          "height": 419.625
+        },
+        "brand": {
+          "x": 340,
+          "y": 19.5,
+          "left": 340,
+          "right": 507.359375,
+          "top": 19.5,
+          "bottom": 63.5,
+          "width": 167.359375,
+          "height": 44
+        },
+        "nav": {
+          "x": 1264,
+          "y": 18.953125,
+          "left": 1264,
+          "right": 1580,
+          "top": 18.953125,
+          "bottom": 64.046875,
+          "width": 316,
+          "height": 45.09375
+        },
+        "buttons": [
+          {
+            "x": 340,
+            "y": 573.140625,
+            "left": 340,
+            "right": 543.8125,
+            "top": 573.140625,
+            "bottom": 621.140625,
+            "width": 203.8125,
+            "height": 48
+          },
+          {
+            "x": 565.8125,
+            "y": 579.09375,
+            "left": 565.8125,
+            "right": 695.8125,
+            "top": 579.09375,
+            "bottom": 615.1875,
+            "width": 130,
+            "height": 36.09375
+          }
+        ],
+        "lines": [
+          {
+            "y": 197.4375,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 281.671875,
+            "text": "让设计思路"
+          },
+          {
+            "y": 365.90625,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1920 首屏标题与两原入口保持",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null,
+          "rect": {
+            "x": 340,
+            "y": 573.140625,
+            "left": 340,
+            "right": 543.8125,
+            "top": 573.140625,
+            "bottom": 621.140625,
+            "width": 203.8125,
+            "height": 48
+          }
+        },
+        {
+          "text": "下载图片测试集",
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "download": "ArchBuddy测试集.7z",
+          "rect": {
+            "x": 565.8125,
+            "y": 579.09375,
+            "left": 565.8125,
+            "right": 695.8125,
+            "top": 579.09375,
+            "bottom": 615.1875,
+            "width": 130,
+            "height": 36.09375
+          }
+        }
+      ]
+    },
+    {
+      "name": "1920 首屏图库放大与关闭可用",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "image": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "1920 正式网页正常渲染且无HTML附件",
+      "pass": true,
+      "detail": {
+        "docs": [
+          {
+            "width": 1920,
+            "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+            "status": 200,
+            "type": "text/html",
+            "disposition": null
+          }
+        ],
+        "htmlDownloads": [],
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手"
+      }
+    },
+    {
+      "name": "1440 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+      ]
+    },
+    {
+      "name": "1440 首屏图片外框与顶部下载/容器右边对齐",
+      "pass": true,
+      "detail": {
+        "frameToDownload": 0,
+        "frameToContainer": 0,
+        "headerToHeroContainer": 0,
+        "imageToFrame": -1,
+        "marginRight": "0px"
+      }
+    },
+    {
+      "name": "1440 无横向溢出或容器越界",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "scroll": 1440,
+        "rects": {
+          "viewport": 1440,
+          "scroll": 1440,
+          "cache": [
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+          ],
+          "header": {
+            "x": 100,
+            "y": 0,
+            "left": 100,
+            "right": 1340,
+            "top": 0,
+            "bottom": 84,
+            "width": 1240,
+            "height": 84
+          },
+          "headerDownload": {
+            "x": 1208,
+            "y": 18.953125,
+            "left": 1208,
+            "right": 1340,
+            "top": 18.953125,
+            "bottom": 64.046875,
+            "width": 132,
+            "height": 45.09375
+          },
+          "heroLayout": {
+            "x": 100,
+            "y": 84,
+            "left": 100,
+            "right": 1340,
+            "top": 84,
+            "bottom": 697.078125,
+            "width": 1240,
+            "height": 613.078125
+          },
+          "figure": {
+            "x": 661.78125,
+            "y": 170.21875,
+            "left": 661.78125,
+            "right": 1340,
+            "top": 170.21875,
+            "bottom": 594.84375,
+            "width": 678.21875,
+            "height": 424.625
+          },
+          "frame": {
+            "x": 661.78125,
+            "y": 170.21875,
+            "left": 661.78125,
+            "right": 1340,
+            "top": 170.21875,
+            "bottom": 594.84375,
+            "width": 678.21875,
+            "height": 424.625
+          },
+          "image": {
+            "x": 662.78125,
+            "y": 171.21875,
+            "left": 662.78125,
+            "right": 1339,
+            "top": 171.21875,
+            "bottom": 593.84375,
+            "width": 676.21875,
+            "height": 422.625
+          },
+          "copy": {
+            "x": 100,
+            "y": 158,
+            "left": 100,
+            "right": 605.78125,
+            "top": 158,
+            "bottom": 607.078125,
+            "width": 505.78125,
+            "height": 449.078125
+          },
+          "title": {
+            "x": 100,
+            "y": 203.4375,
+            "left": 100,
+            "right": 605.78125,
+            "top": 203.4375,
+            "bottom": 442.078125,
+            "width": 505.78125,
+            "height": 238.640625
+          },
+          "actions": {
+            "x": 100,
+            "y": 559.078125,
+            "left": 100,
+            "right": 605.78125,
+            "top": 559.078125,
+            "bottom": 607.078125,
+            "width": 505.78125,
+            "height": 48
+          },
+          "brand": {
+            "x": 100,
+            "y": 19.5,
+            "left": 100,
+            "right": 267.359375,
+            "top": 19.5,
+            "bottom": 63.5,
+            "width": 167.359375,
+            "height": 44
+          },
+          "nav": {
+            "x": 1024,
+            "y": 18.953125,
+            "left": 1024,
+            "right": 1340,
+            "top": 18.953125,
+            "bottom": 64.046875,
+            "width": 316,
+            "height": 45.09375
+          },
+          "marginRight": "0px",
+          "text": "打通创作断点，让设计思路一路向前。",
+          "lines": [
+            {
+              "y": 197.4375,
+              "text": "打通创作断点，"
+            },
+            {
+              "y": 276.984375,
+              "text": "让设计思路"
+            },
+            {
+              "y": 356.53125,
+              "text": "一路向前。"
+            }
+          ],
+          "buttons": [
+            {
+              "text": "下载 Chrome 插件",
+              "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+              "download": null,
+              "rect": {
+                "x": 100,
+                "y": 559.078125,
+                "left": 100,
+                "right": 303.8125,
+                "top": 559.078125,
+                "bottom": 607.078125,
+                "width": 203.8125,
+                "height": 48
+              }
+            },
+            {
+              "text": "下载图片测试集",
+              "href": "downloads/ArchBuddy-test-images.7z",
+              "download": "ArchBuddy测试集.7z",
+              "rect": {
+                "x": 325.8125,
+                "y": 565.03125,
+                "left": 325.8125,
+                "right": 455.8125,
+                "top": 565.03125,
+                "bottom": 601.125,
+                "width": 130,
+                "height": 36.09375
+              }
+            }
+          ],
+          "hero": {
+            "x": 0,
+            "y": 84,
+            "left": 0,
+            "right": 1440,
+            "top": 84,
+            "bottom": 697.078125,
+            "width": 1440,
+            "height": 613.078125
+          }
+        }
+      }
+    },
+    {
+      "name": "1440 标题图框导航按钮不碰撞且无孤字",
+      "pass": true,
+      "detail": {
+        "copy": {
+          "x": 100,
+          "y": 158,
+          "left": 100,
+          "right": 605.78125,
+          "top": 158,
+          "bottom": 607.078125,
+          "width": 505.78125,
+          "height": 449.078125
+        },
+        "frame": {
+          "x": 661.78125,
+          "y": 170.21875,
+          "left": 661.78125,
+          "right": 1340,
+          "top": 170.21875,
+          "bottom": 594.84375,
+          "width": 678.21875,
+          "height": 424.625
+        },
+        "brand": {
+          "x": 100,
+          "y": 19.5,
+          "left": 100,
+          "right": 267.359375,
+          "top": 19.5,
+          "bottom": 63.5,
+          "width": 167.359375,
+          "height": 44
+        },
+        "nav": {
+          "x": 1024,
+          "y": 18.953125,
+          "left": 1024,
+          "right": 1340,
+          "top": 18.953125,
+          "bottom": 64.046875,
+          "width": 316,
+          "height": 45.09375
+        },
+        "buttons": [
+          {
+            "x": 100,
+            "y": 559.078125,
+            "left": 100,
+            "right": 303.8125,
+            "top": 559.078125,
+            "bottom": 607.078125,
+            "width": 203.8125,
+            "height": 48
+          },
+          {
+            "x": 325.8125,
+            "y": 565.03125,
+            "left": 325.8125,
+            "right": 455.8125,
+            "top": 565.03125,
+            "bottom": 601.125,
+            "width": 130,
+            "height": 36.09375
+          }
+        ],
+        "lines": [
+          {
+            "y": 197.4375,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 276.984375,
+            "text": "让设计思路"
+          },
+          {
+            "y": 356.53125,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 首屏标题与两原入口保持",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null,
+          "rect": {
+            "x": 100,
+            "y": 559.078125,
+            "left": 100,
+            "right": 303.8125,
+            "top": 559.078125,
+            "bottom": 607.078125,
+            "width": 203.8125,
+            "height": 48
+          }
+        },
+        {
+          "text": "下载图片测试集",
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "download": "ArchBuddy测试集.7z",
+          "rect": {
+            "x": 325.8125,
+            "y": 565.03125,
+            "left": 325.8125,
+            "right": 455.8125,
+            "top": 565.03125,
+            "bottom": 601.125,
+            "width": 130,
+            "height": 36.09375
+          }
+        }
+      ]
+    },
+    {
+      "name": "1440 首屏图库放大与关闭可用",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "image": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "1440 正式网页正常渲染且无HTML附件",
+      "pass": true,
+      "detail": {
+        "docs": [
+          {
+            "width": 1440,
+            "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+            "status": 200,
+            "type": "text/html",
+            "disposition": null
+          }
+        ],
+        "htmlDownloads": [],
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手"
+      }
+    },
+    {
+      "name": "390 本版缓存版本",
+      "pass": true,
+      "detail": [
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+      ]
+    },
+    {
+      "name": "390 首屏图片外框与顶部下载/容器右边对齐",
+      "pass": true,
+      "detail": {
+        "frameToDownload": 0,
+        "frameToContainer": 0,
+        "headerToHeroContainer": 0,
+        "imageToFrame": -1,
+        "marginRight": "0px"
+      }
+    },
+    {
+      "name": "390 无横向溢出或容器越界",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "scroll": 390,
+        "rects": {
+          "viewport": 390,
+          "scroll": 390,
+          "cache": [
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=hero-align-20261006",
+            "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=hero-align-20261006"
+          ],
+          "header": {
+            "x": 20,
+            "y": 0,
+            "left": 20,
+            "right": 370,
+            "top": 0,
+            "bottom": 72,
+            "width": 350,
+            "height": 72
+          },
+          "headerDownload": {
+            "x": 276,
+            "y": 14,
+            "left": 276,
+            "right": 370,
+            "top": 14,
+            "bottom": 58,
+            "width": 94,
+            "height": 44
+          },
+          "heroLayout": {
+            "x": 20,
+            "y": 72,
+            "left": 20,
+            "right": 370,
+            "top": 72,
+            "bottom": 780.3125,
+            "width": 350,
+            "height": 708.3125
+          },
+          "figure": {
+            "x": 20,
+            "y": 518.8125,
+            "left": 20,
+            "right": 370,
+            "top": 518.8125,
+            "bottom": 738.3125,
+            "width": 350,
+            "height": 219.5
+          },
+          "frame": {
+            "x": 20,
+            "y": 518.8125,
+            "left": 20,
+            "right": 370,
+            "top": 518.8125,
+            "bottom": 738.3125,
+            "width": 350,
+            "height": 219.5
+          },
+          "image": {
+            "x": 21,
+            "y": 519.8125,
+            "left": 21,
+            "right": 369,
+            "top": 519.8125,
+            "bottom": 737.3125,
+            "width": 348,
+            "height": 217.5
+          },
+          "copy": {
+            "x": 20,
+            "y": 116,
+            "left": 20,
+            "right": 370,
+            "top": 116,
+            "bottom": 484.8125,
+            "width": 350,
+            "height": 368.8125
+          },
+          "title": {
+            "x": 20,
+            "y": 154.140625,
+            "left": 20,
+            "right": 370,
+            "top": 154.140625,
+            "bottom": 336.625,
+            "width": 350,
+            "height": 182.484375
+          },
+          "actions": {
+            "x": 20,
+            "y": 438.8125,
+            "left": 20,
+            "right": 370,
+            "top": 438.8125,
+            "bottom": 484.8125,
+            "width": 350,
+            "height": 46
+          },
+          "brand": {
+            "x": 20,
+            "y": 17.5,
+            "left": 20,
+            "right": 160.84375,
+            "top": 17.5,
+            "bottom": 54.5,
+            "width": 140.84375,
+            "height": 37
+          },
+          "nav": {
+            "x": 212,
+            "y": 14,
+            "left": 212,
+            "right": 370,
+            "top": 14,
+            "bottom": 58,
+            "width": 158,
+            "height": 44
+          },
+          "marginRight": "0px",
+          "text": "打通创作断点，让设计思路一路向前。",
+          "lines": [
+            {
+              "y": 149.140625,
+              "text": "打通创作断点，"
+            },
+            {
+              "y": 209.96875,
+              "text": "让设计思路"
+            },
+            {
+              "y": 270.796875,
+              "text": "一路向前。"
+            }
+          ],
+          "buttons": [
+            {
+              "text": "下载 Chrome 插件",
+              "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+              "download": null,
+              "rect": {
+                "x": 20,
+                "y": 438.8125,
+                "left": 20,
+                "right": 205.671875,
+                "top": 438.8125,
+                "bottom": 484.8125,
+                "width": 185.671875,
+                "height": 46
+              }
+            },
+            {
+              "text": "下载图片测试集",
+              "href": "downloads/ArchBuddy-test-images.7z",
+              "download": "ArchBuddy测试集.7z",
+              "rect": {
+                "x": 225.671875,
+                "y": 443.765625,
+                "left": 225.671875,
+                "right": 353.671875,
+                "top": 443.765625,
+                "bottom": 479.859375,
+                "width": 128,
+                "height": 36.09375
+              }
+            }
+          ],
+          "hero": {
+            "x": 0,
+            "y": 72,
+            "left": 0,
+            "right": 390,
+            "top": 72,
+            "bottom": 780.3125,
+            "width": 390,
+            "height": 708.3125
+          }
+        }
+      }
+    },
+    {
+      "name": "390 标题图框导航按钮不碰撞且无孤字",
+      "pass": true,
+      "detail": {
+        "copy": {
+          "x": 20,
+          "y": 116,
+          "left": 20,
+          "right": 370,
+          "top": 116,
+          "bottom": 484.8125,
+          "width": 350,
+          "height": 368.8125
+        },
+        "frame": {
+          "x": 20,
+          "y": 518.8125,
+          "left": 20,
+          "right": 370,
+          "top": 518.8125,
+          "bottom": 738.3125,
+          "width": 350,
+          "height": 219.5
+        },
+        "brand": {
+          "x": 20,
+          "y": 17.5,
+          "left": 20,
+          "right": 160.84375,
+          "top": 17.5,
+          "bottom": 54.5,
+          "width": 140.84375,
+          "height": 37
+        },
+        "nav": {
+          "x": 212,
+          "y": 14,
+          "left": 212,
+          "right": 370,
+          "top": 14,
+          "bottom": 58,
+          "width": 158,
+          "height": 44
+        },
+        "buttons": [
+          {
+            "x": 20,
+            "y": 438.8125,
+            "left": 20,
+            "right": 205.671875,
+            "top": 438.8125,
+            "bottom": 484.8125,
+            "width": 185.671875,
+            "height": 46
+          },
+          {
+            "x": 225.671875,
+            "y": 443.765625,
+            "left": 225.671875,
+            "right": 353.671875,
+            "top": 443.765625,
+            "bottom": 479.859375,
+            "width": 128,
+            "height": 36.09375
+          }
+        ],
+        "lines": [
+          {
+            "y": 149.140625,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 209.96875,
+            "text": "让设计思路"
+          },
+          {
+            "y": 270.796875,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 首屏标题与两原入口保持",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null,
+          "rect": {
+            "x": 20,
+            "y": 438.8125,
+            "left": 20,
+            "right": 205.671875,
+            "top": 438.8125,
+            "bottom": 484.8125,
+            "width": 185.671875,
+            "height": 46
+          }
+        },
+        {
+          "text": "下载图片测试集",
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "download": "ArchBuddy测试集.7z",
+          "rect": {
+            "x": 225.671875,
+            "y": 443.765625,
+            "left": 225.671875,
+            "right": 353.671875,
+            "top": 443.765625,
+            "bottom": 479.859375,
+            "width": 128,
+            "height": 36.09375
+          }
+        }
+      ]
+    },
+    {
+      "name": "390 首屏图库放大与关闭可用",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "image": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/01-project-library-1280x800.png",
+        "closed": true
+      }
+    },
+    {
+      "name": "390 正式网页正常渲染且无HTML附件",
+      "pass": true,
+      "detail": {
+        "docs": [
+          {
+            "width": 390,
+            "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+            "status": 200,
+            "type": "text/html",
+            "disposition": null
+          }
+        ],
+        "htmlDownloads": [],
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手"
+      }
+    },
+    {
+      "name": "正式站点控制台与页面网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "documents": [
+    {
+      "width": 1920,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1920,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1920,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1920,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1920,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "public-1920-hero.png",
+    "public-1440-hero.png",
+    "public-390-hero.png"
+  ],
+  "count": {
+    "checks": 22,
+    "screenshots": 3,
+    "errors": 0
+  },
+  "pass": true,
+  "visualReview": {
+    "reviewer": "independent-verifier",
+    "viewports": [
+      1920,
+      1440,
+      390
+    ],
+    "screenshotsActuallyViewed": true,
+    "pass": true,
+    "findings": []
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-05",
+  "checks": [
+    {
+      "name": "390 三链路导航修复",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "orders": [
+          -202,
+          -202,
+          -202
+        ],
+        "title": "反推与迭代\n提示词",
+        "breakDisplay": "block"
+      }
+    },
+    {
+      "name": "360 三链路导航修复",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "orders": [
+          -214,
+          -214,
+          -214
+        ],
+        "title": "反推与迭代\n提示词",
+        "breakDisplay": "block"
+      }
+    },
+    {
+      "name": "1440 三链路导航修复",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "orders": [
+          264,
+          264,
+          264
+        ],
+        "title": "反推与迭代提示词",
+        "breakDisplay": "none"
+      }
+    }
+  ],
+  "pass": true
+}

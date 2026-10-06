@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-06T12:14:54.555Z",
+  "versionOnly": true,
+  "singleRule": true,
+  "preview": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "mime": "text/html; charset=utf-8",
+      "bytes": 24344
+    },
+    {
+      "file": "scroll-options.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 4493
+    },
+    {
+      "file": "scroll-options.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8",
+      "bytes": 2856
+    }
+  ]
+}

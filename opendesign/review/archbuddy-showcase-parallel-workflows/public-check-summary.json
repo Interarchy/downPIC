@@ -1,0 +1,2371 @@
+{
+  "date": "2026-10-05T11:19:07.362Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "parallel-workflows-20261005",
+  "scope": "第六版真实公网新访客；隔离context、不读取日常profile、不调用模型、不执行下载",
+  "checks": [
+    {
+      "name": "1440 本版真实HTML与无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=parallel-workflows-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "1440 并排与竖排布局",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "x": 100,
+          "y": 1534.640625,
+          "right": 706,
+          "bottom": 2238.640625,
+          "w": 606,
+          "h": 704
+        },
+        {
+          "id": "scenario-ai",
+          "x": 734,
+          "y": 1534.640625,
+          "right": 1340,
+          "bottom": 2238.640625,
+          "w": 606,
+          "h": 704
+        }
+      ]
+    },
+    {
+      "name": "1440 八真实框且等高",
+      "pass": true,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "x": 238,
+            "y": 1641.640625,
+            "right": 488,
+            "bottom": 1789.640625,
+            "w": 250,
+            "h": 148
+          },
+          {
+            "text": "方案创作",
+            "x": 238,
+            "y": 1845.640625,
+            "right": 488,
+            "bottom": 1993.640625,
+            "w": 250,
+            "h": 148
+          },
+          {
+            "text": "沉淀参考图库",
+            "x": 238,
+            "y": 2049.640625,
+            "right": 488,
+            "bottom": 2197.640625,
+            "w": 250,
+            "h": 148
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "x": 775,
+            "y": 1641.640625,
+            "right": 1023,
+            "bottom": 1789.640625,
+            "w": 248,
+            "h": 148
+          },
+          {
+            "text": "反推提示词",
+            "x": 1051,
+            "y": 1641.640625,
+            "right": 1299,
+            "bottom": 1789.640625,
+            "w": 248,
+            "h": 148
+          },
+          {
+            "text": "生成 AI效果图",
+            "x": 1051,
+            "y": 1845.640625,
+            "right": 1299,
+            "bottom": 1993.640625,
+            "w": 248,
+            "h": 148
+          },
+          {
+            "text": "迭代提示词",
+            "x": 1051,
+            "y": 2049.640625,
+            "right": 1299,
+            "bottom": 2197.640625,
+            "w": 248,
+            "h": 148
+          },
+          {
+            "text": "沉淀提示词库",
+            "x": 775,
+            "y": 2049.640625,
+            "right": 1023,
+            "bottom": 2197.640625,
+            "w": 248,
+            "h": 148
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 五阶段AI顺序和大回流",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 775,
+          "y": 1641.640625,
+          "right": 1023,
+          "bottom": 1789.640625,
+          "w": 248,
+          "h": 148
+        },
+        {
+          "text": "反推提示词",
+          "x": 1051,
+          "y": 1641.640625,
+          "right": 1299,
+          "bottom": 1789.640625,
+          "w": 248,
+          "h": 148
+        },
+        {
+          "text": "生成 AI效果图",
+          "x": 1051,
+          "y": 1845.640625,
+          "right": 1299,
+          "bottom": 1993.640625,
+          "w": 248,
+          "h": 148
+        },
+        {
+          "text": "迭代提示词",
+          "x": 1051,
+          "y": 2049.640625,
+          "right": 1299,
+          "bottom": 2197.640625,
+          "w": 248,
+          "h": 148
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 775,
+          "y": 2049.640625,
+          "right": 1023,
+          "bottom": 2197.640625,
+          "w": 248,
+          "h": 148
+        }
+      ]
+    },
+    {
+      "name": "1440 六玫红品牌贡献块",
+      "pass": true,
+      "detail": {
+        "breakColor": "rgb(165, 84, 66)",
+        "blocks": [
+          {
+            "type": "reference-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 285.5,
+              "y": 1718.6875,
+              "right": 440.5,
+              "bottom": 1774.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 238,
+              "y": 1641.640625,
+              "right": 488,
+              "bottom": 1789.640625,
+              "w": 250,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 313.53125,
+              "y": 1725.6875,
+              "right": 412.46875,
+              "bottom": 1747.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          },
+          {
+            "type": "reference-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 285.5,
+              "y": 2126.6875,
+              "right": 440.5,
+              "bottom": 2182.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 238,
+              "y": 2049.640625,
+              "right": 488,
+              "bottom": 2197.640625,
+              "w": 250,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 313.53125,
+              "y": 2133.6875,
+              "right": 412.46875,
+              "bottom": 2155.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          },
+          {
+            "type": "ai-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 821.5,
+              "y": 1718.6875,
+              "right": 976.5,
+              "bottom": 1774.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 775,
+              "y": 1641.640625,
+              "right": 1023,
+              "bottom": 1789.640625,
+              "w": 248,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 849.53125,
+              "y": 1725.6875,
+              "right": 948.46875,
+              "bottom": 1747.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          },
+          {
+            "type": "ai-prompt",
+            "brand": "ArchBuddy",
+            "caption": "AI 反推",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 1097.5,
+              "y": 1718.6875,
+              "right": 1252.5,
+              "bottom": 1774.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 1051,
+              "y": 1641.640625,
+              "right": 1299,
+              "bottom": 1789.640625,
+              "w": 248,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 1125.53125,
+              "y": 1725.6875,
+              "right": 1224.46875,
+              "bottom": 1747.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          },
+          {
+            "type": "ai-iterate",
+            "brand": "ArchBuddy",
+            "caption": "AI 评估",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 1097.5,
+              "y": 2126.6875,
+              "right": 1252.5,
+              "bottom": 2182.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 1051,
+              "y": 2049.640625,
+              "right": 1299,
+              "bottom": 2197.640625,
+              "w": 248,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 1125.53125,
+              "y": 2133.6875,
+              "right": 1224.46875,
+              "bottom": 2155.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          },
+          {
+            "type": "ai-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 821.5,
+              "y": 2126.6875,
+              "right": 976.5,
+              "bottom": 2182.875,
+              "w": 155,
+              "h": 56.1875
+            },
+            "parent": {
+              "x": 775,
+              "y": 2049.640625,
+              "right": 1023,
+              "bottom": 2197.640625,
+              "w": 248,
+              "h": 148
+            },
+            "brandRect": {
+              "x": 849.53125,
+              "y": 2133.6875,
+              "right": 948.46875,
+              "bottom": 2155.6875,
+              "w": 98.9375,
+              "h": 22
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 品牌行及贡献块不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 285.5,
+            "y": 1718.6875,
+            "right": 440.5,
+            "bottom": 1774.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 238,
+            "y": 1641.640625,
+            "right": 488,
+            "bottom": 1789.640625,
+            "w": 250,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 313.53125,
+            "y": 1725.6875,
+            "right": 412.46875,
+            "bottom": 1747.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        },
+        {
+          "type": "reference-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 285.5,
+            "y": 2126.6875,
+            "right": 440.5,
+            "bottom": 2182.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 238,
+            "y": 2049.640625,
+            "right": 488,
+            "bottom": 2197.640625,
+            "w": 250,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 313.53125,
+            "y": 2133.6875,
+            "right": 412.46875,
+            "bottom": 2155.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        },
+        {
+          "type": "ai-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 821.5,
+            "y": 1718.6875,
+            "right": 976.5,
+            "bottom": 1774.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 775,
+            "y": 1641.640625,
+            "right": 1023,
+            "bottom": 1789.640625,
+            "w": 248,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 849.53125,
+            "y": 1725.6875,
+            "right": 948.46875,
+            "bottom": 1747.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "brand": "ArchBuddy",
+          "caption": "AI 反推",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 1097.5,
+            "y": 1718.6875,
+            "right": 1252.5,
+            "bottom": 1774.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 1051,
+            "y": 1641.640625,
+            "right": 1299,
+            "bottom": 1789.640625,
+            "w": 248,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 1125.53125,
+            "y": 1725.6875,
+            "right": 1224.46875,
+            "bottom": 1747.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "brand": "ArchBuddy",
+          "caption": "AI 评估",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 1097.5,
+            "y": 2126.6875,
+            "right": 1252.5,
+            "bottom": 2182.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 1051,
+            "y": 2049.640625,
+            "right": 1299,
+            "bottom": 2197.640625,
+            "w": 248,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 1125.53125,
+            "y": 2133.6875,
+            "right": 1224.46875,
+            "bottom": 2155.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        },
+        {
+          "type": "ai-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 821.5,
+            "y": 2126.6875,
+            "right": 976.5,
+            "bottom": 2182.875,
+            "w": 155,
+            "h": 56.1875
+          },
+          "parent": {
+            "x": 775,
+            "y": 2049.640625,
+            "right": 1023,
+            "bottom": 2197.640625,
+            "w": 248,
+            "h": 148
+          },
+          "brandRect": {
+            "x": 849.53125,
+            "y": 2133.6875,
+            "right": 948.46875,
+            "bottom": 2155.6875,
+            "w": 98.9375,
+            "h": 22
+          }
+        }
+      ]
+    },
+    {
+      "name": "1440 外部与人工无品牌机会",
+      "pass": true,
+      "detail": {
+        "external": {
+          "opportunities": 0,
+          "text": "外部工具完成\nArchBuddy 未介入"
+        },
+        "manual": {
+          "opportunities": 0,
+          "text": "由设计师完成"
+        }
+      }
+    },
+    {
+      "name": "1440 参考回流及评估再生成双向",
+      "pass": true,
+      "detail": {
+        "referenceReturn": [
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#chevron-right"
+        ],
+        "feedback": [
+          {
+            "text": "评估",
+            "href": "assets/lucide.svg#chevron-down"
+          },
+          {
+            "text": "再生成",
+            "href": "assets/lucide.svg#chevron-up"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "1440 04结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "43px"
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 57,
+        "bad": []
+      }
+    },
+    {
+      "name": "1440 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "1440 #workflow导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 264.859375,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 #features导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 260.546875,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 #install导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 608.859375,
+        "header": 84
+      }
+    },
+    {
+      "name": "1440 prompt画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 prompt正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 assets画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 assets正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "1440 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440 复制管理地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "公网实际下载ArchBuddy-0.6.0-Chrome.zip",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+        "failure": null
+      }
+    },
+    {
+      "name": "公网实际下载ArchBuddy-test-images.7z",
+      "pass": true,
+      "detail": {
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+        "failure": null
+      }
+    },
+    {
+      "name": "390 本版真实HTML与无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=parallel-workflows-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 并排与竖排布局",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "x": 20,
+          "y": 1953.875,
+          "right": 370,
+          "bottom": 2650.875,
+          "w": 350,
+          "h": 697
+        },
+        {
+          "id": "scenario-ai",
+          "x": 20,
+          "y": 2674.875,
+          "right": 370,
+          "bottom": 3371.875,
+          "w": 350,
+          "h": 697
+        }
+      ]
+    },
+    {
+      "name": "390 八真实框且等高",
+      "pass": true,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "x": 47,
+            "y": 2043.875,
+            "right": 269,
+            "bottom": 2199.875,
+            "w": 222,
+            "h": 156
+          },
+          {
+            "text": "方案创作",
+            "x": 47,
+            "y": 2255.875,
+            "right": 269,
+            "bottom": 2411.875,
+            "w": 222,
+            "h": 156
+          },
+          {
+            "text": "沉淀参考图库",
+            "x": 47,
+            "y": 2467.875,
+            "right": 269,
+            "bottom": 2623.875,
+            "w": 222,
+            "h": 156
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "x": 47,
+            "y": 2764.875,
+            "right": 183,
+            "bottom": 2920.875,
+            "w": 136,
+            "h": 156
+          },
+          {
+            "text": "反推提示词",
+            "x": 207,
+            "y": 2764.875,
+            "right": 343,
+            "bottom": 2920.875,
+            "w": 136,
+            "h": 156
+          },
+          {
+            "text": "生成 AI效果图",
+            "x": 207,
+            "y": 2976.875,
+            "right": 343,
+            "bottom": 3132.875,
+            "w": 136,
+            "h": 156
+          },
+          {
+            "text": "迭代提示词",
+            "x": 207,
+            "y": 3188.875,
+            "right": 343,
+            "bottom": 3344.875,
+            "w": 136,
+            "h": 156
+          },
+          {
+            "text": "沉淀提示词库",
+            "x": 47,
+            "y": 3188.875,
+            "right": 183,
+            "bottom": 3344.875,
+            "w": 136,
+            "h": 156
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 五阶段AI顺序和大回流",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 47,
+          "y": 2764.875,
+          "right": 183,
+          "bottom": 2920.875,
+          "w": 136,
+          "h": 156
+        },
+        {
+          "text": "反推提示词",
+          "x": 207,
+          "y": 2764.875,
+          "right": 343,
+          "bottom": 2920.875,
+          "w": 136,
+          "h": 156
+        },
+        {
+          "text": "生成 AI效果图",
+          "x": 207,
+          "y": 2976.875,
+          "right": 343,
+          "bottom": 3132.875,
+          "w": 136,
+          "h": 156
+        },
+        {
+          "text": "迭代提示词",
+          "x": 207,
+          "y": 3188.875,
+          "right": 343,
+          "bottom": 3344.875,
+          "w": 136,
+          "h": 156
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 47,
+          "y": 3188.875,
+          "right": 183,
+          "bottom": 3344.875,
+          "w": 136,
+          "h": 156
+        }
+      ]
+    },
+    {
+      "name": "390 六玫红品牌贡献块",
+      "pass": true,
+      "detail": {
+        "breakColor": "rgb(165, 84, 66)",
+        "blocks": [
+          {
+            "type": "reference-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 80.5,
+              "y": 2125.4375,
+              "right": 235.5,
+              "bottom": 2179.234375,
+              "w": 155,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 2043.875,
+              "right": 269,
+              "bottom": 2199.875,
+              "w": 222,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 115.59375,
+              "y": 2132.4375,
+              "right": 200.40625,
+              "bottom": 2152.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          },
+          {
+            "type": "reference-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 80.5,
+              "y": 2549.4375,
+              "right": 235.5,
+              "bottom": 2603.234375,
+              "w": 155,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 2467.875,
+              "right": 269,
+              "bottom": 2623.875,
+              "w": 222,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 115.59375,
+              "y": 2556.4375,
+              "right": 200.40625,
+              "bottom": 2576.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 58,
+              "y": 2846.4375,
+              "right": 172,
+              "bottom": 2900.234375,
+              "w": 114,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 2764.875,
+              "right": 183,
+              "bottom": 2920.875,
+              "w": 136,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 72.59375,
+              "y": 2853.4375,
+              "right": 157.40625,
+              "bottom": 2873.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-prompt",
+            "brand": "ArchBuddy",
+            "caption": "AI 反推",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 218,
+              "y": 2846.4375,
+              "right": 332,
+              "bottom": 2900.234375,
+              "w": 114,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 207,
+              "y": 2764.875,
+              "right": 343,
+              "bottom": 2920.875,
+              "w": 136,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 232.59375,
+              "y": 2853.4375,
+              "right": 317.40625,
+              "bottom": 2873.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-iterate",
+            "brand": "ArchBuddy",
+            "caption": "AI 评估",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 218,
+              "y": 3270.4375,
+              "right": 332,
+              "bottom": 3324.234375,
+              "w": 114,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 207,
+              "y": 3188.875,
+              "right": 343,
+              "bottom": 3344.875,
+              "w": 136,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 232.59375,
+              "y": 3277.4375,
+              "right": 317.40625,
+              "bottom": 3297.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 58,
+              "y": 3270.4375,
+              "right": 172,
+              "bottom": 3324.234375,
+              "w": 114,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 3188.875,
+              "right": 183,
+              "bottom": 3344.875,
+              "w": 136,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 72.59375,
+              "y": 3277.4375,
+              "right": 157.40625,
+              "bottom": 3297.4375,
+              "w": 84.8125,
+              "h": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 品牌行及贡献块不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 80.5,
+            "y": 2125.4375,
+            "right": 235.5,
+            "bottom": 2179.234375,
+            "w": 155,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 2043.875,
+            "right": 269,
+            "bottom": 2199.875,
+            "w": 222,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 115.59375,
+            "y": 2132.4375,
+            "right": 200.40625,
+            "bottom": 2152.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        },
+        {
+          "type": "reference-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 80.5,
+            "y": 2549.4375,
+            "right": 235.5,
+            "bottom": 2603.234375,
+            "w": 155,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 2467.875,
+            "right": 269,
+            "bottom": 2623.875,
+            "w": 222,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 115.59375,
+            "y": 2556.4375,
+            "right": 200.40625,
+            "bottom": 2576.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 58,
+            "y": 2846.4375,
+            "right": 172,
+            "bottom": 2900.234375,
+            "w": 114,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 2764.875,
+            "right": 183,
+            "bottom": 2920.875,
+            "w": 136,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 72.59375,
+            "y": 2853.4375,
+            "right": 157.40625,
+            "bottom": 2873.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "brand": "ArchBuddy",
+          "caption": "AI 反推",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 218,
+            "y": 2846.4375,
+            "right": 332,
+            "bottom": 2900.234375,
+            "w": 114,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 207,
+            "y": 2764.875,
+            "right": 343,
+            "bottom": 2920.875,
+            "w": 136,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 232.59375,
+            "y": 2853.4375,
+            "right": 317.40625,
+            "bottom": 2873.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "brand": "ArchBuddy",
+          "caption": "AI 评估",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 218,
+            "y": 3270.4375,
+            "right": 332,
+            "bottom": 3324.234375,
+            "w": 114,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 207,
+            "y": 3188.875,
+            "right": 343,
+            "bottom": 3344.875,
+            "w": 136,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 232.59375,
+            "y": 3277.4375,
+            "right": 317.40625,
+            "bottom": 3297.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 58,
+            "y": 3270.4375,
+            "right": 172,
+            "bottom": 3324.234375,
+            "w": 114,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 3188.875,
+            "right": 183,
+            "bottom": 3344.875,
+            "w": 136,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 72.59375,
+            "y": 3277.4375,
+            "right": 157.40625,
+            "bottom": 3297.4375,
+            "w": 84.8125,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "390 外部与人工无品牌机会",
+      "pass": true,
+      "detail": {
+        "external": {
+          "opportunities": 0,
+          "text": "外部工具完成\nArchBuddy 未介入"
+        },
+        "manual": {
+          "opportunities": 0,
+          "text": "由设计师完成"
+        }
+      }
+    },
+    {
+      "name": "390 参考回流及评估再生成双向",
+      "pass": true,
+      "detail": {
+        "referenceReturn": [
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#chevron-right"
+        ],
+        "feedback": [
+          {
+            "text": "评估",
+            "href": "assets/lucide.svg#chevron-down"
+          },
+          {
+            "text": "再生成",
+            "href": "assets/lucide.svg#chevron-up"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "390 04结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "25.35px"
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 57,
+        "bad": []
+      }
+    },
+    {
+      "name": "390 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "390 #features导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 210.03125,
+        "header": 72
+      }
+    },
+    {
+      "name": "390 #install导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 334.03125,
+        "header": 72
+      }
+    },
+    {
+      "name": "390 prompt画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "390 prompt正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 assets画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "390 assets正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "390 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 复制管理地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "360 本版真实HTML与无HTML下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+        "script": "app.js?v=parallel-workflows-20261005",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 并排与竖排布局",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "x": 20,
+          "y": 1898.515625,
+          "right": 340,
+          "bottom": 2595.515625,
+          "w": 320,
+          "h": 697
+        },
+        {
+          "id": "scenario-ai",
+          "x": 20,
+          "y": 2619.515625,
+          "right": 340,
+          "bottom": 3316.515625,
+          "w": 320,
+          "h": 697
+        }
+      ]
+    },
+    {
+      "name": "360 八真实框且等高",
+      "pass": true,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "x": 47,
+            "y": 1988.515625,
+            "right": 239,
+            "bottom": 2144.515625,
+            "w": 192,
+            "h": 156
+          },
+          {
+            "text": "方案创作",
+            "x": 47,
+            "y": 2200.515625,
+            "right": 239,
+            "bottom": 2356.515625,
+            "w": 192,
+            "h": 156
+          },
+          {
+            "text": "沉淀参考图库",
+            "x": 47,
+            "y": 2412.515625,
+            "right": 239,
+            "bottom": 2568.515625,
+            "w": 192,
+            "h": 156
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "x": 47,
+            "y": 2709.515625,
+            "right": 168,
+            "bottom": 2865.515625,
+            "w": 121,
+            "h": 156
+          },
+          {
+            "text": "反推提示词",
+            "x": 192,
+            "y": 2709.515625,
+            "right": 313,
+            "bottom": 2865.515625,
+            "w": 121,
+            "h": 156
+          },
+          {
+            "text": "生成 AI效果图",
+            "x": 192,
+            "y": 2921.515625,
+            "right": 313,
+            "bottom": 3077.515625,
+            "w": 121,
+            "h": 156
+          },
+          {
+            "text": "迭代提示词",
+            "x": 192,
+            "y": 3133.515625,
+            "right": 313,
+            "bottom": 3289.515625,
+            "w": 121,
+            "h": 156
+          },
+          {
+            "text": "沉淀提示词库",
+            "x": 47,
+            "y": 3133.515625,
+            "right": 168,
+            "bottom": 3289.515625,
+            "w": 121,
+            "h": 156
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 五阶段AI顺序和大回流",
+      "pass": true,
+      "detail": [
+        {
+          "text": "收集参考图",
+          "x": 47,
+          "y": 2709.515625,
+          "right": 168,
+          "bottom": 2865.515625,
+          "w": 121,
+          "h": 156
+        },
+        {
+          "text": "反推提示词",
+          "x": 192,
+          "y": 2709.515625,
+          "right": 313,
+          "bottom": 2865.515625,
+          "w": 121,
+          "h": 156
+        },
+        {
+          "text": "生成 AI效果图",
+          "x": 192,
+          "y": 2921.515625,
+          "right": 313,
+          "bottom": 3077.515625,
+          "w": 121,
+          "h": 156
+        },
+        {
+          "text": "迭代提示词",
+          "x": 192,
+          "y": 3133.515625,
+          "right": 313,
+          "bottom": 3289.515625,
+          "w": 121,
+          "h": 156
+        },
+        {
+          "text": "沉淀提示词库",
+          "x": 47,
+          "y": 3133.515625,
+          "right": 168,
+          "bottom": 3289.515625,
+          "w": 121,
+          "h": 156
+        }
+      ]
+    },
+    {
+      "name": "360 六玫红品牌贡献块",
+      "pass": true,
+      "detail": {
+        "breakColor": "rgb(165, 84, 66)",
+        "blocks": [
+          {
+            "type": "reference-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 65.5,
+              "y": 2069.40625,
+              "right": 220.5,
+              "bottom": 2123.203125,
+              "w": 155,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 1988.515625,
+              "right": 239,
+              "bottom": 2144.515625,
+              "w": 192,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 103.125,
+              "y": 2076.40625,
+              "right": 182.859375,
+              "bottom": 2096.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          },
+          {
+            "type": "reference-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 65.5,
+              "y": 2493.40625,
+              "right": 220.5,
+              "bottom": 2547.203125,
+              "w": 155,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 2412.515625,
+              "right": 239,
+              "bottom": 2568.515625,
+              "w": 192,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 103.125,
+              "y": 2500.40625,
+              "right": 182.859375,
+              "bottom": 2520.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-capture",
+            "brand": "ArchBuddy",
+            "caption": "采集提效",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 55,
+              "y": 2790.40625,
+              "right": 160,
+              "bottom": 2844.203125,
+              "w": 105,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 2709.515625,
+              "right": 168,
+              "bottom": 2865.515625,
+              "w": 121,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 67.625,
+              "y": 2797.40625,
+              "right": 147.359375,
+              "bottom": 2817.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-prompt",
+            "brand": "ArchBuddy",
+            "caption": "AI 反推",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 200,
+              "y": 2790.40625,
+              "right": 305,
+              "bottom": 2844.203125,
+              "w": 105,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 192,
+              "y": 2709.515625,
+              "right": 313,
+              "bottom": 2865.515625,
+              "w": 121,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 212.625,
+              "y": 2797.40625,
+              "right": 292.359375,
+              "bottom": 2817.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-iterate",
+            "brand": "ArchBuddy",
+            "caption": "AI 评估",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 200,
+              "y": 3214.40625,
+              "right": 305,
+              "bottom": 3268.203125,
+              "w": 105,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 192,
+              "y": 3133.515625,
+              "right": 313,
+              "bottom": 3289.515625,
+              "w": 121,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 212.625,
+              "y": 3221.40625,
+              "right": 292.359375,
+              "bottom": 3241.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          },
+          {
+            "type": "ai-library",
+            "brand": "ArchBuddy",
+            "caption": "沉淀复用",
+            "natural": 150,
+            "background": "rgb(165, 84, 66)",
+            "rect": {
+              "x": 55,
+              "y": 3214.40625,
+              "right": 160,
+              "bottom": 3268.203125,
+              "w": 105,
+              "h": 53.796875
+            },
+            "parent": {
+              "x": 47,
+              "y": 3133.515625,
+              "right": 168,
+              "bottom": 3289.515625,
+              "w": 121,
+              "h": 156
+            },
+            "brandRect": {
+              "x": 67.625,
+              "y": 3221.40625,
+              "right": 147.359375,
+              "bottom": 3241.40625,
+              "w": 79.734375,
+              "h": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 品牌行及贡献块不溢出",
+      "pass": true,
+      "detail": [
+        {
+          "type": "reference-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 65.5,
+            "y": 2069.40625,
+            "right": 220.5,
+            "bottom": 2123.203125,
+            "w": 155,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 1988.515625,
+            "right": 239,
+            "bottom": 2144.515625,
+            "w": 192,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 103.125,
+            "y": 2076.40625,
+            "right": 182.859375,
+            "bottom": 2096.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        },
+        {
+          "type": "reference-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 65.5,
+            "y": 2493.40625,
+            "right": 220.5,
+            "bottom": 2547.203125,
+            "w": 155,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 2412.515625,
+            "right": 239,
+            "bottom": 2568.515625,
+            "w": 192,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 103.125,
+            "y": 2500.40625,
+            "right": 182.859375,
+            "bottom": 2520.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-capture",
+          "brand": "ArchBuddy",
+          "caption": "采集提效",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 55,
+            "y": 2790.40625,
+            "right": 160,
+            "bottom": 2844.203125,
+            "w": 105,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 2709.515625,
+            "right": 168,
+            "bottom": 2865.515625,
+            "w": 121,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 67.625,
+            "y": 2797.40625,
+            "right": 147.359375,
+            "bottom": 2817.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-prompt",
+          "brand": "ArchBuddy",
+          "caption": "AI 反推",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 200,
+            "y": 2790.40625,
+            "right": 305,
+            "bottom": 2844.203125,
+            "w": 105,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 192,
+            "y": 2709.515625,
+            "right": 313,
+            "bottom": 2865.515625,
+            "w": 121,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 212.625,
+            "y": 2797.40625,
+            "right": 292.359375,
+            "bottom": 2817.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-iterate",
+          "brand": "ArchBuddy",
+          "caption": "AI 评估",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 200,
+            "y": 3214.40625,
+            "right": 305,
+            "bottom": 3268.203125,
+            "w": 105,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 192,
+            "y": 3133.515625,
+            "right": 313,
+            "bottom": 3289.515625,
+            "w": 121,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 212.625,
+            "y": 3221.40625,
+            "right": 292.359375,
+            "bottom": 3241.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        },
+        {
+          "type": "ai-library",
+          "brand": "ArchBuddy",
+          "caption": "沉淀复用",
+          "natural": 150,
+          "background": "rgb(165, 84, 66)",
+          "rect": {
+            "x": 55,
+            "y": 3214.40625,
+            "right": 160,
+            "bottom": 3268.203125,
+            "w": 105,
+            "h": 53.796875
+          },
+          "parent": {
+            "x": 47,
+            "y": 3133.515625,
+            "right": 168,
+            "bottom": 3289.515625,
+            "w": 121,
+            "h": 156
+          },
+          "brandRect": {
+            "x": 67.625,
+            "y": 3221.40625,
+            "right": 147.359375,
+            "bottom": 3241.40625,
+            "w": 79.734375,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "360 外部与人工无品牌机会",
+      "pass": true,
+      "detail": {
+        "external": {
+          "opportunities": 0,
+          "text": "外部工具完成\nArchBuddy 未介入"
+        },
+        "manual": {
+          "opportunities": 0,
+          "text": "由设计师完成"
+        }
+      }
+    },
+    {
+      "name": "360 参考回流及评估再生成双向",
+      "pass": true,
+      "detail": {
+        "referenceReturn": [
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#chevron-right"
+        ],
+        "feedback": [
+          {
+            "text": "评估",
+            "href": "assets/lucide.svg#chevron-down"
+          },
+          {
+            "text": "再生成",
+            "href": "assets/lucide.svg#chevron-up"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 五章节顺序",
+      "pass": true,
+      "detail": [
+        "01 方案创作中的断点",
+        "02 工作链路与产品机会",
+        "03 我们的产品思路",
+        "04 三大功能",
+        "05 下载与安装"
+      ]
+    },
+    {
+      "name": "360 04结论单行",
+      "pass": true,
+      "detail": {
+        "text": "三大功能支撑两条业务链路",
+        "lines": 1,
+        "size": "23.4px"
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 可见Lucide渲染",
+      "pass": true,
+      "detail": {
+        "count": 57,
+        "bad": []
+      }
+    },
+    {
+      "name": "360 顶部实色下滑透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "color": "rgb(21, 59, 45)",
+          "image": "none",
+          "blur": "none",
+          "position": "sticky"
+        },
+        "scroll": {
+          "top": 0,
+          "bg": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "360 #features导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 209.53125,
+        "header": 72
+      }
+    },
+    {
+      "name": "360 #install导航无遮挡",
+      "pass": true,
+      "detail": {
+        "heading": 341.765625,
+        "header": 72
+      }
+    },
+    {
+      "name": "360 prompt画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/04-prompt-builder-1280x800.png",
+        "next": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "360 prompt正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/05-prompt-optimization-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 prompt关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 assets画廊切换",
+      "pass": true,
+      "detail": {
+        "old": "case-study/assets/03-prompt-library-1280x800.png",
+        "next": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "360 assets正确源图放大和关闭图标",
+      "pass": true,
+      "detail": {
+        "image": {
+          "src": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+          "w": 1280
+        },
+        "source": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/case-study/assets/02-image-description-1280x800.png",
+        "x": {
+          "w": 12,
+          "h": 12
+        }
+      }
+    },
+    {
+      "name": "360 assets关闭",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "360 复制管理地址",
+      "pass": true,
+      "detail": "chrome://extensions/"
+    },
+    {
+      "name": "实际Document200/text-html无附件",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "站点异常0",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 1440
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 390
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 390
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 360
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 360
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "errors": [],
+  "downloads": [
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "filename": "ArchBuddy-0.6.0-Chrome.zip",
+      "bytes": 179857,
+      "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D",
+      "failure": null
+    },
+    {
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+      "filename": "ArchBuddy测试集.7z",
+      "bytes": 12020913,
+      "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD",
+      "failure": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-platform-warning.png",
+    "public-1440-header-scrolled.png",
+    "public-1440-reference-cycle.png",
+    "public-1440-ai-cycle.png",
+    "public-1440-feature-heading.png",
+    "public-1440-workflow.png",
+    "public-390-platform-warning.png",
+    "public-390-header-scrolled.png",
+    "public-390-reference-cycle.png",
+    "public-390-ai-cycle.png",
+    "public-390-feature-heading.png",
+    "public-360-platform-warning.png",
+    "public-360-header-scrolled.png",
+    "public-360-reference-cycle.png",
+    "public-360-ai-cycle.png",
+    "public-360-feature-heading.png"
+  ],
+  "pass": true,
+  "count": {
+    "checks": 71,
+    "screenshots": 16,
+    "errors": 0
+  }
+}

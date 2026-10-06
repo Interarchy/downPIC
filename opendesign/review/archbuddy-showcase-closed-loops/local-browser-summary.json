@@ -1,0 +1,2298 @@
+{
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "date": "2026-10-05T10:08:48.303Z",
+  "checks": [
+    {
+      "name": "1440 HTTP200新缓存版本",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "name": "1440 header顶部实色滚动透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "top": 0,
+          "position": "sticky",
+          "background": "rgb(21, 59, 45) none repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "none"
+        },
+        "scrolled": {
+          "top": 0,
+          "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8)) repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 1440,
+        "scroll": 1440,
+        "fractureNodes": [
+          "保存图片\n\n保存打断思路",
+          "方案创作",
+          "编写参考图\n提示词\n\n想法难以表达",
+          "AI 效果图\n生成与优化",
+          "成果复用\n\n成果难以复用"
+        ],
+        "links": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "conceptNodes": [
+          {
+            "text": "采集图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          },
+          {
+            "text": "编写提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          },
+          {
+            "text": "提示词迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          }
+        ],
+        "foundation": "32px",
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 110
+          },
+          {
+            "text": "方案创作",
+            "h": 110
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 110
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 132
+          },
+          {
+            "text": "反推提示词",
+            "h": 132
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 132
+          },
+          {
+            "text": "迭代提示词",
+            "h": 132
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 132
+          }
+        ],
+        "sectionNumbers": [
+          {
+            "text": "01",
+            "size": "22px"
+          },
+          {
+            "text": "02",
+            "size": "22px"
+          },
+          {
+            "text": "03",
+            "size": "22px"
+          },
+          {
+            "text": "04",
+            "size": "22px"
+          },
+          {
+            "text": "05",
+            "size": "22px"
+          }
+        ],
+        "captions": 0,
+        "bridges": [
+          {
+            "text": "图片归档",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "找回参考",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "图词沉淀",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "复用意图",
+            "size": "16px",
+            "icon": "30px"
+          }
+        ],
+        "icons": [
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#drafting-compass",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sparkles",
+            "w": 20.004793167114258,
+            "h": 20.004789352416992
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#image",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#folder-open",
+            "w": 20.003511428833008,
+            "h": 17.000141143798828
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#search",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#copy",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#arrow-up-right",
+            "w": 10,
+            "h": 10
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 产品三节点同色且资产标题字号足够",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          {
+            "text": "采集图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          },
+          {
+            "text": "编写提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          },
+          {
+            "text": "提示词迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "26px"
+          }
+        ],
+        "foundation": "32px"
+      }
+    },
+    {
+      "name": "1440 参考三框AI五框及AI同高",
+      "pass": true,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 110
+          },
+          {
+            "text": "方案创作",
+            "h": 110
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 110
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 132
+          },
+          {
+            "text": "反推提示词",
+            "h": 132
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 132
+          },
+          {
+            "text": "迭代提示词",
+            "h": 132
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 132
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 删除旧图注与小字",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "1440 章节序号加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01",
+          "size": "22px"
+        },
+        {
+          "text": "02",
+          "size": "22px"
+        },
+        {
+          "text": "03",
+          "size": "22px"
+        },
+        {
+          "text": "04",
+          "size": "22px"
+        },
+        {
+          "text": "05",
+          "size": "22px"
+        }
+      ]
+    },
+    {
+      "name": "1440 功能桥字体图标加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "图片归档",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "找回参考",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "图词沉淀",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "复用意图",
+          "size": "16px",
+          "icon": "30px"
+        }
+      ]
+    },
+    {
+      "name": "1440 可见Lucide全部渲染",
+      "pass": true,
+      "detail": {
+        "count": 56,
+        "bad": []
+      }
+    },
+    {
+      "name": "1024 HTTP200新缓存版本",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "name": "1024 header顶部实色滚动透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "top": 0,
+          "position": "sticky",
+          "background": "rgb(21, 59, 45) none repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "none"
+        },
+        "scrolled": {
+          "top": 0,
+          "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8)) repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "1024 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 1024,
+        "scroll": 1024,
+        "fractureNodes": [
+          "保存图片\n\n保存打断思路",
+          "方案创作",
+          "编写参考图\n提示词\n\n想法难以表达",
+          "AI 效果图\n生成与优化",
+          "成果复用\n\n成果难以复用"
+        ],
+        "links": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "conceptNodes": [
+          {
+            "text": "采集图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          },
+          {
+            "text": "编写提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          },
+          {
+            "text": "提示词迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          }
+        ],
+        "foundation": "32px",
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 110
+          },
+          {
+            "text": "方案创作",
+            "h": 110
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 110
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 132
+          },
+          {
+            "text": "反推提示词",
+            "h": 132
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 132
+          },
+          {
+            "text": "迭代提示词",
+            "h": 132
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 132
+          }
+        ],
+        "sectionNumbers": [
+          {
+            "text": "01",
+            "size": "22px"
+          },
+          {
+            "text": "02",
+            "size": "22px"
+          },
+          {
+            "text": "03",
+            "size": "22px"
+          },
+          {
+            "text": "04",
+            "size": "22px"
+          },
+          {
+            "text": "05",
+            "size": "22px"
+          }
+        ],
+        "captions": 0,
+        "bridges": [
+          {
+            "text": "图片归档",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "找回参考",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "图词沉淀",
+            "size": "16px",
+            "icon": "30px"
+          },
+          {
+            "text": "复用意图",
+            "size": "16px",
+            "icon": "30px"
+          }
+        ],
+        "icons": [
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#drafting-compass",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sparkles",
+            "w": 20.004793167114258,
+            "h": 20.004789352416992
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#image",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#folder-open",
+            "w": 20.003511428833008,
+            "h": 17.000141143798828
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#search",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#copy",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#arrow-up-right",
+            "w": 10,
+            "h": 10
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 产品三节点同色且资产标题字号足够",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          {
+            "text": "采集图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          },
+          {
+            "text": "编写提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          },
+          {
+            "text": "提示词迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "23px"
+          }
+        ],
+        "foundation": "32px"
+      }
+    },
+    {
+      "name": "1024 参考三框AI五框及AI同高",
+      "pass": true,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 110
+          },
+          {
+            "text": "方案创作",
+            "h": 110
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 110
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 132
+          },
+          {
+            "text": "反推提示词",
+            "h": 132
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 132
+          },
+          {
+            "text": "迭代提示词",
+            "h": 132
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 132
+          }
+        ]
+      }
+    },
+    {
+      "name": "1024 删除旧图注与小字",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "1024 章节序号加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01",
+          "size": "22px"
+        },
+        {
+          "text": "02",
+          "size": "22px"
+        },
+        {
+          "text": "03",
+          "size": "22px"
+        },
+        {
+          "text": "04",
+          "size": "22px"
+        },
+        {
+          "text": "05",
+          "size": "22px"
+        }
+      ]
+    },
+    {
+      "name": "1024 功能桥字体图标加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "图片归档",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "找回参考",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "图词沉淀",
+          "size": "16px",
+          "icon": "30px"
+        },
+        {
+          "text": "复用意图",
+          "size": "16px",
+          "icon": "30px"
+        }
+      ]
+    },
+    {
+      "name": "1024 可见Lucide全部渲染",
+      "pass": true,
+      "detail": {
+        "count": 56,
+        "bad": []
+      }
+    },
+    {
+      "name": "390 HTTP200新缓存版本",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "name": "390 header顶部实色滚动透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "top": 0,
+          "position": "sticky",
+          "background": "rgb(21, 59, 45) none repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "none"
+        },
+        "scrolled": {
+          "top": 0,
+          "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8)) repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 390,
+        "scroll": 390,
+        "fractureNodes": [
+          "保存图片\n\n保存打断思路",
+          "方案创作",
+          "编写参考图提示词\n\n想法难以表达",
+          "AI 效果图生成与优化",
+          "成果复用\n\n成果难以复用"
+        ],
+        "links": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "conceptNodes": [
+          {
+            "text": "采集\n图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          },
+          {
+            "text": "编写\n提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          },
+          {
+            "text": "提示词\n迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          }
+        ],
+        "foundation": "25px",
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 104
+          },
+          {
+            "text": "方案创作",
+            "h": 104
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 104
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 84
+          },
+          {
+            "text": "反推提示词",
+            "h": 84
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 106.390625
+          },
+          {
+            "text": "迭代提示词",
+            "h": 84
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 84
+          }
+        ],
+        "sectionNumbers": [
+          {
+            "text": "01",
+            "size": "20px"
+          },
+          {
+            "text": "02",
+            "size": "20px"
+          },
+          {
+            "text": "03",
+            "size": "20px"
+          },
+          {
+            "text": "04",
+            "size": "20px"
+          },
+          {
+            "text": "05",
+            "size": "20px"
+          }
+        ],
+        "captions": 0,
+        "bridges": [
+          {
+            "text": "图片归档",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "找回参考",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "图词沉淀",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "复用意图",
+            "size": "15px",
+            "icon": "28px"
+          }
+        ],
+        "icons": [
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#drafting-compass",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sparkles",
+            "w": 20.004793167114258,
+            "h": 20.004789352416992
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#image",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#folder-open",
+            "w": 20.003511428833008,
+            "h": 17.000141143798828
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#search",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#copy",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#arrow-up-right",
+            "w": 10,
+            "h": 10
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 产品三节点同色且资产标题字号足够",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          {
+            "text": "采集\n图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          },
+          {
+            "text": "编写\n提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          },
+          {
+            "text": "提示词\n迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "19px"
+          }
+        ],
+        "foundation": "25px"
+      }
+    },
+    {
+      "name": "390 参考三框AI五框及AI同高",
+      "pass": false,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 104
+          },
+          {
+            "text": "方案创作",
+            "h": 104
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 104
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 84
+          },
+          {
+            "text": "反推提示词",
+            "h": 84
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 106.390625
+          },
+          {
+            "text": "迭代提示词",
+            "h": 84
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 84
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 删除旧图注与小字",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "390 章节序号加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01",
+          "size": "20px"
+        },
+        {
+          "text": "02",
+          "size": "20px"
+        },
+        {
+          "text": "03",
+          "size": "20px"
+        },
+        {
+          "text": "04",
+          "size": "20px"
+        },
+        {
+          "text": "05",
+          "size": "20px"
+        }
+      ]
+    },
+    {
+      "name": "390 功能桥字体图标加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "图片归档",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "找回参考",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "图词沉淀",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "复用意图",
+          "size": "15px",
+          "icon": "28px"
+        }
+      ]
+    },
+    {
+      "name": "390 可见Lucide全部渲染",
+      "pass": true,
+      "detail": {
+        "count": 58,
+        "bad": []
+      }
+    },
+    {
+      "name": "360 HTTP200新缓存版本",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "name": "360 header顶部实色滚动透明blur固定",
+      "pass": true,
+      "detail": {
+        "top": {
+          "top": 0,
+          "position": "sticky",
+          "background": "rgb(21, 59, 45) none repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "none"
+        },
+        "scrolled": {
+          "top": 0,
+          "background": "rgba(0, 0, 0, 0) linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8)) repeat scroll 0% 0% / auto padding-box border-box",
+          "blur": "blur(16px)",
+          "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+        }
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "viewport": 360,
+        "scroll": 360,
+        "fractureNodes": [
+          "保存图片\n\n保存打断思路",
+          "方案创作",
+          "编写参考图提示词\n\n想法难以表达",
+          "AI 效果图生成与优化",
+          "成果复用\n\n成果难以复用"
+        ],
+        "links": [
+          "参考难以复用",
+          "说不清意图",
+          "修改缺少依据",
+          "图词难以沉淀"
+        ],
+        "conceptNodes": [
+          {
+            "text": "采集\n图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          },
+          {
+            "text": "编写\n提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          },
+          {
+            "text": "提示词\n迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          }
+        ],
+        "foundation": "24px",
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 104
+          },
+          {
+            "text": "方案创作",
+            "h": 104
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 104
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 84
+          },
+          {
+            "text": "反推提示词",
+            "h": 84
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 104.984375
+          },
+          {
+            "text": "迭代提示词",
+            "h": 84
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 84
+          }
+        ],
+        "sectionNumbers": [
+          {
+            "text": "01",
+            "size": "20px"
+          },
+          {
+            "text": "02",
+            "size": "20px"
+          },
+          {
+            "text": "03",
+            "size": "20px"
+          },
+          {
+            "text": "04",
+            "size": "20px"
+          },
+          {
+            "text": "05",
+            "size": "20px"
+          }
+        ],
+        "captions": 0,
+        "bridges": [
+          {
+            "text": "图片归档",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "找回参考",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "图词沉淀",
+            "size": "15px",
+            "icon": "28px"
+          },
+          {
+            "text": "复用意图",
+            "size": "15px",
+            "icon": "28px"
+          }
+        ],
+        "icons": [
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#unlink",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#drafting-compass",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#images",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#sparkles",
+            "w": 20.004793167114258,
+            "h": 20.004789352416992
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#image",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#sliders-horizontal",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-right",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#chevron-left",
+            "w": 6,
+            "h": 12
+          },
+          {
+            "href": "assets/lucide.svg#folder-open",
+            "w": 20.003511428833008,
+            "h": 17.000141143798828
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#file-text",
+            "w": 16,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-up",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#library",
+            "w": 16,
+            "h": 16
+          },
+          {
+            "href": "assets/lucide.svg#search",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#download",
+            "w": 18,
+            "h": 18
+          },
+          {
+            "href": "assets/lucide.svg#copy",
+            "w": 20,
+            "h": 20
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#chevron-down",
+            "w": 12,
+            "h": 6
+          },
+          {
+            "href": "assets/lucide.svg#arrow-up-right",
+            "w": 10,
+            "h": 10
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 产品三节点同色且资产标题字号足够",
+      "pass": true,
+      "detail": {
+        "nodes": [
+          {
+            "text": "采集\n图片",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          },
+          {
+            "text": "编写\n提示词",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          },
+          {
+            "text": "提示词\n迭代优化",
+            "bg": "rgb(224, 235, 227)",
+            "size": "18px"
+          }
+        ],
+        "foundation": "24px"
+      }
+    },
+    {
+      "name": "360 参考三框AI五框及AI同高",
+      "pass": false,
+      "detail": {
+        "reference": [
+          {
+            "text": "采集参考图",
+            "h": 104
+          },
+          {
+            "text": "方案创作",
+            "h": 104
+          },
+          {
+            "text": "沉淀参考图库",
+            "h": 104
+          }
+        ],
+        "ai": [
+          {
+            "text": "收集参考图",
+            "h": 84
+          },
+          {
+            "text": "反推提示词",
+            "h": 84
+          },
+          {
+            "text": "生成 AI效果图\n\n外部生图工具",
+            "h": 104.984375
+          },
+          {
+            "text": "迭代提示词",
+            "h": 84
+          },
+          {
+            "text": "沉淀提示词库",
+            "h": 84
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 删除旧图注与小字",
+      "pass": true,
+      "detail": {
+        "count": 0
+      }
+    },
+    {
+      "name": "360 章节序号加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01",
+          "size": "20px"
+        },
+        {
+          "text": "02",
+          "size": "20px"
+        },
+        {
+          "text": "03",
+          "size": "20px"
+        },
+        {
+          "text": "04",
+          "size": "20px"
+        },
+        {
+          "text": "05",
+          "size": "20px"
+        }
+      ]
+    },
+    {
+      "name": "360 功能桥字体图标加大",
+      "pass": true,
+      "detail": [
+        {
+          "text": "图片归档",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "找回参考",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "图词沉淀",
+          "size": "15px",
+          "icon": "28px"
+        },
+        {
+          "text": "复用意图",
+          "size": "15px",
+          "icon": "28px"
+        }
+      ]
+    },
+    {
+      "name": "360 可见Lucide全部渲染",
+      "pass": true,
+      "detail": {
+        "count": 58,
+        "bad": []
+      }
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "1440-header-top.png",
+    "1440-header-scrolled.png",
+    "1440-problem.png",
+    "1440-concept.png",
+    "1440-reference-cycle.png",
+    "1440-ai-cycle.png",
+    "1440-features.png",
+    "1024-header-top.png",
+    "1024-header-scrolled.png",
+    "1024-problem.png",
+    "1024-concept.png",
+    "1024-reference-cycle.png",
+    "1024-ai-cycle.png",
+    "1024-features.png",
+    "390-header-top.png",
+    "390-header-scrolled.png",
+    "390-problem.png",
+    "390-concept.png",
+    "390-reference-cycle.png",
+    "390-ai-cycle.png",
+    "390-features.png",
+    "360-header-top.png",
+    "360-header-scrolled.png",
+    "360-problem.png",
+    "360-concept.png",
+    "360-reference-cycle.png",
+    "360-ai-cycle.png",
+    "360-features.png"
+  ],
+  "pass": false
+}

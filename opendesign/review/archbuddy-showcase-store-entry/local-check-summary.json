@@ -1,0 +1,266 @@
+{
+  "date": "2026-10-05T15:57:06.232Z",
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "contentVersion": "store-entry-20261005",
+  "scope": "仅本轮slogan与两个商店CTA及测试集链接；不重跑旧流程",
+  "checks": [
+    {
+      "name": "1440 本版cache query",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "1440 新slogan三行",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 197,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 277,
+            "text": "让设计思路"
+          },
+          {
+            "y": 357,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 标题未溢出或裁切",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 100,
+          "right": 605.78125
+        },
+        "minLeft": 100,
+        "maxRight": 554.59375
+      }
+    },
+    {
+      "name": "1440 两插件CTA精确商店URL名称不变无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "1440 两测试集链接不变",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "1440 无全页横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "390 本版cache query",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "390 新slogan三行",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 149,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 210,
+            "text": "让设计思路"
+          },
+          {
+            "y": 271,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 标题未溢出或裁切",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 20,
+          "right": 370
+        },
+        "minLeft": 20,
+        "maxRight": 367.625
+      }
+    },
+    {
+      "name": "390 两插件CTA精确商店URL名称不变无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "390 两测试集链接不变",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "390 无全页横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "360 本版cache query",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "360 新slogan三行",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 149,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 203,
+            "text": "让设计思路"
+          },
+          {
+            "y": 257,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 标题未溢出或裁切",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 20,
+          "right": 340
+        },
+        "minLeft": 20,
+        "maxRight": 327.515625
+      }
+    },
+    {
+      "name": "360 两插件CTA精确商店URL名称不变无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "360 两测试集链接不变",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "360 无全页横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "页面无错误",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "1440-homepage.png",
+    "1440-download-options.png",
+    "390-homepage.png",
+    "390-download-options.png",
+    "360-homepage.png",
+    "360-download-options.png"
+  ],
+  "pass": true
+}

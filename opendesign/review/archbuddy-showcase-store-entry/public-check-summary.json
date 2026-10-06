@@ -1,0 +1,423 @@
+{
+  "date": "2026-10-05T16:00:50.398Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "version": "store-entry-20261005",
+  "contentVersion": "store-entry-20261005",
+  "scope": "第七版仅slogan/两商店CTA/两测试集链接与页面错误；不复跑画廊、流程、ZIP下载或安装",
+  "checks": [
+    {
+      "name": "1440 实际HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "1440 本轮store-entry版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "1440 新slogan三行且无孤字",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 197,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 277,
+            "text": "让设计思路"
+          },
+          {
+            "y": 357,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 标题无裁切或溢出",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 100,
+          "right": 605.78125
+        },
+        "minLeft": 100,
+        "maxRight": 554.59375
+      }
+    },
+    {
+      "name": "1440 两插件CTA精确URL原名称无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "1440 两测试集链接保持原样",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "1440 全页无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "390 实际HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 本轮store-entry版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "390 新slogan三行且无孤字",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 149,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 210,
+            "text": "让设计思路"
+          },
+          {
+            "y": 271,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 标题无裁切或溢出",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 20,
+          "right": 370
+        },
+        "minLeft": 20,
+        "maxRight": 367.625
+      }
+    },
+    {
+      "name": "390 两插件CTA精确URL原名称无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "390 两测试集链接保持原样",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "390 全页无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "360 实际HTML无附件下载",
+      "pass": true,
+      "detail": {
+        "title": "ArchBuddy · 建筑设计师的参考图与提示词助手",
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "360 本轮store-entry版本",
+      "pass": true,
+      "detail": [
+        "styles.css?v=store-entry-20261005",
+        "app.js?v=store-entry-20261005"
+      ]
+    },
+    {
+      "name": "360 新slogan三行且无孤字",
+      "pass": true,
+      "detail": {
+        "title": "打通创作断点，\n让设计思路\n一路向前。",
+        "lines": [
+          {
+            "y": 149,
+            "text": "打通创作断点，"
+          },
+          {
+            "y": 203,
+            "text": "让设计思路"
+          },
+          {
+            "y": 257,
+            "text": "一路向前。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "360 标题无裁切或溢出",
+      "pass": true,
+      "detail": {
+        "box": {
+          "left": 20,
+          "right": 340
+        },
+        "minLeft": 20,
+        "maxRight": 327.515625
+      }
+    },
+    {
+      "name": "360 两插件CTA精确URL原名称无download",
+      "pass": true,
+      "detail": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        },
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "download": null
+        }
+      ]
+    },
+    {
+      "name": "360 两测试集链接保持原样",
+      "pass": true,
+      "detail": [
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        },
+        {
+          "href": "downloads/ArchBuddy-test-images.7z",
+          "text": "下载图片测试集",
+          "download": "ArchBuddy测试集.7z"
+        }
+      ]
+    },
+    {
+      "name": "360 全页无横向溢出",
+      "pass": true,
+      "detail": {
+        "width": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "三个正式Document200/text-html无附件头",
+      "pass": true,
+      "detail": [
+        {
+          "width": 1440,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 390,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        },
+        {
+          "width": 360,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 200,
+          "type": "text/html",
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "name": "页面无错误",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 1440
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 390
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 390
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "warning": true,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404,
+          "width": 360
+        },
+        {
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "width": 360
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 360,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "screenshots": [
+    "public-1440-homepage.png",
+    "public-1440-download-options.png",
+    "public-390-homepage.png",
+    "public-390-download-options.png",
+    "public-360-homepage.png",
+    "public-360-download-options.png"
+  ],
+  "pass": true,
+  "count": {
+    "checks": 23,
+    "screenshots": 6,
+    "errors": 0
+  }
+}

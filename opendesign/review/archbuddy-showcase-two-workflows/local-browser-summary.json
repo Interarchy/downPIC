@@ -1,0 +1,1179 @@
+{
+  "date": "2026-10-05",
+  "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+  "scope": "第三版仅本地静态站；隔离Chromium、不读日常profile、不调用模型、不执行归档",
+  "checks": [
+    {
+      "name": "1440 首页HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "1440 顶部白品牌绿字与固定blur",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.98), rgba(21, 59, 45, 0.84))",
+        "blur": "blur(16px)",
+        "shadow": "none",
+        "brandBackground": "rgb(255, 255, 255)",
+        "brandColor": "rgb(37, 99, 75)",
+        "scrolled": false
+      }
+    },
+    {
+      "name": "1440 滚动固定透明渐变阴影",
+      "pass": true,
+      "detail": {
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "1440 导航无遮挡 #workflow",
+      "pass": true,
+      "detail": {
+        "hash": "#workflow",
+        "targetHeadingTop": 196.21875,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 导航无遮挡 #features",
+      "pass": true,
+      "detail": {
+        "hash": "#features",
+        "targetHeadingTop": 191.765625,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 导航无遮挡 #install",
+      "pass": true,
+      "detail": {
+        "hash": "#install",
+        "targetHeadingTop": 195.96875,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1440 无横向溢出",
+      "pass": true,
+      "detail": {
+        "client": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 两业务链路",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "title": "设计参考链路",
+          "label": "收集参考图，来自外部采集或自己的图库；参考图进入设计方案，设计师完成的设计图片成为下一轮收集的参考，形成循环。"
+        },
+        {
+          "id": "scenario-ai",
+          "title": "AI 效果图迭代链路",
+          "label": "收集参考图到反推提示词，再进入外部工具生成AI效果图；导回插件评估偏差并迭代提示词，确认修改后再次外部生图；生成与提示词迭代形成循环。"
+        }
+      ]
+    },
+    {
+      "name": "1440 三大功能与八项能力",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "1440 醒目章节标题",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01\n问题与机会",
+          "size": "25px"
+        },
+        {
+          "text": "02\n我们的产品思路",
+          "size": "25px"
+        },
+        {
+          "text": "03\n两条工作链路",
+          "size": "25px"
+        },
+        {
+          "text": "04\n三大功能",
+          "size": "25px"
+        },
+        {
+          "text": "05\n下载与安装",
+          "size": "25px"
+        }
+      ]
+    },
+    {
+      "name": "1440 Lucide外部sprite实际渲染",
+      "pass": false,
+      "detail": {
+        "count": 64,
+        "failed": [
+          {
+            "href": "assets/lucide.svg#x",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ],
+        "unique": [
+          "assets/lucide.svg#download",
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#images",
+          "assets/lucide.svg#unlink",
+          "assets/lucide.svg#chevron-right",
+          "assets/lucide.svg#file-text",
+          "assets/lucide.svg#sliders-horizontal",
+          "assets/lucide.svg#history",
+          "assets/lucide.svg#search-x",
+          "assets/lucide.svg#layers",
+          "assets/lucide.svg#scan-eye",
+          "assets/lucide.svg#chevron-down",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#library",
+          "assets/lucide.svg#drafting-compass",
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#image",
+          "assets/lucide.svg#sparkles",
+          "assets/lucide.svg#folder-open",
+          "assets/lucide.svg#search",
+          "assets/lucide.svg#copy",
+          "assets/lucide.svg#arrow-up-right",
+          "assets/lucide.svg#x"
+        ]
+      }
+    },
+    {
+      "name": "1440 无遗留箭头文字符号",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1440 可选截图 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1440 可选截图 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 首页HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "1024 顶部白品牌绿字与固定blur",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.98), rgba(21, 59, 45, 0.84))",
+        "blur": "blur(16px)",
+        "shadow": "none",
+        "brandBackground": "rgb(255, 255, 255)",
+        "brandColor": "rgb(37, 99, 75)",
+        "scrolled": false
+      }
+    },
+    {
+      "name": "1024 滚动固定透明渐变阴影",
+      "pass": true,
+      "detail": {
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "1024 导航无遮挡 #workflow",
+      "pass": true,
+      "detail": {
+        "hash": "#workflow",
+        "targetHeadingTop": 196.25,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1024 导航无遮挡 #features",
+      "pass": true,
+      "detail": {
+        "hash": "#features",
+        "targetHeadingTop": 192.140625,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1024 导航无遮挡 #install",
+      "pass": true,
+      "detail": {
+        "hash": "#install",
+        "targetHeadingTop": 195.890625,
+        "headerBottom": 84
+      }
+    },
+    {
+      "name": "1024 无横向溢出",
+      "pass": true,
+      "detail": {
+        "client": 1024,
+        "scroll": 1024
+      }
+    },
+    {
+      "name": "1024 两业务链路",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "title": "设计参考链路",
+          "label": "收集参考图，来自外部采集或自己的图库；参考图进入设计方案，设计师完成的设计图片成为下一轮收集的参考，形成循环。"
+        },
+        {
+          "id": "scenario-ai",
+          "title": "AI 效果图迭代链路",
+          "label": "收集参考图到反推提示词，再进入外部工具生成AI效果图；导回插件评估偏差并迭代提示词，确认修改后再次外部生图；生成与提示词迭代形成循环。"
+        }
+      ]
+    },
+    {
+      "name": "1024 三大功能与八项能力",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "1024 醒目章节标题",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01\n问题与机会",
+          "size": "25px"
+        },
+        {
+          "text": "02\n我们的产品思路",
+          "size": "25px"
+        },
+        {
+          "text": "03\n两条工作链路",
+          "size": "25px"
+        },
+        {
+          "text": "04\n三大功能",
+          "size": "25px"
+        },
+        {
+          "text": "05\n下载与安装",
+          "size": "25px"
+        }
+      ]
+    },
+    {
+      "name": "1024 Lucide外部sprite实际渲染",
+      "pass": false,
+      "detail": {
+        "count": 64,
+        "failed": [
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          },
+          {
+            "href": "assets/lucide.svg#x",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ],
+        "unique": [
+          "assets/lucide.svg#download",
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#images",
+          "assets/lucide.svg#unlink",
+          "assets/lucide.svg#chevron-right",
+          "assets/lucide.svg#file-text",
+          "assets/lucide.svg#sliders-horizontal",
+          "assets/lucide.svg#history",
+          "assets/lucide.svg#search-x",
+          "assets/lucide.svg#layers",
+          "assets/lucide.svg#scan-eye",
+          "assets/lucide.svg#chevron-down",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#library",
+          "assets/lucide.svg#drafting-compass",
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#image",
+          "assets/lucide.svg#sparkles",
+          "assets/lucide.svg#folder-open",
+          "assets/lucide.svg#search",
+          "assets/lucide.svg#copy",
+          "assets/lucide.svg#arrow-up-right",
+          "assets/lucide.svg#x"
+        ]
+      }
+    },
+    {
+      "name": "1024 无遗留箭头文字符号",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1024 可选截图 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "1024 可选截图 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "390 首页HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "390 顶部白品牌绿字与固定blur",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.98), rgba(21, 59, 45, 0.84))",
+        "blur": "blur(16px)",
+        "shadow": "none",
+        "brandBackground": "rgb(255, 255, 255)",
+        "brandColor": "rgb(37, 99, 75)",
+        "scrolled": false
+      }
+    },
+    {
+      "name": "390 滚动固定透明渐变阴影",
+      "pass": true,
+      "detail": {
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "390 导航无遮挡 #features",
+      "pass": true,
+      "detail": {
+        "hash": "#features",
+        "targetHeadingTop": 148.1875,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "390 导航无遮挡 #install",
+      "pass": true,
+      "detail": {
+        "hash": "#install",
+        "targetHeadingTop": 150.21875,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "390 无横向溢出",
+      "pass": true,
+      "detail": {
+        "client": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 两业务链路",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "title": "设计参考链路",
+          "label": "收集参考图，来自外部采集或自己的图库；参考图进入设计方案，设计师完成的设计图片成为下一轮收集的参考，形成循环。"
+        },
+        {
+          "id": "scenario-ai",
+          "title": "AI 效果图迭代链路",
+          "label": "收集参考图到反推提示词，再进入外部工具生成AI效果图；导回插件评估偏差并迭代提示词，确认修改后再次外部生图；生成与提示词迭代形成循环。"
+        }
+      ]
+    },
+    {
+      "name": "390 三大功能与八项能力",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "390 醒目章节标题",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01\n问题与机会",
+          "size": "23px"
+        },
+        {
+          "text": "02\n我们的产品思路",
+          "size": "23px"
+        },
+        {
+          "text": "03\n两条工作链路",
+          "size": "23px"
+        },
+        {
+          "text": "04\n三大功能",
+          "size": "23px"
+        },
+        {
+          "text": "05\n下载与安装",
+          "size": "23px"
+        }
+      ]
+    },
+    {
+      "name": "390 Lucide外部sprite实际渲染",
+      "pass": false,
+      "detail": {
+        "count": 64,
+        "failed": [
+          {
+            "href": "assets/lucide.svg#x",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ],
+        "unique": [
+          "assets/lucide.svg#download",
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#images",
+          "assets/lucide.svg#unlink",
+          "assets/lucide.svg#chevron-right",
+          "assets/lucide.svg#file-text",
+          "assets/lucide.svg#sliders-horizontal",
+          "assets/lucide.svg#history",
+          "assets/lucide.svg#search-x",
+          "assets/lucide.svg#layers",
+          "assets/lucide.svg#scan-eye",
+          "assets/lucide.svg#chevron-down",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#library",
+          "assets/lucide.svg#drafting-compass",
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#image",
+          "assets/lucide.svg#sparkles",
+          "assets/lucide.svg#folder-open",
+          "assets/lucide.svg#search",
+          "assets/lucide.svg#copy",
+          "assets/lucide.svg#arrow-up-right",
+          "assets/lucide.svg#x"
+        ]
+      }
+    },
+    {
+      "name": "390 无遗留箭头文字符号",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390 可选截图 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "390 可选截图 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "360 首页HTTP",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "360 顶部白品牌绿字与固定blur",
+      "pass": true,
+      "detail": {
+        "position": "sticky",
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.98), rgba(21, 59, 45, 0.84))",
+        "blur": "blur(16px)",
+        "shadow": "none",
+        "brandBackground": "rgb(255, 255, 255)",
+        "brandColor": "rgb(37, 99, 75)",
+        "scrolled": false
+      }
+    },
+    {
+      "name": "360 滚动固定透明渐变阴影",
+      "pass": true,
+      "detail": {
+        "top": 0,
+        "background": "linear-gradient(rgba(21, 59, 45, 0.94), rgba(21, 59, 45, 0.8))",
+        "blur": "blur(16px)",
+        "shadow": "rgba(20, 46, 35, 0.1) 0px 6px 24px 0px"
+      }
+    },
+    {
+      "name": "360 导航无遮挡 #features",
+      "pass": true,
+      "detail": {
+        "hash": "#features",
+        "targetHeadingTop": 147.671875,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "360 导航无遮挡 #install",
+      "pass": true,
+      "detail": {
+        "hash": "#install",
+        "targetHeadingTop": 150.28125,
+        "headerBottom": 72
+      }
+    },
+    {
+      "name": "360 无横向溢出",
+      "pass": true,
+      "detail": {
+        "client": 360,
+        "scroll": 360
+      }
+    },
+    {
+      "name": "360 两业务链路",
+      "pass": true,
+      "detail": [
+        {
+          "id": "scenario-reference",
+          "title": "设计参考链路",
+          "label": "收集参考图，来自外部采集或自己的图库；参考图进入设计方案，设计师完成的设计图片成为下一轮收集的参考，形成循环。"
+        },
+        {
+          "id": "scenario-ai",
+          "title": "AI 效果图迭代链路",
+          "label": "收集参考图到反推提示词，再进入外部工具生成AI效果图；导回插件评估偏差并迭代提示词，确认修改后再次外部生图；生成与提示词迭代形成循环。"
+        }
+      ]
+    },
+    {
+      "name": "360 三大功能与八项能力",
+      "pass": true,
+      "detail": [
+        {
+          "title": "采集参考图",
+          "count": 2
+        },
+        {
+          "title": "反推与迭代提示词",
+          "count": 4
+        },
+        {
+          "title": "沉淀图词资产",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "360 醒目章节标题",
+      "pass": true,
+      "detail": [
+        {
+          "text": "01\n问题与机会",
+          "size": "22px"
+        },
+        {
+          "text": "02\n我们的产品思路",
+          "size": "22px"
+        },
+        {
+          "text": "03\n两条工作链路",
+          "size": "22px"
+        },
+        {
+          "text": "04\n三大功能",
+          "size": "22px"
+        },
+        {
+          "text": "05\n下载与安装",
+          "size": "22px"
+        }
+      ]
+    },
+    {
+      "name": "360 Lucide外部sprite实际渲染",
+      "pass": false,
+      "detail": {
+        "count": 64,
+        "failed": [
+          {
+            "href": "assets/lucide.svg#maximize-2",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          },
+          {
+            "href": "assets/lucide.svg#x",
+            "exists": true,
+            "bbox": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ],
+        "unique": [
+          "assets/lucide.svg#download",
+          "assets/lucide.svg#maximize-2",
+          "assets/lucide.svg#images",
+          "assets/lucide.svg#unlink",
+          "assets/lucide.svg#chevron-right",
+          "assets/lucide.svg#file-text",
+          "assets/lucide.svg#sliders-horizontal",
+          "assets/lucide.svg#history",
+          "assets/lucide.svg#search-x",
+          "assets/lucide.svg#layers",
+          "assets/lucide.svg#scan-eye",
+          "assets/lucide.svg#chevron-down",
+          "assets/lucide.svg#chevron-up",
+          "assets/lucide.svg#library",
+          "assets/lucide.svg#drafting-compass",
+          "assets/lucide.svg#chevron-left",
+          "assets/lucide.svg#image",
+          "assets/lucide.svg#sparkles",
+          "assets/lucide.svg#folder-open",
+          "assets/lucide.svg#search",
+          "assets/lucide.svg#copy",
+          "assets/lucide.svg#arrow-up-right",
+          "assets/lucide.svg#x"
+        ]
+      }
+    },
+    {
+      "name": "360 无遗留箭头文字符号",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "360 可选截图 prompt",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/04-prompt-builder-1280x800.png",
+        "after": "case-study/assets/05-prompt-optimization-1280x800.png"
+      }
+    },
+    {
+      "name": "360 可选截图 assets",
+      "pass": true,
+      "detail": {
+        "before": "case-study/assets/03-prompt-library-1280x800.png",
+        "after": "case-study/assets/02-image-description-1280x800.png"
+      }
+    },
+    {
+      "name": "原图放大 hero-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "关闭原图 hero-image",
+      "pass": true
+    },
+    {
+      "name": "原图放大 capture-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png"
+      }
+    },
+    {
+      "name": "关闭原图 capture-image",
+      "pass": true
+    },
+    {
+      "name": "原图放大 prompt-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png"
+      }
+    },
+    {
+      "name": "关闭原图 prompt-image",
+      "pass": true
+    },
+    {
+      "name": "原图放大 assets-image",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "source": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+        "large": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png"
+      }
+    },
+    {
+      "name": "关闭原图 assets-image",
+      "pass": true
+    },
+    {
+      "name": "实际复制安装地址",
+      "pass": true,
+      "detail": "已复制，请粘贴到 Chrome 地址栏。"
+    },
+    {
+      "name": "实际下载 插件",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy-0.6.0-Chrome.zip",
+        "bytes": 179857,
+        "sha256": "34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D"
+      }
+    },
+    {
+      "name": "实际下载 测试集",
+      "pass": true,
+      "detail": {
+        "filename": "ArchBuddy测试集.7z",
+        "bytes": 12020913,
+        "sha256": "18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD"
+      }
+    },
+    {
+      "name": "品牌色favicon存在",
+      "pass": true,
+      "detail": {
+        "status": 200
+      }
+    },
+    {
+      "name": "页面/控制台/网络异常",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "screenshots": [
+    "1440-header-top.png",
+    "1440-header-scrolled.png",
+    "1440-full.png",
+    "1440-hero.png",
+    "1440-problem.png",
+    "1440-concept.png",
+    "1440-reference-cycle.png",
+    "1440-ai-cycle.png",
+    "1440-features.png",
+    "1440-asset-support.png",
+    "1440-install.png",
+    "1440-prompt-alternate.png",
+    "1440-assets-alternate.png",
+    "1024-header-top.png",
+    "1024-header-scrolled.png",
+    "1024-full.png",
+    "1024-hero.png",
+    "1024-problem.png",
+    "1024-concept.png",
+    "1024-reference-cycle.png",
+    "1024-ai-cycle.png",
+    "1024-features.png",
+    "1024-asset-support.png",
+    "1024-install.png",
+    "1024-prompt-alternate.png",
+    "1024-assets-alternate.png",
+    "390-header-top.png",
+    "390-header-scrolled.png",
+    "390-full.png",
+    "390-hero.png",
+    "390-problem.png",
+    "390-concept.png",
+    "390-reference-cycle.png",
+    "390-ai-cycle.png",
+    "390-features.png",
+    "390-asset-support.png",
+    "390-install.png",
+    "390-prompt-alternate.png",
+    "390-assets-alternate.png",
+    "360-header-top.png",
+    "360-header-scrolled.png",
+    "360-full.png",
+    "360-hero.png",
+    "360-problem.png",
+    "360-concept.png",
+    "360-reference-cycle.png",
+    "360-ai-cycle.png",
+    "360-features.png",
+    "360-asset-support.png",
+    "360-install.png",
+    "360-prompt-alternate.png",
+    "360-assets-alternate.png"
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/02-image-description-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/styles.css?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/lucide.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/01-project-library-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/app.js?v=two-workflows-20261005",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200
+    }
+  ],
+  "pass": false,
+  "count": {
+    "checks": 67,
+    "screenshots": 52,
+    "errors": 0
+  }
+}
