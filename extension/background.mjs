@@ -1,3 +1,5 @@
+import { ANALYTICS_POLICY_VERSION, analyticsConsentValid } from './analytics-schema.mjs';
+import { createAnalyticsController } from './analytics-worker.mjs';
 import { BACKEND_BASE_URL, BACKEND_MODE, backendUrl } from './runtime-config.mjs';
 import {
   INTENT_MODULES,
@@ -37,15 +39,8 @@ const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const STATUS_TIMEOUT_MS = 25_000;
 const SESSION_TIMEOUT_MS = 30_000;
 const ANALYSIS_TIMEOUT_MS = 135_000;
-const ANALYTICS_POLICY_VERSION = '2026-09-20';
-const ANALYTICS_EVENTS = new Set([
-  'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
-  'module_disabled', 'prompt_confirmed', 'prompt_copied',
-]);
-const ANALYTICS_OUTCOMES = new Set([
-  'success', 'invalid_input', 'network_unavailable', 'timeout', 'service_unavailable',
-  'quota_exceeded', 'format_invalid', 'version_mismatch', 'unknown_error',
-]);
+const analytics = createAnalyticsController(requestBackend);
+
 
 chrome.storage.session.setAccessLevel?.({ accessLevel: 'TRUSTED_CONTEXTS' });
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
@@ -63,9 +58,10 @@ chrome.runtime.onInstalled.addListener(async () => {
     [STORAGE.captureEnabled]: Boolean(stored[STORAGE.captureEnabled]),
     [STORAGE.projectType]: normalizeProjectType(stored[STORAGE.projectType]) || PRESET_TYPES[0],
     [STORAGE.customTypes]: Array.isArray(stored[STORAGE.customTypes]) ? stored[STORAGE.customTypes] : [],
-    [STORAGE.analyticsConsent]: stored[STORAGE.analyticsConsent]?.policyVersion === ANALYTICS_POLICY_VERSION
+    [STORAGE.analyticsConsent]: analyticsConsentValid(stored[STORAGE.analyticsConsent])
       ? {
         enabled: stored[STORAGE.analyticsConsent].enabled === true,
+        consentId: stored[STORAGE.analyticsConsent].consentId,
         updatedAt: String(stored[STORAGE.analyticsConsent].updatedAt || new Date().toISOString()),
         policyVersion: ANALYTICS_POLICY_VERSION,
       }
@@ -233,51 +229,57 @@ async function fetchBackend(path, { method = 'GET', body, timeoutMs = ANALYSIS_T
   return payload;
 }
 
+function analyticsResponseUsable(path, result, body) {
+  if (path === '/api/v2/analyze') return result?.contractVersion === 2 && Array.isArray(result.modules)
+    && result.modules.length === INTENT_MODULES.length && result.modules.every((module, index) => module.key === INTENT_MODULES[index].key);
+  if (path === '/api/analyze') return Array.isArray(result?.sections) && result.sections.length >= 4;
+  if (path === '/api/v3/evaluate') return Array.isArray(result?.findings) && typeof result.overallConclusion === 'string';
+  if (path === '/api/library/describe') return typeof result?.description === 'string' && result.description.trim().length > 0;
+  if (path === '/api/library/search') return Array.isArray(result?.matches);
+  if (path === '/api/library/embed') return result?.model === 'kinfra-text-embedding-0.6b' && Array.isArray(result.vectors)
+    && result.vectors.length === body?.texts?.length && result.vectors.every(vector => Array.isArray(vector)
+      && vector.length === 1024 && vector.every(Number.isFinite));
+  return false;
+}
+function analyticsErrorCategory(error) {
+  if (['NOT_CONFIGURED', 'EMBEDDING_NOT_CONFIGURED'].includes(error?.code)) return 'not_configured';
+  const category = errorCategory(error);
+  return ({ quota: 'quota_exceeded', parse: 'format_invalid', unavailable: 'service_unavailable' })[category] || category;
+}
 async function requestBackend(path, options = {}) {
-  const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed', '/api/events'];
+  const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed', '/api/events', '/api/events/withdraw'];
   if (!authenticatedPaths.includes(path)) return fetchBackend(path, options);
-  const requestId = options.requestId || (['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed'].includes(path) ? crypto.randomUUID() : undefined);
-  let token = await anonymousToken();
+  const aiPaths = { '/api/analyze': 'reference_analysis', '/api/v2/analyze': 'reference_analysis',
+    '/api/v3/evaluate': 'evaluation', '/api/library/search': 'semantic_search', '/api/library/describe': 'description',
+    '/api/library/embed': options.analyticsOperation || 'embedding_index' };
+  const taskType = aiPaths[path];
+  const requestId = options.requestId || (taskType ? crypto.randomUUID() : undefined);
+  const startedAt = Date.now();
+  const entry = ['description', 'embedding_index', 'embedding_query', 'semantic_search'].includes(taskType) ? 'library' : 'sidepanel';
+  const analyticsStart = taskType ? await recordAnalytics({ eventName: 'task_started', entry, scope: 'ai', taskType, requestId }) : null;
   try {
-    return await fetchBackend(path, { ...options, token, requestId });
+    let token = await anonymousToken();
+    let result;
+    try { result = await fetchBackend(path, { ...options, token, requestId }); }
+    catch (error) {
+      if (!['UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID'].includes(error?.code)) throw error;
+      token = await anonymousToken({ forceRefresh: true });
+      result = await fetchBackend(path, { ...options, token, requestId });
+    }
+    if (analyticsStart?.accepted) void recordAnalytics({ eventName: 'task_result', consentId: analyticsStart.consentId, entry, scope: 'ai', taskType, requestId,
+      outcome: analyticsResponseUsable(path, result, options.body) ? 'success' : 'failed',
+      ...(!analyticsResponseUsable(path, result, options.body) ? { errorCategory: 'format_invalid' } : {}),
+      durationMs: Math.min(3_600_000, Date.now() - startedAt) });
+    return result;
   } catch (error) {
-    if (!['UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID'].includes(error?.code)) throw error;
-    token = await anonymousToken({ forceRefresh: true });
-    return fetchBackend(path, { ...options, token, requestId });
+    if (analyticsStart?.accepted) void recordAnalytics({ eventName: 'task_result', consentId: analyticsStart.consentId, entry, scope: 'ai', taskType, requestId,
+      outcome: 'failed', errorCategory: analyticsErrorCategory(error), durationMs: Math.min(3_600_000, Date.now() - startedAt) });
+    throw error;
   }
 }
 
-async function setAnalyticsConsent(enabled) {
-  const consent = {
-    enabled: enabled === true,
-    updatedAt: new Date().toISOString(),
-    policyVersion: ANALYTICS_POLICY_VERSION,
-  };
-  await chrome.storage.local.set({ [STORAGE.analyticsConsent]: consent });
-  return { ok: true, consent };
-}
-
-async function recordAnalytics(payload = {}) {
-  const local = await chrome.storage.local.get(STORAGE.analyticsConsent);
-  const consent = local[STORAGE.analyticsConsent];
-  if (consent?.enabled !== true || consent?.policyVersion !== ANALYTICS_POLICY_VERSION) {
-    return { ok: true, accepted: false };
-  }
-  if (!ANALYTICS_EVENTS.has(payload.eventName)) return { ok: true, accepted: false };
-  const event = {
-    eventId: crypto.randomUUID(),
-    eventName: payload.eventName,
-    clientOccurredAt: new Date().toISOString(),
-    ...(ANALYTICS_OUTCOMES.has(payload.outcome) ? { outcome: payload.outcome } : {}),
-  };
-  try {
-    await requestBackend('/api/events', { method: 'POST', body: event, timeoutMs: 15_000 });
-    return { ok: true, accepted: true };
-  } catch {
-    // 可选统计失败不得影响核心功能，也不保存重试队列。
-    return { ok: true, accepted: false };
-  }
-}
+const setAnalyticsConsent = enabled => analytics.setConsent(enabled);
+const recordAnalytics = payload => analytics.record(payload);
 
 async function backendStatus() {
   try {
@@ -1121,6 +1123,8 @@ async function downloadImage(payload) {
     }
   });
   await captureArchiveQueue.catch(() => {});
+  const completed = await chrome.downloads.search({ id: downloadId }).catch(() => []);
+  if (completed[0]?.state === 'complete') void analytics.downloadComplete(downloadId);
   void drainCaptureDescriptions();
   chrome.runtime.sendMessage({ type: 'download.changed', download }).catch(() => {});
   return { ok: true, downloadId, filename, download };
@@ -1228,7 +1232,7 @@ async function confirmBuilder(payload = {}) {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const run = async () => {
-    if (['capture.describe', 'capture.describe.missing', 'capture.description.save', 'capture.delete', 'capture.folder.move', 'project-types.rename', 'capture.resume', 'library.image.resume', 'library.semantic', 'library.embed', 'assets.consent', 'assets.vectorConsent'].includes(message?.type)
+    if (['analytics.record', 'analytics.consent.set', 'analytics.task.begin', 'analytics.task.current', 'capture.describe', 'capture.describe.missing', 'capture.description.save', 'capture.delete', 'capture.folder.move', 'project-types.rename', 'capture.resume', 'library.image.resume', 'library.semantic', 'library.embed', 'assets.consent', 'assets.vectorConsent'].includes(message?.type)
         && ![chrome.runtime.getURL('library.html'), chrome.runtime.getURL('sidepanel.html')].includes(sender.url?.split('?')[0])) {
       throw new Error('请在 ArchBuddy 图词库中操作');
     }
@@ -1246,7 +1250,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'library.embed': {
         const consent = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
         if (!consent[STORAGE.assetAIConsent] || !consent[STORAGE.assetVectorConsent]) throw new Error('请先确认本地向量检索处理说明');
-        const result = await requestBackend('/api/library/embed', { method: 'POST', body: message.payload });
+        const result = await requestBackend('/api/library/embed', { method: 'POST', body: { texts: message.payload.texts }, analyticsOperation: message.payload.operation === 'embedding_query' ? 'embedding_query' : 'embedding_index' });
         return { ok: true, model: result.model, vectors: result.vectors };
       }
       case 'library.semantic': {
@@ -1318,6 +1322,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'draft.delete': return deleteDraft(message.payload?.draftId);
       case 'analytics.consent.set': return setAnalyticsConsent(message.payload?.enabled);
       case 'analytics.record': return recordAnalytics(message.payload ?? {});
+      case 'analytics.task.begin': return analytics.task(message.payload ?? {}, true);
+      case 'analytics.task.current': return analytics.task(message.payload ?? {}, false);
       case 'download.image': return downloadImage(message.payload ?? {});
       case 'download.show': return showDownload(message.payload ?? {});
       case 'state.get': {
@@ -1353,7 +1359,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           activeDraftId: typeof local[STORAGE.activeIntentDraftIdV2] === 'string'
             ? local[STORAGE.activeIntentDraftIdV2]
             : null,
-          analyticsConsent: local[STORAGE.analyticsConsent]?.policyVersion === ANALYTICS_POLICY_VERSION
+          analyticsConsent: analyticsConsentValid(local[STORAGE.analyticsConsent])
             ? {
               enabled: local[STORAGE.analyticsConsent].enabled === true,
               updatedAt: String(local[STORAGE.analyticsConsent].updatedAt || ''),
@@ -1662,7 +1668,7 @@ async function drainCaptureDescriptions() {
   finally { descriptionsRunning = false; }
 }
 chrome.downloads.onChanged.addListener(change => {
-  if (change.state?.current === 'complete') void drainCaptureDescriptions();
+  if (change.state?.current === 'complete') { void analytics.downloadComplete(change.id); void drainCaptureDescriptions(); }
 });
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && (changes[STORAGE.assetAIConsent]?.newValue || changes[STORAGE.capturePreviewsV4])) void drainCaptureDescriptions();
@@ -1770,3 +1776,9 @@ async function deleteCaptures(payload) {
   }
   return { ok: true, deleted, failed, viewerCopiesKept };
 }
+
+// 沿用既有 alarms 权限；工作线程休眠后由周期唤醒恢复有限批量队列。
+chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'archbuddy-analytics') void analytics.flush(); });
+void chrome.alarms.get('archbuddy-analytics')
+  .then(alarm => alarm || chrome.alarms.create('archbuddy-analytics', { periodInMinutes: 5 }))
+  .then(() => analytics.flush()).catch(() => {});

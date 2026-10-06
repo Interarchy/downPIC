@@ -1,3 +1,4 @@
+import { ANALYTICS_BATCH_SIZE, ANALYTICS_POLICY_VERSION, analyticsConsentValid, validateAnalyticsEvent } from '../extension/analytics-schema.mjs';
 import { createServer } from 'node:http';
 import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { AnalysisFormatError, V2_MODULE_DEFINITIONS, assembleSections, loadEvaluationSystemPrompt, loadSystemPrompt, loadV2SystemPrompt } from '../plugin-prototype/analysis-contract.mjs';
@@ -11,22 +12,13 @@ import { createAnonymousSession, validSessionSecret, verifyAnonymousSession } fr
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const MAX_BODY_BYTES = Math.ceil(MAX_IMAGE_BYTES / 3) * 4 + 4096;
 const MAX_SESSION_BODY_BYTES = 4096;
-const MAX_EVENT_BODY_BYTES = 4096;
+const MAX_EVENT_BODY_BYTES = 32 * 1024;
 const MAX_MODULE_VALUE_LENGTH = 4000;
 const EVALUATION_KEYS = new Set(V2_MODULE_DEFINITIONS
   .map(module => module.key)
   .filter(key => key !== 'reference_summary' && key !== 'negative_constraints'));
 const MODULE_TITLE_BY_KEY = new Map(V2_MODULE_DEFINITIONS.map(module => [module.key, module.title]));
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const EVENT_NAMES = new Set([
-  'analysis_started', 'analysis_succeeded', 'analysis_failed', 'module_edited',
-  'module_disabled', 'prompt_confirmed', 'prompt_copied',
-]);
-const EVENT_OUTCOMES = new Set([
-  'success', 'invalid_input', 'network_unavailable', 'timeout', 'service_unavailable',
-  'quota_exceeded', 'format_invalid', 'version_mismatch', 'unknown_error',
-]);
-
 class HttpError extends Error {
   constructor(status, code, message) {
     super(message);
@@ -185,22 +177,9 @@ function noContent(res) {
   res.end();
 }
 
-function validatedEvent(body) {
-  if (!body || typeof body !== 'object' || Array.isArray(body)) throw new HttpError(400, 'EVENT_INVALID', '统计事件格式无效');
-  const allowed = new Set(['eventId', 'eventName', 'outcome', 'clientOccurredAt']);
-  if (Object.keys(body).some(key => !allowed.has(key)) ||
-      typeof body.eventId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.eventId) ||
-      !EVENT_NAMES.has(body.eventName) ||
-      (body.outcome !== undefined && !EVENT_OUTCOMES.has(body.outcome)) ||
-      typeof body.clientOccurredAt !== 'string' || body.clientOccurredAt.length > 40 || !Number.isFinite(Date.parse(body.clientOccurredAt))) {
-    throw new HttpError(400, 'EVENT_INVALID', '统计事件字段无效');
-  }
-  return {
-    eventId: body.eventId,
-    eventName: body.eventName,
-    ...(body.outcome ? { outcome: body.outcome } : {}),
-    clientOccurredAt: body.clientOccurredAt,
-  };
+function validatedEvent(body, now) {
+  try { return validateAnalyticsEvent(body, { now, allowLegacy: true }); }
+  catch { throw new HttpError(400, 'EVENT_INVALID', '统计事件字段无效'); }
 }
 
 export function createAnalysisServer({
@@ -226,6 +205,7 @@ export function createAnalysisServer({
   const perMinute = positiveInt(environment.ARCHBUDDY_CALLS_PER_MINUTE, 3);
   const embeddingPerMinute = positiveInt(environment.ARCHBUDDY_EMBEDDING_CALLS_PER_MINUTE, 20);
   const timeoutMs = positiveInt(environment.ARCHBUDDY_TIMEOUT_MS, 60_000);
+  let analyticsMinute = now(), analyticsBatches = 0;
   let startedCalls = 0;
   let active = 0;
   let minuteStart = now();
@@ -250,6 +230,8 @@ export function createAnalysisServer({
       if (req.method === 'GET' && pathname === '/api/status') {
         json(res, 200, { configured, provider: 'deepseek', model: 'deepseek-flash', mode: persistent ? 'anonymous-beta' : 'local-process-test', authenticationRequired: true,
           anonymousSessionsEnabled, embeddingConfigured,
+          analyticsEnabled: environment.ARCHBUDDY_ANALYTICS_ENABLED === 'true' && typeof eventWriter === 'function',
+          analyticsSchemaVersion: 2, analyticsPolicyVersion: ANALYTICS_POLICY_VERSION,
           quotaMode: persistent ? 'daily' : 'process-test',
           ...(persistent ? { quotaTimeZone: 'Asia/Shanghai' } : {}),
         });
@@ -265,7 +247,7 @@ export function createAnalysisServer({
         json(res, 201, session);
         return;
       }
-      if (pathname === '/api/events') {
+      if (pathname === '/api/events' || pathname === '/api/events/withdraw') {
         if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
         const identity = authenticate(req.headers.authorization, { testToken, sessionSecret, now });
         if (!identity) throw new HttpError(401, 'UNAUTHORIZED', '匿名访问凭据无效或已过期');
@@ -274,9 +256,26 @@ export function createAnalysisServer({
           noContent(res);
           return;
         }
-        const event = validatedEvent(await readJson(req, MAX_EVENT_BODY_BYTES));
-        await eventWriter(identity.actorId, event);
-        json(res, 202, { accepted: true });
+        if (now() - analyticsMinute >= 60_000) { analyticsMinute = now(); analyticsBatches = 0; }
+        if (++analyticsBatches > 300) throw new HttpError(429, 'ANALYTICS_RATE_LIMITED', '统计请求过于频繁');
+        const body = await readJson(req, MAX_EVENT_BODY_BYTES);
+        if (pathname === '/api/events/withdraw') {
+          if (!onlyKeys(body, new Set(['consentId', 'policyVersion'])) || !analyticsConsentValid({ ...body, enabled: true })
+              || typeof eventWriter.withdraw !== 'function') throw new HttpError(400, 'EVENT_INVALID', '撤回请求无效');
+          await eventWriter.withdraw(identity.actorId, body.consentId);
+          json(res, 202, { accepted: true });
+          return;
+        }
+        const batch = Array.isArray(body?.events);
+        if (batch && (!onlyKeys(body, new Set(['schemaVersion', 'events'])) || body.schemaVersion !== 2
+            || !body.events.length || body.events.length > ANALYTICS_BATCH_SIZE)) {
+          throw new HttpError(400, 'EVENT_INVALID', '统计批次无效');
+        }
+        const events = (batch ? body.events : [body]).map(event => validatedEvent(event, now()));
+        if (batch && events.some(event => event.schemaVersion !== 2)) throw new HttpError(400, 'EVENT_INVALID', '批量接口仅支持新版事件');
+        // 全批验证后再写；部分持久化失败可重试，逐事件事务保证去重。
+        for (const event of events) await eventWriter(identity.actorId, event);
+        json(res, 202, { accepted: true, acceptedCount: events.length });
         return;
       }
       const semantic = pathname === '/api/library/search';

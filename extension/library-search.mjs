@@ -101,16 +101,18 @@ export function createSemanticSearch(embed, namespace) {
           this.status = `已显示关键词结果；首次建立索引 ${done} / ${total} 项`;
           update();
         }));
-        if (version !== generation) return;
+        if (version !== generation) return { outcome: 'cancelled', count: 0 };
         this.status = '已显示关键词结果；正在生成一次查询向量…'; update();
-        const [queryVector] = validVectors(await embed({ texts: [this.query] }), 1);
-        if (version !== generation) return;
+        const [queryVector] = validVectors(await embed({ texts: [this.query], operation: 'embedding_query' }), 1);
+        if (version !== generation) return { outcome: 'cancelled', count: 0 };
         const scored = documents.map(item => ({ id: String(item.id), score: vectorScore(queryVector, records.get(String(item.id))?.vector) }))
           .filter(row => row.score >= 0.35).sort((a, b) => b.score - a.score);
         this.ids = scored.slice(0, Math.min(40, Math.max(12, Math.ceil(documents.length * 0.1)))).map(row => row.id);
         this.status = `关键词与本地向量结果已合并 · 语义候选 ${this.ids.length} 项`;
+        return { outcome: 'success', count: new Set([...keywordMatches(documents, query, item => item.text).map(item => String(item.id)), ...this.ids]).size };
       } catch (error) {
         if (version === generation) this.status = '已保留关键词结果；向量检索未完成：' + error.message;
+        return { outcome: version === generation ? 'failed' : 'cancelled', count: 0 };
       } finally { this.busy = false; update(); }
     },
   };

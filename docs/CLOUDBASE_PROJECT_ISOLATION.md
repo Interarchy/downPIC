@@ -20,6 +20,7 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 | 数据库集合或表 | `archbuddy_dev_quotas`、`archbuddy_dev_requests` | 用户已确认按 ADMINONLY 创建，并报告每日额度脚本测试成功；TTL 自动清理仍待配置和验证 |
 | 云存储对象 / 静态托管 | ArchBuddy 独立静态站已部署并公开验证；URL 见 `cloudbase/environment.json` | 隐私政策公开页面；当前图片和结果只在请求内存处理，不落盘 |
 | 业务身份与使用统计 | 匿名安装会话已部署；计划集合 `archbuddy_dev_events` 尚未创建、尚未验证、不得启用 | 原始安装 ID 只在浏览器；可选统计默认关闭，只处理不可逆项目内主体和白名单事件 |
+| 回访活跃摘要 | 计划集合 `archbuddy_dev_activity`，尚未创建、尚未验证、不得启用 | 仅 ArchBuddy 服务端管理；同意周期内的去标识主体、首次活跃日、每日主动/图库活跃布尔值和撤回状态；最长60天，不含内容 |
 | 调用额度 | 当前个人每日50 / 项目共享500；环境变量配置 | 用户2026-10-06指定；014版本及服务配置核对50/500，normal与100%流量已验证；未配置时兼容默认20/200，普通用户不取得具体余额，金额预算尚未设定 |
 | 日志 | 服务输出已有就绪和启动失败事件 | 腾讯云日志主题、访问日志、保留期和权限尚未在本次检查中核验 |
 | 服务凭据 | `DEEPSEEK_API_KEY`、`ARCHBUDDY_TEST_TOKEN`、`ARCHBUDDY_SESSION_SECRET` 等 | 仅登记变量名，不登记值；其他项目不得默认复用本项目令牌 |
@@ -45,6 +46,14 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 新增持久化业务记录应带 `projectId` 和 `stage`，在服务端按已部署配置写入并核验。客户端无法通过篡改字段、集合名称或对象路径选择其他项目资源。若供应商接口格式或权限机制不支持某项规则，先记录替代设计与实际边界，再实施，不能仅加字段后宣称隔离成立。
 
 业务统计仅记录经过同意的功能事件及必要元数据，不记录图片、提示词正文、网址、文件路径或自定义分类文字；必要防滥用数据与可选产品统计分别确定用途、保留期和访问权限。
+
+### 2026-10-07 埋点版资源预登记（未创建）
+
+- 项目/阶段固定为archbuddy / development；地域ap-shanghai，沿用archbuddy-api。新工作树没有私有environment.json，本轮未连接云端或验证运行凭据。
+- archbuddy_dev_events：schemaVersion=2白名单事件，服务端按安装匿名主体和随机同意周期派生actorHash；30天expiresAt；仅服务端访问。重发按主体+事件ID事务去重，不更新原到期时间。
+- archbuddy_dev_activity：每个同意周期一份活跃摘要，firstActiveDay、每天active/library布尔值、firstReceivedAt、withdrawnAt和expiresAt；首次收到该摘要起最长60天，到期后新行为开始新的观察周期。在线撤回保留拒收墓碑；仅服务端访问，不能由前端指定集合/项目/阶段。
+- 本地analytics_queue_v2仅在明确同意后存在，最多200条/24小时有效发送窗口/每批25条/最多5次失败；下次运行或队列清理时删除过期项，浏览器关闭时不执行清理；关闭统计后清空。流程关联键仅在本地会话保存，不上传素材或方案ID。
+- 两集合的ADMINONLY、实际TTL/删除机制、事务行为、日志/访问日志权限、静态政策与商店披露仍待验证；仍要求ARCHBUDDY_ANALYTICS_ENABLED=false。资源名和本地实现不等于权限隔离已完成。
 
 ## 每次涉及云端变更的检查
 

@@ -1,7 +1,10 @@
+import { createAnalyticsClient } from './analytics-client.mjs';
 import { PRESET_TYPES, STORAGE, normalizePromptScheme, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
 import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
+const telemetry = createAnalyticsClient('library');
+document.addEventListener('pointerdown', () => { void telemetry.visit(); }, { passive: true });
 
 const $ = id => document.getElementById(id);
 const state = { schemes: [], items: [], selectedKey: null, urls: new Map(), pendingUrls: new Map(), loadNumber: 0, captures: [], activeTypes: [], previews: {}, catalog: {}, selectedFolder: null, selectedType: null, showAllCaptures: false, captureProjectView: 'small', typeChosenByUser: false, openTypes: new Set(), foldersInitialized: false, captureUrls: new Map(), capturePendingUrls: new Map(), captureLoad: 0, groups: [], assignments: {}, selectedGroupId: 'all', selectedKeys: new Set() };
@@ -963,6 +966,8 @@ async function copyVersion(version) {
   try {
     await navigator.clipboard.writeText(version.compiledPrompt);
     $('copy-fallback').hidden = true;
+    void telemetry.record('prompt_copied', { flow: 'library' });
+    void telemetry.record('material_reused', { materialType: 'prompt' });
     toast('Prompt 已复制');
   } catch {
     const field = $('copy-fallback');
@@ -1352,7 +1357,7 @@ window.addEventListener('beforeunload', () => {
   releaseUrls();
   for (const url of state.captureUrls.values()) URL.revokeObjectURL(url);
 });
-void Promise.all([load(), loadCaptures()]).catch(error => toast('图词库读取失败：' + error.message, 'error'));
+void Promise.all([load(), loadCaptures()]).then(() => telemetry.visit()).catch(error => toast('图词库读取失败：' + error.message, 'error'));
 
 $('confirm-delete-capture').addEventListener('click', event => {
   event.preventDefault();
@@ -1507,7 +1512,10 @@ function wireSemanticSearch(inputId, buttonId, statusId, search, documents, rend
     if (!(await ensureAssetConsent()) || input.value !== query) return;
     menu.hidden = true;
     try { await rememberSearch(query); } catch (error) { toast('保存搜索记录失败：' + error.message, 'error'); }
-    await search.run(query, documents(), update);
+    const requestId = crypto.randomUUID(), startedAt = Date.now();
+    void telemetry.record('search_started', { requestId });
+    const outcome = await search.run(query, documents(), update);
+    if (outcome) void telemetry.record('search_result', { requestId, outcome: outcome.outcome, count: outcome.count, durationMs: Date.now() - startedAt });
     if (queuedQuery && queuedQuery === input.value) { queuedQuery = null; await run(); }
   };
   submit.addEventListener('click', () => { void run().catch(error => toast(error.message, 'error')); });

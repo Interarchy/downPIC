@@ -36,6 +36,9 @@ export const STORAGE = {
   librarySearchHistoryV4: 'librarySearchHistoryV4',
   captureProjectViewV4: 'captureProjectViewV4',
   analyticsConsent: 'analytics_consent_v1',
+  analyticsQueue: 'analytics_queue_v2',
+  analyticsTasks: 'analytics_tasks_v2',
+  analyticsDownloads: 'analytics_downloads_v2',
 };
 
 export const PRINCIPLE_TITLE = '整体生成准则';

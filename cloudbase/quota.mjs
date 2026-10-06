@@ -9,6 +9,7 @@ export const COLLECTIONS = Object.freeze({
   counters: 'archbuddy_dev_quotas',
   requests: 'archbuddy_dev_requests',
   events: 'archbuddy_dev_events',
+  activities: 'archbuddy_dev_activity',
 });
 
 export class QuotaError extends Error {

@@ -61,7 +61,7 @@ export function wireFolderDrop(element, onFiles, onError, onStart) {
   });
 }
 
-async function doImport(files, progress) {
+async function doImport(files, progress, entry) {
   const entries = [...files].map(fileEntry).filter(Boolean);
   const stored = await chrome.storage.local.get([
     STORAGE.importedAssetsV4, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4,
@@ -106,13 +106,14 @@ async function doImport(files, progress) {
     await Promise.allSettled(created.map(id => deleteSourceImagesByScheme(id)));
     throw error;
   }
+  if (added.length) void chrome.runtime.sendMessage({ type: 'analytics.record', payload: { eventName: 'image_saved', entry, source: 'import', count: added.length } }).catch(() => {});
   return { added: added.length, duplicate, unsupported, failed, folders: new Set(entries.map(item => item.type)).size };
 }
 
-export async function importLocalFolder(files, progress) {
+export async function importLocalFolder(files, progress, entry = 'library') {
   if (!files?.length) throw new Error('请选择包含图片的文件夹');
-  if (navigator.locks?.request) return navigator.locks.request('archbuddy-folder-import', () => doImport(files, progress));
-  return doImport(files, progress);
+  if (navigator.locks?.request) return navigator.locks.request('archbuddy-folder-import', () => doImport(files, progress, entry));
+  return doImport(files, progress, entry);
 }
 
 export function importSummary(result) {

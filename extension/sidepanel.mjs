@@ -1,3 +1,5 @@
+import { createAnalyticsClient } from './analytics-client.mjs';
+import { analyticsConsentValid } from './analytics-schema.mjs';
 import {
   PRESET_TYPES, STORAGE, PRINCIPLE, PRINCIPLE_TITLE, compileIntentPrompt, createEmptyIntentModules,
   normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft, normalizeProjectType, orderedProjectTypes,
@@ -7,6 +9,9 @@ import { importLocalFolder, importSummary, wireFolderDrop } from './folder-impor
 
 // 三参考图构建与效果图直接编辑共用已确认提示词库。
 const $ = id => document.getElementById(id);
+const telemetry = createAnalyticsClient('sidepanel');
+let evaluationTaskKey = null;
+document.addEventListener('pointerdown', () => { void telemetry.visit(); }, { passive: true });
 const state = {
   privacyAccepted: false, backendReady: false, stage: 'analysis', selection: null,
   projectType: PRESET_TYPES[0], customTypes: [], hiddenTypes: [], typeOrder: [], lastDownload: null,
@@ -320,8 +325,10 @@ async function analyzeReference(refId) {
   const ref = builder.references.find(item => item.id === refId);
   if (!ref?.sourceReferenceId) return;
   const builderId = builder.builderId;
-  const sourceReferenceId = ref.sourceReferenceId;
   analysisJobs.set(refId, { startedAt: Date.now() });
+  const taskId = await telemetry.task(builderId);
+  const analyticsStartedAt = Date.now();
+  const sourceReferenceId = ref.sourceReferenceId;
   referenceMessages.delete(refId);
   refreshReferenceControls();
   const ticker = setInterval(() => renderReferenceStatus(refId), 1000);
@@ -340,8 +347,10 @@ async function analyzeReference(refId) {
       if (summary) await request('capture.description.save', { downloadId: ref.captureDownloadId, description: summary.slice(0,1000), previousDescription: '' }).catch(() => {});
     }
     await persistBuilder();
+    if (taskId) void telemetry.record('task_result', { scope: 'task', taskType: 'prompt_build', taskId, outcome: 'success', durationMs: Date.now() - analyticsStartedAt });
     referenceMessages.set(refId, { text: '分析完成，可编辑并加入需要的维度', tone: 'success' });
   } catch (error) {
+    if (taskId) void telemetry.record('task_result', { scope: 'task', taskType: 'prompt_build', taskId, outcome: 'failed', durationMs: Date.now() - analyticsStartedAt });
     referenceMessages.set(refId, { text: error.message, tone: 'error' });
   } finally { clearInterval(ticker); analysisJobs.delete(refId); await renderReferences(refId); }
 }
@@ -357,6 +366,8 @@ async function confirmPrompt() {
     builder.versionId = response.version.versionId;
     await persistBuilder();
     await loadLibrary();
+    const taskId = await telemetry.currentTask(builder.builderId);
+    if (taskId) void telemetry.record('prompt_confirmed', { flow: 'initial', taskId });
     feedback('copy-feedback', '已确认并保存，现在可以复制', 'success');
   } finally { confirming = false; await renderReferences(); }
 }
@@ -365,6 +376,7 @@ async function copy(text, fallbackId, feedbackId) {
     await navigator.clipboard.writeText(text);
     $(fallbackId).hidden = true;
     feedback(feedbackId, '已复制完整提示词', 'success');
+    return true;
   } catch {
     $(fallbackId).value = text; $(fallbackId).hidden = false; $(fallbackId).select();
     feedback(feedbackId, '自动复制未获允许，请按 Ctrl+C 复制已选中的文本');
@@ -398,6 +410,7 @@ async function handleLibraryHandoff(handoff) {
       const wasEmpty = !builder.modules.some(module => module.value);
       switchStage('analysis');
       await acceptReference([new File([record.blob], handoff.name || '图库参考图', { type: record.blob.type })], ref.id);
+      void telemetry.record('material_reused', { materialType: 'image' });
       ref.captureDownloadId = handoff.downloadId ?? null;
       await analyzeReference(ref.id);
       if (ref.result && wasEmpty) {
@@ -486,6 +499,8 @@ async function openScheme(schemeId) {
   }
   await workingQueue;
   const response = await request('scheme.open', { schemeId });
+  void telemetry.record('material_reused', { materialType: 'prompt' });
+  evaluationTaskKey = null;
   state.scheme = normalizePromptScheme(response.scheme); state.working = response.workingDraft;
   const evaluation = await request('evaluation.get', { schemeId });
   state.generated = evaluation.generatedResult;
@@ -527,6 +542,9 @@ async function evaluate() {
   if (evaluating || !state.scheme || !state.generated) return;
   if (state.working?.dirtyModuleKeys?.length && !confirm('重新评估将以已确认的基本提示词为准，当前未确认修改会保留。继续吗？')) return;
   evaluating = true; renderEvaluationControls();
+  evaluationTaskKey = crypto.randomUUID();
+  const taskId = await telemetry.task(evaluationTaskKey, 'evaluation');
+  const analyticsStartedAt = Date.now();
   let seconds = 0;
   feedback('evaluation-feedback', '正在对照生成图与基本提示词…');
   const ticker = setInterval(() => feedback('evaluation-feedback', '正在评估，已等待 ' + (++seconds) + ' 秒'), 1000);
@@ -540,6 +558,10 @@ async function evaluate() {
     confirmedRevision = null;
     feedback('evaluation-feedback', '评估完成，可在下方直接修改提示词', 'success');
     renderEvaluation();
+    if (taskId) void telemetry.record('task_result', { scope: 'task', taskType: 'evaluation', taskId, outcome: 'success', durationMs: Date.now() - analyticsStartedAt });
+  } catch (error) {
+    if (taskId) void telemetry.record('task_result', { scope: 'task', taskType: 'evaluation', taskId, outcome: 'failed', durationMs: Date.now() - analyticsStartedAt });
+    throw error;
   } finally { clearInterval(ticker); evaluating = false; renderEvaluationControls(); }
 }
 function persistWorking() {
@@ -621,6 +643,8 @@ async function confirmRevision() {
   });
   state.scheme = normalizePromptScheme(response.scheme); state.working = response.workingDraft;
   confirmedRevision = prompt;
+  const taskId = await telemetry.currentTask(evaluationTaskKey);
+  if (taskId) void telemetry.record('prompt_confirmed', { flow: 'optimization', taskId });
   $('copy-revision').disabled = false; $('confirm-revision').disabled = true;
   feedback('revision-feedback', response.version?.generatedResult
     ? '提示词和本次效果图已保存至词库，可查看版本历史和关联图片。'
@@ -763,7 +787,7 @@ async function importFolders(files) {
   control.disabled = true;
   feedback('import-feedback', '正在复制图片到本地图词库…');
   try {
-    const result = await importLocalFolder(files, message => feedback('import-feedback', message));
+    const result = await importLocalFolder(files, message => feedback('import-feedback', message), 'sidepanel');
     await reloadTypes();
     feedback('import-feedback', importSummary(result), 'success');
   } catch (error) {
@@ -788,7 +812,10 @@ $('prompt-name').addEventListener('input', () => {
 action($('confirm-prompt'), confirmPrompt, 'copy-feedback');
 action($('copy-prompt'), async () => {
   if (builder.confirmedPrompt !== promptText()) return;
-  await copy(builder.confirmedPrompt, 'copy-fallback', 'copy-feedback');
+  if (await copy(builder.confirmedPrompt, 'copy-fallback', 'copy-feedback')) {
+    const taskId = await telemetry.currentTask(builder.builderId);
+    if (taskId) void telemetry.record('prompt_copied', { flow: 'initial', taskId });
+  }
 }, 'copy-feedback');
 $('scheme-select').addEventListener('change', () => openScheme($('scheme-select').value).catch(error => feedback('evaluation-feedback', error.message, 'error')));
 action($('generated-choose'), () => $('generated-file').click(), 'evaluation-feedback');
@@ -798,7 +825,12 @@ $('generated-file').addEventListener('change', () => {
 wireDrop($('generated-preview'), acceptGenerated, 'evaluation-feedback');
 action($('run-evaluation'), evaluate, 'evaluation-feedback');
 action($('confirm-revision'), confirmRevision, 'revision-feedback');
-action($('copy-revision'), () => confirmedRevision && copy(confirmedRevision, 'revision-copy-fallback', 'revision-feedback'), 'revision-feedback');
+action($('copy-revision'), async () => {
+  if (confirmedRevision && await copy(confirmedRevision, 'revision-copy-fallback', 'revision-feedback')) {
+    const taskId = await telemetry.currentTask(evaluationTaskKey);
+    if (taskId) void telemetry.record('prompt_copied', { flow: 'optimization', taskId });
+  }
+}, 'revision-feedback');
 action($('save-type'), async () => {
   const type = normalizeProjectType($('custom-type').value).slice(0, 40);
   if (!type) throw new Error('请输入分类名称');
@@ -817,7 +849,7 @@ action($('save-type'), async () => {
 $('custom-type').addEventListener('keydown', event => {
   if (event.key === 'Enter') $('save-type').click();
 });
-$('analytics-toggle').addEventListener('change', () => request('analytics.consent.set', { enabled: $('analytics-toggle').checked }).catch(error => feedback('builder-feedback', error.message, 'error')));
+$('analytics-toggle').addEventListener('change', () => request('analytics.consent.set', { enabled: $('analytics-toggle').checked }).then(() => telemetry.visit()).catch(error => feedback('builder-feedback', error.message, 'error')));
 document.addEventListener('paste', event => {
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || !state.privacyAccepted) return;
   const files = [...event.clipboardData.files];
@@ -871,7 +903,7 @@ async function init() {
     state.projectType = availableTypes()[0] || PRESET_TYPES[0];
     await chrome.storage.local.set({ [STORAGE.projectType]: state.projectType });
   }
-  $('analytics-toggle').checked = local[STORAGE.analyticsConsent]?.enabled === true;
+  $('analytics-toggle').checked = analyticsConsentValid(local[STORAGE.analyticsConsent]);
   document.body.classList.toggle('needs-consent', !state.privacyAccepted); $('privacy-gate').hidden = state.privacyAccepted;
   builder = session[STORAGE.builderV3] || freshBuilder();
   builder.references = builder.references.slice(0, 3);
@@ -890,6 +922,7 @@ async function init() {
   if (handoff[STORAGE.libraryHandoffV4]) await handleLibraryHandoff(handoff[STORAGE.libraryHandoffV4]);
   if (handoff[STORAGE.requestedStageV4]) await handleRequestedStage(handoff[STORAGE.requestedStageV4]);
   await refreshBackend();
+  void telemetry.visit();
 }
 init().catch(error => feedback('builder-feedback', error.message, 'error'));
 
