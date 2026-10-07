@@ -392,3 +392,18 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 - 独立本地与公网各1440/390px两场景、共8关键截图及目视通过，五章/10包装完整，异常0、横溢出0。首次淡入/回滚不重播、导航/图库切换/弹图、精确商店链接/测试集属性、首屏右缘误差0px通过。公网两个全新context正常3.2秒确认后正式Document200/text-html/无附件；平台初始404单列。证据opendesign/review/archbuddy-showcase-scroll-reveal/review.md、local/public-check-summary.json、static-check-summary.json。
 - 2026-10-06T12:39:10.123Z固定原应用/前缀23文件15977184字节，CLI退出0、archbuddy-dev-showcase-013/SUCCESS。主域23及备用3资源HTTP200/逐项哈希一致、前缀精确白名单/无临时配置、原隐私站200/6364字节/原哈希保持。构建/语法/引用/源码范围与diff格式检查通过；发布证据在cloudbase/dist/showcase-scroll-reveal-20261006，012产物和改前源留存。
 - 只更新环境showcaseSite，其余环境字段摘要一致，后端014及每日50/500保持；本轮无插件/数据/身份/密钥/模型/共享配置/其他项目变化，无Git提交或推送。OpenDesign完整清单重建；已选轻量进入正式上线，其余候选留在本地比较。
+
+
+## 2026-10-07 第十四版：01起点收集参考图（实现/发布中）
+
+用户要求01流程首节点保存图片改为收集参考图，仅该h3及HTML缓存标识改变，CSS/JS与其他内容保持。原23白名单、固定展示应用/前缀不变，输出cloudbase/dist/showcase-reference-collection-20261007；013产物与改前HTML留存。不改变后端014/50与500配置、插件/数据/身份/密钥/统计/模型/共享配置或其他项目，本轮不提交Git。静态构建及定向公网验收待记录。
+
+
+第十四版发布阶段：2026-10-07T04:07:48.613Z（北京时间10月7日）原应用/前缀23文件15977201字节发布完成，CLI退出0，archbuddy-dev-showcase-014/SUCCESS。主域23及备用3资源逐项HTTP200/哈希一致，精确白名单、无临时配置；原隐私站200/6364字节/原哈希保持。公开仅index.html中01首节点及缓存标识变化，其他22文件原哈希一致。构建/引用/范围检查通过；只更新showcaseSite，其他环境字段摘要保持。新节点桌面/手机公网排版定向复核待完成。
+
+
+### 第十四版最终验收（2026-10-07）
+
+01方案创作中的断点首节点已由保存图片改为收集参考图。公开只改index.html的节点与缓存标识，其他22文件（含CSS/JS）原哈希保持，原排版/痛点总结/方案1进入动效保留。独立公网1440/390px两个fresh context、13项/2截图目视通过，五字均完整单行，无孤字/裁切/碰撞/横溢出，reveal浮现至opacity1/原位，站点异常0。正常平台3秒确认后正式Document200/text-html/无附件，平台提醒与正式响应分开。证据opendesign/review/archbuddy-showcase-reference-collection/check-summary.json、review.md及static-check-summary.json。
+
+2026-10-07T04:07:48.613Z原应用/前缀23文件15977201字节，CLI退出0、archbuddy-dev-showcase-014/SUCCESS；23主域/3备用资源HTTP200且逐项哈希一致，精确前缀白名单/无临时配置，原隐私站200/6364字节/原哈希保持。既有构建/引用/源码范围/格式检查通过，013与改前HTML留存。只更新showcaseSite，其他环境字段摘要不变，后端archbuddy-api-014及50/500配置保持；没有实施统计或改插件/数据/身份/密钥/模型/共享配置/其他项目，无本轮Git提交或推送。

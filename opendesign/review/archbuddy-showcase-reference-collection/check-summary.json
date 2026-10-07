@@ -1,0 +1,430 @@
+{
+  "date": "2026-10-07T04:09:17.889Z",
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+  "contentVersion": "reference-collection-20261007",
+  "scope": "仅01首个节点收集参考图的文案/排版/浮现与正式Document；无其它章节、图库、下载或安装回归",
+  "checks": [
+    {
+      "name": "1440 正式HTML正常渲染",
+      "pass": true,
+      "detail": {
+        "docs": [
+          {
+            "width": 1440,
+            "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+            "status": 200,
+            "type": "text/html",
+            "disposition": null
+          }
+        ],
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "1440 本版缓存标识",
+      "pass": true,
+      "detail": [
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=reference-collection-20261007",
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=reference-collection-20261007"
+      ]
+    },
+    {
+      "name": "1440 第一个节点准确为收集参考图",
+      "pass": true,
+      "detail": "收集参考图"
+    },
+    {
+      "name": "1440 五字同一行且无裁切孤字",
+      "pass": true,
+      "detail": {
+        "font": "20px",
+        "lines": [
+          {
+            "top": 456.359375,
+            "text": "收集参考图"
+          }
+        ],
+        "node": {
+          "left": 100,
+          "right": 244,
+          "top": 401.859375,
+          "bottom": 549.859375,
+          "width": 144,
+          "height": 148
+        },
+        "glyphs": [
+          {
+            "text": "收",
+            "left": 123.25,
+            "right": 142.75,
+            "top": 456.359375,
+            "bottom": 483.359375
+          },
+          {
+            "text": "集",
+            "left": 142.75,
+            "right": 162.25,
+            "top": 456.359375,
+            "bottom": 483.359375
+          },
+          {
+            "text": "参",
+            "left": 162.25,
+            "right": 181.75,
+            "top": 456.359375,
+            "bottom": 483.359375
+          },
+          {
+            "text": "考",
+            "left": 181.75,
+            "right": 201.25,
+            "top": 456.359375,
+            "bottom": 483.359375
+          },
+          {
+            "text": "图",
+            "left": 201.25,
+            "right": 220.75,
+            "top": 456.359375,
+            "bottom": 483.359375
+          }
+        ]
+      }
+    },
+    {
+      "name": "1440 新节点无碰撞与横向溢出",
+      "pass": true,
+      "detail": {
+        "node": {
+          "left": 100,
+          "right": 244,
+          "top": 401.859375,
+          "bottom": 549.859375,
+          "width": 144,
+          "height": 148
+        },
+        "board": {
+          "left": 100,
+          "right": 1340,
+          "top": 401.859375,
+          "bottom": 684.859375,
+          "width": 1240,
+          "height": 283
+        },
+        "firstBreak": {
+          "left": 244,
+          "right": 334,
+          "top": 448.359375,
+          "bottom": 495.359375,
+          "width": 90,
+          "height": 47
+        },
+        "nextNode": {
+          "left": 334,
+          "right": 478,
+          "top": 401.859375,
+          "bottom": 549.859375,
+          "width": 144,
+          "height": 148
+        },
+        "header": {
+          "left": 0,
+          "right": 1440,
+          "top": 0,
+          "bottom": 84,
+          "width": 1440,
+          "height": 84
+        },
+        "viewport": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "1440 01方案1浮现后正常可读",
+      "pass": true,
+      "detail": {
+        "before": [
+          {
+            "class": "section-heading motion-heading motion-part is-revealed",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          },
+          {
+            "class": "motion-stage motion-part",
+            "opacity": "0",
+            "transform": "matrix(1, 0, 0, 1, 0, 26)"
+          }
+        ],
+        "after": [
+          {
+            "class": "section-heading motion-heading motion-part is-revealed",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          },
+          {
+            "class": "motion-stage motion-part is-revealed",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 正式HTML正常渲染",
+      "pass": true,
+      "detail": {
+        "docs": [
+          {
+            "width": 390,
+            "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+            "status": 200,
+            "type": "text/html",
+            "disposition": null
+          }
+        ],
+        "htmlDownloads": []
+      }
+    },
+    {
+      "name": "390 本版缓存标识",
+      "pass": true,
+      "detail": [
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/styles.css?v=reference-collection-20261007",
+        "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/app.js?v=reference-collection-20261007"
+      ]
+    },
+    {
+      "name": "390 第一个节点准确为收集参考图",
+      "pass": true,
+      "detail": "收集参考图"
+    },
+    {
+      "name": "390 五字同一行且无裁切孤字",
+      "pass": true,
+      "detail": {
+        "font": "20px",
+        "lines": [
+          {
+            "top": 350.59375,
+            "text": "收集参考图"
+          }
+        ],
+        "node": {
+          "left": 20,
+          "right": 370,
+          "top": 329.09375,
+          "bottom": 399.09375,
+          "width": 350,
+          "height": 70
+        },
+        "glyphs": [
+          {
+            "text": "收",
+            "left": 146.25,
+            "right": 165.75,
+            "top": 350.59375,
+            "bottom": 377.59375
+          },
+          {
+            "text": "集",
+            "left": 165.75,
+            "right": 185.25,
+            "top": 350.59375,
+            "bottom": 377.59375
+          },
+          {
+            "text": "参",
+            "left": 185.25,
+            "right": 204.75,
+            "top": 350.59375,
+            "bottom": 377.59375
+          },
+          {
+            "text": "考",
+            "left": 204.75,
+            "right": 224.25,
+            "top": 350.59375,
+            "bottom": 377.59375
+          },
+          {
+            "text": "图",
+            "left": 224.25,
+            "right": 243.75,
+            "top": 350.59375,
+            "bottom": 377.59375
+          }
+        ]
+      }
+    },
+    {
+      "name": "390 新节点无碰撞与横向溢出",
+      "pass": true,
+      "detail": {
+        "node": {
+          "left": 20,
+          "right": 370,
+          "top": 329.09375,
+          "bottom": 399.09375,
+          "width": 350,
+          "height": 70
+        },
+        "board": {
+          "left": 20,
+          "right": 370,
+          "top": 329.09375,
+          "bottom": 1260.09375,
+          "width": 350,
+          "height": 931
+        },
+        "firstBreak": {
+          "left": 20,
+          "right": 370,
+          "top": 399.09375,
+          "bottom": 451.09375,
+          "width": 350,
+          "height": 52
+        },
+        "nextNode": {
+          "left": 20,
+          "right": 370,
+          "top": 451.09375,
+          "bottom": 521.09375,
+          "width": 350,
+          "height": 70
+        },
+        "header": {
+          "left": 0,
+          "right": 390,
+          "top": 0,
+          "bottom": 72,
+          "width": 390,
+          "height": 72
+        },
+        "viewport": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "390 01方案1浮现后正常可读",
+      "pass": true,
+      "detail": {
+        "before": [
+          {
+            "class": "section-heading motion-heading motion-part",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          },
+          {
+            "class": "motion-stage motion-part",
+            "opacity": "0",
+            "transform": "matrix(1, 0, 0, 1, 0, 14)"
+          }
+        ],
+        "after": [
+          {
+            "class": "section-heading motion-heading motion-part is-revealed",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          },
+          {
+            "class": "motion-stage motion-part is-revealed",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, 0)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "正式站点页面控制台网络异常为零",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "documents": [
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 1440,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "disposition": null
+    },
+    {
+      "width": 390,
+      "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+      "status": 200,
+      "type": "text/html",
+      "disposition": null
+    }
+  ],
+  "platformVisits": [
+    {
+      "width": 1440,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 1440,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 1440,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "normalCountdownConfirmed": true,
+      "initialErrors": [
+        {
+          "width": 390,
+          "type": "http",
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/",
+          "status": 404
+        },
+        {
+          "width": 390,
+          "type": "console",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "public-1440-problem.png",
+    "public-390-problem.png"
+  ],
+  "errors": [],
+  "count": {
+    "checks": 13,
+    "screenshots": 2,
+    "errors": 0
+  },
+  "pass": true,
+  "visualReview": {
+    "reviewer": "independent-verifier",
+    "viewports": [
+      1440,
+      390
+    ],
+    "screenshotsActuallyViewed": true,
+    "pass": true,
+    "findings": []
+  }
+}
