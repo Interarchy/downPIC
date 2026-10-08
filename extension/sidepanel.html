@@ -1,10 +1,49 @@
 <!doctype html>
+<!--
+Lucide external-link: https://lucide.dev/icons/external-link
+Source: https://github.com/lucide-icons/lucide/blob/main/icons/external-link.svg
+ISC License
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+External-link is derived from Feather and also subject to the MIT License:
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ArchBuddy</title>
-  <link rel="stylesheet" href="sidepanel.css?v=0.6.0" />
+  <link rel="stylesheet" href="sidepanel.css?v=0.6.1" />
 </head>
 <body class="needs-consent">
   <div class="sticky-header">
@@ -13,7 +52,7 @@
     <div class="header-actions"><p id="session-status">正在连接</p></div>
   </header>
   <nav class="tabs">
-    <button class="tab" type="button" data-tab="download">图词库</button>
+    <button id="open-library" class="tab" type="button" data-tab="library">图词库</button>
     <button class="tab is-active" type="button" data-tab="analysis">提示词生成</button>
     <button class="tab" type="button" data-tab="optimize">提示词优化</button>
   </nav>
@@ -27,8 +66,7 @@
         </label>
         <div class="onboarding-actions"><a href="privacy.html" target="_blank">隐私说明</a><button id="privacy-accept" class="primary-button" disabled>确认</button></div>
       </section>
-      <div class="builder-toolbar"><span>最多 3 张参考图</span><button id="new-builder" class="text-button">重新构建</button></div>
-      <div id="reference-list" class="reference-list"></div>
+      <div id="reference-list" class="reference-list"><button id="new-builder" type="button" class="text-button" hidden>清空参考图</button></div>
       <button id="add-reference" class="secondary-button add-reference">添加参考图二</button>
       <p id="builder-feedback" class="section-note"></p>
       <section class="prompt-block builder-summary">
@@ -52,21 +90,10 @@
         <a href="privacy.html" target="_blank">隐私说明</a>
       </details>
     </section>
-    <section id="download-panel" class="panel" hidden>
-      <button id="open-library" type="button" class="primary-button open-library-button">打开图词库 <span aria-hidden="true">↗</span></button>
-      <div class="folder-import"><div id="folder-import-drop" class="folder-import-drop"><button id="import-local-folder" type="button" class="secondary-button">导入本地文件夹</button><span>或将多个文件夹一起拖到这里</span></div><input id="local-folder-files" type="file" webkitdirectory directory multiple hidden /><p id="import-feedback" class="section-note" role="status"></p></div>
-      <section class="type-manager">
-        <div class="section-title"><h2>项目类型</h2><span>点击类型设为默认</span></div>
-        <div id="project-type-list" class="project-type-list" role="list"></div>
-        <label for="custom-type">新建分类</label>
-        <div class="key-row"><input id="custom-type" maxlength="40" placeholder="输入项目类型名称" /><button id="save-type" class="secondary-button">新增</button></div>
-        <p id="type-feedback" class="section-note" aria-live="polite"></p>
-      </section>
-    </section>
     <section id="optimize-panel" class="panel optimize-panel" hidden>
       <nav class="render-services" aria-label="前往 AI 生图网站">
-        <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="icons/gemini.png" alt="" /><span><strong>Gemini</strong><small>gemini.google.com</small></span><span class="external-arrow" aria-hidden="true">↗</span></a>
-        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="icons/chatgpt.svg" alt="" /><span><strong>ChatGPT</strong><small>chatgpt.com</small></span><span class="external-arrow" aria-hidden="true">↗</span></a>
+        <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="icons/gemini.png" alt="" /><span><strong>Gemini</strong><small>gemini.google.com</small></span><svg class="external-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="icons/chatgpt.svg" alt="" /><span><strong>ChatGPT</strong><small>chatgpt.com</small></span><svg class="external-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a>
       </nav>
       <div class="section-title"><h2>生成效果图</h2><span>粘贴、拖入或选择文件</span></div>
       <figure id="generated-preview" class="preview is-empty" tabindex="0">

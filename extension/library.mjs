@@ -1,4 +1,4 @@
-import { PRESET_TYPES, STORAGE, normalizePromptScheme, orderedProjectTypes, resolveProjectType } from './shared.mjs';
+import { PRESET_TYPES, STORAGE, normalizePromptScheme, normalizeSourcePageUrl, normalizeProjectType, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
 import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
@@ -265,7 +265,19 @@ function renderCaptureFolders() {
       const order = [...types]; [order[index],order[next]] = [order[next],order[index]];
       void reorderTypes(order).then(() => [...target.querySelectorAll('.folder-group')].find(node => node.dataset.type === type)?.querySelector('button')?.focus());
     });
-    group.append(heading);
+    const typeRow = element('div', 'folder-type-row');
+    const rename = button('改名', 'group-mini-action type-rename', () => {
+      const name = prompt('修改分类名称', type);
+      if (name === null) return;
+      void renameCaptureType(type, name).catch(error => toast(error.message, 'error'));
+    });
+    rename.title = '修改分类“' + type + '”';
+    const remove = button('删除', 'group-mini-action type-remove', () => {
+      void deleteCaptureType(type).catch(error => toast(error.message, 'error'));
+    });
+    remove.title = '删除空分类“' + type + '”，不删除图片';
+    typeRow.append(heading, rename, remove);
+    group.append(typeRow);
     if (state.openTypes.has(type)) {
       if (!projects.size) group.append(element('p', 'folder-empty', '暂无采集项目'));
       for (const project of [...projects.keys()].sort((a, b) => a.localeCompare(b, 'zh-CN'))) {
@@ -604,12 +616,26 @@ async function renderCaptureDetail() {
   const status = state.catalog[item.id]?.descriptionStatus;
   if (!description.value) description.placeholder = status === 'processing' ? '正在自动生成视觉描述…'
     : status === 'pending' ? '等待自动生成视觉描述…' : state.catalog[item.id]?.descriptionError || '填写视觉特征，编辑后自动保存';
-  body.append(head, infoRow('项目', item.project), infoRow('分类', item.type),
-    infoRow('保存时间', humanDate(item.date)),
+  body.append(head, captureSourceRow(item), infoRow('保存时间', humanDate(item.date)), visual,
     element('h3', '', '核心视觉特征'), description, actions);
   if (item.imported) body.append(element('span', 'imported-origin', '原文件保留在导入时选择的文件夹中'));
-  detail.replaceChildren(visual, body);
+  detail.replaceChildren(body);
   void capturePreview(item, visual);
+}
+
+function captureSourceRow(item) {
+  const url = normalizeSourcePageUrl(state.catalog[item.id]?.sourcePageUrl);
+  if (!url) return infoRow('来源网页', item.imported ? '本地导入，无网页来源' : '未记录来源网页');
+  const row = element('div', 'meta-line capture-source');
+  const content = element('div', 'capture-source-content');
+  const link = element('a', 'capture-source-link', url);
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.title = '打开来源网页（新标签页）';
+  content.append(link);
+  row.append(element('span', '', '来源网页'), content);
+  return row;
 }
 
 async function autoSaveDescription(id) {
@@ -622,6 +648,91 @@ async function autoSaveDescription(id) {
     await request('capture.description.save', { downloadId: id, description: value, previousDescription });
     if (descriptionDrafts.get(id) === value) descriptionDrafts.delete(id);
   } catch (error) { toast('描述未保存：' + error.message, 'error'); }
+}
+
+function resetCaptureSelection(type) {
+  captureSearchReturn = null;
+  failedDescriptionsOnly = false;
+  selectedCaptureId = null;
+  $('capture-search').value = ''; captureSearch.clear(); $('capture-search-status').textContent = '';
+  state.selectedType = type;
+  state.typeChosenByUser = true;
+  state.openTypes.add(type);
+  state.showAllCaptures = false;
+  state.selectedFolder = null;
+}
+
+async function restoreHistoricalCaptureType(type) {
+  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
+  const custom = saved[STORAGE.customTypes] || [];
+  const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
+  if (orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []).includes(type)) return;
+  // 旧版允许移除分类而保留素材；用户整理这些素材时恢复其分类登记。
+  if (!state.captures.some(item => item.type === type) || resolveProjectType(type, saved[STORAGE.projectTypeAliasesV4] || {}) !== type)
+    throw new Error('分类已变化，请刷新后重试');
+  await chrome.storage.local.set({
+    [STORAGE.customTypes]: PRESET_TYPES.includes(type) ? custom : [...new Set([...custom, type])],
+    [STORAGE.hiddenProjectTypesV4]: hidden.filter(name => name !== type),
+  });
+}
+
+async function renameCaptureType(type, value) {
+  const name = normalizeProjectType(value);
+  if (!name || name.length > 40 || /[<>:"/\\|?*\x00-\x1f]/.test(name)) throw new Error('请输入 1–40 字的有效分类名称');
+  if (name === type) return;
+  if ([...captureGroups().keys()].some(other => other !== type && other.toLocaleLowerCase() === name.toLocaleLowerCase()))
+    throw new Error('已有同名分类');
+  await restoreHistoricalCaptureType(type);
+  await request('project-types.rename', { from: type, name });
+  state.openTypes.delete(type);
+  resetCaptureSelection(name);
+  await loadCaptures();
+  toast('分类已改名，已保存图片保留');
+}
+
+async function addCaptureType() {
+  const input = $('custom-type');
+  const type = normalizeProjectType(input.value);
+  if (!type || type.length > 40 || /[<>:"/\\|?*\x00-\x1f]/.test(type)) throw new Error('请输入 1–40 字的有效分类名称');
+  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
+  const custom = saved[STORAGE.customTypes] || [];
+  const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
+  const active = orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []);
+  if (active.some(name => name.toLocaleLowerCase() === type.toLocaleLowerCase())) throw new Error('已有同名分类');
+  const resolved = resolveProjectType(type, saved[STORAGE.projectTypeAliasesV4] || {});
+  if (resolved !== type) throw new Error('这个分类已改名为“' + resolved + '”，请使用新名称');
+  await chrome.storage.local.set({
+    [STORAGE.customTypes]: PRESET_TYPES.includes(type) ? custom : [...new Set([...custom, type])],
+    [STORAGE.hiddenProjectTypesV4]: hidden.filter(name => name !== type),
+    [STORAGE.projectType]: type,
+  });
+  input.value = '';
+  resetCaptureSelection(type);
+  await loadCaptures();
+  toast('已新增分类，并设为浮框默认分类');
+}
+
+async function deleteCaptureType(type) {
+  // 分类整理不能隐式删除图库记录或电脑原图；已有拖动项目功能可先移走内容。
+  await loadCaptures();
+  if (state.captures.some(item => item.type === type)) throw new Error('分类中还有图片，请先将项目拖到其他分类，再删除此分类');
+  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectType, STORAGE.projectTypeOrderV4]);
+  const custom = saved[STORAGE.customTypes] || [];
+  const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
+  const active = orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []);
+  if (!active.includes(type)) throw new Error('分类已变化，请刷新后重试');
+  if (active.length <= 1) throw new Error('至少保留一个分类');
+  const next = active.filter(name => name !== type);
+  await chrome.storage.local.set({
+    [STORAGE.customTypes]: custom.filter(name => name !== type),
+    [STORAGE.hiddenProjectTypesV4]: PRESET_TYPES.includes(type) ? [...new Set([...hidden, type])] : hidden,
+    [STORAGE.projectTypeOrderV4]: next,
+    [STORAGE.projectType]: saved[STORAGE.projectType] === type ? next[0] : saved[STORAGE.projectType] || next[0],
+  });
+  if (state.selectedType === type) state.selectedType = next[0];
+  state.openTypes.delete(type);
+  await loadCaptures();
+  toast('分类已删除，已保存图片不受影响');
 }
 
 async function reorderTypes(order) {
@@ -643,7 +754,9 @@ async function reorderTypes(order) {
 
 async function moveProjectFolder({ type, project }, targetType) {
   const affected = state.captures.filter(item => item.type === type && item.project === project);
-  if (!affected.length || !state.activeTypes.includes(targetType)) throw new Error('目标分类已变化，请刷新后再试');
+  if (!affected.length) throw new Error('项目已变化，请刷新后再试');
+  await restoreHistoricalCaptureType(type);
+  await restoreHistoricalCaptureType(targetType);
   await request('capture.folder.move', { fromType: type, project, targetType, ids: affected.map(item => item.id) });
   state.selectedType = targetType; state.showAllCaptures = false; state.typeChosenByUser = true; state.openTypes.add(targetType);
   state.selectedFolder = targetType + '\u0000' + project; selectedCaptureId = null;
@@ -1315,6 +1428,16 @@ async function importFolders(files) {
     toast(error.message, 'error');
   } finally { control.disabled = false; }
 }
+$('save-type').addEventListener('click', async () => {
+  const control = $('save-type');
+  control.disabled = true;
+  try { await addCaptureType(); }
+  catch (error) { toast(error.message, 'error'); }
+  finally { control.disabled = false; }
+});
+$('custom-type').addEventListener('keydown', event => {
+  if (event.key === 'Enter') $('save-type').click();
+});
 $('import-local-folder').addEventListener('click', () => $('local-folder-files').click());
 $('local-folder-files').addEventListener('change', event => {
   const files = [...event.currentTarget.files]; event.currentTarget.value = '';

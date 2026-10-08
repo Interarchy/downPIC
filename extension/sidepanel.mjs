@@ -1,15 +1,15 @@
 import {
-  PRESET_TYPES, STORAGE, PRINCIPLE, PRINCIPLE_TITLE, compileIntentPrompt, createEmptyIntentModules,
-  normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft, normalizeProjectType, orderedProjectTypes,
+  STORAGE, PRINCIPLE, PRINCIPLE_TITLE, compileIntentPrompt, createEmptyIntentModules,
+  normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft,
 } from './shared.mjs';
 import { putSourceImage, getSourceImage, deleteSourceImagesByScheme } from './source-image-store.mjs';
-import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
 
 // 三参考图构建与效果图直接编辑共用已确认提示词库。
 const $ = id => document.getElementById(id);
+// 重绘参考图时移动同一个按钮，保留已绑定的清空参考图操作。
+const newBuilderControl = $('new-builder');
 const state = {
   privacyAccepted: false, backendReady: false, stage: 'analysis', selection: null,
-  projectType: PRESET_TYPES[0], customTypes: [], hiddenTypes: [], typeOrder: [], lastDownload: null,
   schemes: [], scheme: null, working: null, generated: null, evaluation: null,
 };
 const labels = { compliant: '符合', partial: '部分符合', deviation: '明显偏差', unknown: '无法判断' };
@@ -206,6 +206,7 @@ async function renderReferences(targetRefId = null) {
     section.dataset.reference = ref.id;
     const heading = node('div', 'section-title');
     heading.append(node('h2', '', '参考图' + ['一', '二', '三'][index]));
+    if (index === 0) { newBuilderControl.hidden = false; heading.append(newBuilderControl); }
     section.append(heading);
     const preview = node('figure', 'preview is-empty');
     preview.tabIndex = 0;
@@ -372,7 +373,7 @@ async function copy(text, fallbackId, feedbackId) {
 }
 async function newBuilder() {
   if (analysisJobs.size || editingImage || confirming) return;
-  if (!confirm('重新构建将清空当前编辑区。已确认的提示词仍保留在库中，继续吗？')) return;
+  if (!confirm('清空当前参考图及编辑内容？已确认的提示词仍保留在库中。')) return;
   const oldId = builder.builderId;
   const { schemes } = await request('scheme.list');
   if (!schemes.some(item => item.schemeId === oldId)) await deleteSourceImagesByScheme(oldId);
@@ -640,10 +641,13 @@ function wireDrop(element, accept, feedbackId) {
   });
 }
 function switchStage(stage) {
-  if (!state.privacyAccepted) stage = 'analysis';
+  if (!state.privacyAccepted || !['analysis', 'optimize'].includes(stage)) stage = 'analysis';
   state.stage = stage;
   sessionStorage.setItem('archbuddy-active-stage', stage);
-  for (const name of ['analysis','download','optimize']) $(name + '-panel').hidden = stage !== name;
+  // 原生侧栏关闭会销毁页面；扩展会话保留当前任务，供下次打开恢复。
+  void chrome.storage.session.set({ [STORAGE.activeStageV4]: stage })
+    .catch(error => feedback(stage === 'optimize' ? 'evaluation-feedback' : 'builder-feedback', '当前页面状态保存失败：' + error.message, 'error'));
+  for (const name of ['analysis','optimize']) $(name + '-panel').hidden = stage !== name;
   document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('is-active', tab.dataset.tab === stage));
   requestAnimationFrame(() => document.querySelectorAll('.panel:not([hidden]) textarea.prompt-editor').forEach(fit));
   requestAnimationFrame(() => document.querySelectorAll('#prompt-preview textarea').forEach(fitPromptSection));
@@ -656,80 +660,9 @@ async function refreshBackend() {
   $('session-status').dataset.state = state.backendReady ? 'online' : 'offline';
   await renderReferences(); renderEvaluationControls();
 }
-function availableTypes() {
-  return orderedProjectTypes(state.customTypes, state.hiddenTypes, state.typeOrder);
-}
-function populateTypes() {
-  const target = $('project-type-list');
-  target.replaceChildren();
-  for (const type of availableTypes()) {
-    const row = node('div', 'project-type-row');
-    row.setAttribute('role', 'listitem');
-    row.draggable = true;
-    const grip = node('span', 'type-grip', '⠿');
-    grip.title = '拖动调整顺序';
-    row.append(grip);
-    row.addEventListener('dragstart', event => {
-      event.dataTransfer.setData('text/plain', type);
-      event.dataTransfer.effectAllowed = 'move';
-      row.classList.add('is-dragging');
-    });
-    row.addEventListener('dragend', () => row.classList.remove('is-dragging'));
-    row.addEventListener('dragover', event => { event.preventDefault(); event.dataTransfer.dropEffect = 'move'; });
-    row.addEventListener('drop', async event => {
-      event.preventDefault();
-      const from = event.dataTransfer.getData('text/plain');
-      if (from === type || !availableTypes().includes(from)) return;
-      const next = availableTypes().filter(value => value !== from);
-      next.splice(next.indexOf(type), 0, from);
-      try {
-        await chrome.storage.local.set({ [STORAGE.projectTypeOrderV4]: next });
-        state.typeOrder = next;
-        populateTypes();
-      } catch (error) { feedback('type-feedback', error.message, 'error'); }
-    });
-    const rename = button('改名', async () => {
-      const name = prompt('修改项目类型名称', type);
-      if (name === null) return;
-      await request('project-types.rename', { from: type, name });
-      await reloadTypes();
-    }, 'type-rename', 'type-feedback');
-    row.append(rename);
-    const choose = node('button', 'type-choice' + (type === state.projectType ? ' is-selected' : ''), type);
-    choose.type = 'button';
-    choose.setAttribute('aria-label', type + (type === state.projectType ? '，当前默认类型' : '，设为默认类型'));
-    choose.addEventListener('click', async () => {
-      state.projectType = type;
-      await chrome.storage.local.set({ [STORAGE.projectType]: type });
-      populateTypes();
-      feedback('type-feedback', '默认类型已设为' + type, 'success');
-    });
-    const remove = node('button', 'type-remove', '删除');
-    remove.type = 'button';
-    remove.setAttribute('aria-label', '删除项目类型' + type);
-    remove.addEventListener('click', async () => {
-      if (availableTypes().length === 1) {
-        feedback('type-feedback', '至少保留一个项目类型', 'error');
-        return;
-      }
-      if (PRESET_TYPES.includes(type)) state.hiddenTypes = [...new Set([...state.hiddenTypes, type])];
-      state.customTypes = state.customTypes.filter(value => value !== type);
-      if (state.projectType === type) state.projectType = availableTypes()[0];
-      await chrome.storage.local.set({
-        [STORAGE.customTypes]: state.customTypes,
-        [STORAGE.hiddenProjectTypesV4]: state.hiddenTypes,
-        [STORAGE.projectType]: state.projectType,
-      });
-      populateTypes();
-      feedback('type-feedback', '已移除类型“' + type + '”；已保存图片不受影响', 'success');
-    });
-    row.append(choose, remove);
-    target.append(row);
-  }
-}
 async function refreshCapture() {
-  const session = await chrome.storage.session.get([STORAGE.selection, STORAGE.lastDownload]);
-  state.selection = session[STORAGE.selection]; state.lastDownload = session[STORAGE.lastDownload];
+  const session = await chrome.storage.session.get(STORAGE.selection);
+  state.selection = session[STORAGE.selection];
 }
 
 async function useCapture() {
@@ -738,7 +671,9 @@ async function useCapture() {
   const blob = await (await fetch(state.selection.imagePayload)).blob();
   await acceptReference([new File([blob], state.selection.displayName || '网页参考图', { type: blob.type })], refId);
 }
-document.querySelectorAll('.tab').forEach(tab => action(tab, () => switchStage(tab.dataset.tab)));
+document.querySelectorAll('.tab[data-tab]').forEach(tab => {
+  if (tab.dataset.tab !== 'library') action(tab, () => switchStage(tab.dataset.tab));
+});
 $('privacy-check').addEventListener('change', () => { $('privacy-accept').disabled = !$('privacy-check').checked; });
 action($('privacy-accept'), async () => {
   await request('assets.consent', { enabled: true }); $('asset-ai-toggle').checked = true; state.privacyAccepted = true;
@@ -757,27 +692,6 @@ action($('add-reference'), async () => {
   document.querySelector('[data-reference="' + ref.id + '"]').scrollIntoView({ block: 'start', behavior: 'smooth' });
 });
 action($('new-builder'), newBuilder);
-async function importFolders(files) {
-  const control = $('import-local-folder');
-  if (control.disabled) return;
-  control.disabled = true;
-  feedback('import-feedback', '正在复制图片到本地图词库…');
-  try {
-    const result = await importLocalFolder(files, message => feedback('import-feedback', message));
-    await reloadTypes();
-    feedback('import-feedback', importSummary(result), 'success');
-  } catch (error) {
-    feedback('import-feedback', '导入失败：' + error.message, 'error');
-  } finally { control.disabled = false; }
-}
-action($('import-local-folder'), () => $('local-folder-files').click(), 'import-feedback');
-$('local-folder-files').addEventListener('change', event => {
-  const files = [...event.currentTarget.files]; event.currentTarget.value = '';
-  if (files.length) void importFolders(files);
-});
-wireFolderDrop($('folder-import-drop'), importFolders,
-  error => feedback('import-feedback', '导入失败：' + error.message, 'error'),
-  () => { if ($('import-local-folder').disabled) return false; feedback('import-feedback', '正在读取所拖入的文件夹…'); });
 action($('open-library'), async () => {
   const tab = await chrome.tabs.create({ url: chrome.runtime.getURL('library.html') });
   await chrome.sidePanel.close({ windowId: tab.windowId });
@@ -799,31 +713,12 @@ wireDrop($('generated-preview'), acceptGenerated, 'evaluation-feedback');
 action($('run-evaluation'), evaluate, 'evaluation-feedback');
 action($('confirm-revision'), confirmRevision, 'revision-feedback');
 action($('copy-revision'), () => confirmedRevision && copy(confirmedRevision, 'revision-copy-fallback', 'revision-feedback'), 'revision-feedback');
-action($('save-type'), async () => {
-  const type = normalizeProjectType($('custom-type').value).slice(0, 40);
-  if (!type) throw new Error('请输入分类名称');
-  if (PRESET_TYPES.includes(type)) state.hiddenTypes = state.hiddenTypes.filter(value => value !== type);
-  else state.customTypes = [...new Set([...state.customTypes, type])];
-  state.projectType = type;
-  await chrome.storage.local.set({
-    [STORAGE.customTypes]: state.customTypes,
-    [STORAGE.hiddenProjectTypesV4]: state.hiddenTypes,
-    [STORAGE.projectType]: type,
-  });
-  $('custom-type').value = '';
-  populateTypes();
-  feedback('type-feedback', '分类已新增并设为默认', 'success');
-}, 'type-feedback');
-$('custom-type').addEventListener('keydown', event => {
-  if (event.key === 'Enter') $('save-type').click();
-});
 $('analytics-toggle').addEventListener('change', () => request('analytics.consent.set', { enabled: $('analytics-toggle').checked }).catch(error => feedback('builder-feedback', error.message, 'error')));
 document.addEventListener('paste', event => {
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || !state.privacyAccepted) return;
   const files = [...event.clipboardData.files];
   if (!files.some(file => file.type.startsWith('image/'))) return;
   event.preventDefault();
-  if (state.stage === 'download') switchStage('analysis');
   const operation = state.stage === 'optimize' ? acceptGenerated(files)
     : acceptReference(files, focusedReference || builder.references[0].id);
   operation.catch(error => feedback(state.stage === 'optimize' ? 'evaluation-feedback' : 'builder-feedback', error.message, 'error'));
@@ -840,9 +735,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes[STORAGE.privacyAccepted]?.newValue) {
     state.privacyAccepted = true; document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true;
   }
-  if (sidepanelReady && area === 'local' && [STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectType].some(key => changes[key])) {
-    void reloadTypes().catch(error => feedback('type-feedback', error.message, 'error'));
-  }
   if (sidepanelReady && area === 'session' && changes[STORAGE.requestedStageV4]?.newValue) {
     void handleRequestedStage(changes[STORAGE.requestedStageV4].newValue);
   }
@@ -851,26 +743,20 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
 });
 async function handleRequestedStage(stage) {
-  if (!['analysis', 'optimize'].includes(stage)) return;
+  if (!['analysis', 'optimize', 'download'].includes(stage)) return;
+  // 旧版下载页状态恢复到提示词生成；图词库入口直接打开全页。
+  if (stage === 'download') stage = 'analysis';
   switchStage(stage);
   await chrome.storage.session.remove(STORAGE.requestedStageV4);
 }
 window.addEventListener('beforeunload', releaseImageUrls);
 async function init() {
   const [local, session] = await Promise.all([
-    chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.privacyAccepted, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.analyticsConsent]),
-    chrome.storage.session.get([STORAGE.builderV3, STORAGE.generatedResultV3]),
+    chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.privacyAccepted, STORAGE.analyticsConsent]),
+    chrome.storage.session.get([STORAGE.builderV3, STORAGE.generatedResultV3, STORAGE.activeStageV4]),
   ]);
   state.privacyAccepted = Boolean(local[STORAGE.privacyAccepted]);
   $('asset-ai-toggle').checked = local[STORAGE.assetAIConsent] === true;
-  state.projectType = normalizeProjectType(local[STORAGE.projectType]) || PRESET_TYPES[0];
-  state.customTypes = Array.isArray(local[STORAGE.customTypes]) ? local[STORAGE.customTypes] : [];
-  state.hiddenTypes = Array.isArray(local[STORAGE.hiddenProjectTypesV4]) ? local[STORAGE.hiddenProjectTypesV4] : [];
-  state.typeOrder = Array.isArray(local[STORAGE.projectTypeOrderV4]) ? local[STORAGE.projectTypeOrderV4] : [];
-  if (!availableTypes().includes(state.projectType)) {
-    state.projectType = availableTypes()[0] || PRESET_TYPES[0];
-    await chrome.storage.local.set({ [STORAGE.projectType]: state.projectType });
-  }
   $('analytics-toggle').checked = local[STORAGE.analyticsConsent]?.enabled === true;
   document.body.classList.toggle('needs-consent', !state.privacyAccepted); $('privacy-gate').hidden = state.privacyAccepted;
   builder = session[STORAGE.builderV3] || freshBuilder();
@@ -881,10 +767,10 @@ async function init() {
   focusedReference = builder.references[0].id;
   $('prompt-name').value = builder.name;
   state.generated = session[STORAGE.generatedResultV3] || null;
-  await persistBuilder(); populateTypes();
+  await persistBuilder();
   await refreshCapture(); await renderReferences(); await loadLibrary(); renderGenerated();
   if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
-  switchStage(sessionStorage.getItem('archbuddy-active-stage') || 'analysis');
+  switchStage(session[STORAGE.activeStageV4] || sessionStorage.getItem('archbuddy-active-stage') || 'analysis');
   sidepanelReady = true;
   const handoff = await chrome.storage.session.get([STORAGE.libraryHandoffV4, STORAGE.requestedStageV4]);
   if (handoff[STORAGE.libraryHandoffV4]) await handleLibraryHandoff(handoff[STORAGE.libraryHandoffV4]);
@@ -892,12 +778,3 @@ async function init() {
   await refreshBackend();
 }
 init().catch(error => feedback('builder-feedback', error.message, 'error'));
-
-async function reloadTypes() {
-  const local = await chrome.storage.local.get([STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4]);
-  state.customTypes = local[STORAGE.customTypes] || [];
-  state.hiddenTypes = local[STORAGE.hiddenProjectTypesV4] || [];
-  state.typeOrder = local[STORAGE.projectTypeOrderV4] || [];
-  state.projectType = local[STORAGE.projectType] || availableTypes()[0];
-  populateTypes();
-}

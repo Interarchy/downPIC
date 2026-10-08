@@ -1,5 +1,17 @@
 export const PRESET_TYPES = ['文化建筑', '教育建筑', '办公建筑', '社区建筑'];
 
+// 来源网页与图片直链分开保存；只允许可打开的网页地址。
+export function normalizeSourcePageUrl(value) {
+  if (typeof value !== 'string' || !value.trim()) return '';
+  try {
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol)) return '';
+    url.username = '';
+    url.password = '';
+    return url.href;
+  } catch { return ''; }
+}
+
 export const STORAGE = {
   captureEnabled: 'capture_enabled',
   projectType: 'default_project_type',
@@ -11,6 +23,7 @@ export const STORAGE = {
   projectTypeAliasesV4: 'projectTypeAliasesV4',
   captureHiddenV4: 'captureHiddenV4',
   requestedStageV4: 'requestedStageV4',
+  activeStageV4: 'activeStageV4',
   privacyAccepted: 'privacy_accepted_v1',
   assetAIConsent: 'asset_ai_consent_v1',
   assetVectorConsent: 'asset_vector_consent_v1',

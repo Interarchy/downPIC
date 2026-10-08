@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T04:10:17.301Z",
+  "generated": "2026-10-08T13:04:02.751Z",
   "sections": [
     {
       "id": "mockups",
@@ -27,6 +27,23 @@
             {
               "label": "workflow.html",
               "path": "mockups/archbuddy-case-study/workflow.html"
+            }
+          ]
+        },
+        {
+          "slug": "archbuddy-plugin-simplify",
+          "files": [
+            {
+              "label": "option-one.html",
+              "path": "mockups/archbuddy-plugin-simplify/option-one.html"
+            },
+            {
+              "label": "option-three.html",
+              "path": "mockups/archbuddy-plugin-simplify/option-three.html"
+            },
+            {
+              "label": "option-two.html",
+              "path": "mockups/archbuddy-plugin-simplify/option-two.html"
             }
           ]
         },
@@ -87,12 +104,12 @@
           "slug": "archbuddy-portfolio",
           "files": [
             {
-              "label": "colors_and_type.css",
-              "path": "design-systems/archbuddy-portfolio/colors_and_type.css"
-            },
-            {
               "label": "SKILL.md",
               "path": "design-systems/archbuddy-portfolio/SKILL.md"
+            },
+            {
+              "label": "colors_and_type.css",
+              "path": "design-systems/archbuddy-portfolio/colors_and_type.css"
             }
           ]
         }

@@ -19,6 +19,7 @@ import {
   revisionPreview,
   compileIntentPrompt,
   normalizeProjectType,
+  normalizeSourcePageUrl,
   normalizeLibraryTags,
   sanitizePathSegment,
   orderedProjectTypes,
@@ -1112,6 +1113,7 @@ async function downloadImage(payload) {
   captureArchiveQueue = captureArchiveQueue.catch(() => {}).then(async () => {
     await recordCaptureDownload(downloadId, {
       category: sanitizePathSegment(category, '未分类'), project, name: title, filename,
+      sourcePageUrl: normalizeSourcePageUrl(payload.pageUrl),
       createdAt: download.createdAt, descriptionStatus: 'pending',
     });
     await archiveCapturedImage(downloadId, url).catch(() => {});
@@ -1298,6 +1300,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'image.paste': return selectPastedImage(message.payload ?? {});
       case 'analysis.run': return analyzeSelection(message.payload ?? {});
       case 'intent.add': return addCandidate(message.payload ?? {});
+      case 'library.open': {
+        const tab = await chrome.tabs.create({
+          url: chrome.runtime.getURL('library.html'),
+          ...(Number.isInteger(sender.tab?.windowId) ? { windowId: sender.tab.windowId } : {}),
+        });
+        await chrome.sidePanel.close({ windowId: tab.windowId }).catch(() => {});
+        return { ok: true };
+      }
       case 'library.metadata.save': return saveLibraryMetadata(message.payload ?? {});
       case 'library.resume': return resumeLibraryScheme(message.payload ?? {});
       case 'scheme.list': return listSchemes();
@@ -1414,8 +1424,11 @@ async function renameProjectType(payload) {
 async function captureRecord(downloadId) {
   if (!Number.isSafeInteger(downloadId) || downloadId < 0) throw new Error('图片标识无效');
   const [download] = await chrome.downloads.search({ id: downloadId });
-  if (!download || download.byExtensionId !== chrome.runtime.id || download.state !== 'complete'
-      || !String(download.filename).split(/[\\/]/).includes('ArchBuddy')) throw new Error('图片已不存在，或不属于 ArchBuddy 下载');
+  if (!download) throw new Error('下载记录已不存在，请重新保存图片');
+  if (download.byExtensionId !== chrome.runtime.id) throw new Error('图片不属于当前 ArchBuddy 安装的下载');
+  if (download.state === 'in_progress') throw categorizedError('DOWNLOAD_PENDING', '图片仍在下载，完成后会自动生成概要描述');
+  if (download.state !== 'complete') throw new Error('图片下载已中断，请重新保存图片');
+  if (!String(download.filename).split(/[\\/]/).includes('ArchBuddy')) throw new Error('图片不在 ArchBuddy 下载目录中');
   const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.captureHiddenV4]);
   if ((stored[STORAGE.captureHiddenV4] || []).includes(downloadId)) throw new Error('图片已移出图库');
   return { download, stored };
@@ -1593,8 +1606,9 @@ async function patchCaptureStatus(id, fields) {
   await chrome.storage.local.set({ [STORAGE.captureCatalogV4]: { ...catalog, [id]: { ...catalog[id], ...fields } } });
 }
 let descriptionsRunning = false;
+let descriptionsRerun = false;
 async function drainCaptureDescriptions() {
-  if (descriptionsRunning) return;
+  if (descriptionsRunning) { descriptionsRerun = true; return; }
   descriptionsRunning = true;
   try {
     const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
@@ -1631,6 +1645,9 @@ async function drainCaptureDescriptions() {
             if (task.imported) await importedCaptureRecord(task.downloadId);
             else await captureRecord(task.downloadId);
           } catch (error) {
+            // The preview can be ready before Chrome finishes the original download.
+            // Keep it pending so completion (or the recovery alarm) can resume it.
+            if (error?.code === 'DOWNLOAD_PENDING') break;
             await markStatus({ descriptionStatus: 'failed', descriptionError: error.message });
             await queueCaptureMutation(() => bumpDescriptionProgress({ failed: 1, failedId: task.downloadId }));
             break;
@@ -1659,7 +1676,10 @@ async function drainCaptureDescriptions() {
     };
     await Promise.all(Array.from({ length: Math.min(descriptionConcurrency, tasks.length) }, runTask));
   } catch { /* 保留已持久化任务，下次唤醒恢复。 */ }
-  finally { descriptionsRunning = false; }
+  finally {
+    descriptionsRunning = false;
+    if (descriptionsRerun) { descriptionsRerun = false; void drainCaptureDescriptions(); }
+  }
 }
 chrome.downloads.onChanged.addListener(change => {
   if (change.state?.current === 'complete') void drainCaptureDescriptions();

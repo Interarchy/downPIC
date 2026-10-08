@@ -1,8 +1,8 @@
 import { STORAGE } from './shared.mjs';
 
 const elements = Object.fromEntries([
-  'backend-status', 'capture-enabled', 'capture-copy', 'open-analysis',
-  'open-optimize', 'open-library', 'global-feedback',
+  'backend-status', 'capture-enabled', 'capture-copy', 'open-sidepanel',
+  'open-library', 'global-feedback',
 ].map(id => [id, document.getElementById(id)]));
 let enabled = false;
 let currentTab = null;
@@ -82,21 +82,18 @@ elements['capture-enabled'].addEventListener('change', async event => {
   feedback(enabled ? '网页图片工具已开启' : '网页图片工具已关闭');
 });
 
-function openStage(stage) {
+function openSidepanel() {
   if (typeof currentTab?.windowId !== 'number') {
     feedback('无法识别当前浏览器窗口', 'error');
     return;
   }
-  // Keep open() in the click gesture; the session message selects the tab as the panel loads.
-  const opening = chrome.sidePanel.open({ windowId: currentTab.windowId });
-  chrome.storage.session.set({ [STORAGE.requestedStageV4]: stage })
-    .then(() => opening)
+  // 保持在点击手势内打开，沿用侧栏保存的当前任务。
+  chrome.sidePanel.open({ windowId: currentTab.windowId })
     .then(() => window.close())
     .catch(error => feedback(error?.message || '无法打开右侧面板', 'error'));
 }
 
-elements['open-analysis'].addEventListener('click', () => openStage('analysis'));
-elements['open-optimize'].addEventListener('click', () => openStage('optimize'));
+elements['open-sidepanel'].addEventListener('click', openSidepanel);
 elements['open-library'].addEventListener('click', () => {
   chrome.tabs.create({ url: chrome.runtime.getURL('library.html') })
     .then(tab => chrome.sidePanel.close({ windowId: tab.windowId }).catch(() => {}))

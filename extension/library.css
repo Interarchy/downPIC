@@ -277,6 +277,9 @@ h1, h2, h3, p, figure { margin: 0; }
 .capture-detail-image { width: 100%; border: 0; padding: 0; }
 .capture-description-editor { resize: vertical; min-height: 165px; width: 100%; padding: 10px; border: 1px solid #b9c8bd; border-radius: 5px; color: var(--ink); background: #fafcf9; font-size: 12px; line-height: 1.7; }
 .capture-detail-layout .detail-body { gap: 13px; padding: 16px; }
+.capture-source > span { flex-shrink: 0; }
+.capture-source-content { min-width: 0; display: grid; gap: 4px; justify-items: end; }
+.capture-source-link { max-width: 100%; color: var(--green); overflow-wrap: anywhere; text-align: right; }
 .capture-detail-layout h3 { font-size: 12px; }
 .delete-dialog { width: min(440px, calc(100vw - 40px)); padding: 24px; border: 1px solid #bccbbf; border-radius: 10px; color: var(--ink); background: var(--surface); box-shadow: 0 12px 48px #173a2426; }
 .delete-dialog::backdrop { background: #16302166; }
@@ -301,7 +304,7 @@ h1, h2, h3, p, figure { margin: 0; }
 
 /* 紧凑的图词导航与贴近图片的操作。 */
 .library-shell { grid-template-columns: 216px minmax(0,1fr); }
-.mode-switch { gap: 6px; }
+.mode-switch { gap: 6px; margin-bottom: 12px; }
 .mode-button { min-height: 51px; gap: 8px; padding: 10px 9px; border-radius: 7px; }
 .mode-button .mode-icon { width: 23px; height: 23px; flex: 0 0 23px; }
 .mode-button .mode-icon svg { width: 20px; height: 20px; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
@@ -342,7 +345,7 @@ h1, h2, h3, p, figure { margin: 0; }
 /* 本地文件夹导入与跨项目类型归类。 */
 .folder-project[draggable="true"] { cursor: grab; }
 .capture-folder-row.is-dragging { opacity: .42; }
-.capture-folders.is-moving-project .folder-group > :not(.folder-type) { display: none; }
+.capture-folders.is-moving-project .folder-group > :not(.folder-type-row) { display: none; }
 .capture-folders.is-moving-project .folder-type::before { content: "▸"; }
 .folder-group.folder-drop-target { background: #e2f1e7; outline: 2px solid var(--green); outline-offset: -2px; border-radius: 6px; }
 .folder-group.folder-drop-target .folder-type { color: var(--green-dark); }
@@ -524,3 +527,14 @@ h1, h2, h3, p, figure { margin: 0; }
 
 /* 右侧操作保持等宽，页眉按钮与项目视图切换的两侧边缘对齐。 */
 #open-sidepanel { width: 96px; white-space: nowrap; }
+
+/* 分类管理集中到图库左栏，保持分类选择与维护操作分开。 */
+.folder-type-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.folder-type-row .folder-type { flex: 1; min-width: 0; width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 2px; }
+.folder-type-row .group-mini-action { flex: 0 0 auto; padding: 4px 2px; }
+.folder-type-row .type-remove:hover { color: var(--danger); }
+.capture-type-create { flex: 0 0 auto; padding-bottom: 10px; }
+.capture-type-create input { min-width: 0; width: 100%; height: 34px; padding: 0 7px; border: 1px solid #b9c8bd; border-radius: 5px; color: var(--ink); background: #fff; font-size: 11px; }
+.capture-type-create input:focus-visible { outline-offset: -2px; }
+.capture-type-create .solid-button { min-height: 34px; padding: 0 8px; font-size: 11px; }
+.capture-detail-layout .detail-body > .detail-image { min-height: 180px; border-radius: 5px; }

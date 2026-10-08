@@ -1,0 +1,185 @@
+{
+  "results": [
+    {
+      "variant": "one",
+      "width": 1440,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 1440,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 1440,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 1440,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 1440,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    },
+    {
+      "variant": "one",
+      "width": 390,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 390,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 390,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 390,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "one",
+      "width": 390,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    },
+    {
+      "variant": "two",
+      "width": 390,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 390,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 390,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 390,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "two",
+      "width": 390,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    },
+    {
+      "variant": "three",
+      "width": 390,
+      "surface": "capture",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 390,
+      "surface": "library",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 390,
+      "surface": "popup",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 390,
+      "surface": "sidebar",
+      "overflow": false
+    },
+    {
+      "variant": "three",
+      "width": 390,
+      "interaction": "关闭恢复/图库直达/分类新增/双入口",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

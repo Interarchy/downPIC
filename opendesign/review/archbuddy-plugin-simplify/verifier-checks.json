@@ -1,0 +1,20 @@
+[
+  {
+    "file": "one",
+    "width": 390,
+    "closeRestore": true,
+    "directLibrary": true
+  },
+  {
+    "file": "two",
+    "width": 390,
+    "closeRestore": true,
+    "directLibrary": true
+  },
+  {
+    "file": "three",
+    "width": 390,
+    "closeRestore": true,
+    "directLibrary": true
+  }
+]

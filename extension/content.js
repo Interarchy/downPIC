@@ -1,3 +1,42 @@
+/*
+ * Lucide chevron-up: https://lucide.dev/icons/chevron-up
+ * Source: https://github.com/lucide-icons/lucide/blob/main/icons/chevron-up.svg
+ * ISC License
+ * Copyright (c) 2026 Lucide Icons and Contributors
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * Chevron-up is derived from Feather and also subject to the MIT License:
+ * Copyright (c) 2013-present Cole Bemis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 (() => {
   if (window.__downPicBetaActive) return;
   window.__downPicBetaActive = true;
@@ -21,6 +60,7 @@
   let hideTimer = null;
   let busy = false;
   let toolbarPinned = false;
+  let toolbarCollapsed = false;
 
   chrome.storage.local.get([STORAGE.captureEnabled, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenTypes, STORAGE.typeOrder]).then(values => {
     captureEnabled = Boolean(values[STORAGE.captureEnabled]);
@@ -36,7 +76,10 @@
     if (changes[STORAGE.typeOrder]) { typeOrder = changes[STORAGE.typeOrder].newValue || []; populateCategorySelect(); }
     if (changes[STORAGE.captureEnabled]) {
       captureEnabled = Boolean(changes[STORAGE.captureEnabled].newValue);
-      if (!captureEnabled) removeToolbar(true);
+      if (!captureEnabled) {
+        toolbarCollapsed = false;
+        removeToolbar(true);
+      }
     }
     if (changes[STORAGE.projectType]) {
       defaultType = normalize(changes[STORAGE.projectType].newValue) || defaultType;
@@ -92,7 +135,7 @@
   }
 
   function removeToolbar(force = false) {
-    if (!force && (busy || toolbarPinned || toolbar?.contains(document.activeElement))) return;
+    if (!force && (busy || toolbarPinned || toolbarCollapsed || toolbar?.contains(document.activeElement))) return;
     clearTimers();
     toolbar?.remove();
     toolbar = null;
@@ -101,7 +144,7 @@
   }
 
   function scheduleHide() {
-    if (toolbarPinned) return;
+    if (toolbarPinned || toolbarCollapsed) return;
     clearTimeout(hideTimer);
     hideTimer = setTimeout(removeToolbar, 260);
   }
@@ -111,6 +154,14 @@
     const rect = currentImage.getBoundingClientRect();
     toolbar.style.top = `${window.scrollY + rect.top + 10}px`;
     toolbar.style.left = `${window.scrollX + rect.left + rect.width / 2}px`;
+  }
+
+  function setToolbarCollapsed(collapsed) {
+    toolbarCollapsed = collapsed;
+    clearTimers();
+    if (!toolbar) return;
+    toolbar.dataset.collapsed = String(collapsed);
+    positionToolbar();
   }
 
   function setStatus(message, tone = '') {
@@ -230,12 +281,16 @@
     toolbar = document.createElement('div');
     toolbar.className = 'downpic-toolbar';
     toolbar.setAttribute('aria-label', 'ArchBuddy 图片工具条');
+    toolbar.dataset.collapsed = String(toolbarCollapsed);
+    const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" focusable="false"><rect x="8" y="8" width="112" height="112" rx="24" fill="#25634b"/><path fill="#fff" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z"/></svg>`;
     toolbar.innerHTML = `
       <div class="downpic-toolbar-row">
-        <span class="downpic-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" focusable="false"><rect x="8" y="8" width="112" height="112" rx="24" fill="#25634b"/><path fill="#fff" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z"/></svg></span>
-        <label class="downpic-category-label"><span>分类</span><select data-role="category" aria-label="选择图片分类"></select></label>
+        <button class="downpic-mark" type="button" data-action="open-library" title="打开图词库" aria-label="打开图词库">${logo}</button>
+        <button class="downpic-expand" type="button" data-action="expand" title="展开图片工具" aria-label="展开图片工具">展开</button>
+        <label class="downpic-category-label"><select data-role="category" aria-label="选择图片分类"></select></label>
         <button type="button" data-action="save">保存图片</button>
         <button type="button" data-action="analyze">反推提示词</button>
+        <button class="downpic-collapse" type="button" data-action="collapse" title="收起" aria-label="收起图片工具"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg></button>
       </div>
       <div class="downpic-custom-row" hidden>
         <input data-role="custom-type" type="text" maxlength="40" placeholder="输入自定义图片类型" />
@@ -252,6 +307,18 @@
     toolbar.addEventListener('pointerenter', () => clearTimeout(hideTimer));
     toolbar.addEventListener('pointerleave', scheduleHide);
     toolbar.addEventListener('focusout', scheduleHide);
+    toolbar.querySelector('[data-action="open-library"]').addEventListener('click', async event => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      const response = await request({ type: 'library.open' });
+      button.disabled = false;
+      if (!response?.ok) {
+        setToolbarCollapsed(false);
+        setStatus(response?.error || '无法打开图词库', 'error');
+      }
+    });
+    toolbar.querySelector('[data-action="collapse"]').addEventListener('click', () => setToolbarCollapsed(true));
+    toolbar.querySelector('[data-action="expand"]').addEventListener('click', () => setToolbarCollapsed(false));
     toolbar.querySelector('[data-action="save"]').addEventListener('click', event => saveImage(image, event.currentTarget));
     toolbar.querySelector('[data-action="analyze"]').addEventListener('click', event => analyzeImage(image, event.currentTarget));
     toolbar.querySelector('[data-role="category"]').addEventListener('change', async event => {
@@ -295,12 +362,14 @@
   }
 
   document.addEventListener('pointerover', event => {
-    if (!captureEnabled) return;
+    if (!captureEnabled || event.target.closest?.('.downpic-toolbar')) return;
     const image = imageAtPointer(event);
     if (!image || busy || image === currentImage) return;
     clearTimeout(hideTimer);
     clearTimeout(showTimer);
-    showTimer = setTimeout(() => createToolbar(image), 120);
+    showTimer = setTimeout(() => {
+      if (captureEnabled && !busy) createToolbar(image);
+    }, 120);
   });
 
   document.addEventListener('pointerout', event => {
@@ -309,7 +378,7 @@
     scheduleHide();
   });
   document.addEventListener('pointerdown', event => {
-    if (toolbarPinned && toolbar && !toolbar.contains(event.target)) removeToolbar(true);
+    if (toolbarPinned && !toolbarCollapsed && toolbar && !toolbar.contains(event.target)) removeToolbar(true);
   }, true);
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') removeToolbar(true);
@@ -333,6 +402,9 @@
     }
     if (message?.type !== 'capture.setEnabled') return;
     captureEnabled = Boolean(message.enabled);
-    if (!captureEnabled) removeToolbar(true);
+    if (!captureEnabled) {
+      toolbarCollapsed = false;
+      removeToolbar(true);
+    }
   });
 })();

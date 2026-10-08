@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const files = await Promise.all([
   'popup.html', 'popup.mjs', 'sidepanel.html', 'sidepanel.mjs',
-  'content.js', 'content.css', 'background.mjs', 'runtime-config.mjs',
+  'content.js', 'content.css', 'background.mjs', 'runtime-config.mjs', 'library.html', 'library.mjs',
 ].map(async name => [name, await readFile(new URL(`../${name}`, import.meta.url), 'utf8')]));
 const source = Object.fromEntries(files);
 
@@ -22,16 +22,16 @@ test('弹窗和侧栏脚本引用的静态元素都真实存在', () => {
   }
 });
 
-test('Logo 弹窗提供三条入口和网页图片工具开关', () => {
-  for (const id of ['capture-enabled', 'open-analysis', 'open-optimize', 'open-library']) {
+test('Logo 弹窗提供图库和侧栏两个入口及网页图片工具开关', () => {
+  for (const id of ['capture-enabled', 'open-sidepanel', 'open-library']) {
     assert.match(source['popup.html'], new RegExp('id="' + id + '"'), '弹窗缺少 ' + id);
   }
-  assert.match(source['popup.mjs'], /STORAGE\.requestedStageV4/);
+  assert.match(source['popup.mjs'], /chrome\.sidePanel\.open/);
   assert.match(source['popup.mjs'], /capture\.setEnabled/);
 });
 
 test('网页工具条只在总开关开启时响应图片悬浮', () => {
-  assert.match(source['content.js'], /if \(!captureEnabled\) return;/);
+  assert.match(source['content.js'], /if \(!captureEnabled \|\| event\.target/);
   assert.match(source['content.js'], /capture\.setEnabled/);
   assert.match(source['content.js'], /data-action="save"/);
   assert.match(source['content.js'], /data-action="analyze"/);
@@ -41,22 +41,25 @@ test('网页工具条只在总开关开启时响应图片悬浮', () => {
   assert.match(source['content.js'], /toolbar\.style\.visibility = 'hidden'/);
   assert.match(source['content.js'], /capture\.geometry/);
   assert.match(source['content.js'], /toolbarPinned = true/);
-  assert.match(source['content.js'], /if \(toolbarPinned\) return/);
+  assert.match(source['content.js'], /if \(toolbarPinned \|\| toolbarCollapsed\) return/);
 });
 
-test('网页浮栏初始无空状态行，主要控件使用统一视觉尺寸', () => {
+test('网页浮栏初始无空状态行，操作紧凑且能收起展开', () => {
   assert.match(source['content.js'], /class="downpic-feedback-row" hidden/);
-  assert.match(source['content.css'], /\.downpic-toolbar-row > button \{ width: 104px; flex: 0 0 104px; \}/);
-  assert.match(source['content.css'], /\.downpic-toolbar button \{[\s\S]*?height: 36px;[\s\S]*?font: 600 14px/);
+  assert.match(source['content.js'], /data-action="collapse"/);
+  assert.match(source['content.js'], /data-action="expand"/);
+  assert.doesNotMatch(source['content.js'], /<span>分类<\/span>/);
+  assert.match(source['content.css'], /\.downpic-toolbar button \{[\s\S]*?height: 36px;[\s\S]*?font: 600 13px/);
   assert.match(source['content.css'], /\.downpic-category-label select \{[\s\S]*?height: 36px;[\s\S]*?font: 500 14px/);
 });
 
-test('侧栏图资库提供全页入口和项目类型管理', () => {
-  for (const id of ['open-library', 'project-type-list', 'custom-type', 'save-type']) {
-    assert.match(source['sidepanel.html'], new RegExp('id="' + id + '"'), '侧栏缺少 ' + id);
+test('侧栏图库直达，分类管理集中在完整图库', () => {
+  assert.match(source['sidepanel.html'], /id="open-library"[^>]*>图词库<\/button>/);
+  assert.doesNotMatch(source['sidepanel.html'], /id="(?:download-panel|project-type-list|custom-type|save-type)"/);
+  for (const id of ['custom-type', 'save-type']) {
+    assert.match(source['library.html'], new RegExp('id="' + id + '"'), '图库缺少 ' + id);
   }
-  assert.doesNotMatch(source['sidepanel.html'], /id="capture-preview"/);
-  assert.match(source['sidepanel.mjs'], /STORAGE\.hiddenProjectTypesV4/);
+  assert.match(source['library.mjs'], /project-types\.rename/);
 });
 
 test('扩展端没有模型 Key、DeepSeek 地址或管理员测试凭据', () => {
