@@ -27,7 +27,7 @@ test('Logo 弹窗提供图库和侧栏两个入口及网页图片工具开关', 
     assert.match(source['popup.html'], new RegExp('id="' + id + '"'), '弹窗缺少 ' + id);
   }
   assert.match(source['popup.mjs'], /chrome\.sidePanel\.open/);
-  assert.match(source['popup.mjs'], /capture\.setEnabled/);
+  assert.match(source['popup.mjs'], /capture\.syncPages/);
 });
 
 test('网页工具条只在总开关开启时响应图片悬浮', () => {

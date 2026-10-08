@@ -23,22 +23,14 @@ function renderEnabled() {
   elements['capture-copy'].textContent = enabled ? '功能已开启' : '功能已关闭';
 }
 
-async function syncCurrentPage(active) {
-  if (!currentTab?.id || !/^https?:/i.test(currentTab.url || '')) {
-    feedback('请在普通网页中使用图片工具', 'error');
-    return;
+async function syncCapturePages() {
+  // 后台读取最新总开关并同步全部网页，避免旧消息把关闭状态反转。
+  const sync = await request({ type: 'capture.syncPages' });
+  if (!sync?.ok) {
+    feedback(sync?.error || '网页图片工具同步失败，请重试', 'error');
+    return false;
   }
-  try {
-    await chrome.tabs.sendMessage(currentTab.id, { type: 'capture.setEnabled', enabled: active });
-  } catch {
-    if (!active) return;
-    const result = await request({ type: 'page.activate', tabId: currentTab.id });
-    if (!result?.ok) {
-      feedback(result?.error || '当前网页无法启用图片工具', 'error');
-      return;
-    }
-    await chrome.tabs.sendMessage(currentTab.id, { type: 'capture.setEnabled', enabled: active }).catch(() => {});
-  }
+  return true;
 }
 
 async function refreshBackend() {
@@ -64,7 +56,7 @@ async function initialize() {
   currentTab = tabs[0] || null;
   enabled = Boolean(stored[STORAGE.captureEnabled]);
   renderEnabled();
-  await Promise.all([refreshBackend(), enabled ? syncCurrentPage(true) : Promise.resolve()]);
+  await Promise.all([refreshBackend(), syncCapturePages()]);
 }
 
 elements['capture-enabled'].addEventListener('change', async event => {
@@ -78,8 +70,8 @@ elements['capture-enabled'].addEventListener('change', async event => {
   enabled = next;
   await chrome.storage.local.set({ [STORAGE.captureEnabled]: enabled });
   renderEnabled();
-  await syncCurrentPage(enabled);
-  feedback(enabled ? '网页图片工具已开启' : '网页图片工具已关闭');
+  const synced = await syncCapturePages();
+  if (synced !== false) feedback(enabled ? '网页图片工具已开启' : '网页图片工具已关闭');
 });
 
 function openSidepanel() {

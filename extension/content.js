@@ -38,8 +38,12 @@
  * SOFTWARE.
  */
 (() => {
-  if (window.__downPicBetaActive) return;
+  // 重新注入时释放上一轮监听，替换重载扩展前遗留的工具条。
+  window.__downPicBetaDispose?.();
+  document.querySelectorAll('.downpic-toolbar').forEach(element => element.remove());
   window.__downPicBetaActive = true;
+  const lifetime = new AbortController();
+  let disposed = false;
 
   const STORAGE = {
     captureEnabled: 'capture_enabled',
@@ -63,6 +67,7 @@
   let toolbarCollapsed = false;
 
   chrome.storage.local.get([STORAGE.captureEnabled, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenTypes, STORAGE.typeOrder]).then(values => {
+    if (disposed) return;
     captureEnabled = Boolean(values[STORAGE.captureEnabled]);
     defaultType = normalize(values[STORAGE.projectType]) || defaultType;
     customTypes = Array.isArray(values[STORAGE.customTypes])
@@ -72,7 +77,8 @@
     typeOrder = Array.isArray(values[STORAGE.typeOrder]) ? values[STORAGE.typeOrder] : [];
     populateCategorySelect();
   });
-  chrome.storage.onChanged.addListener(changes => {
+  const onStorageChanged = (changes, area) => {
+    if (area !== 'local') return;
     if (changes[STORAGE.typeOrder]) { typeOrder = changes[STORAGE.typeOrder].newValue || []; populateCategorySelect(); }
     if (changes[STORAGE.captureEnabled]) {
       captureEnabled = Boolean(changes[STORAGE.captureEnabled].newValue);
@@ -95,7 +101,8 @@
       hiddenTypes = Array.isArray(changes[STORAGE.hiddenTypes].newValue) ? changes[STORAGE.hiddenTypes].newValue : [];
       populateCategorySelect();
     }
-  });
+  };
+  chrome.storage.onChanged.addListener(onStorageChanged);
 
   function normalize(value) {
     return String(value ?? '').replaceAll('\u3000', ' ').trim().replace(/\s+/g, ' ');
@@ -275,7 +282,7 @@
   }
 
   function createToolbar(image) {
-    toolbar?.remove();
+    document.querySelectorAll('.downpic-toolbar').forEach(element => element.remove());
     toolbarPinned = false;
     currentImage = image;
     toolbar = document.createElement('div');
@@ -362,30 +369,31 @@
   }
 
   document.addEventListener('pointerover', event => {
+    if (!chrome.runtime?.id) { window.__downPicBetaDispose?.(); return; }
     if (!captureEnabled || event.target.closest?.('.downpic-toolbar')) return;
     const image = imageAtPointer(event);
     if (!image || busy || image === currentImage) return;
     clearTimeout(hideTimer);
     clearTimeout(showTimer);
     showTimer = setTimeout(() => {
-      if (captureEnabled && !busy) createToolbar(image);
+      if (captureEnabled && !disposed && !busy) createToolbar(image);
     }, 120);
-  });
+  }, { signal: lifetime.signal });
 
   document.addEventListener('pointerout', event => {
     if (!currentImage || event.relatedTarget?.closest?.('.downpic-toolbar')) return;
     clearTimeout(showTimer);
     scheduleHide();
-  });
+  }, { signal: lifetime.signal });
   document.addEventListener('pointerdown', event => {
     if (toolbarPinned && !toolbarCollapsed && toolbar && !toolbar.contains(event.target)) removeToolbar(true);
-  }, true);
+  }, { capture: true, signal: lifetime.signal });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') removeToolbar(true);
-  });
-  window.addEventListener('scroll', positionToolbar, { passive: true });
-  window.addEventListener('resize', positionToolbar);
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  }, { signal: lifetime.signal });
+  window.addEventListener('scroll', positionToolbar, { passive: true, signal: lifetime.signal });
+  window.addEventListener('resize', positionToolbar, { signal: lifetime.signal });
+  const onMessage = (message, sender, sendResponse) => {
     if (message?.type === 'capture.geometry') {
       if (!currentImage) {
         sendResponse({ ok: false });
@@ -406,5 +414,19 @@
       toolbarCollapsed = false;
       removeToolbar(true);
     }
-  });
+    sendResponse({ ok: true });
+  };
+  chrome.runtime.onMessage.addListener(onMessage);
+  window.__downPicBetaDispose = () => {
+    if (disposed) return;
+    disposed = true;
+    captureEnabled = false;
+    toolbarCollapsed = false;
+    removeToolbar(true);
+    lifetime.abort();
+    // 重载后 Chrome API 已失效，DOM 和页面监听仍需释放。
+    try { chrome.storage.onChanged.removeListener(onStorageChanged); } catch {}
+    try { chrome.runtime.onMessage.removeListener(onMessage); } catch {}
+    window.__downPicBetaActive = false;
+  };
 })();

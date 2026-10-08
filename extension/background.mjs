@@ -301,6 +301,37 @@ async function backendStatus() {
   }
 }
 
+// 旧页面的内容脚本可能因扩展重载失效；总开关同时处理DOM与样式。
+const CAPTURE_DISABLED_CSS = '.downpic-toolbar { display: none !important; }';
+let capturePagesSync = Promise.resolve();
+function syncCapturePages() {
+  capturePagesSync = capturePagesSync.catch(() => {}).then(async () => {
+    const stored = await chrome.storage.local.get(STORAGE.captureEnabled);
+    const enabled = Boolean(stored[STORAGE.captureEnabled]);
+    const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+    await Promise.all(tabs.map(async tab => {
+      const target = { tabId: tab.id };
+      try {
+        await chrome.scripting.removeCSS({ target, css: CAPTURE_DISABLED_CSS });
+        if (!enabled) {
+          // 隐藏仍由旧脚本创建的浮框；移除已存在的残留节点。
+          await chrome.scripting.insertCSS({ target, css: CAPTURE_DISABLED_CSS });
+          await chrome.tabs.sendMessage(tab.id, { type: 'capture.setEnabled', enabled: false }).catch(() => {});
+          await chrome.scripting.executeScript({ target, func: () => {
+            window.__downPicBetaDispose?.();
+            document.querySelectorAll('.downpic-toolbar').forEach(element => element.remove());
+          } });
+        } else {
+          const response = await chrome.tabs.sendMessage(tab.id, { type: 'capture.setEnabled', enabled: true }).catch(() => null);
+          if (!response?.ok) await activatePage(tab.id);
+        }
+      } catch { /* 已关闭、权限受限的标签页不阻塞其他网页同步。 */ }
+    }));
+    return { ok: true };
+  });
+  return capturePagesSync;
+}
+
 async function activatePage(tabId) {
   const id = Number(tabId);
   if (!Number.isInteger(id) || id < 0) throw new Error('无法识别当前标签页');
@@ -1295,6 +1326,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'builder.analyze': return analyzeBuilderReference(message.payload ?? {});
       case 'builder.confirm': return confirmBuilder(message.payload ?? {});
       case 'page.activate': return activatePage(message.tabId);
+      case 'capture.syncPages': return syncCapturePages();
       case 'backend.status': return backendStatus();
       case 'image.select': return selectWebImage(message.payload ?? {}, sender);
       case 'image.paste': return selectPastedImage(message.payload ?? {});
@@ -1685,6 +1717,7 @@ chrome.downloads.onChanged.addListener(change => {
   if (change.state?.current === 'complete') void drainCaptureDescriptions();
 });
 chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes[STORAGE.captureEnabled]) void syncCapturePages();
   if (area === 'local' && (changes[STORAGE.assetAIConsent]?.newValue || changes[STORAGE.capturePreviewsV4])) void drainCaptureDescriptions();
 });
 chrome.alarms.onAlarm.addListener(alarm => { if (alarm.name === 'archbuddy-descriptions') void recoverDescriptionQueue(); });
