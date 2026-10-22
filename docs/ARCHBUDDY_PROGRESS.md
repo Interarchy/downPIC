@@ -3,18 +3,19 @@
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。
 >
 > **更新时间**：2026-10-22
-> **插件主开发分支**：direction/plugin；**官网增量分支**：feature/archbuddy-unified-home
+> **当前分支**：feature/archbuddy-unified-home（整合展示站第十七版与统一官网增量）
 > **本地最新功能**：2026-10-08 本轮已提交并推送 **V4.1（0.6.1）**，版本标签 archbuddy-v4.1，Git交接见文末。AB-001 来源网页与下载自动描述时序修复保留；用户已选组合交互，浮框收起/展开、两入口菜单、图库直达与左栏分类管理已在本地实现；分类输入已上移压缩，清空参考图与参考图一并排，生图站外链采用 Lucide 图标；浮框 Logo 在展开和收起时均直达图词库。未部署或上架，详见文末。
 > **当前工作区状态**：V4.1及交接摘要已推送（功能主提交 `362db0c`、摘要 `c576fe4`）。本轮修复扩展重新加载后旧网页浮框无法关闭的问题：总开关同步全部普通网页，清理旧节点与监听，开启后可恢复。标签 `archbuddy-v4.1` 保留指向原功能主提交；浮框关闭修复 `45de85c` 已提交并推送，结果见文末。未部署CloudBase或更新商店。
 
+## 2026-10-22：统一官网改用展示站第十七版源码
 
-## 2026-10-22：统一官网首页已上线，域名归属完成
+用户指出 `www.archbuddy.top` 曾采用旧版展示站。核对后确认 CloudBase 公网首页 HTML 与 GitHub `codex/showcase-site-017` 的 `index.html` 逐字节一致；官网分支此前使用的是 `direction/plugin` 中较早的展示站版本。现以第十七版归档分支为基线，保留其原有正文、图解、滚动接力、安装说明、样式与脚本，只在首屏后补充 ArchBuddy 完整链路总览，在功能段落后补充 Canvas 介绍及画布入口。此前统一官网增量文档和域名交接记录继续保留，详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
 
-用户确认 ArchBuddy 是一个产品，图词库与 Canvas 应在同一官网首页按完整设计链路介绍；无需各自的独立营销介绍页。图词库通过 Chrome 扩展使用，Canvas 保留进入网页画布的入口。沿用原 CloudBase 展示站全部已确认内容，在其首屏后新增完整链路总览，在原功能区后新增 Canvas 说明和入口。原案例、图片、下载、隐私链接与交互文件未删改。
+## 2026-10-22：展示站第十七版源码单独归档
 
-GitHub 分支 `feature/archbuddy-unified-home` 自 `direction/plugin` 创建，草稿 PR：https://github.com/Interarchy/downPIC/pull/1。Vercel 静态项目 `archbuddy-official-site` 的功能分支生产部署 READY；`www.archbuddy.top` 访问别名已切至该部署，首页、样式、品牌图标、脚本返回 HTTP 200。`archbuddy.top` 继续 308 跳转至 `www`。阿里云 `canvas` CNAME 已生效；补签自动续期 HTTPS 证书后，独立浏览器渲染 `canvas.archbuddy.top` 返回 HTTP 200，并识别出 Canvas 限额预览页。详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
+已发布的 ArchBuddy 展示站第十七版以独立分支归档，包含正式单页、01/02 章节图解及滚动接力、05 白色安装区、五页案例、Lucide/品牌资源、29 文件限定构建脚本和展示站说明。宽屏 2436×1240 时深绿容器最大 1640×900px，01 圆图 550px，02 节点 176×116px；较矮桌面和手机保留原布局。公网版本 archbuddy-dev-showcase-017/SUCCESS，发布资源和浏览器核查详见 [展示站文档](ARCHBUDDY_SHOWCASE_SITE.md) 与 [第十七版验收记录](../opendesign/review/archbuddy-showcase-proportion-20261016/report.md)。
 
-用户已在 Vercel 控制台完成 Move Domain。复核确认 `www.archbuddy.top` 与根域 `archbuddy.top` 的项目域名均归属官网项目，根域仍 308 跳转 `www`；Canvas 项目只保留 `canvas.archbuddy.top`。官网项目可持续生产来源仍待配置，以免默认 `master` 自动构建失败。官网测试集下载地址 HEAD 为 HTTP 200，但完整下载与包哈希、商店和隐私入口仍待验收。统一账号、额度与自动素材流转仍未实现，Canvas 云端业务未开放。本轮未改 CloudBase 应用、扩展功能、后端、隐私站、用户数据或每日额度。
+本分支仅记录网站与对应隔离说明。账号积分、插件、后端等原工作区未提交改动留在原分支，不包含在这次网站源码归档中；没有重新部署 CloudBase 或更新 Chrome 商店。
 
 ## V4.1 本轮交接摘要（2026-10-08）
 

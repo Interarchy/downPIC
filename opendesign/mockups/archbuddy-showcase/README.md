@@ -38,3 +38,11 @@
 
 
 2026-10-07第十四版reference-collection-20261007/014已上线：01流程首节点改为收集参考图。仅HTML词句和缓存标识变化，公网桌面/手机13项2截图通过，原排版/方案1动效保持。
+
+
+2026-10-16 selected-workflows：用户已选01最终琥珀环形断点图与02双栏紧凑回环，共用深绿底和琥珀橙。图解在独立problem-section.css/js、workflow-section.css/js，保留原页面滚动进入。白名单构建输出cloudbase/dist/showcase-selected-workflows-20261016/site，27个公开文件。发布状态见docs/ARCHBUDDY_SHOWCASE_SITE.md最新记录。
+
+
+2026-10-16第十六版motion-install-20261016：已选浅底接力正式上线。01三断点按滚动强调/说明逐条显露、圆环内侧两条链路，之后与02左右接力；05改全宽墨绿。正式页无比较控件，窄屏纵向阅读。29文件白名单输出cloudbase/dist/showcase-motion-install-20261016/site，元数据016/SUCCESS；详见展示站文档和本轮验收报告。
+
+2026-10-16第十七版proportion-white-install-20261016：针对2436×1240公网图幅，01/02深绿容器宽屏最大1640×900px，圆图550px、02节点176×116px并同步放大文字；05黄色强调改白。29文件限定输出cloudbase/dist/showcase-proportion-white-install-20261016/site，元数据017/SUCCESS，验收见展示站文档。

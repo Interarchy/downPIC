@@ -10,10 +10,16 @@
   <meta property="og:type" content="website">
   <title>ArchBuddy · 建筑设计师的参考图与提示词助手</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=reference-collection-20261007">
-  <script src="app.js?v=reference-collection-20261007" defer></script>
+  <link rel="stylesheet" href="styles.css?v=unified-home-20261022">
+  <link rel="stylesheet" href="problem-section.css?v=proportion-white-install-20261016">
+  <link rel="stylesheet" href="workflow-section.css?v=proportion-white-install-20261016">
+  <script src="problem-section.js?v=proportion-white-install-20261016" defer></script>
+  <script src="workflow-section.js?v=proportion-white-install-20261016" defer></script>
+  <script src="app.js?v=proportion-white-install-20261016" defer></script>
+  <link rel="stylesheet" href="story-section.css?v=proportion-white-install-20261016">
+  <script src="story-section.js?v=proportion-white-install-20261016" defer></script>
 </head>
-<body>
+<body >
 <header class="site-header"><div class="container header-inner">
   <a class="brand" href="#top" aria-label="ArchBuddy 返回顶部"><span class="brand-icon"><img src="assets/brand-mark.svg" alt="" width="44" height="44"></span><strong>ArchBuddy</strong></a>
   <nav aria-label="网站导航"><a class="workflow-link" href="#workflow">业务链路</a><a href="#features">三大功能</a><a class="header-download" href="#install">下载体验 <svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#download"></use></svg></a></nav>
@@ -33,41 +39,25 @@
   </div>
   <p class="archbuddy-chain-note">以下原有案例与功能展示聚焦已开放下载的图词库扩展；页面后段补充 Canvas。两端目前独立使用，素材自动流转、统一账号与额度仍在建设中。</p>
 </div></section>
-<section id="problem" class="problem-section container" aria-labelledby="problem-title">
-  <div class="section-heading"><div><p class="section-label"><span>01</span>方案创作中的断点</p><h2 id="problem-title">方案创作是连续的，<br>工作流程却常常断开。</h2></div></div>
-  <div class="problem-analysis" aria-label="按工作阶段对应核心痛点"><div class="analysis-node analysis-save" data-node><h3>收集参考图</h3></div><div class="analysis-break analysis-save-break" data-break><div class="analysis-track"><span></span><svg class="icon analysis-gap" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#unlink"></use></svg><span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg></div><p>参考难以复用</p></div><div class="analysis-node analysis-design" data-node><h3>方案创作</h3></div><div class="analysis-break analysis-intent-break" data-break><div class="analysis-track"><span></span><svg class="icon analysis-gap" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#unlink"></use></svg><span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg></div><p>说不清意图</p></div><div class="analysis-node analysis-prompt" data-node><h3>编写参考图<br>提示词</h3></div><div class="analysis-break analysis-evaluate-break" data-break><div class="analysis-track"><span></span><svg class="icon analysis-gap" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#unlink"></use></svg><span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg></div><p>修改缺少依据</p></div><div class="analysis-node analysis-generate" data-node><h3>生成 AI<br>效果图</h3><p class="analysis-note">多轮优化</p></div><div class="analysis-break analysis-asset-break" data-break><div class="analysis-track"><span></span><svg class="icon analysis-gap" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#unlink"></use></svg><span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg></div><p>图词难以沉淀</p></div><div class="analysis-node analysis-reuse" data-node><h3>成果复用</h3></div>
-    <div class="analysis-pain analysis-pain-one"><p class="analysis-statement">逐张机械保存，<br>打断创作思路。</p></div><div class="analysis-pain analysis-pain-two"><p class="analysis-statement">提示词从零编写，<br>难以完整表达设计意图。</p></div><div class="analysis-pain analysis-pain-three"><p class="analysis-statement">过程素材不断堆积，<br>却难以再次复用。</p></div>
-  </div>
-</section>
-<section id="workflow" class="workflow-section container" aria-labelledby="workflow-title">
-  <div class="section-heading"><div><p class="section-label"><span>02</span>工作链路与产品机会</p><h2 id="workflow-title">在两条业务链路中，<br>找到产品的介入点。</h2></div></div>
-  <div class="flow-comparison">
-    <article class="flow-panel" id="scenario-reference"><div class="flow-heading"><span class="flow-number">01</span><h3>方案创作链路</h3></div>
-      <div class="flow-map design-map" role="img" aria-label="方案创作三个完整步骤：采集参考图，设计师创作方案，沉淀参考图库，再复用参考回到采集。ArchBuddy只在采集和图库两个步骤用玫红品牌块标注机会，方案由设计师完成。">
-        <div class="flow-step design-capture"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#images"></use></svg><h4>采集参考图</h4><div class="product-opportunity" data-opportunity="reference-capture" aria-label="ArchBuddy 的产品机会：采集提效"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">采集提效</span></div></div>
-        <div class="flow-link design-first"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg></div>
-        <div class="flow-step design-create manual-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#drafting-compass"></use></svg><h4>方案创作</h4><p class="flow-note">由设计师完成</p></div>
-        <div class="flow-link design-second"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg></div>
-        <div class="flow-step design-library"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#library"></use></svg><h4>沉淀参考图库</h4><div class="product-opportunity" data-opportunity="reference-library" aria-label="ArchBuddy 的产品机会：沉淀复用"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">沉淀复用</span></div></div>
-        <div class="design-return"><svg class="icon return-enter" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-left"></use></svg><svg class="icon return-rise" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-up"></use></svg><svg class="icon return-exit" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg><span>复用参考</span></div>
+
+<div id="story" class="story-chapter"><div class="story-pin"><div class="story-shell"><div class="story-window"><section id="problem" class="problem-section ab-problem story-panel" aria-labelledby="problem-title"><div class="container">
+      <div class="section-heading"><p class="section-label"><span>01</span>方案创作中的断点</p><h2 id="problem-title">方案创作是连续的，<br>工作流程却常常断开。</h2></div>
+      <div class="radial-layout" id="radial-stage" aria-label="五步创作环及 A、B、C 三处工作断点">
+        <div class="radial-visual"><div class="radial-disc"><svg id="problem-ring-svg" class="ring-svg" role="img" aria-label="五步方案创作过程及 A、B、C 三处断点" xmlns="http://www.w3.org/2000/svg"></svg></div></div>        <div class="diagnoses"><ol aria-label="三个工作断点的解释">
+          <li class="diagnosis" data-story-break="A"><span class="diagnosis-id">A</span><div><h3>保存打断思路</h3><p>逐张保存占用注意，<br>创作时参考难找回。</p></div></li>
+          <li class="diagnosis" data-story-break="B"><span class="diagnosis-id">B</span><div><h3>意图难以表达</h3><p>提示词从零编写，<br>多轮修改缺少依据。</p></div></li>
+          <li class="diagnosis" data-story-break="C"><span class="diagnosis-id">C</span><div><h3>成果难以复用</h3><p>图片与提示词堆积，<br>下次创作难以复用。</p></div></li>
+        </ol></div>
       </div>
-    </article>
-    <article class="flow-panel" id="scenario-ai"><div class="flow-heading"><span class="flow-number">02</span><h3>AI 效果图迭代链路</h3></div>
-      <div class="flow-map ai-map" role="img" aria-label="AI效果图迭代五个完整步骤：收集参考图、反推提示词、外部生成AI效果图、迭代提示词、沉淀提示词库，再复用图词回到收集。ArchBuddy在采集、反推、迭代、词库四步用玫红品牌块标注机会；外部生图为完整独立框，明确ArchBuddy未介入。生图与迭代双向循环。">
-        <div class="flow-step ai-capture-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#images"></use></svg><h4>收集参考图</h4><div class="product-opportunity" data-opportunity="ai-capture" aria-label="ArchBuddy 的产品机会：采集提效"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">采集提效</span></div></div>
-        <div class="flow-link ai-build-link"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-right"></use></svg></div>
-        <div class="flow-step ai-build-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#sparkles"></use></svg><h4>反推提示词</h4><div class="product-opportunity" data-opportunity="ai-prompt" aria-label="ArchBuddy 的产品机会：AI 反推"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">AI 反推</span></div></div>
-        <div class="flow-link ai-generate-link"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg></div>
-        <div class="flow-step ai-generate-step external-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#image"></use></svg><h4>生成 AI<wbr>效果图</h4><p class="flow-note">外部工具完成<br>ArchBuddy 未介入</p></div>
-        <div class="iteration-link"><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg><strong>评估</strong></span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-up"></use></svg><strong>再生成</strong></span></div>
-        <div class="flow-step ai-iterate-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#sliders-horizontal"></use></svg><h4>迭代提示词</h4><div class="product-opportunity" data-opportunity="ai-iterate" aria-label="ArchBuddy 的产品机会：AI 评估"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">AI 评估</span></div></div>
-        <div class="flow-link ai-library-link"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-left"></use></svg></div>
-        <div class="flow-step ai-library-step"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#library"></use></svg><h4>沉淀提示词库</h4><div class="product-opportunity" data-opportunity="ai-library" aria-label="ArchBuddy 的产品机会：沉淀复用"><span class="opportunity-brand"><img src="assets/brand-mark.svg" alt="" width="22" height="22"><strong>ArchBuddy</strong></span><span class="opportunity-caption">沉淀复用</span></div></div>
-        <div class="asset-return"><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-up"></use></svg><span>复用图词</span></div>
-      </div>
-    </article>
+    </div></section>
+<section id="workflow" class="workflow-section ab-workflow story-panel" aria-labelledby="workflow-title"><div class="container">
+  <div class="section-heading"><div><p class="section-label"><span>02</span>工作链路与产品机会</p><h2 id="workflow-title">在两条业务链路中，<br>找到产品的介入点。</h2></div><div class="ab-workflow-legend"><img src="assets/brand-mark.svg" width="20" height="20" alt=""><span>标有 ArchBuddy 的产品介入环节</span></div></div>
+  <div class="ab-workflow-diagrams">
+    <article class="ab-workflow-panel" id="scenario-reference"><header class="ab-workflow-heading"><span class="ab-workflow-number">01</span><h3>方案创作链路</h3></header><div class="ab-workflow-chart" data-flow="design" aria-label="方案创作三个步骤：采集参考图、设计师创作方案、沉淀参考图库，再复用参考回到采集。ArchBuddy 在采集和图库两个步骤介入。"></div></article>
+    <article class="ab-workflow-panel" id="scenario-ai"><header class="ab-workflow-heading"><span class="ab-workflow-number">02</span><h3>AI 效果图迭代链路</h3></header><div class="ab-workflow-chart" data-flow="ai" aria-label="AI 效果图五个步骤：收集参考图、反推提示词、外部生成 AI 效果图、迭代提示词、沉淀提示词库，再复用图词回到采集。生成与迭代形成双向小循环，ArchBuddy 在外部生图之外的四个步骤介入。"></div></article>
   </div>
-</section>
+</div></section>
+</div></div><div class="story-progress"><button type="button" class="story-progress-label" data-story-step="0">01 断点分析</button><div class="story-progress-track"><i></i></div><button type="button" class="story-progress-label" data-story-step="1">02 产品机会</button></div></div></div>
 <section id="concept" class="concept-section" aria-labelledby="concept-title"><div class="container">
   <p class="section-label"><span>03</span>我们的产品思路</p><h2 id="concept-title">让参考、意图与成果，<br>在一条链路里流动。</h2><p class="concept-description">把图片、提示词和迭代成果留下来。</p>
   <div class="product-diagram" role="img" aria-label="采集图片、编写提示词、提示词迭代优化共同连接，下方沉淀图词资产，通过归档、找回与复用支持下一轮创作。">
@@ -94,13 +84,14 @@
   </div>
   <p class="canvas-introduction-boundary">原展示中的“外部生图”描述的是图词库扩展单独使用时的流程；Canvas 是 ArchBuddy 正在建设的独立网页画布。当前两端尚未自动同步素材或共享账户额度。</p>
 </div></section>
-<section id="install" class="install-section container" aria-labelledby="install-title">
+
+<section id="install" class="install-section" aria-labelledby="install-title"><div class="container">
   <div class="install-heading"><p class="section-label"><span>05</span>下载与安装</p><h2 id="install-title">把创作的循环，<br>放进你的浏览器。</h2></div>
   <div class="download-options"><div><a class="button button-green" href="https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&amp;hl=zh-CN">下载 Chrome 插件 <svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#download"></use></svg></a><p>Chrome 商店安装 · 适用于桌面 Chrome</p></div><div><a class="button button-outline" href="downloads/ArchBuddy-test-images.7z" download="ArchBuddy测试集.7z">下载图片测试集 <svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#download"></use></svg></a><p>7z 压缩包 · 约 11.5 MB · 37 张建筑参考图</p></div></div>
   <ol class="install-steps"><li><span>1</span><div><h3>打开商店页面</h3><p>在桌面 Chrome 中点击“下载 Chrome 插件”，进入 ArchBuddy 商品页。</p></div></li><li><span>2</span><div><h3>添加到 Chrome</h3><p>点击“添加至 Chrome”，在弹窗中确认“添加扩展程序”，完成安装。</p></div></li><li><span>3</span><div><h3>固定并开始使用</h3><p>在工具栏的“扩展程序”中固定 ArchBuddy，点击图标，从菜单进入图词库或提示词工具。</p></div></li></ol>
   <p class="testset-guide"><strong>用测试集开始：</strong>解压图片测试集，在插件图词库中导入其中的图片文件夹，再选择参考图构建提示词。</p>
   <div class="install-notes"><details><summary>AI 功能需要联网吗？<svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg></summary><p>安装后即可打开插件。使用 AI 反推与效果评估时需要联网，并按界面提示确认相关数据处理。</p></details><details><summary>图片和提示词存在哪里？<svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#chevron-down"></use></svg></summary><p>图库、Prompt 版本和向量索引主要保存在本机插件内，当前不提供跨设备同步。清除浏览器扩展数据或卸载可能造成资料丢失。</p></details></div>
-</section>
+</div></section>
 </main>
 <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#top">ArchBuddy</a><p>从参考图，到可复用的设计意图。</p><a href="https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/" target="_blank" rel="noopener noreferrer">隐私说明 <svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#arrow-up-right"></use></svg></a></div></footer>
 <dialog id="image-dialog" class="image-dialog"><div class="dialog-header"><span>ArchBuddy 实际界面 · 演示资料</span><button type="button" data-close-dialog>关闭 <svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="assets/lucide.svg#x"></use></svg></button></div><img id="dialog-image" alt="ArchBuddy 实际界面大图"></dialog>
