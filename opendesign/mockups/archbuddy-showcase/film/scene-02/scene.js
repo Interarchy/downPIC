@@ -70,7 +70,7 @@
     if (token !== runId) return;
     cards.slice(0, count).forEach((card, index) => {
       if (!card.classList.contains('visible')) { card.classList.add('visible'); void card.offsetWidth; }
-      card.style.left = (index * 250) + 'px';
+      card.style.left = (index * 266) + 'px';
     });
     compositionProgress.style.width = (count * 25) + '%';
     compositionPercent.textContent = String(count * 25).padStart(2, '0') + '%';
@@ -102,7 +102,7 @@
   }
   function assemble(token) {
     if (token !== runId) return;
-    cards.forEach((card, index) => { card.style.left = (index * 250) + 'px'; });
+    cards.forEach((card, index) => { card.style.left = (index * 266) + 'px'; });
     panel.classList.add('visible'); void panel.offsetWidth; panel.style.left = '850px';
     compositionProgress.style.width = '100%';
     compositionPercent.textContent = '100%';
@@ -141,7 +141,7 @@
       card.classList.add('visible', 'has-copy', 'selected', 'is-typing');
       card.querySelector('.card-eyebrow').classList.add('revealed');
       card.querySelectorAll('.prompt-item').forEach(item => item.classList.add('revealed'));
-      card.style.left = (index * 250) + 'px';
+      card.style.left = (index * 266) + 'px';
       card.querySelectorAll('.typed').forEach((line, lineIndex) => { line.textContent = copy[index][lineIndex]; });
       card.querySelector('.action-label').textContent = '已加入整体 Prompt';
     });
