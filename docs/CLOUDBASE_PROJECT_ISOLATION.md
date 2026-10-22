@@ -407,3 +407,7 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 01方案创作中的断点首节点已由保存图片改为收集参考图。公开只改index.html的节点与缓存标识，其他22文件（含CSS/JS）原哈希保持，原排版/痛点总结/方案1进入动效保留。独立公网1440/390px两个fresh context、13项/2截图目视通过，五字均完整单行，无孤字/裁切/碰撞/横溢出，reveal浮现至opacity1/原位，站点异常0。正常平台3秒确认后正式Document200/text-html/无附件，平台提醒与正式响应分开。证据opendesign/review/archbuddy-showcase-reference-collection/check-summary.json、review.md及static-check-summary.json。
 
 2026-10-07T04:07:48.613Z原应用/前缀23文件15977201字节，CLI退出0、archbuddy-dev-showcase-014/SUCCESS；23主域/3备用资源HTTP200且逐项哈希一致，精确前缀白名单/无临时配置，原隐私站200/6364字节/原哈希保持。既有构建/引用/源码范围/格式检查通过，013与改前HTML留存。只更新showcaseSite，其他环境字段摘要不变，后端archbuddy-api-014及50/500配置保持；没有实施统计或改插件/数据/身份/密钥/模型/共享配置/其他项目，无本轮Git提交或推送。
+
+### 2026-10-22：展示站第十七版 Git 归档
+
+仅将已发布的 archbuddy/development 静态展示站源码、限定构建和核查说明归档到独立分支；本次 Git 操作不调用 CloudBase API，不修改云端应用、前缀、后端、账号、集合、身份、日志、密钥、模型额度或其他项目。此前第十七版上线范围是 archbuddy-dev-showcase 与 archbuddy/dev/showcase/，公网验收见展示站文档。

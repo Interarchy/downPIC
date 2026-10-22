@@ -42,7 +42,7 @@
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   if (motionPreference.matches || !('IntersectionObserver' in window)) return;
   const motionParts = [];
-  ['problem', 'workflow', 'concept', 'features', 'install'].forEach(id => {
+  ['concept', 'features', 'install'].forEach(id => {
     const section = document.getElementById(id);
     let heading = section.querySelector('.section-heading,.install-heading');
     if (!heading) {
