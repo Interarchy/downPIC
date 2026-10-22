@@ -43,7 +43,7 @@
   candidates.filter(item => item.match).forEach((item, i) => $('results-grid').append(card(item, true, i)));
   function render(t) {
     const focus = F.ease(F.ramp(t, 2.4, 3.8)) * (1 - F.ease(F.ramp(t, 8.6, 10)));
-    const detailZoom = F.ease(F.ramp(t, 12, 14));
+    const detailZoom = F.ease(F.ramp(t, 12, 14)) * (1 - F.ease(F.ramp(t, 19.5, 21)));
     const scale = 1 + .18 * focus + .055 * detailZoom;
     const x = -118 * focus - 62 * detailZoom;
     const y = -3 * focus - 18 * detailZoom;

@@ -34,5 +34,5 @@
 .copy-toast{position:absolute;left:870px;top:491px;display:flex;align-items:center;gap:8px;padding:11px 20px;background:#1e4935;color:#f4fff5;border:1px solid #8eb59b;border-radius:7px;font-weight:650;font-size:12px;opacity:0;transform:translateY(9px);box-shadow:0 8px 24px #10291d30}.copy-toast .icon{width:15px;height:15px}
 
 /* Keep all four matches visible beside the saved prompt. */
-.results-grid .asset-photo{aspect-ratio:2.75}
+.results-grid .asset-photo{aspect-ratio:3.5}
 .results-grid .asset-copy{padding:8px 10px 9px}.results-grid .asset-excerpt{margin-top:5px;padding-top:5px}
