@@ -29,9 +29,9 @@
 .version-select{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border:1px solid #b8cdbf;border-radius:4px;font-size:11px;color:#274832}.version-select .icon{width:13px;height:13px}
 .version-meta{font-size:9px;color:#6e8375;margin:7px 0 10px}
 .saved-prompt{padding:13px 14px;border:1px solid #d7e3da;border-radius:5px;background:#f5f8f4;line-height:1.65;height:225px;overflow:hidden}.saved-prompt h3{font-size:10px;letter-spacing:.02em;color:#274d35;margin:0 0 3px}.saved-prompt p{font-size:10px;margin:0 0 9px;color:#465f4e}
-.copy-button{width:100%;height:32px;display:flex;justify-content:center;align-items:center;gap:7px;margin-top:11px;border:1px solid #8eaf99;border-radius:4px;background:white;color:#25634b;font:650 10px "Microsoft YaHei UI",sans-serif}.copy-button .icon{width:13px;height:13px}.copy-button.pressed{background:#25634b;color:white;border-color:#25634b;box-shadow:0 0 0 4px #b6d1bc55}
+.copy-button{width:100%;height:32px;display:flex;justify-content:center;align-items:center;gap:7px;margin-top:11px;border:1px solid #8eaf99;border-radius:4px;background:white;color:#25634b;font:650 10px "Microsoft YaHei UI",sans-serif}.copy-button .icon{width:13px;height:13px}
 .related-title{font-size:9px;font-weight:650;color:#637d6c;margin-top:10px}.related-images{display:flex;align-items:center;gap:7px;margin-top:4px}.related-images span{padding:2px 5px;border-radius:3px;background:#eef4ed;color:#52745e;font-size:8px}.related-images p{font-size:8px;color:#6b8273;margin:0}
-.copy-toast{position:absolute;left:870px;top:491px;display:flex;align-items:center;gap:8px;padding:11px 20px;background:#1e4935;color:#f4fff5;border:1px solid #8eb59b;border-radius:7px;font-weight:650;font-size:12px;opacity:0;transform:translateY(9px);box-shadow:0 8px 24px #10291d30}.copy-toast .icon{width:15px;height:15px}
+
 
 /* Keep all four matches visible beside the saved prompt. */
 .results-grid .asset-photo{aspect-ratio:3.5}
@@ -43,3 +43,10 @@
 .magnifier-field{height:91px;border:2px solid #5c966e;border-radius:8px;display:flex;align-items:center;padding:0 14px 0 23px;background:#fff;font-size:40px;letter-spacing:.035em;color:#173f29}
 .magnifier-caret{width:2px;height:40px;background:#35764c;margin-left:4px}.magnifier-field b{margin-left:auto;flex:none;background:#276345;color:#fff;border-radius:6px;padding:18px 20px;font-size:23px;font-weight:600;letter-spacing:.02em}.magnifier-field b.pressed{background:#173d2a;box-shadow:0 0 0 5px #a8c5aa}
 .search-magnifier p{margin:17px 0 0;font-size:22px;color:#6b836f;line-height:1.4}
+
+/* 结果出现后固定镜头，仅滑入版本详情并描亮保存的提示词。 */
+.asset-detail{--prompt-emphasis:0}
+.saved-prompt{position:relative;border-color:rgba(61,121,84,calc(.15 + .65 * var(--prompt-emphasis)));box-shadow:0 0 0 calc(3px * var(--prompt-emphasis)) rgba(108,162,119,calc(.12 * var(--prompt-emphasis)))}
+.saved-prompt::after{content:"";position:absolute;inset:0;border:2px solid #568d64;border-radius:4px;opacity:var(--prompt-emphasis);pointer-events:none}
+.version-select{background:rgba(221,237,220,calc(.45 * var(--prompt-emphasis)));border-color:rgba(77,132,92,calc(.35 + .4 * var(--prompt-emphasis)))}
+.detail-title h2{font-size:14px}.copy-button{font-size:12px;height:34px}

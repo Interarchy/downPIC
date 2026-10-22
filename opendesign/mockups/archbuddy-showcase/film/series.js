@@ -11,7 +11,12 @@
     const el=$('intro-'+i);if(!el)return;
     el.style.visibility=opacity>0?'visible':'hidden';el.style.opacity=String(opacity);
     el.style.transform='translateY('+((1-progress)*22)+'px) scale('+(.965+.035*progress)+')';
-    el.querySelectorAll('.overview-wire').forEach(w=>w.style.strokeDashoffset=String(-current*140));
+    const paths=[...el.querySelectorAll('.lightpath-core')],travel=clamp((current-i+.1)/.26);
+    el.querySelectorAll('.diagram-spark').forEach(dot=>{
+      const path=paths[Number(dot.dataset.path)];if(!path)return;
+      const point=path.getPointAtLength(path.getTotalLength()*travel);
+      dot.setAttribute('cx',point.x);dot.setAttribute('cy',point.y);
+    });
   }
   function draw(q){
     if(!ready)return;current=Math.max(0,Math.min(4,q));const i=Math.min(3,Math.floor(current)),p=current>=4?1:current-i,start=i===0?0:.16;

@@ -42,13 +42,9 @@
   candidates.forEach((item, i) => $('asset-grid').append(card(item, false, i)));
   candidates.filter(item => item.match).forEach((item, i) => $('results-grid').append(card(item, true, i)));
   function render(t) {
-    const focus = F.ease(F.ramp(t, 2.4, 3.8)) * (1 - F.ease(F.ramp(t, 8.6, 10)));
-    const detailZoom = F.ease(F.ramp(t, 12, 14)) * (1 - F.ease(F.ramp(t, 19.5, 21)));
-    const scale = 1 + .18 * focus + .055 * detailZoom;
-    const x = -118 * focus - 62 * detailZoom;
-    const y = -3 * focus - 18 * detailZoom;
-    $('app-camera').style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
-    const lens=F.ease(F.ramp(t,3.3,3.8))*(1-F.ease(F.ramp(t,8.0,8.8)));
+    const focus = F.ease(F.ramp(t, 2.4, 3.8)) * (1 - F.ease(F.ramp(t, 7.4, 8.2)));
+    $('app-camera').style.transform = 'translate(0px,0px) scale(1)';
+    const lens=F.ease(F.ramp(t,3.3,3.8))*(1-F.ease(F.ramp(t,7.4,8.2)));
     $('search-magnifier').style.opacity=String(lens);
     $('search-magnifier').style.transform='translateY('+((1-lens)*18)+'px) scale('+(.96+.04*lens)+')';
     $('search-focus-shade').style.opacity=String(lens*.5);
@@ -72,11 +68,9 @@
     $('result-count').textContent = t < 8.2 ? '显示 20 / 20 项' : '全提示词库搜索 · 4 / 20 项';
     const detail = F.ease(F.ramp(t, 10.4, 11.5));
     $('asset-detail').style.opacity = String(detail);
-    $('asset-detail').style.transform = 'translateX(' + (22 * (1 - detail)) + 'px)';
-    const copied = F.ease(F.ramp(t, 19.2, 19.65));
-    $('copy-button').classList.toggle('pressed', t >= 18.85 && t < 19.4);
-    $('copy-toast').style.opacity = String(copied);
-    $('copy-toast').style.transform = 'translateY(' + (9 * (1 - copied)) + 'px)';
+    $('asset-detail').style.transform = 'translateX(' + (128 * (1 - detail)) + 'px)';
+    const highlight=F.ease(F.ramp(t,12,13.1));
+    $('asset-detail').style.setProperty('--prompt-emphasis',String(highlight));
   }
   F.create({duration:22.5,render});
 })();

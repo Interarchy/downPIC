@@ -40,6 +40,15 @@
     [[$('join-one'),3.4],[$('join-two'),6.6],[$('combine-arrow'),9.8]].forEach(([el,start])=>{
       F.show(el,t>=start);const p=F.ease(F.ramp(t,start,start+.45));el.style.opacity=p;el.style.transform='scale('+mix(.7,1,p)+')';
     });
+    // 全部卡片采用相同局部透视；加号以首张的实际投影中心计算，避免视口缩放造成偏移。
+    if(t>=begins[0]+.95){
+      const stage=document.querySelector('.card-stage'),box=stage.getBoundingClientRect(),first=cards[0].getBoundingClientRect(),scale=box.width/stage.offsetWidth;
+      const cx=(first.x+first.width/2-box.x)/scale,cy=(first.y+first.height/2-box.y)/scale;
+      [$('join-one'),$('join-two')].forEach((el,i)=>{
+        el.style.left=(cx+133+i*266-el.offsetWidth/2)+'px';
+        el.style.top=(cy-el.offsetHeight/2)+'px';
+      });
+    }
     const pp=F.ease(F.ramp(t,10.5,11.38)),panel=$('prompt-panel');F.show(panel,t>=10.5);
     panel.style.left=mix(1350,850,pp)+'px';panel.style.opacity=pp;
     let start=11.43,visibleRows=0;
