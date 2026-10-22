@@ -2,8 +2,22 @@ import { PRESET_TYPES, STORAGE, normalizePromptScheme, normalizeSourcePageUrl, n
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
 import { importLocalFolder, importSummary, wireFolderDrop } from './folder-import.mjs';
+import { mountAccountUI, ensureAccount, pointsEnabled, formatPoints } from './account-ui.mjs';
 
 const $ = id => document.getElementById(id);
+mountAccountUI(document.querySelector('.top-actions'));
+if (pointsEnabled()) {
+  $('bulk-description-points').hidden = false;
+  $('asset-consent').querySelector('span').textContent = '开启后，新下载图片自动生成核心视觉描述，每张 0.1 积分；向量建索引与检索不扣积分，均受每日调用上限保护。';
+  $('local-demo-notice').hidden = false;
+  $('local-demo-notice').textContent = '本地演示：手机号验证码未发送短信，正在确认 AI 模式…';
+  void request('backend.status').then(status => {
+    $('local-demo-notice').textContent = !status.online || !status.configured
+    ? '本地账号服务未连接，请先启动本地服务。' : status.mockAI
+      ? '本地演示：验证码和 AI 结果均为模拟，未发送短信。'
+      : '当前服务不是本地模拟模式，请启动账号积分演示服务。';
+  }).catch(() => { $('local-demo-notice').textContent = '本地账号服务未连接，请先启动本地服务。'; });
+}
 const state = { schemes: [], items: [], selectedKey: null, urls: new Map(), pendingUrls: new Map(), loadNumber: 0, captures: [], activeTypes: [], previews: {}, catalog: {}, selectedFolder: null, selectedType: null, showAllCaptures: false, captureProjectView: 'small', typeChosenByUser: false, openTypes: new Set(), foldersInitialized: false, captureUrls: new Map(), capturePendingUrls: new Map(), captureLoad: 0, groups: [], assignments: {}, selectedGroupId: 'all', selectedKeys: new Set() };
 let toastTimer;
 let recentSearches = [];
@@ -617,7 +631,9 @@ async function renderCaptureDetail() {
   if (!description.value) description.placeholder = status === 'processing' ? '正在自动生成视觉描述…'
     : status === 'pending' ? '等待自动生成视觉描述…' : state.catalog[item.id]?.descriptionError || '填写视觉特征，编辑后自动保存';
   body.append(head, captureSourceRow(item), infoRow('保存时间', humanDate(item.date)), visual,
-    element('h3', '', '核心视觉特征'), description, actions);
+    element('h3', '', '核心视觉特征'), description);
+  if (pointsEnabled()) body.append(element('p', 'points-cost-note capture-action-costs', '本次消耗：概要描述 0.1 积分；完整提示词 1 积分。'));
+  body.append(actions);
   if (item.imported) body.append(element('span', 'imported-origin', '原文件保留在导入时选择的文件夹中'));
   detail.replaceChildren(body);
   void capturePreview(item, visual);
@@ -1352,7 +1368,13 @@ $('generate-missing-descriptions').addEventListener('click', async event => {
   if (button.dataset.busy === 'true') return;
   const missing = state.captures.filter(item => !String(state.catalog[item.id]?.description || '').trim()).length;
   if (!missing) { toast('当前图库没有缺少核心描述的图片'); return; }
-  if (!confirm('将逐张发送本地预览给 ArchBuddy 生成核心视觉描述，可能消耗模型额度。继续？')) return;
+  if (!(await ensureAccount())) return;
+  const prompt = pointsEnabled()
+    ? `将为 ${missing} 张缺少描述的图片逐张生成核心视觉特点，最多消耗 ${formatPoints(missing)} 积分（每张 0.1 积分），失败释放。每日模型调用最多 50 次，达到后暂停。继续？`
+    : '将逐张发送本地预览给 ArchBuddy 生成核心视觉描述，可能消耗模型额度。继续？';
+  if (!confirm(prompt)) return;
+  if (!(await ensureCaptureDescriptionConsent())) return;
+  if (button.dataset.busy === 'true') return;
   button.dataset.busy = 'true'; button.disabled = true;
   try {
     const result = await request('capture.describe.missing', {});
@@ -1530,21 +1552,31 @@ async function refreshAssetConsent() {
   $('asset-consent').hidden = stored[STORAGE.assetAIConsent] === true && stored[STORAGE.assetVectorConsent] === true;
 }
 async function ensureCaptureDescriptionConsent() {
+  if (!(await ensureAccount())) return false;
   const stored = await chrome.storage.local.get(STORAGE.assetAIConsent);
   if (stored[STORAGE.assetAIConsent]) return true;
-  if (!confirm('生成概要描述会发送此图片的压缩预览给 ArchBuddy 与 DeepSeek，并消耗模型额度。确认开启图库 AI？')) return false;
+  const text = pointsEnabled()
+    ? '生成核心视觉特点会发送图片的压缩预览，每张 0.1 积分；开启后新下载图片也会自动描述。确认同意并开启图库 AI？'
+    : '生成概要描述会发送此图片的压缩预览给 ArchBuddy 与 DeepSeek，并消耗模型额度。确认开启图库 AI？';
+  if (!confirm(text)) return false;
   await request('assets.consent', { enabled: true });
   await refreshAssetConsent();
   return true;
 }
 async function ensureAssetConsent() {
+  if (!(await ensureAccount())) return false;
   const stored = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
   if (!stored[STORAGE.assetAIConsent]) {
-    if (!confirm('开启图库 AI：新下载图片的预览将发送给 ArchBuddy 与 DeepSeek 生成视觉描述。确认有权处理并同意？')) return false;
+    const text = pointsEnabled()
+      ? '开启图库 AI：新下载图片的预览将自动生成核心视觉特点，每张 0.1 积分（100 张共 10 积分）。确认有权处理并同意自动消耗积分？'
+      : '开启图库 AI：新下载图片的预览将发送给 ArchBuddy 与 DeepSeek 生成视觉描述。确认有权处理并同意？';
+    if (!confirm(text)) return false;
     await request('assets.consent', { enabled: true });
   }
   if (!stored[STORAGE.assetVectorConsent]) {
-    if (!confirm('开启本地向量检索：首次建索引及文本变化时，图片名称/描述和提示词文本会发给腾讯云 TokenHub 生成向量；每次提交搜索只发送一次查询。图片字节、文件路径和向量索引不会上传或保存在云端；建索引批次与查询各计入现有 AI 调用额度。确认同意？')) return false;
+    const text = '开启本地向量检索：首次建索引及文本变化时，图片名称/描述和提示词文本会发给腾讯云 TokenHub 生成向量；每次提交搜索只发送一次查询。图片字节、文件路径和向量索引不会上传或保存在云端；'
+      + (pointsEnabled() ? '向量建索引与查询不扣积分，但计入每日模型调用保护。' : '建索引批次与查询各计入现有 AI 调用额度。') + '确认同意？';
+    if (!confirm(text)) return false;
     await request('assets.vectorConsent', { enabled: true });
     void primeVectorIndex(captureSearch, captureDocuments());
     void primeVectorIndex(promptSearch, promptDocuments());

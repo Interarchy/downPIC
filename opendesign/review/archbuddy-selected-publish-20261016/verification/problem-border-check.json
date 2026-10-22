@@ -1,0 +1,44 @@
+[
+  {
+    "width": 1440,
+    "borders": [
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "0px"
+      },
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "0px"
+      },
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "1px"
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "width": 390,
+    "borders": [
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "0px"
+      },
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "0px"
+      },
+      {
+        "top": "1px",
+        "color": "rgb(65, 100, 82)",
+        "bottom": "1px"
+      }
+    ],
+    "overflow": 0
+  }
+]

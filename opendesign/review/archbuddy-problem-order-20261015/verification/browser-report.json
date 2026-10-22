@@ -1,0 +1,1262 @@
+{
+  "time": "2026-10-14T16:59:15.688Z",
+  "cases": [
+    {
+      "width": 1440,
+      "variant": "one",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=one#one",
+      "visible": [
+        "panel-one"
+      ],
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "section": {
+        "top": 203,
+        "bottom": 770.09375,
+        "height": 567.09375
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 496.5,
+          "left": 145,
+          "width": 206,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "23px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 496.5,
+          "left": 381,
+          "width": 206,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "23px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 496.5,
+          "left": 617,
+          "width": 206,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "23px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 496.5,
+          "left": 853,
+          "width": 206,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "23px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 496.5,
+          "left": 1089,
+          "width": 206,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "23px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 1240,
+          "client": 1240,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "variant": "two",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=two#two",
+      "visible": [
+        "panel-two"
+      ],
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "section": {
+        "top": 203,
+        "bottom": 816.203125,
+        "height": 613.203125
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 512,
+          "left": 126,
+          "width": 162.65625,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 512,
+          "left": 324.65625,
+          "width": 162.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 512,
+          "left": 539.328125,
+          "width": 162.65625,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 512,
+          "left": 737.984375,
+          "width": 162.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "本次图与词",
+          "top": 512,
+          "left": 952.65625,
+          "width": 162.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "下次新方案",
+          "top": 512,
+          "left": 1151.328125,
+          "width": 162.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "18px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 1240,
+          "client": 1240,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "variant": "three",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=three#three",
+      "visible": [
+        "panel-three"
+      ],
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "section": {
+        "top": 203,
+        "bottom": 1004.296875,
+        "height": 801.296875
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 521,
+          "left": 181,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 598,
+          "left": 181,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 702,
+          "left": 181,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 779,
+          "left": 181,
+          "width": 111.734375,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 883,
+          "left": 181,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 1240,
+          "client": 1240,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "variant": "one",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=one#one",
+      "visible": [
+        "panel-one"
+      ],
+      "documentWidth": 1024,
+      "viewport": 1024,
+      "section": {
+        "top": 203,
+        "bottom": 796.09375,
+        "height": 593.09375
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 496.5,
+          "left": 44,
+          "width": 177.59375,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "21px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 496.5,
+          "left": 233.59375,
+          "width": 177.59375,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "21px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 496.5,
+          "left": 423.1875,
+          "width": 177.609375,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "21px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 496.5,
+          "left": 612.796875,
+          "width": 177.59375,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "21px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 496.5,
+          "left": 802.390625,
+          "width": 177.609375,
+          "height": 32,
+          "lineHeight": "32px",
+          "font": "21px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 976,
+          "client": 976,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "variant": "two",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=two#two",
+      "visible": [
+        "panel-two"
+      ],
+      "documentWidth": 1024,
+      "viewport": 1024,
+      "section": {
+        "top": 203,
+        "bottom": 836.125,
+        "height": 633.125
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 512,
+          "left": 42,
+          "width": 132.65625,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 512,
+          "left": 198.65625,
+          "width": 132.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 512,
+          "left": 367.328125,
+          "width": 132.65625,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 512,
+          "left": 523.984375,
+          "width": 132.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        },
+        {
+          "text": "本次图与词",
+          "top": 512,
+          "left": 692.65625,
+          "width": 132.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        },
+        {
+          "text": "下次新方案",
+          "top": 512,
+          "left": 849.328125,
+          "width": 132.671875,
+          "height": 58,
+          "lineHeight": "24px",
+          "font": "16px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 976,
+          "client": 976,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "variant": "three",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=three#three",
+      "visible": [
+        "panel-three"
+      ],
+      "documentWidth": 1024,
+      "viewport": 1024,
+      "section": {
+        "top": 203,
+        "bottom": 999.796875,
+        "height": 796.796875
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 521,
+          "left": 95,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 598,
+          "left": 95,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 702,
+          "left": 95,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 779,
+          "left": 95,
+          "width": 111.734375,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 883,
+          "left": 95,
+          "width": 107.5,
+          "height": 30,
+          "lineHeight": "30px",
+          "font": "22px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 976,
+          "client": 976,
+          "height": 30,
+          "scrollHeight": 35
+        }
+      ],
+      "icons": [
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "variant": "one",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=one#one",
+      "visible": [
+        "panel-one"
+      ],
+      "documentWidth": 390,
+      "viewport": 390,
+      "section": {
+        "top": 192,
+        "bottom": 1273.203125,
+        "height": 1081.203125
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 405.03125,
+          "left": 89,
+          "width": 257,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 497.03125,
+          "left": 89,
+          "width": 257,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 589.03125,
+          "left": 89,
+          "width": 257,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 681.03125,
+          "left": 89,
+          "width": 257,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 773.03125,
+          "left": 89,
+          "width": 257,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 350,
+          "client": 350,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "variant": "two",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=two#two",
+      "visible": [
+        "panel-two"
+      ],
+      "documentWidth": 390,
+      "viewport": 390,
+      "section": {
+        "top": 192,
+        "bottom": 1409.875,
+        "height": 1217.875
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 441.53125,
+          "left": 45,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 441.53125,
+          "left": 216,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 787.8125,
+          "left": 45,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 787.8125,
+          "left": 216,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "本次图与词",
+          "top": 1134.09375,
+          "left": 45,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        },
+        {
+          "text": "下次新方案",
+          "top": 1134.09375,
+          "left": 216,
+          "width": 129,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "18px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 350,
+          "client": 350,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "variant": "three",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=three#three",
+      "visible": [
+        "panel-three"
+      ],
+      "documentWidth": 390,
+      "viewport": 390,
+      "section": {
+        "top": 192,
+        "bottom": 1245.46875,
+        "height": 1053.46875
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 417.03125,
+          "left": 44,
+          "width": 134.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "19px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 417.03125,
+          "left": 211.5,
+          "width": 134.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "19px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 708.84375,
+          "left": 44,
+          "width": 134.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "19px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 708.84375,
+          "left": 211.5,
+          "width": 134.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "19px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 1000.65625,
+          "left": 44,
+          "width": 302,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "19px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 350,
+          "client": 350,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 0,
+          "height": 0,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 0,
+          "height": 0,
+          "reference": "assets/lucide.svg#chevron-down"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 360,
+      "variant": "one",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=one#one",
+      "visible": [
+        "panel-one"
+      ],
+      "documentWidth": 360,
+      "viewport": 360,
+      "section": {
+        "top": 192,
+        "bottom": 1292.515625,
+        "height": 1100.515625
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 397.34375,
+          "left": 85,
+          "width": 235,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 489.34375,
+          "left": 85,
+          "width": 235,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 581.34375,
+          "left": 85,
+          "width": 235,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 673.34375,
+          "left": 85,
+          "width": 235,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 765.34375,
+          "left": 85,
+          "width": 235,
+          "height": 29,
+          "lineHeight": "29px",
+          "font": "23px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 328,
+          "client": 328,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 360,
+      "variant": "two",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=two#two",
+      "visible": [
+        "panel-two"
+      ],
+      "documentWidth": 360,
+      "viewport": 360,
+      "section": {
+        "top": 192,
+        "bottom": 1384.84375,
+        "height": 1192.84375
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 433.84375,
+          "left": 37,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 433.84375,
+          "left": 201,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 774.34375,
+          "left": 37,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 774.34375,
+          "left": 201,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        },
+        {
+          "text": "本次图与词",
+          "top": 1114.84375,
+          "left": 37,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        },
+        {
+          "text": "下次新方案",
+          "top": 1114.84375,
+          "left": 201,
+          "width": 122,
+          "height": 54,
+          "lineHeight": "24px",
+          "font": "17px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 328,
+          "client": 328,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        },
+        {
+          "width": 6,
+          "height": 12,
+          "reference": "assets/lucide.svg#chevron-right"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 360,
+      "variant": "three",
+      "initialScrollY": 0,
+      "status": 200,
+      "url": "http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4&verify=three#three",
+      "visible": [
+        "panel-three"
+      ],
+      "documentWidth": 360,
+      "viewport": 360,
+      "section": {
+        "top": 192,
+        "bottom": 1229.34375,
+        "height": 1037.34375
+      },
+      "headings": [
+        {
+          "text": "收集参考图",
+          "top": 409.34375,
+          "left": 36,
+          "width": 127.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "18px"
+        },
+        {
+          "text": "构思新方案",
+          "top": 409.34375,
+          "left": 196.5,
+          "width": 127.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "18px"
+        },
+        {
+          "text": "编写提示词",
+          "top": 698.34375,
+          "left": 36,
+          "width": 127.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "18px"
+        },
+        {
+          "text": "AI 生图迭代",
+          "top": 698.34375,
+          "left": 196.5,
+          "width": 127.5,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "18px"
+        },
+        {
+          "text": "复用图与词",
+          "top": 987.34375,
+          "left": 36,
+          "width": 288,
+          "height": 26,
+          "lineHeight": "26px",
+          "font": "18px"
+        }
+      ],
+      "clip": [
+        {
+          "text": "01方案创作中的断点",
+          "scroll": 328,
+          "client": 328,
+          "height": 27,
+          "scrollHeight": 31
+        }
+      ],
+      "icons": [
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 0,
+          "height": 0,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 12,
+          "height": 6,
+          "reference": "assets/lucide.svg#chevron-down"
+        },
+        {
+          "width": 0,
+          "height": 0,
+          "reference": "assets/lucide.svg#chevron-down"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "interaction": [
+    {
+      "test": "click one",
+      "hash": "#one",
+      "pressed": "one"
+    },
+    {
+      "test": "ArrowRight",
+      "hash": "#two",
+      "focus": "two",
+      "visible": "panel-two"
+    },
+    {
+      "test": "ArrowRight",
+      "hash": "#three",
+      "focus": "three",
+      "visible": "panel-three"
+    },
+    {
+      "test": "ArrowRight",
+      "hash": "#one",
+      "focus": "one",
+      "visible": "panel-one"
+    },
+    {
+      "test": "End",
+      "hash": "#three",
+      "focus": "three",
+      "visible": "panel-three"
+    },
+    {
+      "test": "Home",
+      "hash": "#one",
+      "focus": "one",
+      "visible": "panel-one"
+    },
+    {
+      "test": "ArrowLeft",
+      "hash": "#three",
+      "focus": "three",
+      "visible": "panel-three"
+    },
+    {
+      "test": "hashchange",
+      "hash": "#two",
+      "visible": "panel-two"
+    }
+  ],
+  "errors": []
+}

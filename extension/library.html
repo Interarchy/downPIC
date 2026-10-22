@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>图词库 · ArchBuddy</title>
   <link rel="stylesheet" href="library.css" />
+  <link rel="stylesheet" href="account-ui.css" />
 </head>
 <body>
   <header class="topbar">
@@ -24,6 +25,7 @@
     </div>
   </header>
   <main class="workspace">
+    <p id="local-demo-notice" class="local-demo-notice" hidden></p>
     <div id="asset-consent" class="asset-consent" hidden><span>开启后，新下载图片生成视觉描述；图库文本会生成本地向量，搜索时只发送一次查询生成向量。</span><button id="enable-asset-ai" class="solid-button">开启图库 AI 与本地向量</button><a href="privacy.html" target="_blank">处理说明</a></div>
     <div class="library-shell">
       <aside class="library-sidebar" aria-label="图词库导航">
@@ -56,6 +58,7 @@
           </div>
           <input id="local-folder-files" type="file" webkitdirectory directory multiple hidden />
           <div class="sidebar-tool-card generate-card">
+            <p id="bulk-description-points" class="points-cost-note" hidden>核心视觉描述：0.1 积分 / 张</p>
             <button id="generate-missing-descriptions" type="button" class="sidebar-action-button">
               <span class="sidebar-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4.5l1.7 4.6 4.6 1.7-4.6 1.7L12 17.1l-1.7-4.6-4.6-1.7 4.6-1.7z"/><path d="M18.8 16.3l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z"/></svg></span>
               <span class="sidebar-tool-copy"><strong>生成概要描述</strong></span>

@@ -1,0 +1,152 @@
+{
+  "states": [
+    {
+      "name": "hero-1440",
+      "scrollY": 0,
+      "layout": "pinned",
+      "transition": "0.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "a-1440",
+      "scrollY": 861,
+      "layout": "pinned",
+      "transition": "0.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        0.455933,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "b-1440",
+      "scrollY": 1113,
+      "layout": "pinned",
+      "transition": "0.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        0.455933,
+        0
+      ]
+    },
+    {
+      "name": "c-1440",
+      "scrollY": 1437,
+      "layout": "pinned",
+      "transition": "0.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        0.990026
+      ]
+    },
+    {
+      "name": "transition-1440",
+      "scrollY": 1797,
+      "layout": "pinned",
+      "transition": "0.5000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "workflow-1440",
+      "scrollY": 2283,
+      "layout": "pinned",
+      "transition": "1.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "install-1440",
+      "scrollY": 5873,
+      "layout": "pinned",
+      "transition": "1.0000",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "short-1366",
+      "layout": "pinned",
+      "overflow": 0
+    },
+    {
+      "name": "problem-390",
+      "scrollY": 700,
+      "layout": "natural",
+      "transition": "0",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "workflow-390",
+      "scrollY": 1722,
+      "layout": "natural",
+      "transition": "1",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "install-390",
+      "scrollY": 5650,
+      "layout": "natural",
+      "transition": "1",
+      "overflow": 0,
+      "install": "rgb(21, 59, 45)",
+      "diagnoses": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "errors": [],
+  "failures": [],
+  "links": {
+    "store": [
+      "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+      "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+    ],
+    "testset": [
+      "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z",
+      "http://127.0.0.1:8766/mockups/archbuddy-showcase/downloads/ArchBuddy-test-images.7z"
+    ],
+    "preview": false
+  }
+}

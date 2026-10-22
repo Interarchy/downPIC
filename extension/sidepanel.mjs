@@ -3,9 +3,14 @@ import {
   normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft,
 } from './shared.mjs';
 import { putSourceImage, getSourceImage, deleteSourceImagesByScheme } from './source-image-store.mjs';
+import { mountAccountUI, ensureAccount, pointsEnabled } from './account-ui.mjs';
 
 // 三参考图构建与效果图直接编辑共用已确认提示词库。
 const $ = id => document.getElementById(id);
+mountAccountUI(document.querySelector('.header-actions'));
+if (pointsEnabled()) {
+  for (const id of ['privacy-points-note', 'auto-description-points', 'evaluation-points-cost', 'analysis-points-total']) $(id).hidden = false;
+}
 // 重绘参考图时移动同一个按钮，保留已绑定的清空参考图操作。
 const newBuilderControl = $('new-builder');
 const state = {
@@ -179,6 +184,10 @@ function renderReferenceStatus(refId) {
   status.dataset.tone = job ? '' : message?.tone || '';
 }
 function refreshReferenceControls() {
+  if (pointsEnabled()) {
+    const count = builder.references.filter(ref => ref.sourceReferenceId).length;
+    $('analysis-points-total').textContent = count ? `已放入 ${count} 张参考图，全部分析共 ${count} 积分；每张单独点击开始。` : '反推提示词：每张 1 积分，失败释放。';
+  }
   for (const ref of builder.references) {
     const section = document.querySelector('[data-reference="' + ref.id + '"]');
     if (!section) continue;
@@ -228,6 +237,7 @@ async function renderReferences(targetRefId = null) {
     preview.append(image, caption, choose, input);
     section.append(preview);
     const analyze = button('开始分析', () => analyzeReference(ref.id), 'primary-button reference-analyze');
+    if (pointsEnabled()) section.append(node('p', 'points-cost-note', '本次分析 1 张参考图，消耗 1 积分；失败释放。'));
     section.append(analyze, node('p', 'section-note reference-feedback'));
     if (ref.result) {
       const list = node('div', 'reference-modules');
@@ -320,6 +330,8 @@ async function analyzeReference(refId) {
   if (analysisJobs.has(refId) || confirming || editingImage) return;
   const ref = builder.references.find(item => item.id === refId);
   if (!ref?.sourceReferenceId) return;
+  if (!(await ensureAccount())) return;
+  if (analysisJobs.has(refId) || confirming || editingImage) return;
   const builderId = builder.builderId;
   const sourceReferenceId = ref.sourceReferenceId;
   analysisJobs.set(refId, { startedAt: Date.now() });
@@ -526,6 +538,7 @@ async function acceptGenerated(files) {
 }
 async function evaluate() {
   if (evaluating || !state.scheme || !state.generated) return;
+  if (!(await ensureAccount()) || evaluating) return;
   if (state.working?.dirtyModuleKeys?.length && !confirm('重新评估将以已确认的基本提示词为准，当前未确认修改会保留。继续吗？')) return;
   evaluating = true; renderEvaluationControls();
   let seconds = 0;
@@ -655,6 +668,11 @@ function switchStage(stage) {
 }
 async function refreshBackend() {
   const status = await request('backend.status');
+  $('local-demo-notice').hidden = !pointsEnabled();
+  if (pointsEnabled()) $('local-demo-notice').textContent = !status.online || !status.configured
+    ? '本地账号服务未连接，请先启动本地服务。' : status.mockAI
+    ? '本地演示：验证码和 AI 结果均为模拟，未发送短信。'
+    : '当前服务不是本地模拟模式，请启动账号积分演示服务。';
   state.backendReady = Boolean(status.configured && status.online);
   $('session-status').textContent = state.backendReady ? (status.mode === 'local' ? '本地服务已连接' : '服务已连接') : '服务未连接';
   $('session-status').dataset.state = state.backendReady ? 'online' : 'offline';
@@ -676,13 +694,18 @@ document.querySelectorAll('.tab[data-tab]').forEach(tab => {
 });
 $('privacy-check').addEventListener('change', () => { $('privacy-accept').disabled = !$('privacy-check').checked; });
 action($('privacy-accept'), async () => {
+  if (!(await ensureAccount())) return;
   await request('assets.consent', { enabled: true }); $('asset-ai-toggle').checked = true; state.privacyAccepted = true;
   document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true; await refreshBackend();
   if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
 });
 action($('asset-ai-toggle'), async () => {
   const enabled = $('asset-ai-toggle').checked;
-  if (enabled && !confirm('新下载图片将自动发送预览生成描述；语义检索会发送查询与库内描述/提示词给 ArchBuddy 与 DeepSeek。确认开启？')) { $('asset-ai-toggle').checked = false; return; }
+  if (enabled && !(await ensureAccount())) { $('asset-ai-toggle').checked = false; return; }
+  const consentText = pointsEnabled()
+    ? '新下载图片会自动发送预览生成核心视觉描述，每张 0.1 积分（100 张共 10 积分）。反推和效果分析每张 1 积分；向量检索不扣积分。所有模型请求受每日调用上限保护。确认开启自动描述？'
+    : '新下载图片将自动发送预览生成描述；语义检索会发送查询与库内描述/提示词给 ArchBuddy 与 DeepSeek。确认开启？';
+  if (enabled && !confirm(consentText)) { $('asset-ai-toggle').checked = false; return; }
   await request('assets.consent', { enabled });
 });
 action($('add-reference'), async () => {

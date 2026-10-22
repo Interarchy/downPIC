@@ -1,0 +1,173 @@
+[
+  {
+    "width": 1440,
+    "variant": "one",
+    "minNumberMargin": 15.032464840911217,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "variant": "two",
+    "minNumberMargin": 22.494986127650378,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "variant": "three",
+    "minNumberMargin": 10.701413675944309,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "variant": "one",
+    "minNumberMargin": 8.285408712590424,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "variant": "two",
+    "minNumberMargin": 13.055489818072772,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "variant": "three",
+    "minNumberMargin": 5.516971656437704,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "variant": "one",
+    "minNumberMargin": 6.809033420160858,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "variant": "two",
+    "minNumberMargin": 11.178855862670162,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "variant": "three",
+    "minNumberMargin": 3.701879110482224,
+    "breakContainment": [
+      {
+        "text": "断点 A",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 B",
+        "allCornersInside": true
+      },
+      {
+        "text": "断点 C",
+        "allCornersInside": true
+      }
+    ]
+  }
+]

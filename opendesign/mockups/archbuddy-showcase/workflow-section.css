@@ -1,0 +1,44 @@
+/* 用户选定的 02 双栏紧凑回环；单一琥珀色与 01 共用。 */
+.ab-workflow{--accent:var(--diagram-accent,#ffaf45);--forest:var(--diagram-forest,#153b2d);--workflow-paper:#f5f7f4;--workflow-sage:#e4eee3;--workflow-rule:#416451;background:var(--forest);color:var(--workflow-paper);padding-block:66px 48px}
+.ab-workflow .section-heading{margin-bottom:0}
+.ab-workflow .section-label{color:#b9d1be;font-size:24px;gap:14px;margin:0 0 18px}
+.ab-workflow .section-label>span{font-size:30px;line-height:1;width:auto;height:auto;background:none;border:0;border-radius:0;color:inherit;font-weight:500}
+.ab-workflow .section-heading h2{color:var(--workflow-paper);font-size:42px;line-height:1.28;font-weight:600;letter-spacing:-.038em}
+.ab-workflow-legend{display:flex;align-items:center;gap:9px;color:#d2e0d3;font-size:12px;padding-bottom:6px;white-space:nowrap}
+.ab-workflow-legend img{display:block;width:20px;height:20px}
+.ab-workflow-diagrams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:46px;margin-top:42px}
+.ab-workflow-panel{min-width:0}
+.ab-workflow-heading{display:flex;align-items:center;gap:12px;margin-bottom:17px;padding-top:19px;border-top:1px solid var(--workflow-rule)}
+.ab-workflow-number{font-size:14px;color:var(--accent);font-variant-numeric:tabular-nums}
+.ab-workflow-heading h3{font-size:22px;line-height:1.4;letter-spacing:-.025em;font-weight:600}
+.ab-workflow-chart{position:relative;width:100%;isolation:isolate}
+.ab-workflow-wires{position:absolute;inset:0;overflow:visible;pointer-events:none;width:100%;height:100%;z-index:0}
+.ab-workflow-wire{stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ab-workflow-arrow{color:var(--accent);fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ab-workflow-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px 8px;border-radius:7px;background:var(--workflow-sage);color:var(--forest);z-index:2;text-align:center}
+.ab-workflow-node h4{font-size:16px;line-height:1.35;font-weight:650;white-space:nowrap;letter-spacing:-.035em}
+.ab-workflow-manual,.ab-workflow-external{background:var(--workflow-paper)}
+.ab-workflow-note{font-size:11px;line-height:1.55;margin-top:8px;color:#617568}
+.ab-workflow-mark{margin-top:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:112px;padding:5px 7px;background:var(--accent);color:var(--forest);border-radius:4px}
+.ab-workflow-brand{display:flex;align-items:center;gap:5px;line-height:1}
+.ab-workflow-brand img{width:16px;height:16px;display:block}
+.ab-workflow-brand strong{font-size:10px;font-weight:650;letter-spacing:-.02em}
+.ab-workflow-caption{font-size:11px;line-height:1.25;font-weight:600}
+.ab-workflow-edge-label{position:absolute;transform:translate(-50%,-50%);color:var(--accent);background:var(--forest);padding:4px 7px;font-size:12px;line-height:1.2;white-space:nowrap;z-index:1}
+@media(max-width:1100px){.ab-workflow-diagrams{gap:24px}.ab-workflow-heading h3{font-size:20px}}
+@media(max-width:980px){.ab-workflow-diagrams{grid-template-columns:1fr;gap:24px}.ab-workflow-panel{max-width:620px;width:100%;margin-inline:auto}.ab-workflow-legend{font-size:11px}}
+@media(max-width:760px){.ab-workflow{padding-block:48px 36px}.ab-workflow .section-label{font-size:21px}.ab-workflow .section-label>span{font-size:27px}.ab-workflow .section-heading h2{font-size:31px}.ab-workflow .section-heading{display:block}.ab-workflow-legend{margin-top:22px}}
+@media(max-width:620px){.ab-workflow-diagrams{margin-top:29px}}
+@media(max-width:450px){.ab-workflow-node h4{font-size:14px}.ab-workflow-mark{min-width:106px}.ab-workflow-heading{gap:10px;margin-bottom:12px}.ab-workflow-heading h3{font-size:20px}.ab-workflow-number{font-size:13px}.ab-workflow-edge-label{font-size:11px;padding:3px 4px}}
+
+@media(min-width:1800px) and (min-height:1050px){
+ .ab-workflow-node{padding:14px 11px;border-radius:9px}
+ .ab-workflow-node h4{font-size:19px}
+ .ab-workflow-note{font-size:13px;margin-top:10px}
+ .ab-workflow-mark{min-width:138px;margin-top:10px;padding:7px 9px}
+ .ab-workflow-brand img{width:19px;height:19px}
+ .ab-workflow-brand strong{font-size:12px}
+ .ab-workflow-caption{font-size:13px}
+ .ab-workflow-edge-label{font-size:14px}
+ .ab-workflow-number{font-size:17px}
+}

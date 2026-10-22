@@ -1,0 +1,20 @@
+[
+  {
+    "mode": "focus",
+    "actual": "focus",
+    "y": 0,
+    "overflow": 0
+  },
+  {
+    "mode": "rail",
+    "actual": "rail",
+    "y": 0,
+    "overflow": 0
+  },
+  {
+    "mode": "relay",
+    "actual": "relay",
+    "y": 0,
+    "overflow": 0
+  }
+]

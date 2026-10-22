@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 const html = await readFile(new URL('../hosting/archbuddy/privacy/index.html', import.meta.url), 'utf8');
 
 test('公开隐私政策包含产品、联系邮箱与核心数据说明', () => {
-  for (const text of ['ArchBuddy 隐私政策', '19822692515@163.com', 'DeepSeek', '匿名身份与额度记录', '不持久化保存原图']) {
+  for (const text of ['ArchBuddy 隐私政策', '19822692515@163.com', 'DeepSeek', '匿名身份与额度记录', '服务不持久化图片']) {
     assert.ok(html.includes(text), `隐私政策缺少：${text}`);
   }
 });

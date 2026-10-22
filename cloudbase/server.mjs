@@ -210,16 +210,24 @@ export function createAnalysisServer({
   quota = null,
   eventWriter = null,
   embedder = embedTexts,
+  accountService = null,
+  localMockAI = false,
 } = {}) {
   const testToken = environment.ARCHBUDDY_TEST_TOKEN;
   const sessionSecret = environment.ARCHBUDDY_SESSION_SECRET;
   const persistent = environment.ARCHBUDDY_QUOTA_MODE === 'cloudbase';
-  const anonymousSessionsEnabled = validSessionSecret(sessionSecret);
-  const configured = Boolean(environment.DEEPSEEK_API_KEY)
-    && (validSecret(testToken) || anonymousSessionsEnabled)
+  const localAccounts = environment.ARCHBUDDY_ACCOUNT_MODE === 'local-demo';
+  if (localAccounts && (persistent || !accountService)) throw new Error('Local accounts require a local account store and cannot use CloudBase quota');
+  if (localMockAI && !localAccounts) throw new Error('Mock AI is restricted to local account mode');
+  const anonymousSessionsEnabled = !localAccounts && validSessionSecret(sessionSecret);
+  const identify = header => localAccounts
+    ? accountService.authenticate(bearerToken(header))
+    : authenticate(header, { testToken, sessionSecret, now });
+  const configured = (localMockAI || Boolean(environment.DEEPSEEK_API_KEY))
+    && (localAccounts || validSecret(testToken) || anonymousSessionsEnabled)
     && (!persistent || Boolean(quota));
-  const embeddingConfigured = validEmbeddingKey(environment.ARCHBUDDY_EMBEDDING_API_KEY)
-    && (validSecret(testToken) || anonymousSessionsEnabled)
+  const embeddingConfigured = !localMockAI && validEmbeddingKey(environment.ARCHBUDDY_EMBEDDING_API_KEY)
+    && (localAccounts || validSecret(testToken) || anonymousSessionsEnabled)
     && (!persistent || Boolean(quota));
   const maxCalls = positiveInt(environment.ARCHBUDDY_MAX_CALLS_PER_PROCESS, 20);
   const maxConcurrent = positiveInt(environment.ARCHBUDDY_MAX_CONCURRENT, 3);
@@ -237,22 +245,59 @@ export function createAnalysisServer({
     let contractVersion = null;
     let acquired = false;
     let reservation = null;
+    let pointReservation = null;
+    let pointsRecorded = false;
     let modelStarted = false;
     let modelResult = null;
+    let modelSucceeded = false;
     let modelStartedAt = null;
     let outcomeRecorded = false;
     try {
       const pathname = new URL(req.url, 'http://localhost').pathname;
+      if (localAccounts) {
+        const host = new URL(`http://${req.headers.host || ''}`).hostname;
+        const origin = req.headers.origin;
+        if (!['127.0.0.1', 'localhost'].includes(host)
+            || !['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)
+            || (origin && !/^chrome-extension:\/\/[a-p]{32}$/.test(origin) && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin))) {
+          throw new HttpError(403, 'LOCAL_ONLY', '本地演示服务仅允许本机访问');
+        }
+      }
       if (req.method === 'GET' && pathname === '/healthz') {
         json(res, 200, { status: 'ok', service: 'archbuddy-api' });
         return;
       }
       if (req.method === 'GET' && pathname === '/api/status') {
-        json(res, 200, { configured, provider: 'deepseek', model: 'deepseek-flash', mode: persistent ? 'anonymous-beta' : 'local-process-test', authenticationRequired: true,
+        json(res, 200, { configured, provider: localMockAI ? 'local-demo' : 'deepseek', model: localMockAI ? 'archbuddy-local-demo' : 'deepseek-flash', mode: localAccounts ? 'local-demo' : persistent ? 'anonymous-beta' : 'local-process-test', authenticationRequired: true,
           anonymousSessionsEnabled, embeddingConfigured,
-          quotaMode: persistent ? 'daily' : 'process-test',
-          ...(persistent ? { quotaTimeZone: 'Asia/Shanghai' } : {}),
+          accountMode: localAccounts ? 'local-demo' : 'anonymous', localDemo: localAccounts, mockAI: localMockAI,
+          quotaMode: localAccounts ? 'local-daily' : persistent ? 'daily' : 'process-test',
+          ...(persistent || localAccounts ? { quotaTimeZone: 'Asia/Shanghai' } : {}),
         });
+        return;
+      }
+      if (localAccounts && (pathname.startsWith('/api/auth/') || pathname === '/api/account' || pathname.startsWith('/api/account/'))) {
+        if (pathname === '/api/auth/code' || pathname === '/api/auth/login') {
+          if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
+          const body = await readJson(req, 4096);
+          json(res, 200, pathname === '/api/auth/code'
+            ? await accountService.sendCode(body?.phone)
+            : await accountService.login(body));
+          return;
+        }
+        const identity = await identify(req.headers.authorization);
+        if (!identity) throw new HttpError(401, 'UNAUTHORIZED', '请登录手机号账号后继续');
+        if (pathname === '/api/account' && req.method === 'GET') {
+          json(res, 200, { account: await accountService.getAccount(identity.actorId), mode: 'local-demo', packages: accountService.packages });
+        } else if (pathname === '/api/auth/logout' && req.method === 'POST') {
+          req.resume(); json(res, 200, await accountService.logout(bearerToken(req.headers.authorization)));
+        } else if (pathname === '/api/account/bonus' && req.method === 'POST') {
+          const body = await readJson(req, 8192);
+          json(res, 200, await accountService.requestBonus(identity.actorId, body?.reason));
+        } else if (pathname === '/api/account/orders' && req.method === 'POST') {
+          const body = await readJson(req, 4096);
+          json(res, 200, await accountService.createOrder(identity.actorId, body?.packageId, body?.requestId));
+        } else throw new HttpError(404, 'NOT_FOUND', '账号接口不存在或请求方式无效');
         return;
       }
       if (pathname === '/api/session') {
@@ -267,9 +312,9 @@ export function createAnalysisServer({
       }
       if (pathname === '/api/events') {
         if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
-        const identity = authenticate(req.headers.authorization, { testToken, sessionSecret, now });
-        if (!identity) throw new HttpError(401, 'UNAUTHORIZED', '匿名访问凭据无效或已过期');
-        if (environment.ARCHBUDDY_ANALYTICS_ENABLED !== 'true' || typeof eventWriter !== 'function') {
+        const identity = await identify(req.headers.authorization);
+        if (!identity) throw new HttpError(401, 'UNAUTHORIZED', localAccounts ? '账号登录状态无效或已过期，请重新登录' : '匿名访问凭据无效或已过期');
+        if (localAccounts || environment.ARCHBUDDY_ANALYTICS_ENABLED !== 'true' || typeof eventWriter !== 'function') {
           req.resume();
           noContent(res);
           return;
@@ -281,6 +326,7 @@ export function createAnalysisServer({
       }
       const semantic = pathname === '/api/library/search';
       const description = pathname === '/api/library/describe';
+      if (semantic && localMockAI) throw new HttpError(503, 'LOCAL_DEMO_SEARCH_DISABLED', '本地演示不模拟语义检索，请使用关键词搜索；本轮尚未接入真实模型');
       const embedding = pathname === '/api/library/embed';
       contractVersion = embedding ? 6 : semantic ? 4 : description ? 5 : pathname === '/api/analyze' ? 1 : pathname === '/api/v2/analyze' ? 2 : pathname === '/api/v3/evaluate' ? 3 : null;
       if (!contractVersion) throw new HttpError(404, 'NOT_FOUND', '接口不存在');
@@ -288,10 +334,10 @@ export function createAnalysisServer({
       if (embedding ? !embeddingConfigured : !configured) {
         throw new HttpError(503, embedding ? 'EMBEDDING_NOT_CONFIGURED' : 'NOT_CONFIGURED', embedding ? '语义向量服务尚未配置；关键词搜索仍可使用' : '测试服务尚未配置完成');
       }
-      const identity = authenticate(req.headers.authorization, { testToken, sessionSecret, now });
-      if (!identity) throw new HttpError(401, 'UNAUTHORIZED', '匿名访问凭据无效或已过期');
+      const identity = await identify(req.headers.authorization);
+      if (!identity) throw new HttpError(401, 'UNAUTHORIZED', localAccounts ? '账号登录状态无效或已过期，请重新登录' : '匿名访问凭据无效或已过期');
       if (environment.ARCHBUDDY_ANALYSIS_ENABLED === 'false') throw new HttpError(503, 'ANALYSIS_PAUSED', '反推服务暂时暂停，下载与分类仍可使用');
-      if (!persistent && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+      if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
       if (embedding) {
         if (now() - embeddingMinuteStart >= 60_000) { embeddingMinuteStart = now(); embeddingMinuteCalls = 0; }
         if (embeddingMinuteCalls >= embeddingPerMinute) throw new HttpError(429, 'RATE_LIMITED', '向量生成请求过于频繁，请稍后再试');
@@ -312,8 +358,9 @@ export function createAnalysisServer({
           throw new HttpError(400, 'INVALID_INPUT', '向量化文本无效');
         }
         if (persistent) reservation = await quota.reserve(identity.actorId, req.headers['x-archbuddy-request-id']);
+        if (localAccounts) pointReservation = await accountService.reserve(identity.actorId, req.headers['x-archbuddy-request-id'], 'embed');
         if (req.aborted || res.destroyed) return;
-        if (!persistent && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+        if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), timeoutMs);
         res.on('close', () => { if (!res.writableEnded) controller.abort(); });
@@ -323,6 +370,8 @@ export function createAnalysisServer({
         let result;
         try { result = modelResult = await embedder(body.texts.map(text => text.trim()), { apiKey: environment.ARCHBUDDY_EMBEDDING_API_KEY, signal: controller.signal }); }
         finally { clearTimeout(timeout); }
+        modelSucceeded = true;
+        if (pointReservation) { await accountService.finish(pointReservation, true); pointsRecorded = true; }
         let usageRecorded = false;
         if (reservation) {
           try {
@@ -332,7 +381,7 @@ export function createAnalysisServer({
           } catch { console.warn(JSON.stringify({ event: 'usage_record_failed', projectId: 'archbuddy', stage: 'development' })); }
         }
         json(res, 200, { model: result.model, vectors: result.vectors, durationMs: now() - modelStartedAt,
-          usage: normalizeUsage(result.usage), usageRecorded });
+          usage: normalizeUsage(result.usage), usageRecorded, ...(localAccounts ? { demo: localMockAI, account: await accountService.getAccount(identity.actorId) } : {}) });
         return;
       }
       const evaluationRequest = contractVersion === 3 ? await readEvaluationRequest(req) : null;
@@ -372,8 +421,13 @@ export function createAnalysisServer({
         reservation = await quota.reserve(identity.actorId, req.headers['x-archbuddy-request-id']);
         if (req.aborted || res.destroyed) return;
       }
+      if (localAccounts) {
+        if (evaluationRequest && evaluationRequest.requestId !== req.headers['x-archbuddy-request-id']) throw new HttpError(400, 'INVALID_REQUEST_ID', '评估请求标识不一致');
+        pointReservation = await accountService.reserve(identity.actorId, req.headers['x-archbuddy-request-id'], semantic ? 'search' : description ? 'describe' : contractVersion === 3 ? 'evaluate' : 'analyze');
+        if (req.aborted || res.destroyed) return;
+      }
       // Count attempts, even failures: upstream may charge for unsuccessful requests.
-      if (!persistent && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+      if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
       startedCalls++;
       modelStarted = true;
       modelStartedAt = now();
@@ -393,6 +447,8 @@ export function createAnalysisServer({
           ? await analyzer.analyzeV2({ ...image, signal: controller.signal })
           : await analyzer.analyze({ ...image, signal: controller.signal });
       const sections = contractVersion === 1 ? assembleSections(result.sections) : null;
+      modelSucceeded = true;
+      if (pointReservation) { await accountService.finish(pointReservation, true); pointsRecorded = true; }
       let usageRecorded = false;
       if (reservation) {
         try {
@@ -410,11 +466,19 @@ export function createAnalysisServer({
         : contractVersion === 2 ? { contractVersion: 2, modules: result.modules } : { sections };
       json(res, 200, { ...analysisPayload, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
         usage: normalizeUsage(result.usage), usageRecorded,
+        ...(localAccounts ? { demo: localMockAI, account: await accountService.getAccount(identity.actorId) } : {}),
         ...(reservation && identity.type === 'administrator'
           ? { quota: { day: reservation.day, userRemaining: reservation.userRemaining, projectRemaining: reservation.projectRemaining } }
           : {}),
       });
     } catch (error) {
+      if (pointReservation && modelStarted && !pointsRecorded) {
+        // A valid result with a bookkeeping error stays reserved; never refund an uncertain success.
+        if (!modelSucceeded) {
+          try { await accountService.finish(pointReservation, false); pointsRecorded = true; }
+          catch { console.warn(JSON.stringify({ event: 'local_points_record_failed', projectId: 'archbuddy', stage: 'local' })); }
+        }
+      }
       if (reservation && modelStarted && !outcomeRecorded) {
         try {
           await quota.finish(reservation, { success: false, usage: modelResult?.usage ?? error?.usage, durationMs: now() - modelStartedAt });
@@ -426,8 +490,8 @@ export function createAnalysisServer({
       const sendError = (status, code, message) => json(res, status, contractVersion === 3
         ? { error: { code, message }, requestId: req.headers['x-archbuddy-request-id'] || null }
         : { code, message });
-      if (error instanceof HttpError || error instanceof QuotaError) {
-        const code = contractVersion === 3
+      if (error instanceof HttpError || error instanceof QuotaError || error.name === 'AccountError') {
+        const code = contractVersion === 3 && !localAccounts
           ? (error.status === 429 ? 'QUOTA_REACHED' : error.status === 401 ? 'AUTH_REQUIRED' : error.status === 403 ? 'AUTH_INVALID' : error.status >= 500 ? 'SERVICE_UNAVAILABLE' : 'INVALID_INPUT')
           : error.code;
         const status = contractVersion === 3 && [413, 415].includes(error.status) ? 400 : error.status;
@@ -442,6 +506,10 @@ export function createAnalysisServer({
       // Do not log request bodies, credentials, images, prompts, or upstream errors.
       req.resume();
     } finally {
+      if (pointReservation && !modelStarted) {
+        try { await accountService.cancel(pointReservation); }
+        catch { console.warn(JSON.stringify({ event: 'local_points_cancel_failed', projectId: 'archbuddy', stage: 'local' })); }
+      }
       if (reservation && !modelStarted) {
         try { await quota.cancel(reservation); }
         catch { console.warn(JSON.stringify({ event: 'quota_release_failed', projectId: 'archbuddy', stage: 'development' })); }

@@ -2,10 +2,266 @@
 
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。
 >
-> **更新时间**：2026-10-09
-> **当前分支**：direction/plugin
-> **本地最新功能**：2026-10-08 本轮已提交并推送 **V4.1（0.6.1）**，版本标签 archbuddy-v4.1，Git交接见文末。AB-001 来源网页与下载自动描述时序修复保留；用户已选组合交互，浮框收起/展开、两入口菜单、图库直达与左栏分类管理已在本地实现；分类输入已上移压缩，清空参考图与参考图一并排，生图站外链采用 Lucide 图标；浮框 Logo 在展开和收起时均直达图词库。未部署或上架，详见文末。
-> **当前工作区状态**：V4.1及交接摘要已推送（功能主提交 `362db0c`、摘要 `c576fe4`）。本轮修复扩展重新加载后旧网页浮框无法关闭的问题：总开关同步全部普通网页，清理旧节点与监听，开启后可恢复。标签 `archbuddy-v4.1` 保留指向原功能主提交；浮框关闭修复 `45de85c` 已提交并推送，结果见文末。未部署CloudBase或更新商店。
+> **更新时间**：2026-10-16
+> **当前工作区分支**：codex/archbuddy-snapshot-20261022（从 direction/plugin 基线建立，用于保存本工作区积累的本地改动；原 codex/phone-login-credits 分支仍由另一工作区占用）
+> **当前新增工作**：手机号验证码登录与积分账户本地模拟闭环已实现并完成本机验收。注册 200 分、每张反推/优化 1 分、核心视觉特点 0.1 分；个人每日 50 / 项目每日 500 次调用保护；站内反馈人工审核可追加一次 200 分；积分包 100/500/1000 分，¥1/¥2/¥3 占位。未接真实短信/模型/支付，不部署 CloudBase、不更新商店。
+> **上一轮基线功能**：2026-10-08 本轮已提交并推送 **V4.1（0.6.1）**，版本标签 archbuddy-v4.1，Git交接见文末。AB-001 来源网页与下载自动描述时序修复保留；用户已选组合交互，浮框收起/展开、两入口菜单、图库直达与左栏分类管理已在本地实现；分类输入已上移压缩，清空参考图与参考图一并排，生图站外链采用 Lucide 图标；浮框 Logo 在展开和收起时均直达图词库。未部署或上架，详见文末。
+> **上一轮基线状态**：V4.1及交接摘要已推送（功能主提交 `362db0c`、摘要 `c576fe4`）。本轮修复扩展重新加载后旧网页浮框无法关闭的问题：总开关同步全部普通网页，清理旧节点与监听，开启后可恢复。标签 `archbuddy-v4.1` 保留指向原功能主提交；浮框关闭修复 `45de85c` 已提交并推送，结果见文末。未部署CloudBase或更新商店。
+
+## 2026-10-22：本工作区改动归档并推送
+
+用户要求提交并推送。当前工作区从已发布的 `direction/plugin` 基线检出，包含本地账号积分演示、Edge 商店资料与截图、已上线展示站第十七版的源码和审阅证据，以及相应中文交接文档；提交到独立分支 `codex/archbuddy-snapshot-20261022`，避免移动其他工作区占用的 `codex/phone-login-credits` 和 `codex/showcase-site-017` 分支。仅提交源码、文档与项目内审阅资产；不提交本机 `.codex` 环境配置、临时 HTTP 服务进程记录和 Git 忽略的账本、密钥、构建 ZIP。提交和推送不触发 CloudBase 部署、模型调用、商店提交或其他项目资源变更。账号积分仍仅为本地演示，Edge 候选包仍待最终人工复核与商店提交。
+
+本次提交前复查全部暂存的 66 个 JavaScript/MJS/CJS 与 4 个 PowerShell 脚本语法、40 个 JSON 文件及 `git diff --cached --check`，均通过；在离线安装锁定依赖后，既有后端 22 项检查通过。原隐私页测试的旧字面断言与早已发布的实际措辞不一致，已改为检查当前真实声明。展示站使用另一个工作区中经 SHA-256 校验的原始 0.6.0 ZIP，在本工作区忽略目录完成 29 文件白名单构建；当前源码产物 16015024 字节，比此前上线 017 记录多 976 字节，因此该构建只证明本地构建可用，不代表重新核实公网版本，更未重新发布。
+
+## 2026-10-17：Edge V4.1 商品截图已准备（仅本地）
+
+用户在 Partner Center 的截图栏要求可上传图片。从固定 SHA-256 为 `301E23CFEAC0DF4A01BADFA4C89A22F43B3F9D94A54C90A757D0F7B5A4F09561` 的 Edge V4.1 / 0.6.1 最终候选 ZIP 解包，以独立 Edge 测试配置加载实际扩展，使用仓库建筑演示图板和手工示例内容截取五张商品图：项目图库、图片详情、提示词库、提示词生成、效果优化。输出在 [Edge 截图目录](../extension/store/edge/assets/screenshots-v4.1/README.md)，另打仅含五张 PNG 的下载包 `extension/dist/edge/ArchBuddy-Edge-V4.1-0.6.1-screenshots.zip`（SHA-256 `E3ED00C16339C280C21967DD5873DD09315831F206359D557453E26C049BBC4D`）。Chrome 旧截图和商店代码均未改。
+
+五张图均为 1280×800、RGB PNG、无透明通道；目视检查内容与 0.6.1 Edge 实际界面一致，采集记录中模型请求 0、页面脚本错误 0，服务状态仅使用公开 `/api/status` GET 核对。演示视觉描述与 Prompt 是手工填入的示例，不代表模型结果；优化画面未显示虚构评估。截图已可逐张上传，最终 ZIP 的日常 Edge 人工全流程复核与商店提交仍待完成。本轮未部署云端、未更新商店、未调用模型，未变更其他项目或 CloudBase 资源、数据、身份、密钥、统计、日志、额度、预算；未提交或推送 Git。
+
+## 2026-10-17：Edge 专用隐私政策已公开部署
+
+用户要求先部署 Edge 隐私页。目标固定为 ArchBuddy / development / `dev-mel-d9guu8bpu44029179` / 既有静态应用 `archbuddy-privacy`；当前工作区无忽略的 `cloudbase/environment.json`，本轮改用既有资源登记与 CloudBase CLI 只读确认环境、应用域名和固定路径。上传前原 `archbuddy/privacy/index.html` 是唯一文件，Edge 子路径为空；Chrome 公开页面 HTTP 200、6364 字节、哈希 `D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8`。
+
+从只含 `index.html` 的忽略白名单目录把 [Edge 政策源](../extension/store/edge/privacy.html) 上传为 `archbuddy/privacy/edge/index.html`，没有修改 Chrome 文件、展示站或插件 ZIP。CLI 退出 0 但返回 `successCount=0`/`verified=false`，因此另行核对云端前缀精确只有原 Chrome 页与新增 Edge 页两项；[Edge 公网隐私页](https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/edge/) 和显式 `edge/index.html` 均返回 200、`text/html`、3907 字节，SHA-256 `392FC25C2EC5C6FC44D0E4A7C110414E17C79998653D52EB4409903DE66C3F96`，与本地源完全一致。Chrome 公网页部署后字节数和原哈希不变。Edge 上架清单及填写稿已写入实际 URL。
+
+本次仅新增 ArchBuddy 专属公开静态 HTML；未改后端、集合、业务数据、身份、模型密钥、统计、日志配置、额度、预算、网关或其他项目。CLI 角色仍可能具环境级权限，平台访问日志和账号带宽费用未独立审计；未运行模型或触及用户图库。商店后台尚未填写/提交，最终候选 ZIP 的干净 Edge 复核仍待完成。资源登记及验证证据见 [CloudBase 隔离记录](CLOUDBASE_PROJECT_ISOLATION.md)。本轮未提交或推送 Git。
+
+## 2026-10-16：Edge 上架资料与 Chrome 文件隔离（本地）
+
+用户反馈先前的 Edge `local-test` 包可以直接使用，并要求区分两店文件、准备 Edge 上架资料。保留既有 `extension/store/` Chrome 文稿和 `assets/v4/` 原位；新增 `extension/store/README.md` 说明归属，在 `extension/store/edge/` 单独整理简体中文商品描述、权限与数据披露、审核步骤、128×128 品牌图标、Edge 专用隐私 HTML、提交清单和固定基线候选包脚本。Chrome 现有商品、源码和未提交账号积分演示均未改变。
+
+由此前 SHA-256 为 `56D558C6E3CF209C3746808877530EDBC2BDAEE0CBE8EB3AD2A88ED71C453310` 的 V4.1 / 0.6.1 Edge 测试 ZIP，生成忽略目录中的 `extension/dist/edge/ArchBuddy-Edge-V4.1-0.6.1-store-candidate.zip`。候选包 182461 字节、27 个运行文件，SHA-256 `301E23CFEAC0DF4A01BADFA4C89A22F43B3F9D94A54C90A757D0F7B5A4F09561`；逐条哈希比较只有 `privacy.html` 改为 Edge 措辞及当前 50/500 额度，其余 26 个文件与用户测试包完全一致。Manifest V3 / 0.6.1、无本地账号积分模块；候选构建脚本语法通过，Edge 商品长描述 628 字符，图标 128×128。未重新运行 Edge 浏览器人工验收；旧 V4 截图来自 Chrome 0.6.0，不直接冒充 V4.1 Edge 画面。
+
+发布前关口：Edge 专用 `privacy.html` 仍是本地文件，必须部署到 ArchBuddy 自有、与 Chrome 页面分开的可访问 HTTPS 路径并核对后台 URL；随后在全新 Edge 配置验收最终候选包、填写 Partner Center 实际数据选项、可见性和市场，再提交审核。当前工作区无 `cloudbase/environment.json`，因此此次未作云端归属核对或部署，也未变更 CloudBase 服务、数据、身份、日志、密钥、额度、预算、其他项目或任何商店后台。完整待办见 [Edge 上架清单](../extension/store/edge/SUBMISSION_CHECKLIST.md)。本轮未提交或推送 Git。
+
+## 2026-10-16：Edge 本地测试压缩包（用户随后确认可用）
+
+用户要求先取得最新 Edge 版压缩包自行本地测试，测试通过后再考虑上架。为避免混入本工作区未提交的本地账号积分演示，从已提交的 `c01e14a:extension` 导出 V4.1（0.6.1，含浮框重载修复），使用该提交内原有白名单脚本打包，在 Git 忽略目录生成 `extension/dist/edge/ArchBuddy-Edge-V4.1-0.6.1-local-test.zip`。包名标明 Edge，扩展清单及业务代码保持原样；本包仅供 Edge 解压后本地加载，尚非 Edge 商店提交包。
+
+压缩包 181484 字节、27 个运行文件，SHA-256 `56D558C6E3CF209C3746808877530EDBC2BDAEE0CBE8EB3AD2A88ED71C453310`；全部 ZIP 条目与提交快照逐文件 SHA-256 一致，根目录含 Manifest V3、版本 0.6.1，`BACKEND_MODE=cloud`，无本地账号模块或异常归档路径。12 个打包所涉 JS/MJS 文件通过 `node --check`。尚待用户在真实 Edge 中确认侧栏、图片采集、下载与图库流程；未改插件源码、CloudBase 资源或配置、Google Chrome 商店及 Edge 商店，也未提交或推送。
+
+## 2026-10-16：展示站第十七版已上线——宽屏图幅与05白色强调
+
+用户反馈公网2436×1240宽屏下01/02深绿外框与内容比例失衡，并补充要求05下载与安装不使用黄色强调。针对宽高均充足的演示屏，01/02共用容器最大宽度1360→1640px，停驻舞台高度上限900px并在视口中垂直居中；01圆图450→550px，标题、痛点同步放大；02节点146×98→176×116px，图示纵向与字级同步增大。1920×900、1440×1000及390×844保留原断点布局。05章节字、主按钮、步骤数字与测试集提示改为白色体系，保留墨绿底与清晰反差。
+
+仅发布ArchBuddy/development静态应用archbuddy-dev-showcase及固定前缀archbuddy/dev/showcase/。上传前只读核对旧016/SUCCESS、29文件原清单与隐私页；第十七版29文件16014048字节，CLI退出0、元数据017/SUCCESS，主域29及备用3资源逐项HTTP200/哈希一致，前缀精确29文件且无临时配置，隐私页200/6364字节/哈希不变。公网浏览器2436×1240、1920×900、1440×1000、390×844核对01/02与05，均无横向溢出、脚本或资源失败；2436屏的圆图/容器高度比由450/1098提高到550/900。证据见[本轮报告](../opendesign/review/archbuddy-showcase-proportion-20261016/report.md)和cloudbase/dist/showcase-proportion-white-install-20261016。未改插件、账户积分、后端、用户数据、身份、密钥、额度、预算、共享配置和其他项目。本轮未提交或推送Git。
+
+## 2026-10-16：展示站第十六版已上线——接力动效与墨绿05
+
+用户明确选定浅底接力方案并要求05改墨绿后直接部署。正式站整合01三处断点随滚动依次突出、阶梯式A/B/C白色说明、圆环内侧两条业务链路标注；01/02标题放大改琥珀色，同一章节窗口完成左右接力；05改整幅墨绿底，按钮、步骤、测试集提示和问答调整对比度。正式站不带三方案比较栏。03/04内容、Chrome商店与测试集入口保持既有路径。
+
+范围：仅ArchBuddy/development静态应用archbuddy-dev-showcase与前缀archbuddy/dev/showcase/；未部署插件、账号积分服务或后端，未改数据、身份、密钥、模型、额度、预算、统计和其他项目。新建29文件白名单输出cloudbase/dist/showcase-motion-install-20261016/site；旧015包及正式源归档保留。
+
+验收：本地语法检查与1440/1366/390真实浏览器通过，01三次逐条显现/转场/02、05及下载入口正常，无横溢或浏览器错误。上传前只读检查旧015的27文件清单和隐私页均匹配。部署CLI退出0，元数据archbuddy-dev-showcase-016/SUCCESS；29个主域资源与3个备用资源HTTP200且SHA256逐项一致，限定前缀精确29文件，无临时配置；隐私页200/6364字节/哈希不变。新公网1440/390按平台提示进入正式Document200，01/02/05截图目视正常，浏览器脚本/资源失败0。证据见[本轮报告](../opendesign/review/archbuddy-showcase-motion-publish-20261016/report.md)。本轮未提交或推送Git。
+
+## 2026-10-16：已选浅底接力方案的01分析动效细化（本地）
+
+用户选定上一轮方案一，要求增强01/02标题，01的三处断点随滚动依次突出并带出阶梯式A/B/C说明，说明小字改白；圆环内侧沿弧新增“方案创作链路”（对应01–02）与“AI 效果图迭代链路”（对应03–05）。仅修改本地[候选页](../opendesign/mockups/archbuddy-story-motion-options/index.html)，浅底接力仍为默认模式；正式公网不变。
+
+在方案一中，01先经历A、B、C三次径向微移/放大与说明横向显露，再保持完整画面，之后01向左、02从右接入。标题01/02统一放大并用#FFAF45标明章节；三条痛点A左/B居中/C靠右，小字白色。较矮窗口纵向布局也使用滚动进度逐次显露；减弱动态偏好直接显示完整信息。两条链路文字使用SVG textPath沿内环排布，未改外侧五步和三断点语义。
+
+验证：脚本语法通过；本地HTTP200。真实Chrome 1440×1000检查01逐步/完整/转场/02，1366×768检查自然纵向滚动，360和390宽度检查圆环文字；页面无横溢、脚本及请求错误。截图与进度状态记录在[selected-relay-refinement](../opendesign/review/archbuddy-story-motion-options-20261016/selected-relay-refinement/)。仅本地预览，无云端资源修改、部署、提交或推送。
+
+## 2026-10-16：首屏与01/02转场三版（本地候选）
+
+用户反馈正式站首屏、01、02同背景导致层次不清，希望先比较三个动效方案：区别宣传首屏和正文，并以左右进入/退出把断点分析接到产品机会，再继续产品思路与功能。新独立目录[archbuddy-story-motion-options](../opendesign/mockups/archbuddy-story-motion-options/index.html)，复用已上线图解与统一#FFAF45，不修改正式页。三版分别浅底接力、暗场聚焦、章节推演（左侧保留两步线索）；正常滚轮控制，01/02分别保留静止阅读区间，向上滚动反向还原。窄屏/高度不足降级为完整纵向阅读和轻量方向进入，减弱动态偏好显示全文；03–05保留原进入效果。
+
+本地预览http://127.0.0.1:8766/mockups/archbuddy-story-motion-options/?motion=relay（另focus/rail）。顶部切换/从头体验只在候选页；品牌、Lucide与图像复制到目录，下载仍指向既有公网资源。脚本语法、107条本地引用、正式页7文件哈希保持检查通过；manifest全量重建。独立宽屏三模式完整阅读/中间转场/反向回滚/释放到03，以及360手机、1366×768短屏纵向回退、减弱动态全文核查通过；模式按钮与重播/业务锚点/原画廊/弹图正常，JS和请求错误/横溢0。第三版最后将遮罩改为优先显露02标题与方案链路，避免先露出AI右半部分；该处定向复核见[验收报告](../opendesign/review/archbuddy-story-motion-options-20261016/verification/report.md)。
+
+只提供本地选择，不部署、不提交或推送，不涉及云端资源、数据、身份、日志、密钥、模型、预算或其他项目。正式公网仍为015已选静态图解/轻量进入。
+
+## 2026-10-16：官网01/02已选方案已上线（第十五版）
+
+用户确认02采用双栏紧凑回环方案一，并授权将此前01最终深绿琥珀环形图一起更新公网。01选取round15方案二，流程/断点/痛点均#FFAF45；02使用相同强调色、紧凑步骤框和完整3步/5步回环。两个章节复用统一色变量，保留整站已选轻量进入动效。方案选择控制不进入正式页。
+
+本轮仅官网01/02以及白名单构建与发布记录；03–05、商店/测试集、原图片交互和其它既有工作保持。发布目标仅archbuddy/development/archbuddy-dev-showcase和/archbuddy/dev/showcase/，27公开白名单文件。未发布账号积分/插件/后端，不调用模型、不改变数据/身份/密钥/50与500保护/共享配置/其他项目。旧014产物和整合前源文件留存。本地与公网验收通过，已上线第十五版。
+
+发布与验收：北京时间2026-10-16 01:35，CLI退出0，archbuddy-dev-showcase-015/SUCCESS；27公开文件15998817字节。主域27与备用3资源HTTP200且逐项SHA256一致；固定前缀精确27白名单，无临时配置；原隐私页200/6364字节/旧哈希保持。环境仅showcaseSite更新，其他字段摘要一致。
+
+独立本地1440/390/360与公网fresh context1440/390通过。五阶段/三断点、3/5节点与2/4机会、统一#FFAF45、三痛点分隔、外部生图及大小循环均清晰，实际截图无碰撞/裁切/横溢。五章reveal、回滚、导航、画廊、弹图、精确商店和测试集/05教程均正常。公网按平台倒计时后正常确认进入，正式Document均200/text-html/无附件，站点错误与资源失败0。初次自动识别倒计时按钮过早的问题只修正核查脚本并重新核验，无站点变更。详见[验收报告](../opendesign/review/archbuddy-selected-publish-20261016/verification/report.md)与static-check.json；发布/哈希/范围证据在cloudbase/dist/showcase-selected-workflows-20261016。
+
+[公网主页](https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/)。未提交或推送Git，其他工作区改动保留。
+
+## 2026-10-16：官网 02 琥珀橙紧凑工作链路三版（本地，待选择）
+
+用户要求把02工作链路中的ArchBuddy介入环节与连线统一为01已选的琥珀橙，并缩小步骤方块，先提供三版静态候选。新增独立[本地比较页](../opendesign/mockups/archbuddy-workflow-options/index.html)：双栏紧凑回环、横向双轨、双环站点。三版深绿底与#FFAF45强调色共用，桌面节点约142–164px宽、88–98px高；第一版保留左右对照，第二版分两行横向阅读，第三版以环路和琥珀实色小节点突出介入位置。窄屏做纵向回环重排，页面无流程或滚动动效。
+
+每版保留方案创作3个节点/2处产品介入、AI链5个节点/4处产品介入；设计师创作与外部生图均完整显示职责，不贴插件标记。图库/词库回采集的大环与迭代回外部生图的小环均保留。原A形Logo和官方Lucide箭头资产复制到候选目录，附许可；图例用品牌标记区分产品介入，橙线本身只表达工作流。
+
+预览：[双栏紧凑回环](http://127.0.0.1:8766/mockups/archbuddy-workflow-options/?v=1#one)／[横向双轨](http://127.0.0.1:8766/mockups/archbuddy-workflow-options/?v=1#two)／[双环站点](http://127.0.0.1:8766/mockups/archbuddy-workflow-options/?v=1#three)。设计决策见目录plan.md；脚本语法、本地相对资源和HTTP200通过，manifest全量重建。独立图面核查通过：1440/360px三版共6张截图均已目视，另查780px方案二；7个场景无横向溢出、浏览器错误或资源失败，9项按钮/hash切换通过，节点与大小循环清晰，强调色实测统一为#FFAF45。见[验收报告](../opendesign/review/archbuddy-workflow-options-20261016/verification/report.md)。
+
+仅新建本地候选，待用户选版；不替换01或正式02、不部署公网、不提交/推送。不涉及云端资源、数据、身份、日志、密钥、统计、模型、额度或预算，保留既有工作区改动。
+
+## 2026-10-16：官网 01 琥珀强调色统一（本地）
+
+用户否定分别加深流程线和提亮标题的多色处理，明确要求与断点色块统一。本轮将方案二的虚线/箭头、三个断点填色、右侧三条痛点标题及ABC圆标统一为 #FFAF45；共用 AMBER_ACCENT 色值与派生章节变量，后续调色需同步，不能再拆成不同的深金与亮黄。保留3.8px流程线（手机下限2.6px）、700标题字重、已确认的外弧与文字居中。其他两版和正式展示页保持。
+
+[本地预览](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=15#two)。脚本语法检查通过，manifest全量重建；本地HTTP200与差异格式通过；1440px独立截图及computedStyle核对12处强调元素均为rgb(255,175,69)，线宽3.8px/标题700保持，断点形状和字形坐标与round14一致，无横溢/浏览器错误/资源失败。见[核查记录](../opendesign/review/archbuddy-radial-amber-unified-20261016/verification/report.md)。仅本地修改，未部署、提交或推送，不涉及云端资源、数据、身份、日志、密钥、统计、模型、额度或预算。
+
+## 2026-10-16：官网 01 琥珀流程线与痛点标题对比增强（本地）
+
+用户反馈浅黄虚线在绿色扇面中不显眼、右侧三条痛点标题不够凸显。本轮仅改选定方案二：流程虚线与箭头改深金琥珀 #A76200，线宽2.6→3.8px（手机下限1.8→2.6px），短线长度4.8px、间距2.4px；右侧三条标题改明亮金黄 #FFD15C，字重600→700。按浅绿扇面和深绿背景分别增强对比，断点色块、同心外弧、ABC居中、其它排版和两版候选保留。上一版归档 opendesign/archive/archbuddy-radial-break-options-before-amber-contrast-20261016/。
+
+[本地预览](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=14#two)。脚本语法、HTTP200与差异格式通过，manifest全量重建；1440/360独立目视通过：与round13相比流程线明显增强、三标题更醒目，无碰字或横溢，0浏览器错误/资源失败；断点路径、填色与文字字号/坐标保持一致。见[核查报告](../opendesign/review/archbuddy-radial-amber-contrast-20261016/verification/report.md)。仅本地，不同步正式展示页、不部署/提交/推送。不涉及云端资源、数据、身份、日志、密钥、统计、模型、额度或预算。
+
+## 2026-10-16：官网 01 已选琥珀橙文字与同心弧细化（本地）
+
+用户选定第十二轮方案二琥珀橙，要求字母大小与中文更协调、断点整组居中、流程虚线同琥珀色，并追加断点向外延长、外边改成同心圆弧。本轮只更新[本地比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)中的方案二，默认进入方案二；其余两版保留。旧稿完整归档 opendesign/archive/archbuddy-radial-break-options-before-amber-refine-20261016/。
+
+ABC独立放大20%，中文字号保持；依据中文和拉丁字形实际可见宽高对齐，将整组放在断点径向两端的中间。C继续使用正向字形从右到左读“断点C”。断点外伸由12px改为22px（560px图径），外边使用与流程环同圆心的圆弧，两端保留圆润倒角；切槽复用色块路径保持平行等距，文字中心随新外缘移动。流程虚线和开口箭头与断点同为琥珀色 #FFAF45。
+
+预览：[琥珀橙细化](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=13#two)。脚本语法、HTTP200与差异格式检查通过，OpenDesign manifest全量重建；桌面1440与手机360独立目视通过：ABC更醒目、三组字形居中且留白充分，外弧连续、黄线与箭头清晰，无文字碰撞或横溢，0浏览器错误/请求失败。见[本轮报告](../opendesign/review/archbuddy-radial-amber-refine-20261016/verification/report.md)。
+
+仅本地修改，未同步正式展示页或公网，不提交/推送。不涉及云端资源、数据、身份、日志、密钥、统计、模型、额度或预算，保留其他工作区改动。
+
+## 2026-10-15：官网 01 深绿底平行断槽与暖色三版（本地，待选择）
+
+用户选定第十一轮深绿色底，要求断点相邻切边平行、扩大留缝、五条细缝等宽，并放大文字、加粗流程线和箭头，提供三种更清楚的红橙色候选。本轮只更新[本地比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)，分别为珊瑚橙、琥珀橙、朱红；三版固定主题深绿 #153B2D 与由浅到深的五级绿色，方便比较暖色强调。上一轮四种底色完整归档到 opendesign/archive/archbuddy-radial-break-options-before-precision-20261015/。
+
+几何采用统一72度阶段边界，五条细缝按6px法向宽度切出；三处断槽与圆角梯形使用同一轮廓等距扩张，净留缝约8px（均指560px图径）。断点角部倒圆加大，保留外宽内窄和外缘略突出；断点文字放大1.18倍。编号与名称同弧放大1.15倍，流程虚线从1.5px加至2.6px，开口箭头尺寸同步增加且与线同色同路径。C保持正向字形、右到左读“断点C”。[配色来源与对比](../opendesign/review/archbuddy-radial-precision-options-20261015/color-references.md)记录Carbon及Atlassian官方参考；候选色为按本图调整，并非官方成套配方。
+
+预览：[珊瑚橙](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=12#one)／[琥珀橙](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=12#two)／[朱红](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=12#three)。脚本语法、HTTP200、相对资源与旧稿归档检查通过，OpenDesign manifest全量扫描重建。独立目视1440/390/360三版共9场景通过：文字无碰撞裁切、断点留缝和等宽细缝清楚、C方向正确；0横溢/JS或控制台错误/失败请求，13项按钮、hash与键盘交互通过。同尺寸三版的图形路径与字号一致；560px图径净留缝8px，手机约5px。证据见[本轮核查报告](../opendesign/review/archbuddy-radial-precision-options-20261015/verification/report.md)。
+
+仅本地候选，待用户选择；正式展示页与公网未改，不提交或推送，保留账号积分及其他既有工作区改动。不涉及云端资源、数据、身份、日志、密钥、统计、模型、额度或预算。
+
+## 2026-10-15：官网 01 留白轻环四种底色（本地，待选择）
+
+用户选定上一轮留白轻环的整体方向，继续要求强化断点并比较章节底色。本轮[本地比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)共四版：浅灰、浅绿、主题深绿、自主补充的暖米白。底色覆盖整个 01 章节，深绿版标题/中心文字反白、痛点用浅陶土色，其余图文颜色分别协调。
+
+四版共用轻环几何：三个圆角梯形断点外宽约为内宽三倍，外缘略突出，并用章节底色留缝与绿色扇面脱开；A/B 径向排字，C 字形扶正，按用户指定从右到左读“断点 C”。01–05 编号与名称合入同一条弧线，保留细密虚线与细开口箭头，取消独立编号轨道。前版完整归档 `opendesign/archive/archbuddy-radial-break-options-before-backgrounds-20261015/`。
+
+预览：[浅灰](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=11b#one)／[浅绿](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=11b#two)／[深绿](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=11b#three)／[暖米白](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=11b#four)。独立目视 1440/390/360 四版共 12 场景，无文字重叠裁切、横溢、JS/控制台异常或资源失败；五步、C 方向、扇面与断点留缝、深底文字均通过。13 项切换核查通过，证据在[本轮报告](../opendesign/review/archbuddy-radial-background-options-20261015/verification/report.md)。脚本语法、HTTP 200 与四个入口检查通过，OpenDesign manifest 已全量重建。
+
+本轮仅本地候选，等待用户选择；正式展示页及公网未改，不提交或推送。保留账号积分与其他既有工作区改动；不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、模型、额度或预算。
+## 2026-10-15：官网 01 双轨弧排参考优化三版（本地，待选择）
+
+用户以第九轮方案二为基础继续优化并要求查找专业视觉参考。本轮在[本地比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)统一为“流程线→步骤名称→阶段编号”的径向层级：名称更靠近线，编号在更外侧；绿色线改紧密方形端点虚线与更细开口箭头；去最外围辅助圆和断点白点。三处红色圆角梯形仍内齐流程线、外端略突出，用一行“断点 A/B/C”从中心向外沿径向排列。三版分别为素纸细线、林绿方格、留白轻环，区别在绿阶、环带厚度和虚线节奏。
+
+已实际查看 Nicholas Felton《2009 Annual Report》和 Pentagram / Giorgia Lupi《TED Data Portraits》官网图像，借鉴有限色彩、细线层级与统一圆形语言；弧排文字和方块虚线是根据用户要求推导，来源与截图在[参考记录](../opendesign/review/archbuddy-radial-editorial-options-20261015/references.md)。上一轮完整保存于 `opendesign/archive/archbuddy-radial-break-options-before-editorial-20261015/`。
+
+预览：[方案一](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=10b#one)／[方案二](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=10b#two)／[方案三](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=10b#three)。独立初检 1440/1024/390/360 的 12 场景后修正第三版编号压边及断点逐字排列挤压；最终 round10b 在 1440/390/360 共 9 场景复检通过，编号最小外边距 10.7/5.5/3.7px，无文字重叠裁切、横溢或 JS 错误。切换与字号核查通过，见[核查报告](../opendesign/review/archbuddy-radial-editorial-options-20261015/verification/report.md)。脚本语法及 HTTP200 通过，OpenDesign manifest 全量扫描重建。
+
+仅本地候选更新，待用户选版；未同步正式展示页、未部署公网、不提交或推送。保留既有账号积分和其他工作区改动；不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算。
+## 2026-10-15：官网 01 环形断点图再出三版（本地，待选择）
+
+按最新意见，更新[本地三版比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)：五个扇面沿用由浅到深的绿色并留白缝；绿色流程线位于环带内侧约三分之一，线与开口双笔画箭头为同一 SVG 路径，指向 A/B/C 三处断裂。三处暗红断口改成外宽内窄的圆角梯形，内端与流程线半径对齐，外端略超出扇环；白点沿半径放射，A/B/C 嵌入断口。中心标题为两行「创作流程／断点分析」。三版只比较步骤文字：切线随行、双轨弧排、等距轴列。前版归档在 `opendesign/archive/archbuddy-radial-break-options-before-flow-path-20261015/`。
+
+预览：[方案一](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=9e#one)／[方案二](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=9e#two)／[方案三](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=9e#three)。设计参数见[方案记录](../opendesign/mockups/archbuddy-radial-break-options/plan.md)。[独立核查](../opendesign/review/archbuddy-radial-flow-options-20261015/verification.md)在 1440、1024、390、360 px 共 12 场景确认文字可读、无横向溢出或 JS 错误，hash、按钮和键盘切换通过。JS 语法与本地预览 HTTP 检查通过；OpenDesign manifest 已全量扫描。正式展示页与公网未更新；保留工作区既有改动，不提交或推送。不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算。
+## 2026-10-15：官网 01 按草图重做环形断点三版（本地，待选择）
+
+用户澄清：流程线应在绿色扇环内缘往外约三分之一处，红色断点只占该线到扇环外缘的约三分之二，内侧留白；点阵须从圆心向外放射，绿线与箭头同色连成整体，五个扇面以窄白缝分隔并由浅到深。用户又要求断点为两端圆润、浅红描边的椭圆形，A/B/C 直接嵌在断点框内。已按该几何重做 [本地三版比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)：均衡放射、轻盈留白（内部分缝扩大至 5°）、层次点阵（绿阶和白点更鲜明）。02/05 步骤标题在扇环内分两行，避免与绿线或外缘碰撞。上一轮点网方案已完整归档于 `opendesign/archive/archbuddy-radial-break-options-before-sketch-20261015/`。
+
+预览：[方案一](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=8#one)／[方案二](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=8#two)／[方案三](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=8#three)。[设计记录](../opendesign/mockups/archbuddy-radial-break-options/plan.md)与[独立核查](../opendesign/review/archbuddy-radial-sketch-options-20261015/verification.md)已保存；1440、1024、390、360 宽度三版共 12 场景无标题碰线、横向溢出或浏览器错误，按钮、hash 和键盘切换正常。JS 语法、预览 HTTP 200、Git 差异格式检查通过，OpenDesign manifest 已全量重建。正式本地展示页仍保留此前横向版 01，公网未部署；不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算，不更新商店、不提交或推送。
+## 2026-10-15：官网 01 点网断口三版视觉比较（本地，待选择）
+
+用户认为上一轮斜线 hatch 与环形语言不协调，要求断口改用点网，绿色流程环线向圆心收进约环带厚度的三分之一，并在 A/B/C 三处断口加入箭头。本轮新增独立 [三版比较页](../opendesign/mockups/archbuddy-radial-break-options/index.html)，保留五步环形、三处断点与右侧问题对应；三版分别为完整轻点网、留白点桥、柔和暗红反白点阵。短箭杆与箭尖沿顺时针指向各断口，中心保持「创作流程／断点分析」。旧比较页与本地正式展示页均未替换，等待用户选版。
+
+[方案一](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/#one)／[方案二](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/#two)／[方案三](http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/#three)。[设计依据](../opendesign/mockups/archbuddy-radial-break-options/plan.md)与[独立视觉核查](../opendesign/review/archbuddy-radial-break-options-20261015/verification.md)已记录；1440、1024、390、360 宽度的三版共 12 个场景均无横向溢出、文字碰撞或浏览器错误，按钮与键盘/hash 切换通过。脚本语法、预览 HTTP 200、Git 差异格式检查通过，OpenDesign manifest 全量重建。本轮不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算；不部署公网、不更新商店、不提交或推送。
+## 2026-10-15：官网 01 第三版内侧流程环线与暗红斜线断点（本地）
+
+用户在第三版截图上标出一条内侧流程环线，要求它与外侧色块同角度在 A/B/C 三处断开，并用暗红斜线 hatch 强调断口；中心只写两行「创作流程／断点分析」，右侧去掉「三处断点」总标题和 01—02 等范围数字，只保留 A/B/C 痛点标题及说明。本轮只改 [本地比较页的方案三](../opendesign/mockups/archbuddy-problem-options/index.html)，环带、斜线断口、内侧环线共用 33–42°、105–114°、249–258° 三个角度范围。窄屏 02/05 的长标题拆成两行并向色带外缘微移。方案一、二和本地正式 showcase 未改。
+
+[本地预览](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=7#three)。独立核查在 1440/1024/390/360 宽度确认三层断口对齐、斜线可见、中心与右侧文案符合要求，且无文字碰撞、页面横向溢出或浏览器错误；见 [截图与核查记录](../opendesign/review/archbuddy-problem-order-20261015/radial-hatch-verification/review.md)。脚本语法、差异格式检查通过，OpenDesign manifest 全量重建。仍待用户确认方案三是否选定，再同步正式本地展示页；本轮不部署公网，不触及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算，不提交／推送。
+## 2026-10-15：官网 01 第三版按用户参考图重排（本地）
+
+用户认可第三版的理想闭环与三处断点含义，但认为深色矩形包住整图，与页面不协调；提供白底分段圆环、中央总述、外侧说明的一张八段信息图作构图参考。本轮只重排 [比较页第三版](../opendesign/mockups/archbuddy-problem-options/index.html)：移除整图矩形底框，把五个步骤直接置于五段同色系绿环，保留外侧完整细环代表理想的 05→01 回路；在 01→02、02→03、04→05 留 A/B/C 三处真实缺口，并在右侧同号说明保存打断思路、意图难以表达、成果难以复用。用户附图的八步、彩虹色和占位文案没有复制。原第三版已归档至 `opendesign/archive/archbuddy-problem-options-ring-before-reference-20261015/`，方案一、二和本地正式 showcase 均未变。设计依据写入 [方案记录](../opendesign/mockups/archbuddy-problem-options/plan.md) 与 [参考核查](../opendesign/review/archbuddy-problem-order-20261015/references.md)。
+
+新预览：[方案三放射环形](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=6#three)。本地服务仅监听 127.0.0.1；用户选定前不替换展示页 01。独立视觉核查检查 1440/1024/390/360 宽度，五步顺序、三处缺口、右侧问题对应均清晰，无外围矩形框、页面横向溢出、文字碰撞或浏览器错误；证据存于 [本轮验收](../opendesign/review/archbuddy-problem-order-20261015/radial-reference-verification/)。适用脚本语法和 Git 差异格式检查通过，OpenDesign manifest 全量重建。本轮不涉及 CloudBase 资源、数据、身份、日志、密钥、统计、额度或预算；不部署、不提交、不推送。
+## 2026-10-15：官网 01 断点图优化与环形备选（本地，待选择）
+
+用户沿用先前方案一的简洁方向，要求序号与步骤标题同行、三组痛点同轴对齐，并让步骤间的断裂真正可见；又提出将五步首尾相接成环，左侧三处断开、右侧对应三类问题，比较多种表现。本轮在 [三版比较页](../opendesign/mockups/archbuddy-problem-options/index.html) 制作：① 优化横向断点；② 暖白开放环；③ 深绿双层环（完整理想路径与三处断开的现实路径对照）。五步统一为「收集参考图→构思新方案→编写提示词→AI 生图迭代→复用图与词→回到收集」，A/B/C 分别对应保存打断思路、意图难以表达、成果难以复用。先前横排和彩色候选分别留在 opendesign/archive 归档。参考了 Figma 官方 FigJam 因果循环图的环形关系表达，来源及核查边界见 [参考记录](../opendesign/review/archbuddy-problem-order-20261015/references.md)。
+
+优化后的横向方案已同步到 [本地正式展示页 01](../opendesign/mockups/archbuddy-showcase/index.html)，环形方案只在比较页展示，尚未替换正式页，更未部署公网。预览：[#one 横向断点](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=5#one)、[#two 开放环](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=5#two)、[#three 双层环](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=5#three)。本地预览服务绑定 127.0.0.1，根目录限定 opendesign。用户选择后再决定是否将环形方案同步正式页；公网发布按后续明确指令。
+
+验证：独立视觉核查检查了横向方案在比较页和正式页的 1440/1024/390/360 宽度，正式页 02–05 与切图、放大、导航正常；环形两方案八组宽度均为 HTTP 200、无浏览器错误或页面横向溢出。深色环的手机 01/A 轻微重叠已局部修正并重新检查，记录和截图见 [本轮验证](../opendesign/review/archbuddy-problem-order-20261015/selected-verification/REVIEW.md)。OpenDesign manifest 已重新全量扫描。当前工作保留已有账号积分和其他未提交修改；本轮不触及 CloudBase 资源、数据、身份、日志、密钥、额度或预算，不提交/推送/部署。
+## 2026-10-15：官网 01 流程图三种排版本地比较（待选择）
+
+用户要求先参考网上流程图，重新组织 01 的节点、连接和三类痛点，先看三版，不部署公网。本轮只更新本地比较页 [archbuddy-problem-options](../opendesign/mockups/archbuddy-problem-options/index.html)，旧第三轮配色已完整保留到 [归档](../opendesign/archive/archbuddy-problem-options-color-round-20261006/index.html)。
+
+- 方案一「对齐时间轴」：五步等宽横排，三个痛点通过 01—02 / 03—04 / 05 范围对应。
+- 方案二「三段式诊断」：参考输入、AI 表达、成果复用三个连续分区，小流程与对应痛点在同一分区；当前建议优先考虑本方案。
+- 方案三「纵向对应图」：左侧五步顺排，右侧三类痛点逐段对应，便于完整讲解。
+
+统一暖白、深绿与柔和砖红；节点文字统一行高/长度，取消断链符号和跨栏括线，只复用官方 Lucide 方向图标与原品牌资产。文案保留逐张机械保存、参考难调用、提示词从零编写、修改无依据、图词资产难复用的语义。在线参考已实际查看 Whimsical 官方旅程/流程模板及 Dribbble 的 Taras Bakusevych 原 PDF；Figma 页面仅显示营销插画，不冒充完整模板证据，详见 [参考核查](../opendesign/review/archbuddy-problem-order-20261015/references.md)。
+
+本地预览：[三版比较](http://127.0.0.1:8766/mockups/archbuddy-problem-options/?round=4#one)，顶部按钮/方向键/Home/End 可切换，支持 hash 定位版本并保持切换栏可见。预览服务仅绑定 127.0.0.1，根目录为 opendesign，越界路径返回 403。完整 manifest 已重新扫描生成。
+
+验收：独立代理已实际查看三版 1440 与 390 截图，12 组尺寸/方案未发现横向溢出或脚本异常；图标引用与脚本语法检查通过。检查记录与截图在 [本轮验收目录](../opendesign/review/archbuddy-problem-order-20261015/verification/)。正式 showcase 的 24 个文件 SHA256 与制作前一致，见 [范围核查](../opendesign/review/archbuddy-problem-order-20261015/scope-verification.json)。本轮不涉及云端资源、部署、商店更新、Git 提交或推送；保留 codex/phone-login-credits 的全部既有账号积分与其他未提交改动。
+
+下一步：等待用户选择方案及微调意见，再决定是否合入正式网页；公网发布需依照后续明确指令。
+
+## 2026-10-11：新增产品内置素材库需求（仅文档）
+
+用户要求再加入“产品本身可以包含素材库”。已在[需求池](ARCHBUDDY_REQUIREMENTS_BACKLOG.md)新增 **AB-010：产品内置素材库**，优先级待定、状态待澄清；记录在产品内浏览、查找与选用建筑相关素材的价值，以及候选验收方向。现有本地图词库已承载用户采集与导入；是否新增产品自带素材、具体内容、来源授权和提供方式尚未确认，不重复建设已有图库。
+
+本轮仅更新需求池和本交接，保留当前分支及已有工作区改动，不涉及云端资源、素材下载、功能实现、部署、商店更新或 Git 提交／推送。文档差异格式、10 条需求编号唯一性及本地引用已检查通过；未运行功能测试。
+
+## 2026-10-09：建筑项目类型需求与建筑场景梳理（仅文档）
+
+用户要求在需求管理文件新增“预置更多建筑项目类型”，并分析产品如何加强建筑使用场景相关性。已在 [需求池](ARCHBUDDY_REQUIREMENTS_BACKLOG.md) 记录 **AB-009／P1／待评审**，保留现有文化、教育、办公、社区四类，候选补充居住、商业、酒店、医疗、体育、交通、工业、养老、综合体；清单与排序未确认。验收方向包含采集浮框与图库一致、同名去重、尊重已有排序／改名／隐藏及历史图词关系，尚未实施功能。
+
+同一文件补充六个建筑场景候选方向：项目任务上下文、参考图借鉴用途、多图角色与设计条件、建筑效果偏差评估、按设计问题检索、案例与图词迭代复用。建议优先评审 AB-009 和已有 AB-003／004，并复用 AB-008 真实任务测评；这些是产品分析，未获开发排期授权，不扩大当前 MVP 到规范审查、CAD／BIM、插件内生图或云同步。
+
+本轮在 codex/phone-login-credits 保留既有账号积分及其他未提交改动，仅修改需求池和本交接记录；不涉及云端资源、运行配置、模型调用、部署或商店更新，不提交／推送。已检查文档差异、9 条需求编号唯一性和需求池本地引用，检查通过；纯文档修改未运行功能测试，分类扩充与场景建议均未实现。
+## 2026-10-09：官网购买积分与商店政策核查（建议，尚未实施）
+
+### 官网域名与备案准备补充
+
+用户询问正式域名与备案顺序。已核对官方文档：生产官网应换自有域名，先明确运营主体，再注册/实名域名、核对备案资源、申请 ICP、绑定 HTTPS；本地官网与共享账号开发可并行。CloudBase 有条件支持备案，不默认新增服务器；若业务需 ICP 许可证须另核资源适用性。腾讯云短信个人自用签名已不支持新增，需先确认主体资质。本轮用户营业执照情况待确认，未购买域名、变更共享环境、提交备案、接入支付或部署。来源及限制补记于 [政策研究](ARCHBUDDY_PAYMENTS_POLICY_RESEARCH.md#官网正式域名与备案准备2026-10-09-补充)。
+
+### 官网购买政策结论
+
+用户询问侧栏购买入口，以及在现有产品介绍网站购买后同步插件积分是否符合 Chrome Web Store 要求。本轮只研究政策和产品方案，不改功能、不部署、不接支付、不提交或推送。
+
+官方开发者协议 4.4.3 明确允许扩展作为已注册付费服务的访问入口；收费政策要求交易说明、退款条款、卖家身份和必要的安装前收费披露；Manifest V3 政策明确允许与服务器同步用户账号数据。因此侧栏购买入口本身不构成禁止项，推荐“侧栏显示余额和前往官网购买入口 → 官网确认账号并付款 → 服务端核验到账 → 插件读取同一账号积分”。这是基于现行条款的方案判断，不代表已获得 Google 个案审核通过。
+
+现有介绍站可以扩展为官网，但当前静态站没有生产账号、订单或支付。官网与插件应复用 ArchBuddy 统一账号和唯一服务端账本；购买积分与图库云同步无关。新站外购买同样受商店整体验要求约束；需明确 200 试用积分、消耗单价、有效期、每日 50/500 次保护、价格、退款及隐私说明，且支付成功必须由服务端核验，不能相信网页成功跳转。本地演示账本与验证码不能直接作为生产身份。
+
+上线收费前需核查已发布版本对老用户的免费承诺，按开发者协议 3.3 安排过渡；本轮没有确认全部历史商店文案。官网升级、真实支付渠道选择、数据库资源登记和部署均待后续明确实施。详细来源与限制见 [支付政策研究](ARCHBUDDY_PAYMENTS_POLICY_RESEARCH.md)。
+
+## 2026-10-09：手机号登录与积分账户（本地模拟闭环）
+
+### 目标与已确认规则
+
+用户要求先新建 Git 分支，再把账号、积分和后续收费准备做成本地闭环。已从 `direction/plugin` 建立 `codex/phone-login-credits`；不安排 Git 提交/推送、CloudBase 部署或商店更新。详细规格与实施计划在 [specs/004-account-points](../specs/004-account-points/)。
+
+- 手机号验证码优先，本地使用明确标识的开发验证码；首次注册赠送 200 积分，不到期、不每日恢复。
+- 反推与优化每张成功处理 1 积分；核心视觉特点每张成功生成 0.1 积分。开始操作前提示预计消耗，登录后显示余额和流水。
+- 个人每日 50 次、ArchBuddy 全账号共享每日 500 次模型调用保护独立保留；成功扣分，确认失败返还积分，已发起的模型请求仍计调用次数。
+- 用户已确认将商店评价奖励改为“站内产品反馈后人工审核”，每账号只能申请一次，通过后赠送 200 积分；拒绝后不能重提，不要求评分或评论。
+- 100 / 500 / 1000 积分包暂用 ¥1 / ¥2 / ¥3 占位，只记录待处理申请；不接支付、不因申请自动到账。
+- 账号只管理 AI 身份和权益，同一浏览器图库继续共用。切换账号暂停自动 AI，进行中的请求先处理完，避免跨账号扣分。
+
+### 实现与验证状态
+
+账号后端、扩展账号窗口与消耗提示已接通。服务端保存账号、会话哈希、整数积分账本、每日使用、反馈审核和订单；写入串行且持久化，异常预占保留为待核对，由本机管理员处理。前端登录凭据存放扩展 origin 的 IndexedDB，公开余额跨页面同步；登录切换撤回自动描述和向量处理同意，图片读取期间切换账号也不会把旧任务扣给新账号。
+
+本轮启动入口强制模拟模型，不读取真实模型密钥。模拟反推、优化和视觉描述均明确标注演示，向量及语义检索不生成假数据，使用关键词检索。当前 50/500 是持久化的本地模拟每日保护，不与线上共享计数，也不提供额外真实预算。
+
+本地体验：在仓库根目录运行下述命令，保持服务开启；Chrome 加载已解压扩展选择 `extension/dist/local-account`。侧栏或图库点击“登录 / 注册”，输入合成手机号并获取界面显示的演示验证码。数据保存到忽略目录 `cloudbase/dist/local-accounts`。规范源码的 `BACKEND_MODE=cloud`、正式版本 0.6.1 和发布资源均保持。详细说明和反馈审核命令见 [本地账号指南](../cloudbase/LOCAL_ACCOUNTS.md)。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File cloudbase/scripts/start-local-accounts.ps1
+```
+
+- 既有扩展 19 项与后端 20 项检查全部通过；无新依赖、测试框架或跟踪测试文件。
+- 后端 8 组流程验收与 6 项边界验收通过，包含注册不重复送、并发预占、失败退分、重复请求、50/500 保护、北京时间跨日、一次审核、订单恢复、崩溃与人工退款。证据在 `cloudbase/dist/account-verification-1791477083780` 和 `cloudbase/dist/account-edge-verification-1791477387258`。
+- 独立 Chrome 浏览器 29 项核对通过、页面异常 0，覆盖注册、反馈、积分包、余额跨页同步、1/2/3 图费用、1 与 0.1 扣费、重复登录、退出和延迟图片期间跨账号隔离。实际目视 1440/1024 桌面及 360 侧栏截图，图库费用提示已改为独立一行并复核无截断。证据在 `extension/dist/account-points-20261009-review/verified-summary.json`、`cost-visibility-report.json` 及同目录截图。
+
+- 最终静态核对：10 个 JS 模块语法、3 个 PowerShell 脚本解析、Manifest 9 项资源及页面/模块引用、差异格式通过；26 个变更/新增文本文件凭据模式无命中，云端运行配置与 environment 登记未修改。报告 `extension/dist/account-points-20261009-review/static-final-report.json`。
+- 复核修复 V1 兼容模拟结果标题；通过既有 `assembleSections` 验证，生成 4 个合法模型分项和固定准则，共 5 项。主 V2 流程已通过浏览器验收。
+- 仅两个合成演示账号的账本已归档到 `extension/dist/account-points-20261009-review/synthetic-accounts`，保留完整证据；随后本地服务在 127.0.0.1:8080 干净重启，新账本账号数为 0。没有操作用户真实数据；临时证据均被 Git 忽略。
+
+### 后续接入真实使用者前的工作
+
+1. 接入短信供应商，完成真实手机号归属验证与防刷；本地展示验证码不能作为生产登录。
+2. 将账号、积分账本与原线上每日 500 次统一到同一个持久化服务；迁移匿名入口，接通真实模型并重新验收，不叠加独立真实预算。
+3. 用户核算成本后确定积分包价格，再实现服务端支付核验、到账与退款；当前订单不会收款或加分。
+4. 确定真实用户数据留存与备份，再单独安排云端部署和商店发布。
+
+本轮仅本地资源，云端 `archbuddy-api-014` 及 50/500 配置保持；`cloudbase/environment.json` 不变。真实短信、真实支付、真实模型端到端、云端身份/账本、匿名用户迁移及商店发布均未完成，不属于本轮承诺。
 
 ## V4.1 本轮交接摘要（2026-10-08）
 
@@ -1075,3 +1331,11 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 
 - 修复提交 `45de85c5dfb546af35397c6d003f6f20d19552d4`（`fix: 修复扩展重载后图片浮框无法关闭`）已成功正常推送至origin/direction/plugin；git ls-remote核对远端分支与该提交一致。
 - 原archbuddy-v4.1标签仍指向 `362db0c1b3f916fe4e4bd07f209a178b8c97d384`，未移动标签、未强制推送、未修改数字版本。此条为实际推送结果补记，将单独提交至同一分支；云端与Chrome商店未更新。
+
+## 2026-10-09：本地图词库失联与数据丢失风险核查（仅评审）
+
+- 用户要求预测长期大量积累图片后的误操作和系统不稳定风险，未要求实施修复。基于当前 codex/phone-login-credits 工作区源码与 Chrome 官方文档，新增 [本地图词库可靠性风险核查](ARCHBUDDY_LOCAL_LIBRARY_RELIABILITY_AUDIT.md)，关联需求池 AB-007。
+- 确认两项应优先修复的问题：onErased 会在下载历史被清除后主动删除采集元数据及预览；图库使用 downloads.search({})，受默认最多1000条全部浏览器下载记录影响，可能漏图。未读取真实用户 Chrome 资料或核对商店包，不把源码结果描述为真实用户事故统计。
+- 同时记录缺少完整备份恢复/回收站、10MB元数据配额与图片存储容量、导入中断、跨存储删除及多页面写入覆盖风险；列出19种用户和系统异常，区分暂时不可见、文件路径失联、整理成果丢失和原图丢失。
+- 校正边界：素材库是插件内页面；文件夹导入复制完整图片，采集图通常只存640px预览；普通清缓存不直接清扩展存储，但清下载历史会触发当前主动删除逻辑。账号登录不是图库云备份。建议先独立资产目录、解除历史删除联动并修正查询，再做可验证的完整备份恢复。
+- 本轮仅源码审阅、Context7/官方文档核查与文档记录；未新增测试文件、未执行破坏性验证或读取用户图库，未改插件功能、未修复上述风险。保留已有未提交改动，不提交推送、不部署、不更新商店；不涉及云端资源、身份、数据、密钥、日志、统计或预算。

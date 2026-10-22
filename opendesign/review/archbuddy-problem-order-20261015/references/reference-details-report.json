@@ -1,0 +1,14 @@
+[
+  {
+    "name": "figma-journey-detail",
+    "error": "TimeoutError: locator.scrollIntoViewIfNeeded: Timeout 29991.905999999995ms exceeded.\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying scroll into view action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying scroll into view action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "name": "whimsical-user-flow",
+    "url": "https://whimsical.com/templates/user-flow",
+    "title": "User Flow Template & Examples (Editable) | Whimsical",
+    "targetCount": 2,
+    "links": [],
+    "images": []
+  }
+]

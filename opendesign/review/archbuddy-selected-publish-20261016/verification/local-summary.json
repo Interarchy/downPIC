@@ -1,0 +1,936 @@
+{
+  "generated": "2026-10-15T17:31:27.563Z",
+  "scope": "local",
+  "base": "http://127.0.0.1:8766/mockups/archbuddy-showcase/?v=selected-workflows-20261016",
+  "cases": [
+    {
+      "width": 1440,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "documents": [
+        {
+          "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/?v=selected-workflows-20261016",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        }
+      ],
+      "chapters": [
+        {
+          "id": "problem",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "workflow",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "concept",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "features",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "install",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        }
+      ],
+      "initialHttp": 200,
+      "init": {
+        "motion": "reveal",
+        "parts": 10,
+        "headings": 5,
+        "stages": 5,
+        "overflow": 0,
+        "brand": "assets/brand-mark.svg",
+        "heroRight": 1340,
+        "downloadRight": 1340,
+        "comparisonControls": 0,
+        "initialParts": [
+          {
+            "reveal": true,
+            "opacity": "1"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.4065"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.4065"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.4065"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          }
+        ]
+      },
+      "diagram": {
+        "sectors": 5,
+        "breaks": 3,
+        "stages": [
+          "01收集参考图",
+          "02构思新方案",
+          "03编写提示词",
+          "04AI 生图迭代",
+          "05复用图与词"
+        ],
+        "center": [
+          "创作流程",
+          "断点分析"
+        ],
+        "breakFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "flowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "diagnosisColors": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "markFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "wireStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "arrowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "charts": [
+          {
+            "flow": "design",
+            "nodes": 3,
+            "marks": 2,
+            "edges": [
+              "capture-create",
+              "create-library",
+              "library-capture"
+            ],
+            "titles": [
+              "采集参考图",
+              "方案创作",
+              "沉淀参考图库"
+            ],
+            "labels": [
+              "复用参考"
+            ],
+            "width": 597,
+            "height": 328
+          },
+          {
+            "flow": "ai",
+            "nodes": 5,
+            "marks": 4,
+            "edges": [
+              "capture-prompt",
+              "prompt-generate",
+              "generate-iterate",
+              "iterate-generate",
+              "iterate-library",
+              "library-capture"
+            ],
+            "titles": [
+              "收集参考图",
+              "反推提示词",
+              "生成 AI 效果图",
+              "迭代提示词",
+              "沉淀提示词库"
+            ],
+            "labels": [
+              "评估",
+              "再生成",
+              "复用图词"
+            ],
+            "width": 597,
+            "height": 328
+          }
+        ],
+        "nodeIssues": [],
+        "manual": "方案创作由设计师完成",
+        "external": "生成 AI 效果图外部工具完成ArchBuddy 未介入"
+      },
+      "backscroll": [
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        }
+      ],
+      "nav": {
+        "hash": "#features",
+        "top": 261.5625,
+        "headerBottom": 84
+      },
+      "gallery": [
+        {
+          "gallery": "prompt",
+          "n": 1,
+          "src": "case-study/assets/05-prompt-optimization-1280x800.png"
+        },
+        {
+          "gallery": "prompt",
+          "n": 0,
+          "src": "case-study/assets/04-prompt-builder-1280x800.png"
+        },
+        {
+          "gallery": "assets",
+          "n": 1,
+          "src": "case-study/assets/02-image-description-1280x800.png"
+        },
+        {
+          "gallery": "assets",
+          "n": 0,
+          "src": "case-study/assets/03-prompt-library-1280x800.png"
+        }
+      ],
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "links": {
+        "chrome": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          }
+        ],
+        "testset": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "documents": [
+        {
+          "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/?v=selected-workflows-20261016",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        }
+      ],
+      "chapters": [
+        {
+          "id": "problem",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "workflow",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "concept",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "features",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "install",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        }
+      ],
+      "initialHttp": 200,
+      "init": {
+        "motion": "reveal",
+        "parts": 10,
+        "headings": 5,
+        "stages": 5,
+        "overflow": 0,
+        "brand": "assets/brand-mark.svg",
+        "heroRight": 370,
+        "downloadRight": 370,
+        "comparisonControls": 0,
+        "initialParts": [
+          {
+            "reveal": false,
+            "opacity": "0.365818"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365818"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365818"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365818"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          }
+        ]
+      },
+      "diagram": {
+        "sectors": 5,
+        "breaks": 3,
+        "stages": [
+          "01收集参考图",
+          "02构思新方案",
+          "03编写提示词",
+          "04AI 生图迭代",
+          "05复用图与词"
+        ],
+        "center": [
+          "创作流程",
+          "断点分析"
+        ],
+        "breakFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "flowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "diagnosisColors": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "markFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "wireStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "arrowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "charts": [
+          {
+            "flow": "design",
+            "nodes": 3,
+            "marks": 2,
+            "edges": [
+              "capture-create",
+              "create-library",
+              "library-capture"
+            ],
+            "titles": [
+              "采集参考图",
+              "方案创作",
+              "沉淀参考图库"
+            ],
+            "labels": [
+              "复用参考"
+            ],
+            "width": 350,
+            "height": 328
+          },
+          {
+            "flow": "ai",
+            "nodes": 5,
+            "marks": 4,
+            "edges": [
+              "capture-prompt",
+              "prompt-generate",
+              "generate-iterate",
+              "iterate-generate",
+              "iterate-library",
+              "library-capture"
+            ],
+            "titles": [
+              "收集参考图",
+              "反推提示词",
+              "生成 AI 效果图",
+              "迭代提示词",
+              "沉淀提示词库"
+            ],
+            "labels": [
+              "评估",
+              "再生成",
+              "复用图词"
+            ],
+            "width": 350,
+            "height": 402
+          }
+        ],
+        "nodeIssues": [],
+        "manual": "方案创作由设计师完成",
+        "external": "生成 AI 效果图外部工具完成ArchBuddy 未介入"
+      },
+      "backscroll": [
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        }
+      ],
+      "nav": {
+        "hash": "#features",
+        "top": 220.90625,
+        "headerBottom": 72
+      },
+      "gallery": [
+        {
+          "gallery": "prompt",
+          "n": 1,
+          "src": "case-study/assets/05-prompt-optimization-1280x800.png"
+        },
+        {
+          "gallery": "prompt",
+          "n": 0,
+          "src": "case-study/assets/04-prompt-builder-1280x800.png"
+        },
+        {
+          "gallery": "assets",
+          "n": 1,
+          "src": "case-study/assets/02-image-description-1280x800.png"
+        },
+        {
+          "gallery": "assets",
+          "n": 0,
+          "src": "case-study/assets/03-prompt-library-1280x800.png"
+        }
+      ],
+      "dialogOpen": true,
+      "dialogClosed": true,
+      "links": {
+        "chrome": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          }
+        ],
+        "testset": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "width": 360,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "documents": [
+        {
+          "url": "http://127.0.0.1:8766/mockups/archbuddy-showcase/?v=selected-workflows-20261016",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        }
+      ],
+      "chapters": [
+        {
+          "id": "problem",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "workflow",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "concept",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "features",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        },
+        {
+          "id": "install",
+          "heading": "1",
+          "stage": "1",
+          "revealed": true,
+          "overflow": 0
+        }
+      ],
+      "initialHttp": 200,
+      "init": {
+        "motion": "reveal",
+        "parts": 10,
+        "headings": 5,
+        "stages": 5,
+        "overflow": 0,
+        "brand": "assets/brand-mark.svg",
+        "heroRight": 340,
+        "downloadRight": 340,
+        "comparisonControls": 0,
+        "initialParts": [
+          {
+            "reveal": false,
+            "opacity": "0.365662"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365662"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365662"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          },
+          {
+            "reveal": false,
+            "opacity": "0.365662"
+          },
+          {
+            "reveal": false,
+            "opacity": "0"
+          }
+        ]
+      },
+      "diagram": {
+        "sectors": 5,
+        "breaks": 3,
+        "stages": [
+          "01收集参考图",
+          "02构思新方案",
+          "03编写提示词",
+          "04AI 生图迭代",
+          "05复用图与词"
+        ],
+        "center": [
+          "创作流程",
+          "断点分析"
+        ],
+        "breakFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "flowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "diagnosisColors": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "markFills": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "wireStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "arrowStrokes": [
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)",
+          "rgb(255, 175, 69)"
+        ],
+        "charts": [
+          {
+            "flow": "design",
+            "nodes": 3,
+            "marks": 2,
+            "edges": [
+              "capture-create",
+              "create-library",
+              "library-capture"
+            ],
+            "titles": [
+              "采集参考图",
+              "方案创作",
+              "沉淀参考图库"
+            ],
+            "labels": [
+              "复用参考"
+            ],
+            "width": 320,
+            "height": 328
+          },
+          {
+            "flow": "ai",
+            "nodes": 5,
+            "marks": 4,
+            "edges": [
+              "capture-prompt",
+              "prompt-generate",
+              "generate-iterate",
+              "iterate-generate",
+              "iterate-library",
+              "library-capture"
+            ],
+            "titles": [
+              "收集参考图",
+              "反推提示词",
+              "生成 AI 效果图",
+              "迭代提示词",
+              "沉淀提示词库"
+            ],
+            "labels": [
+              "评估",
+              "再生成",
+              "复用图词"
+            ],
+            "width": 320,
+            "height": 402
+          }
+        ],
+        "nodeIssues": [],
+        "manual": "方案创作由设计师完成",
+        "external": "生成 AI 效果图外部工具完成ArchBuddy 未介入"
+      },
+      "backscroll": [
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        },
+        {
+          "reveal": true,
+          "opacity": "1"
+        }
+      ],
+      "links": {
+        "chrome": [
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          },
+          {
+            "text": "下载 Chrome 插件",
+            "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+            "download": false
+          }
+        ],
+        "testset": [
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          },
+          {
+            "href": "downloads/ArchBuddy-test-images.7z",
+            "download": "ArchBuddy测试集.7z"
+          }
+        ],
+        "steps": [
+          "打开商店页面",
+          "添加到 Chrome",
+          "固定并开始使用"
+        ],
+        "overflow": 0
+      }
+    }
+  ],
+  "failures": []
+}

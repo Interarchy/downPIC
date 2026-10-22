@@ -1,0 +1,60 @@
+{
+  "sections": [
+    {
+      "id": "problem",
+      "display": "block",
+      "height": 700.78125
+    },
+    {
+      "id": "workflow",
+      "display": "block",
+      "height": 1080.78125
+    },
+    {
+      "id": "concept",
+      "display": "block",
+      "height": 856.90625
+    },
+    {
+      "id": "features",
+      "display": "block",
+      "height": 1621.3125
+    },
+    {
+      "id": "install",
+      "display": "block",
+      "height": 830.953125
+    }
+  ],
+  "interactions": [
+    {
+      "gallery": "prompt",
+      "before": "case-study/assets/04-prompt-builder-1280x800.png",
+      "after": "case-study/assets/05-prompt-optimization-1280x800.png",
+      "pressed": "true",
+      "imageLoaded": true
+    },
+    {
+      "dialogGallery": "prompt",
+      "open": true,
+      "sameSrc": true
+    },
+    {
+      "gallery": "assets",
+      "before": "case-study/assets/03-prompt-library-1280x800.png",
+      "after": "case-study/assets/02-image-description-1280x800.png",
+      "pressed": "true",
+      "imageLoaded": true
+    },
+    {
+      "dialogGallery": "assets",
+      "open": true,
+      "sameSrc": true
+    },
+    {
+      "nav": "workflow",
+      "hash": "#workflow"
+    }
+  ],
+  "errors": []
+}

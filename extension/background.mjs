@@ -1,4 +1,5 @@
 import { BACKEND_BASE_URL, BACKEND_MODE, backendUrl } from './runtime-config.mjs';
+import { createAccountClient, LOCAL_ACCOUNTS } from './account-session.mjs';
 import {
   INTENT_MODULES,
   EVALUATION_MODULE_KEYS,
@@ -32,6 +33,13 @@ import {
   putSourceImage,
 } from './source-image-store.mjs';
 
+const accountClient = createAccountClient({
+  fetchBackend,
+  onSessionChange: async () => {
+    // 本机图库共享，切号后必须再次明确同意自动生成及其扣分。
+    await chrome.storage.local.set({ [STORAGE.assetAIConsent]: false, [STORAGE.assetVectorConsent]: false });
+  },
+});
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 // CloudBase development instances can scale to zero. A cold start was measured at
 // about 12.4 seconds, so status/session checks must not fail before the service wakes.
@@ -102,7 +110,12 @@ async function fetchOriginalImage(payload) {
 
 function backendError(code, detail = '') {
   const messages = {
-    NOT_CONFIGURED: 'ArchBuddy 云端服务尚未配置完成，请稍后再试。',
+    LOGIN_REQUIRED: '请先登录，再使用 AI 功能。',
+    INSUFFICIENT_POINTS: '积分不足，请打开账号查看积分包或申请内测反馈奖励。',
+    ACCOUNT_CHANGED: '账号已切换，原来的 AI 队列已暂停。',
+    ACCOUNT_BUSY: '请等待当前 AI 请求完成，再切换或退出账号。',
+    ACCOUNT_DISABLED: '账号已停用，请联系开发者。',
+    NOT_CONFIGURED: 'ArchBuddy 服务尚未配置完成，请稍后再试。',
     INVALID_CONFIGURATION: 'ArchBuddy 云端服务配置无效，请联系开发者。',
     IMAGE_REJECTED: '服务无法读取这张图片，请换一张 PNG、JPEG 或 WebP。',
     ANALYSIS_FORMAT_INVALID: '模型没有按约定格式返回，请重试。',
@@ -110,17 +123,17 @@ function backendError(code, detail = '') {
     UPSTREAM_FAILED: 'DeepSeek 暂时不可用，请稍后重试。',
     BODY_TOO_LARGE: '图片超过服务允许的大小，请换一张较小的图片。',
     FORBIDDEN: 'ArchBuddy 服务拒绝了扩展请求，请更新本地服务后重试。',
-    UNAUTHORIZED: '匿名访问凭据已失效，正在重新建立连接，请重试。',
+    UNAUTHORIZED: LOCAL_ACCOUNTS ? '登录已失效，请重新登录。' : '匿名访问凭据已失效，正在重新建立连接，请重试。',
     ANONYMOUS_SESSION_DISABLED: 'ArchBuddy 免登录服务尚未启用，请稍后再试。',
     INVALID_INSTALLATION_ID: '插件安装身份无效，请在扩展管理页重新加载 ArchBuddy。',
-    USER_DAILY_LIMIT: '你今天的反推次数已用完，请明天再试。下载与分类仍可使用。',
-    PROJECT_DAILY_LIMIT: 'ArchBuddy 今天的反推服务额度已用完，请明天再试。下载与分类仍可使用。',
+    USER_DAILY_LIMIT: LOCAL_ACCOUNTS ? '今天的 AI 调用已达每日保护上限，明天恢复；积分余额保留，下载与分类仍可使用。' : '你今天的反推次数已用完，请明天再试。下载与分类仍可使用。',
+    PROJECT_DAILY_LIMIT: LOCAL_ACCOUNTS ? 'ArchBuddy 今天已达服务保护上限，明天恢复；积分余额保留，下载与分类仍可使用。' : 'ArchBuddy 今天的反推服务额度已用完，请明天再试。下载与分类仍可使用。',
     RATE_LIMITED: '请求过于频繁，请稍后再试。',
     BUSY: '当前分析请求较多，请稍后再试。',
     ANALYSIS_PAUSED: '反推服务暂时暂停，下载与分类仍可使用。',
     INVALID_INPUT: '评估输入无效，请换图或返回提示词构建检查方案。',
-    AUTH_REQUIRED: '匿名会话已失效，请重试。',
-    AUTH_INVALID: '匿名会话无效，请重试。',
+    AUTH_REQUIRED: LOCAL_ACCOUNTS ? '请先登录，再使用 AI 功能。' : '匿名会话已失效，请重试。',
+    AUTH_INVALID: LOCAL_ACCOUNTS ? '登录已失效，请重新登录。' : '匿名会话无效，请重试。',
     MODEL_TIMEOUT: '模型评估超时，请稍后重试。',
     QUOTA_REACHED: '今天暂时无法继续评估，请稍后再试。',
     MODEL_RESPONSE_INVALID: '模型评估结果无法解析，请重试。',
@@ -238,6 +251,7 @@ async function requestBackend(path, options = {}) {
   const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed', '/api/events'];
   if (!authenticatedPaths.includes(path)) return fetchBackend(path, options);
   const requestId = options.requestId || (['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed'].includes(path) ? crypto.randomUUID() : undefined);
+  if (LOCAL_ACCOUNTS) return accountClient.request(path, { ...options, requestId });
   let token = await anonymousToken();
   try {
     return await fetchBackend(path, { ...options, token, requestId });
@@ -286,7 +300,9 @@ async function backendStatus() {
     return {
       ok: true,
       online: true,
-      configured: Boolean(status?.configured && status?.anonymousSessionsEnabled),
+      configured: Boolean(status?.configured && (LOCAL_ACCOUNTS ? status?.accountMode === 'local-demo' : status?.anonymousSessionsEnabled)),
+      accountMode: status?.accountMode,
+      mockAI: Boolean(status?.mockAI),
       mode: BACKEND_MODE,
       quotaMode: status?.quotaMode,
     };
@@ -435,6 +451,7 @@ async function selectPastedImage(payload) {
 }
 
 async function analyzeSelection(options = {}) {
+  const expectedAccountId = LOCAL_ACCOUNTS ? (options.expectedAccountId || await accountClient.identity()) : null;
   const local = await chrome.storage.local.get(STORAGE.privacyAccepted);
   if (!local[STORAGE.privacyAccepted]) throw categorizedError('IMAGE_CONSENT_REQUIRED', '请先确认图片处理与隐私说明', 'invalid_input');
   const session = await chrome.storage.session.get(STORAGE.selection);
@@ -447,7 +464,7 @@ async function analyzeSelection(options = {}) {
   let modules;
   let sourceContractVersion = 2;
   try {
-    payload = await requestBackend('/api/v2/analyze', { method: 'POST', body: requestBody });
+    payload = await requestBackend('/api/v2/analyze', { method: 'POST', body: requestBody, expectedAccountId });
     const keys = Array.isArray(payload?.modules) ? payload.modules.map(module => module?.key) : [];
     if (payload?.contractVersion !== 2 || keys.length !== INTENT_MODULES.length
         || keys.some((key, index) => key !== INTENT_MODULES[index].key)) {
@@ -457,7 +474,7 @@ async function analyzeSelection(options = {}) {
   } catch (error) {
     if (error?.code !== 'NOT_FOUND') throw error;
     sourceContractVersion = 1;
-    payload = await requestBackend('/api/analyze', { method: 'POST', body: requestBody });
+    payload = await requestBackend('/api/analyze', { method: 'POST', body: requestBody, expectedAccountId });
     const values = new Map((Array.isArray(payload?.sections) ? payload.sections : [])
       .map(section => [String(section?.title || ''), String(section?.text || '').trim()]));
     const titleByKey = {
@@ -991,6 +1008,7 @@ async function setEvaluationImage(payload = {}) {
 }
 
 async function runEvaluation(payload = {}) {
+  const expectedAccountId = LOCAL_ACCOUNTS ? await accountClient.identity() : null;
   if (payload.consentConfirmed !== true) throw categorizedError('CONSENT_REQUIRED', '请确认发送这张生成图后再开始评估', 'invalid_input');
   const opened = await openScheme(payload.schemeId);
   const scheme = opened.scheme;
@@ -1020,7 +1038,7 @@ async function runEvaluation(payload = {}) {
   try {
     const result = await requestBackend('/api/v3/evaluate', {
       method: 'POST',
-      requestId: snapshot.requestId,
+      requestId: snapshot.requestId, expectedAccountId,
       body: {
         contractVersion: 3,
         requestId: snapshot.requestId,
@@ -1190,13 +1208,14 @@ async function showDownload(payload) {
 
 
 async function analyzeBuilderReference(payload = {}) {
+  const expectedAccountId = LOCAL_ACCOUNTS ? await accountClient.identity() : null;
   const record = await getSourceImage(payload.sourceReferenceId);
   if (record.schemeId !== payload.builderId) throw categorizedError('OWNERSHIP_MISMATCH', '参考图不属于当前编辑内容', 'invalid_input');
   const bytes = new Uint8Array(await record.blob.arrayBuffer());
   let binary = '';
   for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
   return analyzeSelection({
-    transient: true,
+    transient: true, expectedAccountId,
     selection: {
       selectionId: record.sourceReferenceId,
       imagePayload: `data:${record.mimeType};base64,${btoa(binary)}`,
@@ -1261,12 +1280,19 @@ async function confirmBuilder(payload = {}) {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const run = async () => {
+    if (typeof message?.type === 'string' && message.type.startsWith('account.')) {
+      if (sender.id !== chrome.runtime.id || ![chrome.runtime.getURL('library.html'), chrome.runtime.getURL('sidepanel.html'), chrome.runtime.getURL('popup.html')].includes(sender.url?.split('?')[0])) {
+        throw backendError('FORBIDDEN', '请在 ArchBuddy 中管理账号');
+      }
+      return accountClient.handle(message.type, message.payload ?? {});
+    }
     if (['capture.describe', 'capture.describe.missing', 'capture.description.save', 'capture.delete', 'capture.folder.move', 'project-types.rename', 'capture.resume', 'library.image.resume', 'library.semantic', 'library.embed', 'assets.consent', 'assets.vectorConsent'].includes(message?.type)
         && ![chrome.runtime.getURL('library.html'), chrome.runtime.getURL('sidepanel.html')].includes(sender.url?.split('?')[0])) {
       throw new Error('请在 ArchBuddy 图词库中操作');
     }
     switch (message?.type) {
       case 'assets.consent':
+        if (LOCAL_ACCOUNTS && message.payload?.enabled === true) await accountClient.identity();
         await chrome.storage.local.set({ [STORAGE.assetAIConsent]: message.payload?.enabled === true, ...(!message.payload?.enabled ? { [STORAGE.assetVectorConsent]: false } : { [STORAGE.privacyAccepted]: true }) });
         void drainCaptureDescriptions();
         return { ok: true };
@@ -1277,15 +1303,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return { ok: true };
       }
       case 'library.embed': {
+        const expectedAccountId = LOCAL_ACCOUNTS ? await accountClient.identity() : null;
         const consent = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
         if (!consent[STORAGE.assetAIConsent] || !consent[STORAGE.assetVectorConsent]) throw new Error('请先确认本地向量检索处理说明');
-        const result = await requestBackend('/api/library/embed', { method: 'POST', body: message.payload });
+        const result = await requestBackend('/api/library/embed', { method: 'POST', body: message.payload, expectedAccountId });
         return { ok: true, model: result.model, vectors: result.vectors };
       }
       case 'library.semantic': {
+        const expectedAccountId = LOCAL_ACCOUNTS ? await accountClient.identity() : null;
         const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
         if (!consent[STORAGE.assetAIConsent]) throw new Error('请先确认图库 AI 处理说明');
-        const result = await requestBackend('/api/library/search', { method: 'POST', body: message.payload });
+        const result = await requestBackend('/api/library/search', { method: 'POST', body: message.payload, expectedAccountId });
         return { ok: true, matches: result.matches };
       }
       case 'library.image.resume': {
@@ -1416,6 +1444,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   run().then(sendResponse).catch(error => sendResponse({
     ok: false,
     error: error?.message || String(error),
+    message: error?.message || String(error),
     code: error?.code || 'UNKNOWN_ERROR',
     category: errorCategory(error),
   }));
@@ -1536,6 +1565,7 @@ async function patchImportedStatus(id, fields) {
     ? { ...item, ...fields } : item) });
 }
 async function describeCapture(payload) {
+  const expectedAccountId = LOCAL_ACCOUNTS ? (payload.expectedAccountId || await accountClient.identity()) : null;
   const value = payload.downloadId;
   const importedId = typeof value === 'string' && value.startsWith('local:') ? value : null;
   const id = importedId ?? Number(value);
@@ -1562,7 +1592,7 @@ async function describeCapture(payload) {
     }
     const uploadBlob = await compressImageForDescription(image.blob);
     const data = await blobAsDataUrl(uploadBlob);
-    const result = await requestBackend('/api/library/describe', { method: 'POST', body: {
+    const result = await requestBackend('/api/library/describe', { method: 'POST', expectedAccountId, body: {
       image: { mimeType: uploadBlob.type, base64: data.split(',')[1] },
     } });
     if (!result.description?.trim()) throw new Error('未取得有效视觉描述');
@@ -1578,7 +1608,7 @@ async function describeCapture(payload) {
     return { ok: true, description: result.description };
   } finally { captureDescriptionJobs.delete(jobKey); }
 }
-const DESCRIPTION_MAX_ATTEMPTS = 2;
+const DESCRIPTION_MAX_ATTEMPTS = LOCAL_ACCOUNTS ? 1 : 2;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function bumpDescriptionProgress({ id = null, failed = 0, failedId = null } = {}) {
   const stored = await chrome.storage.local.get(STORAGE.descriptionProgressV4);
@@ -1598,6 +1628,7 @@ async function bumpDescriptionProgress({ id = null, failed = 0, failedId = null 
   } });
 }
 async function describeMissingCaptureDescriptions() {
+  if (LOCAL_ACCOUNTS) await accountClient.identity();
   if (descriptionsRunning) throw new Error('已有描述生成任务正在运行，请稍后查看');
   const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
   if (!consent[STORAGE.assetAIConsent]) throw new Error('请先开启图库 AI');
@@ -1643,6 +1674,7 @@ async function drainCaptureDescriptions() {
   if (descriptionsRunning) { descriptionsRerun = true; return; }
   descriptionsRunning = true;
   try {
+    const expectedAccountId = LOCAL_ACCOUNTS ? await accountClient.identity() : null;
     const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
     if (!consent[STORAGE.assetAIConsent]) return;
     const stored = await chrome.storage.local.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
@@ -1662,7 +1694,8 @@ async function drainCaptureDescriptions() {
     // Six parallel calls; local development service uses the same cap; saves remain serialized.
     const descriptionConcurrency = 6;
     const nonRetryableCodes = new Set(['USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT', 'TEST_LIMIT_REACHED',
-      'QUOTA_REACHED', 'NOT_CONFIGURED', 'ANALYSIS_PAUSED', 'INVALID_IMAGE', 'IMAGE_TOO_LARGE']);
+      'QUOTA_REACHED', 'NOT_CONFIGURED', 'ANALYSIS_PAUSED', 'INVALID_IMAGE', 'IMAGE_TOO_LARGE',
+      'LOGIN_REQUIRED', 'ACCOUNT_CHANGED', 'ACCOUNT_DISABLED', 'INSUFFICIENT_POINTS']);
     let cursor = 0, stop = false;
     const runTask = async () => {
       while (cursor < tasks.length && !stop) {
@@ -1686,9 +1719,14 @@ async function drainCaptureDescriptions() {
           }
           await markStatus({ descriptionStatus: 'processing', descriptionStartedAt: Date.now() });
           try {
-            await describeCapture({ downloadId: task.downloadId });
+            await describeCapture({ downloadId: task.downloadId, expectedAccountId });
             break;
           } catch (error) {
+            if (LOCAL_ACCOUNTS && ['LOGIN_REQUIRED', 'ACCOUNT_CHANGED', 'ACCOUNT_DISABLED', 'INSUFFICIENT_POINTS', 'USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT'].includes(error?.code)) {
+              await markStatus({ descriptionStatus: 'pending', descriptionError: error.message, descriptionRetryAt: null });
+              stop = true;
+              break;
+            }
             const nonRetryable = nonRetryableCodes.has(error?.code);
             if (nonRetryable || attempt >= DESCRIPTION_MAX_ATTEMPTS) {
               await markStatus({

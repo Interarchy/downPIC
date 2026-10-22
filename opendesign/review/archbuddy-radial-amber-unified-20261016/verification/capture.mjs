@@ -1,0 +1,18 @@
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+import path from 'node:path';
+const require=createRequire('C:/Users/lee/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/runtime.cjs');
+const {chromium}=require('playwright');
+const out=path.dirname(new URL(import.meta.url).pathname.replace(/^\/(\w:)/,'$1'));
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+const page=await browser.newPage({viewport:{width:1440,height:1050},deviceScaleFactor:1});
+const errors=[],failures=[],badResponses=[];
+page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('requestfailed',r=>failures.push(r.url()));page.on('response',r=>{if(r.status()>=400)badResponses.push({url:r.url(),status:r.status()});});
+await page.goto('http://127.0.0.1:8766/mockups/archbuddy-radial-break-options/?round=15#two',{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
+await page.screenshot({path:path.join(out,'1440-two-full.png'),fullPage:true});
+const metrics=await page.evaluate(()=>{const svg=document.querySelector('#ring-svg');return {hash:location.hash,theme:document.querySelector('.problem-section').dataset.theme,viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,diameter:document.querySelector('.radial-disc').clientWidth,flows:[...svg.querySelectorAll('.flow')].map(el=>({stroke:getComputedStyle(el).stroke,width:getComputedStyle(el).strokeWidth})),breaks:[...svg.querySelectorAll('.break-group')].map(el=>({shape:el.querySelector('.break-shape').getAttribute('d'),fill:getComputedStyle(el.querySelector('.break-shape')).fill,text:[...el.querySelectorAll('text')].map(t=>({text:t.textContent,font:getComputedStyle(t).fontSize,x:t.getAttribute('x'),y:t.getAttribute('y'),transform:t.getAttribute('transform')}))})),headings:[...document.querySelectorAll('.diagnosis h2')].map(el=>({text:el.textContent,color:getComputedStyle(el).color,weight:getComputedStyle(el).fontWeight})),badges:[...document.querySelectorAll('.diagnosis-id')].map(el=>({text:el.textContent,background:getComputedStyle(el).backgroundColor})),labels:[...svg.querySelectorAll('.step-label')].map(el=>el.textContent)};});
+const prior=JSON.parse(fs.readFileSync(path.join(out,'../../archbuddy-radial-amber-contrast-20261016/verification/check-summary.json'),'utf8')).find(s=>s.width===1440);
+const target='rgb(255, 175, 69)';
+const colors=[...metrics.flows.map(x=>x.stroke),...metrics.breaks.map(x=>x.fill),...metrics.headings.map(x=>x.color),...metrics.badges.map(x=>x.background)];
+const report={width:1440,metrics,errors,failures,badResponses,allTwelveColorsMatch:colors.length===12&&colors.every(c=>c===target),breakGeometryAndTextSameAsRound14:JSON.stringify(metrics.breaks)===JSON.stringify(prior.metrics.breaks),labelsSameAsRound14:JSON.stringify(metrics.labels)===JSON.stringify(prior.metrics.labels)};
+fs.writeFileSync(path.join(out,'check-summary.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({colorsMatch:report.allTwelveColorsMatch,breaksSame:report.breakGeometryAndTextSameAsRound14,labelsSame:report.labelsSameAsRound14,errors:errors.length,failures:failures.length,badResponses:badResponses.length,overflow:metrics.scrollWidth>1440}));await browser.close();

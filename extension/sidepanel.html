@@ -44,6 +44,7 @@ SOFTWARE.
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ArchBuddy</title>
   <link rel="stylesheet" href="sidepanel.css?v=0.6.1" />
+  <link rel="stylesheet" href="account-ui.css" />
 </head>
 <body class="needs-consent">
   <div class="sticky-header">
@@ -58,14 +59,17 @@ SOFTWARE.
   </nav>
   </div>
   <main>
+    <p id="local-demo-notice" class="local-demo-notice" hidden></p>
     <section id="analysis-panel" class="panel">
       <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
         <h1>开始使用前确认</h1>
         <label class="check-row onboarding-check"><input id="privacy-check" type="checkbox" />
           <span><strong>我同意图片与图库 AI 处理</strong><small>新下载图片自动发送预览以生成视觉描述；语义检索发送查询与库内描述/提示词；分析和评估发送所选图片及相关提示词给 ArchBuddy 与 DeepSeek。我确认有权处理这些内容。</small></span>
         </label>
+        <p id="privacy-points-note" class="points-cost-note" hidden>开启后，下载图片自动生成核心视觉描述，每张 0.1 积分；反推与效果分析每张 1 积分。可在详细说明中关闭自动描述。</p>
         <div class="onboarding-actions"><a href="privacy.html" target="_blank">隐私说明</a><button id="privacy-accept" class="primary-button" disabled>确认</button></div>
       </section>
+      <p id="analysis-points-total" class="points-cost-note" hidden></p>
       <div id="reference-list" class="reference-list"><button id="new-builder" type="button" class="text-button" hidden>清空参考图</button></div>
       <button id="add-reference" class="secondary-button add-reference">添加参考图二</button>
       <p id="builder-feedback" class="section-note"></p>
@@ -87,6 +91,7 @@ SOFTWARE.
         <p class="section-note">在参考图的各维度中编辑，点击“加入”或“替换”汇入整体预览。已选内容继续编辑时，预览同步更新。整体确认后再复制。</p>
         <label class="check-row"><input id="analytics-toggle" type="checkbox" />允许匿名功能统计（不包含图片和提示词）</label>
         <label class="check-row"><input id="asset-ai-toggle" type="checkbox" />下载后自动描述与图库语义检索</label>
+        <p id="auto-description-points" class="points-cost-note" hidden>自动描述每张 0.1 积分（100 张共 10 积分）；向量建索引与检索不扣积分，均受每日调用上限保护。</p>
         <a href="privacy.html" target="_blank">隐私说明</a>
       </details>
     </section>
@@ -107,6 +112,7 @@ SOFTWARE.
         <select id="scheme-select"><option value="">从最近确认的提示词库中选择</option></select>
         <details id="baseline-details" hidden><summary>查看原文</summary><pre id="baseline-prompt"></pre></details>
       </section>
+      <p id="evaluation-points-cost" class="points-cost-note" hidden>本次分析 1 张效果图，消耗 1 积分；失败释放。</p>
       <button id="run-evaluation" title="点击后发送生成图与所选提示词给 ArchBuddy 与 DeepSeek 进行评估" class="primary-button" disabled>开始评估</button>
       <p id="evaluation-feedback" class="section-note"></p>
       <section id="evaluation-report" hidden>

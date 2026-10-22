@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-16",
+  "publicFiles": 27,
+  "bytes": 15998817,
+  "bodyOutside01And02Unchanged": true,
+  "duplicateIds": [],
+  "appJsUnchanged": true,
+  "changedFromPublic014": [
+    "index.html",
+    "styles.css",
+    "problem-section.css",
+    "problem-section.js",
+    "workflow-section.css",
+    "workflow-section.js"
+  ],
+  "syntaxChecks": [
+    "problem-section.js",
+    "workflow-section.js",
+    "build-showcase-site.mjs"
+  ],
+  "references": "build-script-pass",
+  "deploymentTarget": {
+    "project": "archbuddy",
+    "stage": "development",
+    "application": "archbuddy-dev-showcase",
+    "prefix": "archbuddy/dev/showcase/"
+  }
+}

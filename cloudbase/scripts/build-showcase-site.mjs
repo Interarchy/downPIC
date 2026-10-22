@@ -6,11 +6,11 @@ import { createHash } from 'node:crypto';
 // 仅构建公开静态站的明确白名单；真实环境配置、开发目录与用户资料不进入上传目录。
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const source = path.join(root, 'opendesign/mockups/archbuddy-showcase');
-const delivery = path.join(root, 'cloudbase/dist/showcase-reference-collection-20261007');
+const delivery = path.join(root, 'cloudbase/dist/showcase-proportion-white-install-20261016');
 const output = path.join(delivery, 'site');
 const pages = ['index.html', 'problem.html', 'workflow.html', 'decisions.html', 'outcomes.html'];
 const assets = ['01-project-library-1280x800.png', '02-image-description-1280x800.png', '03-prompt-library-1280x800.png', '04-prompt-builder-1280x800.png', '05-prompt-optimization-1280x800.png', 'logo.svg', 'tokens.css'];
-const files = ['index.html', 'styles.css', 'app.js', ...pages.map(name => 'case-study/' + name), 'case-study/styles.css', 'case-study/app.js', ...assets.map(name => 'case-study/assets/' + name), 'downloads/ArchBuddy-0.6.0-Chrome.zip', 'downloads/ArchBuddy-test-images.7z', 'assets/lucide.svg', 'assets/lucide-LICENSE.txt', 'assets/favicon.svg', 'assets/brand-mark.svg'];
+const files = ['index.html', 'styles.css', 'app.js', 'problem-section.css', 'problem-section.js', 'workflow-section.css', 'workflow-section.js', 'story-section.css', 'story-section.js', ...pages.map(name => 'case-study/' + name), 'case-study/styles.css', 'case-study/app.js', ...assets.map(name => 'case-study/assets/' + name), 'downloads/ArchBuddy-0.6.0-Chrome.zip', 'downloads/ArchBuddy-test-images.7z', 'assets/lucide.svg', 'assets/lucide-LICENSE.txt', 'assets/favicon.svg', 'assets/brand-mark.svg'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex').toUpperCase();
 const archivePath = path.join(root, 'extension/dist/browser-load-20261005/ArchBuddy-0.6.0-Chrome.zip');
 const expectedArchiveHash = '34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D';
@@ -52,6 +52,6 @@ for (const name of files.filter(name => /\.(html|css|js)$/.test(name))) {
     if (!files.includes(resolved)) throw new Error('缺少公开引用资源：' + name + ' → ' + resolved);
   }
 }
-const manifest = { date: '2026-10-07', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, testsetSha256: expectedTestsetHash, contentVersion: 'reference-collection-20261007', files: results };
+const manifest = { date: '2026-10-16', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, testsetSha256: expectedTestsetHash, contentVersion: 'proportion-white-install-20261016', files: results };
 await writeFile(path.join(delivery,'deployment-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({ output, fileCount: manifest.fileCount, bytes:manifest.bytes, archiveSha256:expectedArchiveHash }));

@@ -1,0 +1,230 @@
+/* ArchBuddy: warm paper, forest type, restrained clay diagnostics. */
+:root{--paper:#f5f7f4;--warm:#f3f1eb;--warm-deep:#ebe5db;--ink:#24332d;--forest:#153b2d;--green:#25634b;--muted:#637168;--clay:#98523f;--rule:#d8ded5;--font:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #9c6a42;outline-offset:5px}
+p,h1,h2,h3,ol{margin:0}
+ol{list-style:none;padding:0}
+[hidden]{display:none!important}
+.container{width:calc(100% - 80px);max-width:1240px;margin-inline:auto}
+.icon{width:24px;height:24px;display:block;flex:none;color:currentColor;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.brand-bar{height:72px;background:var(--forest);color:white}
+.brand-inner{height:100%;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{display:inline-flex;gap:11px;align-items:center;font-size:22px;letter-spacing:-.5px;font-weight:650}
+.brand img{background:white;border-radius:7px;padding:4px}
+.brand-inner>p{font-size:13px;color:#cad8d0;letter-spacing:.4px}
+.preview-controls{padding-top:22px}
+.variant-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.variant-tabs button{display:flex;text-align:left;align-items:center;gap:14px;min-height:72px;padding:12px 20px;border:0;border-radius:8px;background:#e9ede6;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.variant-tabs button:hover{background:#dfe7de}
+.variant-tabs button[aria-pressed="true"]{background:var(--forest);color:#fff}
+.option-number{font-size:25px;line-height:1;font-weight:400;opacity:.65;font-variant-numeric:tabular-nums}
+.variant-tabs button>span:last-child{font-weight:600;font-size:17px}
+.variant-tabs small{display:block;font-size:12px;line-height:1.5;font-weight:400;opacity:.72;margin-top:3px}
+.variant-description{font-size:13px;line-height:1.7;color:var(--muted);margin-top:14px;min-height:23px}
+.section-heading{padding:39px 0 30px}
+.section-label{display:flex;align-items:center;gap:13px;color:var(--green);font-size:20px;font-weight:600;letter-spacing:.4px}
+.section-label span{font-size:30px;line-height:1;font-weight:500;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+h1{font-size:42px;line-height:1.28;letter-spacing:-1.5px;font-weight:600;margin-top:18px;color:var(--forest)}
+.diagram{border-radius:16px;overflow:hidden;background:var(--warm)}
+.step-no{font-size:14px;line-height:20px;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:1px;color:#738275}
+.range-label{display:flex;gap:12px;align-items:center;font-size:14px;line-height:20px;color:#6f746a;letter-spacing:.2px}
+.range-label span{font-size:13px;font-variant-numeric:tabular-nums;color:var(--clay);font-weight:600;letter-spacing:1px}
+.pain-detail{font-size:16px;line-height:1.8;color:#746b60;text-wrap:pretty}
+/* 1. A single five-column track over one three-column diagnostic band. */
+.axis-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:32px 30px 34px}
+.axis-step{position:relative;padding:0 15px;text-align:center;min-width:0}
+.axis-step .step-no{display:block;margin-bottom:17px}
+.axis-step h2{font-size:23px;line-height:32px;font-weight:600;color:var(--forest);letter-spacing:-.5px;white-space:nowrap}
+.axis-step>p{font-size:14px;line-height:22px;color:var(--muted);margin-top:8px;white-space:nowrap}
+.axis-arrow{position:absolute;right:-12px;top:42px;color:#9b8b75;width:24px;height:24px}
+.axis-pains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--warm-deep);padding:31px 42px 35px;gap:42px}
+.axis-pain h3{font-size:27px;line-height:1.4;font-weight:600;color:var(--clay);margin-top:15px;letter-spacing:-.7px}
+.axis-pain .pain-detail{margin-top:10px;max-width:20em}
+/* 2. Three editorial columns; every mini-flow and conclusion shares a baseline. */
+.phase-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:transparent;overflow:visible;border-radius:0}
+.phase{background:var(--warm);padding:26px 26px 31px;position:relative;min-width:0}
+.phase:first-child{border-radius:16px 0 0 16px}
+.phase:last-child{border-radius:0 16px 16px 0}
+.phase:nth-child(2){background:#ebece3}
+.phase-heading{position:static;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--forest);padding-bottom:24px}
+.phase-heading>p{font-size:20px;font-weight:600;line-height:28px}
+.phase-heading>span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.5px}
+.phase-next{position:absolute;right:-12px;top:29px;width:24px;height:24px;color:#5f7966;z-index:1;background:var(--paper);border-radius:50%;padding:2px}
+.phase-mini-flow{display:grid;grid-template-columns:1fr 24px 1fr;gap:6px;align-items:center;height:71px}
+.phase-mini-flow h2{font-size:18px;font-weight:600;line-height:24px;letter-spacing:-.4px;text-align:center;padding:17px 0;background:#dfe8dd;border-radius:6px;color:var(--forest);white-space:nowrap}
+.phase-mini-flow>.icon{color:#778b73}
+.phase-gap{font-size:14px;line-height:22px;color:var(--clay);text-align:center;margin-top:12px;min-height:22px}
+.phase-conclusion{border-top:1px solid #d9d9cd;margin-top:26px;padding-top:25px}
+.phase-conclusion h3{font-size:27px;line-height:1.48;letter-spacing:-.8px;font-weight:600;color:var(--clay)}
+.phase-conclusion .pain-detail{margin-top:14px;max-width:21em}
+/* 3. A vertical workflow with aligned, spanning diagnostic rows. */
+.ledger-board{padding:0 38px}
+.ledger-head{display:grid;grid-template-columns:32% 68%;padding:21px 0 18px;font-size:13px;letter-spacing:1px;color:var(--muted);border-bottom:1px solid #d9ddd2}
+.ledger-head>span:first-child{padding-left:39px}
+.ledger-head>span:last-child{padding-left:34px}
+.ledger-group{display:grid;grid-template-columns:32% 68%;align-items:stretch}
+.ledger-group+.ledger-group{border-top:1px solid #d9ddd2}
+.ledger-steps{padding-block:13px}
+.ledger-steps>li{position:relative;min-height:77px;display:flex;align-items:center;gap:19px}
+.ledger-steps h2{font-size:22px;line-height:30px;font-weight:600;letter-spacing:-.5px;color:var(--forest);white-space:nowrap}
+.ledger-steps .step-no{width:24px;flex:none}
+.ledger-arrow{position:absolute;bottom:-10px;left:101px;width:22px;height:22px;z-index:1;color:#9b8b75}
+.ledger-pain{padding:27px 0 28px 34px;display:flex;flex-direction:column;justify-content:center}
+.ledger-pain .range-label{font-size:13px;color:#8a7b69;letter-spacing:1px}
+.ledger-pain h3{text-wrap:balance;font-size:26px;line-height:1.5;font-weight:600;letter-spacing:-.6px;color:var(--clay);margin-top:7px}
+.ledger-pain .pain-detail{margin-top:8px}
+.preview-footer{padding-top:28px;padding-bottom:44px;color:var(--muted);font-size:12px;line-height:1.8}
+.references{margin-top:20px;border-top:1px solid var(--rule);padding-top:15px}
+.references summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;width:fit-content;min-height:30px;font-size:13px}
+.references summary::-webkit-details-marker{display:none}
+.references summary .icon{width:17px;height:17px;transition:transform .2s}
+.references[open] summary .icon{transform:rotate(180deg)}
+.reference-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;padding:20px 0 10px}
+.reference-grid a{display:block;position:relative;padding-right:25px;line-height:1.8}
+.reference-grid a:hover strong{color:var(--green);text-decoration:underline}
+.reference-grid strong{font-size:14px;font-weight:600;color:var(--ink)}
+.reference-grid span{display:block;margin-top:6px}
+.reference-grid .icon{position:absolute;right:0;top:4px;width:17px;height:17px}
+.reference-note{margin-top:12px}
+@media(min-width:1500px){.section-heading{padding-top:48px}h1{font-size:46px}.axis-flow{padding-block:40px}.axis-pains{padding-block:37px}.phase{padding-block:32px 36px}}
+@media(max-width:1100px){
+ .container{width:calc(100% - 48px)}
+ .axis-flow{padding-inline:14px}
+ .axis-step{padding-inline:6px}
+ .axis-step h2{font-size:21px}
+ .axis-step>p{font-size:13px}
+ .axis-pains{padding-inline:28px;gap:28px}
+ .axis-pain h3{font-size:25px}
+ .phase{padding-inline:18px}
+ .phase-heading>p{font-size:18px}
+ .phase-mini-flow{gap:2px;grid-template-columns:1fr 20px 1fr}
+ .phase-mini-flow h2{font-size:16px}
+ .phase-mini-flow .icon{width:20px;height:20px}
+ .phase-conclusion h3{font-size:24px}
+ .phase-gap{font-size:13px}
+ .ledger-board{padding-inline:28px}
+ .ledger-pain h3{font-size:23px}
+}
+@media(max-width:800px){
+ .container{width:calc(100% - 40px)}
+ .brand-bar{height:62px}
+ .brand{font-size:20px}
+ .brand-inner>p{font-size:11px}
+ .preview-controls{padding-top:16px}
+ .variant-tabs{gap:6px}
+ .variant-tabs button{padding:11px 8px;gap:8px;min-height:61px;justify-content:center}
+ .variant-tabs button>span:last-child{font-size:14px}
+ .option-number{font-size:20px}
+ .variant-tabs small{display:none}
+ .variant-description{font-size:12px;min-height:41px;margin-top:12px}
+ .section-heading{padding:25px 0 23px}
+ .section-label{font-size:17px;gap:10px}
+ .section-label span{font-size:27px}
+ h1{font-size:34px;letter-spacing:-1.2px;margin-top:17px}
+ .axis-flow{grid-template-columns:1fr;padding:17px 24px}
+ .axis-step{display:grid;grid-template-columns:32px 1fr;column-gap:13px;text-align:left;padding:17px 0 20px;min-height:88px}
+ .axis-step .step-no{margin:4px 0 0;grid-row:1/3}
+ .axis-step h2{font-size:23px;line-height:29px;letter-spacing:-.5px}
+ .axis-step>p{font-size:14px;line-height:21px;margin-top:5px}
+ .axis-arrow{right:auto;left:1px;top:auto;bottom:-7px;width:22px;height:22px;transform:rotate(90deg)}
+ .axis-pains{grid-template-columns:1fr;gap:26px;padding:27px 25px 31px}
+ .axis-pain h3{font-size:26px;margin-top:9px}
+ .axis-pain .pain-detail{max-width:none;margin-top:7px}
+ .range-label{font-size:13px}
+ .phase-board{grid-template-columns:1fr;gap:0;border-radius:14px;overflow:hidden}
+ .phase{padding:24px 25px 28px;border-radius:0!important}
+ .phase-heading{padding-bottom:13px}
+ .phase-heading>p{font-size:19px}
+ .phase-heading>span{font-size:12px}
+ .phase-next{top:auto;bottom:-12px;right:calc(50% - 12px);transform:rotate(90deg)}
+ .phase-mini-flow{grid-template-columns:1fr 24px 1fr;gap:9px;height:65px}
+ .phase-mini-flow h2{font-size:18px;padding:15px 0}
+ .phase-mini-flow .icon{width:24px;height:24px}
+ .phase-gap{font-size:13px;margin-top:9px}
+ .phase-conclusion{margin-top:20px;padding-top:20px}
+ .phase-conclusion h3{font-size:27px;line-height:1.45}
+ .phase-conclusion .pain-detail{margin-top:11px;max-width:none}
+ .ledger-board{padding-inline:24px}
+ .ledger-head{display:none}
+ .ledger-group{grid-template-columns:1fr;padding:22px 0 25px}
+ .ledger-steps{display:flex;gap:33px;align-items:center;padding:0}
+ .ledger-steps>li{min-height:57px;flex:1;display:block}
+ .ledger-steps .step-no{display:block;font-size:12px;line-height:17px;margin-bottom:7px}
+ .ledger-steps h2{font-size:19px;line-height:26px;letter-spacing:-.7px}
+ .ledger-arrow{bottom:5px;left:auto;right:-27px;transform:rotate(-90deg)}
+ .ledger-steps>li:last-child .ledger-arrow{display:none}
+ .ledger-pain{padding:21px 0 0}
+ .ledger-pain .range-label{font-size:12px}
+ .ledger-pain h3{font-size:26px;line-height:1.42;margin-top:8px;max-width:12em}
+ .ledger-pain .pain-detail{margin-top:10px}
+ .pain-detail{font-size:15px;line-height:1.8}
+ .reference-grid{grid-template-columns:1fr;gap:21px}
+ .preview-footer{padding-top:23px}
+}
+@media(max-width:380px){
+ .container{width:calc(100% - 32px)}
+ .brand-inner>p{font-size:10px}
+ .variant-tabs button{gap:6px;padding-inline:6px}
+ .variant-tabs button>span:last-child{font-size:13px}
+ h1{font-size:31px}
+ .phase{padding-inline:21px}
+ .phase-mini-flow h2{font-size:17px}
+ .phase-conclusion h3{font-size:25px}
+ .ledger-board{padding-inline:20px}
+ .ledger-pain h3{font-size:25px}
+ .ledger-steps h2{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Section 01: one aligned work sequence; each link is visibly interrupted. */
+.axis-board{overflow:hidden;background:#f4f2ec;border-radius:6px}
+.axis-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:34px 28px 38px;list-style:none}
+.axis-step{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:64px;padding:0}
+.axis-step-heading{display:inline-flex;align-items:baseline;justify-content:center;gap:8px;white-space:nowrap}
+.axis-step .step-no{display:inline-block;margin:0;font-size:15px;line-height:1.4;font-weight:600;letter-spacing:.02em;color:#718075;font-variant-numeric:tabular-nums}
+.axis-step h2,.axis-step h3{margin:0;font-size:22px;line-height:1.4;letter-spacing:-.035em;font-weight:600;color:#153b2d}
+.axis-break{position:absolute;top:50%;right:-34px;z-index:1;display:flex;align-items:center;gap:6px;width:68px;height:30px;transform:translateY(-50%);color:#a55442}
+.axis-break-line{height:2px;min-width:0;flex:1;background:#b18d7a}
+.axis-break .axis-break-icon{display:block;width:28px;height:28px;flex:none;color:#a55442;stroke-width:2.1}
+.axis-pains{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;padding:28px 28px 34px;background:#ece6dc}
+.axis-pain{width:192px;min-width:0;justify-self:center;display:grid;grid-template-rows:26px 48px auto;grid-row:1}
+.axis-pain-one{grid-column:1/3}.axis-pain-two{grid-column:2/5}.axis-pain-three{grid-column:4/6}
+.axis-range{margin:0;font-size:14px;line-height:26px;letter-spacing:.08em;font-weight:600;color:#876f61;font-variant-numeric:tabular-nums}
+.axis-pain h3,.axis-pain h4{margin:0;font-size:27px;line-height:48px;letter-spacing:-.035em;font-weight:600;color:#a55442;white-space:nowrap}
+.axis-detail{margin:0;font-size:16px;line-height:26px;color:#6c665d;letter-spacing:-.018em}
+.axis-detail span{display:block;white-space:nowrap}
+@media(max-width:1100px){
+ .axis-flow{padding-inline:18px}
+ .axis-step-heading{gap:6px}
+ .axis-step .step-no{font-size:13px}
+ .axis-step h2,.axis-step h3{font-size:19px}
+ .axis-break{right:-26px;width:52px;gap:5px}
+ .axis-break .axis-break-icon{width:25px;height:25px}
+ .axis-pains{padding-inline:18px}
+ .axis-pain{width:178px;grid-template-rows:25px 44px auto}
+ .axis-pain h3,.axis-pain h4{font-size:25px;line-height:44px}
+ .axis-detail{font-size:15px;line-height:25px}
+}
+@media(max-width:980px){
+ .axis-flow{grid-template-columns:1fr;padding:18px 25px 22px}
+ .axis-step{justify-content:flex-start;min-height:76px;padding:15px 0 29px}
+ .axis-step-heading{gap:12px}
+ .axis-step .step-no{font-size:14px;min-width:22px}
+ .axis-step h2,.axis-step h3{font-size:21px}
+ .axis-break{top:auto;right:auto;bottom:-9px;left:-23px;width:60px;height:26px;transform:rotate(90deg)}
+ .axis-break .axis-break-icon{width:27px;height:27px;transform:rotate(-90deg)}
+ .axis-pains{display:flex;flex-direction:column;gap:24px;padding:24px 25px 30px}
+ .axis-pain{width:100%;grid-template-rows:24px 43px auto}
+ .axis-pain h3,.axis-pain h4{font-size:25px;line-height:43px}
+ .axis-detail{font-size:15px;line-height:25px}
+}
+@media(max-width:380px){
+ .axis-flow{padding-inline:20px}
+ .axis-pains{padding-inline:20px}
+ .axis-pain h3,.axis-pain h4{font-size:24px}
+ .axis-detail{font-size:14px;line-height:24px}
+}

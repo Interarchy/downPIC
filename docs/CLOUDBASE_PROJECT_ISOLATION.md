@@ -26,6 +26,22 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 
 以上现状来自仓库实现及此前部署记录，不代表已完成云端全资源或权限审计。
 
+## 2026-10-09 本地账号积分资源登记
+
+本轮为用户明确授权的本地开发，分支 `codex/phone-login-credits`。已核对 `cloudbase/environment.json`：既有云端仍为 archbuddy / development / archbuddy-api / 014，每日 50/500；本轮不变更该文件、云服务、集合、身份、凭据、日志、统计或其他项目资源。
+
+| 本地资源 | 归属与用途 | 权限边界 / 状态 |
+| --- | --- | --- |
+| 回环账号服务 | 固定 `archbuddy/local`；验证码、账号会话、积分结算和申请审核 | 仅监听回环地址；本地开发通道，不是 CloudBase 认证 |
+| 本地持久化账本 | 本仓库忽略的 runtime 目录；账号、会话、积分流水、每日调用计数、反馈与积分包申请 | 服务端固定路径/归属，不接受客户端指定项目或数据文件；实际路径随实现补记 |
+| 独立扩展产物 | `extension/dist/local-account`；本地登录与积分体验 | 不用于商店上传；规范源码保留既有 cloud 运行配置 |
+| 扩展会话凭据 | 当前扩展专用存储，仅账号服务请求使用 | 不发给网页内容脚本、日志、素材元数据或其他项目；前端仅展示脱敏账号资料 |
+| 本地管理员操作 | 审核反馈、查看/处理积分申请 | 普通用户不可取得管理员权限；演示申请与实际到账区分 |
+
+这些是本地实现登记，不是云端资源创建或权限验收。默认模拟短信和 AI；模拟调用不产生供应商费用。未来启用真实模型必须沿用 ArchBuddy 专属凭据及预算，并单独记录；不能默认再给本地阶段新增一份真实 500 次预算。
+
+持久化文件和演示账号数据不得进入 Git、发布包或日志。正式接入云端时，需先登记专属身份、账本集合、会话与管理凭据、保留期、权限、预算和旧匿名入口过渡，再核验跨项目拒绝；本轮不能声称这些已完成。
+
 ## 后续资源命名与访问规则
 
 以下是预留规则，不表示资源已经创建。
@@ -166,6 +182,15 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 - 从源目录作为 shell 工作目录执行命名应用的纯静态部署，保持原 /archbuddy/privacy 路径；明确只上传 1 个文件。没有创建新站、修改域名/网关/权限、覆盖共享根目录或操作其他项目。首次 --cwd 扫描范围异常被立即中止，随后查询该固定前缀确认仍只有 index.html。
 - 公开 HTTPS 返回 200，含 DeepSeek 和 TokenHub 的 V4 数据流说明，正文 SHA-256 与本地 HTML 一致。CLI 应用记录仍保留原 metadata，本次是现有静态文件更新，不宣称新建构建版本。
 - 未涉及集合、对象素材、身份、日志、密钥、额度、预算或运行角色调整；既有角色和日志/TTL 的未核验项仍保留。生成的本地环境配置已移除，模型请求未发生。
+
+### 2026-10-17：Edge 专用隐私页资源预登记（部署前）
+
+- 用户明确要求先部署 Edge 隐私页，目标固定为 `archbuddy` / `development` / `ap-shanghai` / 环境 `dev-mel-d9guu8bpu44029179` / 既有静态应用 `archbuddy-privacy`。本次只新增静态托管文件 `archbuddy/privacy/edge/index.html`；原 Chrome `archbuddy/privacy/index.html` 保留，展示站 `archbuddy/dev/showcase/` 不参与。
+- 源文件 `extension/store/edge/privacy.html` 是 V4.1（0.6.1）公开中文政策；数据类型仅公开 HTML，无表单、Cookie、执行脚本、用户素材、提示词或密钥。公众只读；既有 CLI 发布身份可能具有环境级权限，因此使用显式环境 ID、单文件本地路径和精确目标文件名约束操作，不使用 `--prune`、根目录或父目录上传。
+- 部署前只读核对：`tcb env list` 显示目标环境正常；`tcb app info archbuddy-privacy` 确认为 `static-hosting`、`AppPath=/archbuddy/privacy`、既有独立域名及 `SUCCESS`；`tcb hosting list /archbuddy/privacy` 仅有 Chrome `index.html`，Edge 子前缀为空；Chrome 公网政策 HTTP 200、6364 字节、SHA-256 `D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8`。
+- 预期 Edge 地址为既有隐私站域名的 `/edge/` 子路径，须部署后实测 HTTP 与正文哈希才算完成。此单文件不修改数据库、云服务、身份、日志配置、密钥、统计、额度、预算、共享网关或其他项目。平台既有访问日志、环境级发布角色和账号级带宽成本仍未核验；本次无持久化业务记录或模型请求，跨项目数据访问测试不适用。
+- 部署结果：2026-10-17 仅从单文件白名单目录执行 `tcb hosting deploy .\index.html /archbuddy/privacy/edge/index.html -e dev-mel-d9guu8bpu44029179 --verify --json`，未使用 `--prune` 或目录递归上传。CLI 退出 0、提示上传完成，但统计为 `successCount=0`、`verified=false`，故不以该统计认定成功；随后只读 `tcb hosting list /archbuddy/privacy` 精确列出 Chrome 根 `index.html` 与新增 Edge `edge/index.html` 两项，无其他文件。
+- 公网验收：`https://archbuddy-privacy-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/edge/` 与显式 `/edge/index.html` 均 HTTP 200、`text/html`、3907 字节，SHA-256 `392FC25C2EC5C6FC44D0E4A7C110414E17C79998653D52EB4409903DE66C3F96`，与源文件一致；含 Edge、DeepSeek、TokenHub、50/500 文案，无 Chrome Limited Use。原 Chrome 根页部署前后均 200、6364 字节、SHA-256 `D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8`。静态应用和业务服务无配置调整；未修改其他项目。当前仍需在 Partner Center 填 URL、复核最终 ZIP 并提交审核。
 
 ### 2026-10-05：公网展示站资源预登记（尚未创建）
 
@@ -407,3 +432,27 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 01方案创作中的断点首节点已由保存图片改为收集参考图。公开只改index.html的节点与缓存标识，其他22文件（含CSS/JS）原哈希保持，原排版/痛点总结/方案1进入动效保留。独立公网1440/390px两个fresh context、13项/2截图目视通过，五字均完整单行，无孤字/裁切/碰撞/横溢出，reveal浮现至opacity1/原位，站点异常0。正常平台3秒确认后正式Document200/text-html/无附件，平台提醒与正式响应分开。证据opendesign/review/archbuddy-showcase-reference-collection/check-summary.json、review.md及static-check-summary.json。
 
 2026-10-07T04:07:48.613Z原应用/前缀23文件15977201字节，CLI退出0、archbuddy-dev-showcase-014/SUCCESS；23主域/3备用资源HTTP200且逐项哈希一致，精确前缀白名单/无临时配置，原隐私站200/6364字节/原哈希保持。既有构建/引用/源码范围/格式检查通过，013与改前HTML留存。只更新showcaseSite，其他环境字段摘要不变，后端archbuddy-api-014及50/500配置保持；没有实施统计或改插件/数据/身份/密钥/模型/共享配置/其他项目，无本轮Git提交或推送。
+
+
+### 2026-10-16：展示站01/02已选琥珀方案发布登记
+
+用户明确授权01最终深绿琥珀环形图与02紧凑回环方案一上线。固定archbuddy / development / ap-shanghai / 已登记环境 / archbuddy-dev-showcase，仅写/archbuddy/dev/showcase/。公开白名单由23增加为27个文件，新增两个章节各自的CSS/JS；保留既有商店入口、图片测试集与旧公开文件。不包含开发候选、审阅、环境配置、账号积分实现或任何凭据。旧014产物和整合前源文件留存，可仅回滚本站。
+
+此次只更新静态网站，模型调用0，不改后端014、每日50/500、数据、身份、日志配置、密钥、预算、共享环境设置或其他项目。部署前完成静态及本地浏览器核查；发布后核对27资源哈希、精确前缀、应用登记、原隐私页与公网浏览器。此记录先登记范围，实际发布结果后补。
+
+部署前只读核查：原应用archbuddy-dev-showcase-014/SUCCESS、static-hosting、固定AppPath；限定本站前缀恰为旧23文件；原隐私页HTTP200、6364字节、哈希与旧基线一致。构建27文件、15998817字节，静态引用/脚本语法/范围检查通过。凭据沿用既有CLI登录，可能具有环境级权限，此轮不宣称角色最小权限或环境物理隔离；只读查询与写入仍被固定应用/前缀和精确文件白名单约束。无持久化实现，因此集合/身份跨项目访问项不适用。证据cloudbase/dist/showcase-selected-workflows-20261016/preflight-verification.json及deployment-manifest.json。
+
+第十五版发布记录：2026-10-16北京时间01:35，静态发布CLI退出0；archbuddy-dev-showcase-015/SUCCESS。主域27项、备用3项均HTTP200且逐项哈希匹配，固定前缀文件恰为27项白名单，没有临时cloudbaserc配置。原隐私页200/6364字节/原哈希保持。只更新environment.json的showcaseSite，其余字段摘要一致。实际公网浏览器核查进行中；未更改后端、账号积分或其他资源。
+
+第十五版最终验收：本地1440/390/360及公网1440/390通过。公网正常等待平台倒计时并点击确认进入；正式文档200/text-html/无附件，01/02图形与同色标记/外部生图边界清楚，5章滚动与下载交互正常，站点错误/资源失败/横溢0。独立截图和证据opendesign/review/archbuddy-selected-publish-20261016/verification/report.md；环境仅本站状态更新为deployed-browser-selected-workflows-verified，其他字段摘要保持。没有下载安装/归档/登录或模型调用，无用户数据和跨项目操作。
+
+
+### 2026-10-16：展示站第十六版接力动效及墨绿05发布
+
+- 目标固定为projectId=archbuddy、development、环境dev-mel-d9guu8bpu44029179、ap-shanghai、静态应用archbuddy-dev-showcase、前缀archbuddy/dev/showcase/。仅上传29个公开静态白名单文件；不新增集合、存储业务目录、身份、密钥、日志、统计、缓存、任务或模型调用，也不更改后端服务、每日50/500额度及预算。
+- 上传前只读核对旧015元数据SUCCESS、原前缀精确27文件及既有隐私页哈希；发布后016/SUCCESS、前缀精确29文件且无临时配置，29主域/3备用资源逐项SHA256一致，隐私页200/6364字节且哈希保持。第十六版交付目录保留证据。
+- 当前CLI账号仍可能具备环境级权限，这是既有共享环境限制；本次命令仅使用固定应用、固定环境ID及限定路径，不执行共享配置修改、迁移、清理或通配删除。业务数据与跨项目访问均未触及，本轮无新增持久化权限测试项。
+
+### 2026-10-16：展示站第十七版宽屏比例与05白色安装区
+
+仅针对已登记静态应用archbuddy-dev-showcase、开发阶段和前缀archbuddy/dev/showcase/更新29个白名单网页资源。上传前旧016/SUCCESS、精确29文件及隐私页哈希通过只读核查；更新后017/SUCCESS、原前缀精确29文件且无临时配置，29主域与3备用文件逐项哈希匹配，隐私页原哈希保持。CloudBase共享环境和其它项目没有操作；未更改后端014、每日50/500额度、集合、身份、用户数据、模型、密钥、日志、统计、预算或通配权限。只更新环境登记中的showcaseSite，其余字段哈希保持。证据保留在cloudbase/dist/showcase-proportion-white-install-20261016，展示验收见opendesign/review/archbuddy-showcase-proportion-20261016/report.md。

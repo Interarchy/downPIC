@@ -1,0 +1,84 @@
+/* 本地转场比较，正式站不引用。 */
+:root{--preview-height:48px;--story-top:148px;--story-stage:660px;--story-scale:1}
+html{scroll-padding-top:158px}
+body{padding-top:var(--preview-height)}
+.preview-controls{position:fixed;inset:0 0 auto;z-index:90;background:#f5f7f4;color:#153b2d;border-bottom:1px solid #cbd7cc;height:var(--preview-height)}
+.preview-inner{display:flex;align-items:center;gap:18px;width:min(1360px,calc(100% - 40px));height:100%;margin:auto}
+.preview-inner>strong{font-size:12px;white-space:nowrap;font-weight:500}
+.preview-tabs{display:flex;gap:5px;height:100%;align-items:center}
+.preview-tabs button,#story-replay{border:0;border-radius:4px;background:transparent;font-size:12px;padding:7px 13px;min-height:34px;color:#52675b}
+.preview-tabs button[aria-pressed="true"]{background:#153b2d;color:#fff}
+#story-replay{margin-left:auto;display:flex;align-items:center;gap:8px;color:#153b2d}
+#story-replay .icon{width:16px;height:16px}
+.preview-local{font-size:11px;color:#718176}
+.site-header{top:var(--preview-height)}
+.story-chapter{position:relative;padding:48px 28px 56px;background:#e4eae2}
+.story-pin{position:relative;width:min(1360px,100%);margin-inline:auto}
+.story-shell{transform-origin:center top}
+.story-window{position:relative;min-width:0;background:#153b2d;border-radius:12px;overflow:hidden}
+.story-panel{margin:0}
+.story-panel>.container{width:calc(100% - 64px)}
+.story-rail{display:none}
+.story-progress{display:flex;align-items:center;justify-content:center;gap:15px;height:36px;color:#375a45;font-size:11px}
+.story-progress-label{font:inherit;border:0;padding:4px 0;background:none;color:inherit}
+.story-progress-track{width:112px;height:2px;background:#bbccbd;overflow:hidden}
+.story-progress-track i{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:#25634b}
+body[data-story-mode="focus"] .story-chapter{background:#091d16;padding-top:60px;padding-bottom:64px}
+body[data-story-mode="focus"] .story-window{border-radius:4px}
+body[data-story-mode="focus"] .story-progress{color:#c0d1c4}
+body[data-story-mode="focus"] .story-progress-track{background:#345142}
+body[data-story-mode="focus"] .story-progress-track i{background:#ffaf45}
+body[data-story-mode="rail"] .story-chapter{background:#f0f2ed}
+body[data-story-mode="rail"] .story-shell{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px}
+body[data-story-mode="rail"] .story-rail{display:flex;flex-direction:column;align-self:center;align-items:flex-start;padding:20px 0}
+.story-rail-kicker{font-size:12px;color:#5c7464;margin-bottom:30px}
+.story-rail button{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;border:0;background:none;color:#819487;padding:12px 0}
+.story-rail button[aria-current="step"]{color:#153b2d}
+.rail-number{font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}
+.story-rail button strong{display:block;font-size:17px;line-height:1.4;font-weight:600;white-space:nowrap}
+.story-rail button small{display:block;font-size:11px;margin-top:7px}
+.rail-connector{display:block;width:2px;height:58px;background:#cfdbcf;margin:10px 0 10px 14px;overflow:hidden}
+.rail-connector span{display:block;width:100%;height:100%;background:#25634b;transform:scaleY(0);transform-origin:top}
+body[data-story-layout="pinned"] .story-pin{position:sticky;top:var(--story-top)}
+body[data-story-layout="pinned"] .story-window{height:var(--story-stage)}
+body[data-story-layout="pinned"] .story-panel{position:absolute;inset:0 0 auto;width:100%;transform-origin:center top;will-change:transform,opacity;contain:layout style}
+body[data-story-layout="pinned"] #problem,body[data-story-layout="pinned"] #workflow{padding:30px 0 24px}
+body[data-story-layout="pinned"] #problem .section-heading{padding-bottom:18px}
+body[data-story-layout="pinned"] #problem .section-heading h2,body[data-story-layout="pinned"] #workflow .section-heading h2{font-size:32px;line-height:1.25}
+body[data-story-layout="pinned"] #problem .section-label,body[data-story-layout="pinned"] #workflow .section-label{font-size:18px;margin-bottom:12px;gap:10px}
+body[data-story-layout="pinned"] #problem .section-label>span,body[data-story-layout="pinned"] #workflow .section-label>span{font-size:24px}
+body[data-story-layout="pinned"] #problem .radial-layout{min-height:0;padding:0;grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);gap:28px}
+body[data-story-layout="pinned"] #problem .radial-disc{max-width:450px}
+body[data-story-layout="pinned"] #problem .diagnosis{padding:16px 0 19px;gap:14px}
+body[data-story-layout="pinned"] #problem .diagnosis h3{font-size:23px}
+body[data-story-layout="pinned"] #problem .diagnosis p{font-size:14px;margin-top:8px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-diagrams{margin-top:24px;gap:32px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-heading{padding-top:14px;margin-bottom:12px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-heading h3{font-size:20px}
+body[data-story-mode="rail"][data-story-layout="pinned"] #workflow .section-heading{display:block}
+body[data-story-mode="rail"][data-story-layout="pinned"] .ab-workflow-legend{margin-top:12px;padding:0}
+body[data-story-layout="natural"] .story-window{overflow:clip;background:transparent}
+body[data-story-layout="natural"] .story-panel{position:relative;border-radius:12px;will-change:transform,opacity}
+body[data-story-layout="natural"] #workflow{margin-top:28px}
+body[data-story-layout="natural"] .story-progress{display:none}
+body[data-story-layout="natural"][data-story-mode="rail"] .story-shell{display:block}
+body[data-story-layout="natural"][data-story-mode="rail"] .story-rail{display:flex;flex-direction:row;align-items:center;gap:24px;padding:0 0 24px}
+body[data-story-layout="natural"] .story-rail-kicker,body[data-story-layout="natural"] .rail-connector,body[data-story-layout="natural"] .story-rail small{display:none}
+body[data-story-layout="natural"] .story-rail button{width:auto}
+@media(max-width:760px){:root{--preview-height:56px}.preview-inner{gap:7px;width:calc(100% - 20px)}.preview-inner>strong,.preview-local{display:none}.preview-tabs{gap:2px}.preview-tabs button{font-size:11px;padding:8px;min-height:40px}#story-replay{font-size:11px;padding:8px 4px;gap:4px}.story-chapter{padding:30px 12px 34px}body[data-story-mode="focus"] .story-chapter{padding:38px 12px}.story-panel>.container{width:calc(100% - 32px)}#problem.ab-problem,#workflow.ab-workflow{padding:32px 0}.story-rail{gap:16px!important}.story-rail button{gap:8px}.story-rail button strong{font-size:14px}.rail-number{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.story-panel,.story-shell{transform:none!important;opacity:1!important;clip-path:none!important;will-change:auto!important}}
+
+/* 方案一：章节标题、三处断点逐次强调与阶梯式诊断。 */
+#problem .ring-svg .chain-label{fill:#f5f8ef;font-weight:600;text-anchor:middle;dominant-baseline:middle;letter-spacing:.045em}
+#problem .diagnosis p{color:#f4f7ee}
+#problem .diagnosis:nth-child(2){margin-left:8%}
+#problem .diagnosis:nth-child(3){margin-left:16%}
+#problem .diagnosis{will-change:transform,opacity,clip-path}
+#problem .ring-svg .break-group{will-change:transform}
+#problem .section-label,#workflow .section-label{color:#ffaf45}
+#problem .section-label>span,#workflow .section-label>span{color:#ffaf45}
+body[data-story-layout="pinned"] #problem .section-label,body[data-story-layout="pinned"] #workflow .section-label{font-size:25px;margin-bottom:14px;font-weight:650}
+body[data-story-layout="pinned"] #problem .section-label>span,body[data-story-layout="pinned"] #workflow .section-label>span{font-size:34px;font-weight:600}
+body[data-story-layout="pinned"] #problem .section-heading h2,body[data-story-layout="pinned"] #workflow .section-heading h2{font-size:38px;line-height:1.2}
+@media(max-width:860px){#problem .diagnosis:nth-child(2),#problem .diagnosis:nth-child(3){margin-left:0}}
+@media(prefers-reduced-motion:reduce){#problem .diagnosis{opacity:1!important;clip-path:none!important;transform:none!important}}

@@ -1,0 +1,233 @@
+{
+  "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=motion-install-20261016",
+  "cases": [
+    {
+      "width": 1440,
+      "errors": [],
+      "failed": [],
+      "documents": [
+        {
+          "status": 404,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=motion-install-20261016",
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        },
+        {
+          "status": 200,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=motion-install-20261016",
+          "type": "text/html",
+          "disposition": null
+        }
+      ],
+      "screens": [
+        {
+          "name": "problem",
+          "scrollY": 1437,
+          "layout": "pinned",
+          "transition": "0.0000",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "0.990026"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        },
+        {
+          "name": "transition",
+          "scrollY": 1797,
+          "layout": "pinned",
+          "transition": "0.5000",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        },
+        {
+          "name": "workflow",
+          "scrollY": 2283,
+          "layout": "pinned",
+          "transition": "1.0000",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        },
+        {
+          "name": "install",
+          "scrollY": 5873,
+          "layout": "pinned",
+          "transition": "1.0000",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        }
+      ],
+      "initial": 404,
+      "platformWarning": true,
+      "links": {
+        "store": [
+          "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+        ],
+        "testset": [
+          "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+          "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z"
+        ]
+      }
+    },
+    {
+      "width": 390,
+      "errors": [],
+      "failed": [],
+      "documents": [
+        {
+          "status": 404,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=motion-install-20261016",
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        },
+        {
+          "status": 200,
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=motion-install-20261016",
+          "type": "text/html",
+          "disposition": null
+        }
+      ],
+      "screens": [
+        {
+          "name": "problem",
+          "scrollY": 700,
+          "layout": "natural",
+          "transition": "0",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        },
+        {
+          "name": "workflow",
+          "scrollY": 1722,
+          "layout": "natural",
+          "transition": "1",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        },
+        {
+          "name": "install",
+          "scrollY": 5660,
+          "layout": "natural",
+          "transition": "1",
+          "overflow": 0,
+          "install": "rgb(21, 59, 45)",
+          "breaks": 3,
+          "labels": [
+            "方案创作链路",
+            "AI 效果图迭代链路"
+          ],
+          "diagnoses": [
+            "1",
+            "1",
+            "1"
+          ],
+          "products": [
+            2,
+            4
+          ],
+          "preview": false
+        }
+      ],
+      "initial": 404,
+      "platformWarning": true,
+      "links": {
+        "store": [
+          "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN",
+          "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+        ],
+        "testset": [
+          "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z",
+          "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/downloads/ArchBuddy-test-images.7z"
+        ]
+      }
+    }
+  ],
+  "failures": []
+}

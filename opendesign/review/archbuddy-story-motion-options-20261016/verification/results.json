@@ -1,0 +1,1110 @@
+{
+  "results": [
+    {
+      "mode": "relay",
+      "name": "hero",
+      "scrollY": 0,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 888.2426147460938,
+          "bottom": 1527.02197265625,
+          "height": 638.7793579101562,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 921.84228515625,
+          "bottom": 1493.2216796875,
+          "height": 571.37939453125,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "boundary",
+      "scrollY": 295,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 584.9075927734375,
+          "bottom": 1228.5059814453125,
+          "height": 643.598388671875,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 618.7606811523438,
+          "bottom": 1194.4505615234375,
+          "height": 575.6898803710938,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "problem",
+      "scrollY": 831,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "transition",
+      "scrollY": 1405,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "0.5010",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "workflow",
+      "scrollY": 1993,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "release",
+      "scrollY": 3075,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -649.921875,
+          "bottom": -3.53125,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": -615.921875,
+          "bottom": -37.734375,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "relay",
+      "name": "reverse",
+      "scrollY": 831,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "hero",
+      "scrollY": 0,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 908.0534057617188,
+          "bottom": 1534.147216796875,
+          "height": 626.0938110351562,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 940.9857788085938,
+          "bottom": 1501.01806640625,
+          "height": 560.0322875976562,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "boundary",
+      "scrollY": 295,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 599.7730102539062,
+          "bottom": 1238.7177734375,
+          "height": 638.9447631835938,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 633.38134765625,
+          "bottom": 1204.9085693359375,
+          "height": 571.5272216796875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "problem",
+      "scrollY": 843,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "transition",
+      "scrollY": 1417,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "0.5010",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 863.4378051757812,
+          "height": 633.4378051757812,
+          "inert": true,
+          "opacity": "0.699419"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "workflow",
+      "scrollY": 2005,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 850.5349731445312,
+          "height": 620.5349731445312,
+          "inert": true,
+          "opacity": "0.4"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "release",
+      "scrollY": 3095,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -657.921875,
+          "bottom": -37.38690185546875,
+          "height": 620.5349731445312,
+          "inert": true,
+          "opacity": "0.4"
+        },
+        {
+          "id": "workflow",
+          "top": -623.921875,
+          "bottom": -45.734375,
+          "height": 578.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "focus",
+      "name": "reverse",
+      "scrollY": 843,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 264,
+          "bottom": 842.1875,
+          "height": 578.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "hero",
+      "scrollY": 0,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 875.078125,
+          "bottom": 1521.46875,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 893.078125,
+          "bottom": 1503.265625,
+          "height": 610.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "boundary",
+      "scrollY": 295,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 580.078125,
+          "bottom": 1226.46875,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 598.078125,
+          "bottom": 1208.265625,
+          "height": 610.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "problem",
+      "scrollY": 831,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 248,
+          "bottom": 858.1875,
+          "height": 610.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "transition",
+      "scrollY": 1405,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "0.5010",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "0.499032"
+        },
+        {
+          "id": "workflow",
+          "top": 248,
+          "bottom": 858.1875,
+          "height": 610.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "workflow",
+      "scrollY": 1993,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "0"
+        },
+        {
+          "id": "workflow",
+          "top": 248,
+          "bottom": 858.1875,
+          "height": 610.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "release",
+      "scrollY": 3075,
+      "layout": "pinned",
+      "step": "1",
+      "transition": "1.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -649.921875,
+          "bottom": -3.53125,
+          "height": 646.390625,
+          "inert": true,
+          "opacity": "0"
+        },
+        {
+          "id": "workflow",
+          "top": -631.921875,
+          "bottom": -21.734375,
+          "height": 610.1875,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "mode": "rail",
+      "name": "reverse",
+      "scrollY": 831,
+      "layout": "pinned",
+      "step": "0",
+      "transition": "0.0000",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 230,
+          "bottom": 876.390625,
+          "height": 646.390625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 248,
+          "bottom": 858.1875,
+          "height": 610.1875,
+          "inert": true,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 810
+    },
+    {
+      "action": "switch-relay",
+      "mode": "relay",
+      "scroll": 0
+    },
+    {
+      "action": "workflow-nav",
+      "step": "1",
+      "transition": "1.0000"
+    },
+    {
+      "action": "replay",
+      "scroll": 0
+    },
+    {
+      "action": "dialog",
+      "open": true
+    },
+    {
+      "action": "gallery",
+      "src": "case-study/assets/05-prompt-optimization-1280x800.png"
+    },
+    {
+      "mode": "relay",
+      "name": "mobile-problem",
+      "scrollY": 687,
+      "layout": "natural",
+      "step": "0",
+      "transition": "0",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 139.515625,
+          "bottom": 1093.28125,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 1121.28125,
+          "bottom": 2263.015625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "0.45"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "relay",
+      "name": "mobile-workflow",
+      "scrollY": 1668,
+      "layout": "natural",
+      "step": "1",
+      "transition": "1",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -841.484375,
+          "bottom": 112.28125,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 140.28125,
+          "bottom": 1282.015625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "focus",
+      "name": "mobile-problem",
+      "scrollY": 695,
+      "layout": "natural",
+      "step": "0",
+      "transition": "0",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 139.515625,
+          "bottom": 1093.28125,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 1121.28125,
+          "bottom": 2263.015625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "0.45"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "focus",
+      "name": "mobile-workflow",
+      "scrollY": 1676,
+      "layout": "natural",
+      "step": "1",
+      "transition": "1",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -841.484375,
+          "bottom": 112.28125,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 140.28125,
+          "bottom": 1282.015625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "rail",
+      "name": "mobile-problem",
+      "scrollY": 761,
+      "layout": "natural",
+      "step": "0",
+      "transition": "0",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 139.90625,
+          "bottom": 1093.671875,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 1121.671875,
+          "bottom": 2263.40625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "0.45"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "rail",
+      "name": "mobile-workflow",
+      "scrollY": 1743,
+      "layout": "natural",
+      "step": "1",
+      "transition": "1",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": -842.09375,
+          "bottom": 111.671875,
+          "height": 953.765625,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 139.671875,
+          "bottom": 1281.40625,
+          "height": 1141.734375,
+          "inert": false,
+          "opacity": "1"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 614
+    },
+    {
+      "mode": "relay",
+      "name": "short",
+      "scrollY": 645,
+      "layout": "natural",
+      "step": "0",
+      "transition": "0",
+      "overflow": 0,
+      "panels": [
+        {
+          "id": "problem",
+          "top": 139.546875,
+          "bottom": 1077.234375,
+          "height": 937.6875,
+          "inert": false,
+          "opacity": "1"
+        },
+        {
+          "id": "workflow",
+          "top": 1105.234375,
+          "bottom": 1816.125,
+          "height": 710.890625,
+          "inert": false,
+          "opacity": "0.45"
+        }
+      ],
+      "charts": [
+        {
+          "nodes": 3,
+          "products": 2
+        },
+        {
+          "nodes": 5,
+          "products": 4
+        }
+      ],
+      "stage": 578
+    },
+    {
+      "action": "reduced-motion",
+      "layout": "natural",
+      "states": [
+        {
+          "id": "problem",
+          "inert": false,
+          "opacity": "1",
+          "transform": "none"
+        },
+        {
+          "id": "workflow",
+          "inert": false,
+          "opacity": "1",
+          "transform": "none"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "fails": []
+}

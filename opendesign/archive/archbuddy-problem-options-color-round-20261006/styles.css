@@ -1,0 +1,64 @@
+:root{--paper:#f5f7f4;--ink:#24332d;--muted:#63746a;--green:#25634b;--forest:#153b2d;--sage:#e8f0ec;--line:#d8e1da;--break:#a55442;--pink:#f3eae6;--sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}button,a{-webkit-tap-highlight-color:transparent}button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px solid #95baa4;outline-offset:4px}.container{width:min(1240px,calc(100% - 80px));margin-inline:auto}.icon{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.brand-bar{background:var(--forest);color:white}.brand-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:white;font-size:24px;font-weight:650;letter-spacing:-.04em}.brand img{display:block;border-radius:7px}.brand-inner>p{font-size:14px;color:#d5e4da}
+.preview-controls{background:#fff;border-bottom:1px solid var(--line);padding-block:22px 19px}.variant-tabs{display:flex;gap:12px;flex-wrap:wrap}.variant-tabs button{display:flex;align-items:center;gap:15px;border:1px solid #b5c9bc;border-radius:4px;padding:12px 20px;font-size:15px;font-weight:650;color:var(--forest);background:#fff;cursor:pointer;min-height:48px}.variant-tabs button span{font-size:16px;font-weight:500}.variant-tabs button[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:#fff}.variant-tabs button:hover{border-color:var(--green)}.variant-description{font-size:14px;line-height:1.6;color:var(--muted);margin-top:14px}
+.variant[hidden]{display:none}.problem-section{padding:52px 0 58px}.section-heading{margin-bottom:34px}.section-label{display:flex;align-items:center;gap:14px;font-size:25px;font-weight:650;margin-bottom:22px;letter-spacing:-.025em}.section-label>span{display:grid;place-items:center;width:44px;height:44px;border-radius:5px;background:var(--green);color:#fff;font-size:22px;letter-spacing:-.03em}.section-heading h2{font-size:43px;line-height:1.22;font-weight:600;letter-spacing:-.055em}.pain{color:var(--break);font-weight:600;letter-spacing:-.04em;line-height:1.5;font-size:28px}.stage{min-width:0;color:var(--forest);text-align:center}.stage h3{font-size:20px;line-height:1.45;font-weight:600;letter-spacing:-.025em}.stage-note{font-size:14px;line-height:1.5;color:var(--muted);margin-top:5px}.break{min-width:0;text-align:center;color:var(--break);padding-inline:4px}.break p{font-size:13px;line-height:1.5;font-weight:600;white-space:nowrap;margin-top:6px;letter-spacing:-.025em}.break-line{display:flex;align-items:center;gap:2px}.break-line>span{border-top:2px dashed #ca9d90;flex:1}.break-line .gap-icon{width:17px;height:17px}.break-line>.icon:last-child{width:23px;height:23px}
+/* 方案一：流程与结论共享一张图面。 */
+.unified-board{background:#fff;border:1px solid #c8d7cd;border-radius:6px;overflow:hidden}.horizontal-route{display:grid;grid-template-columns:1fr 110px 1fr 110px 1.15fr 110px 1.15fr 110px 1fr;align-items:center;padding:36px 28px 38px;gap:0}.horizontal-route>.stage{min-height:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 6px;border-bottom:2px solid #b3c6b9}.horizontal-route>.break{transform:translateY(10px)}.shared-pains{background:var(--pink);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:30px 0 34px;border-top:1px solid #dfccc5}.shared-pain{padding:0 30px;min-width:0}.shared-pain+.shared-pain{border-left:1px solid #d8b9ae}.shared-pain .pain{font-size:26px}
+.preview-footer{color:var(--muted);font-size:13px;line-height:1.6;padding:20px 0 32px;border-top:1px solid var(--line)}
+@media(max-width:1100px){.container{width:calc(100% - 56px)}.horizontal-route{grid-template-columns:1fr 91px 1fr 91px 1.1fr 91px 1.1fr 91px 1fr;padding-inline:20px}.horizontal-route .stage h3{font-size:17px}.horizontal-route .break p{font-size:12px}.shared-pain{padding-inline:22px}.shared-pain .pain{font-size:22px}.section-heading h2{font-size:38px}.diagnosis-board{padding-inline:26px}.diagnosis-row,.row-transition{gap:34px}.diagnosis-pain .pain{font-size:24px}.paired-route{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr)}.paired-route .stage h3{font-size:18px}.split-board{grid-template-columns:300px minmax(0,1fr)}.vertical-route{padding-inline:24px}.split-pains{padding-inline:32px}.split-pain .pain{font-size:28px}}
+@media(max-width:800px){.horizontal-route{grid-template-columns:1fr;padding:24px}.horizontal-route>.stage{min-height:60px;border-bottom:0;padding-block:12px}.horizontal-route>.break{transform:none;display:flex;align-items:center;justify-content:center;gap:14px;height:52px}.horizontal-route .break-line{width:55px;transform:rotate(90deg)}.horizontal-route .break p{font-size:13px;margin-top:0}.horizontal-route .stage h3{font-size:20px}.horizontal-route .stage h3 br{display:none}.shared-pains{grid-template-columns:1fr;padding:0 24px}.shared-pain{padding:24px 0}.shared-pain+.shared-pain{border-left:0;border-top:1px solid #d8b9ae}.shared-pain .pain{font-size:24px}.diagnosis-row{grid-template-columns:1fr;gap:20px;padding:24px 0;min-height:0}.row-transition{display:flex;justify-content:center;height:46px}.diagnosis-pain .pain{font-size:26px}.paired-route{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr)}.split-board{grid-template-columns:1fr}.vertical-route{padding:24px;max-width:none}.vertical-route .stage{max-width:340px;width:100%;align-self:center}.vertical-route>.break{height:52px}.split-pains{padding:0 24px}.split-pain{padding:28px 0}.split-pain .pain{font-size:27px}}
+@media(max-width:760px){.container{width:calc(100% - 40px)}.brand-inner{height:62px}.brand{font-size:22px;gap:10px}.brand img{width:32px;height:32px}.brand-inner>p{font-size:12px}.preview-controls{padding-block:16px}.variant-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.variant-tabs button{padding:10px 4px;display:flex;flex-direction:column;gap:4px;font-size:13px;min-height:62px}.variant-tabs button span{font-size:13px}.variant-description{font-size:13px;margin-top:12px;min-height:42px}.problem-section{padding:36px 0 40px}.section-heading{margin-bottom:25px}.section-label{font-size:23px;gap:12px;margin-bottom:21px}.section-label>span{width:40px;height:40px;font-size:20px}.section-heading h2{font-size:33px;line-height:1.25}.diagnosis-board{padding:0 20px}.diagnosis-pain .pain{font-size:24px}.paired-route{grid-template-columns:minmax(0,1fr) 86px minmax(0,1fr)}.paired-route .stage h3{font-size:16px}.paired-route>.stage{min-height:100px;padding-inline:5px}.paired-route .break p{font-size:11px}.paired-route .break-line{gap:1px}.paired-route .gap-icon{width:14px;height:14px}.paired-route .break-line>.icon:last-child{width:20px;height:20px}.stage-note{font-size:12px}.final-stage>.stage{max-width:none;min-height:76px}.final-stage .stage h3{font-size:18px}.shared-pains{padding-inline:20px}.split-pains{padding-inline:20px}.split-pain .pain{font-size:24px}.preview-footer{font-size:12px}}
+@media(max-width:380px){.brand-inner>p{font-size:11px}.brand{font-size:21px}.section-label{font-size:22px}.section-heading h2{font-size:30px}.diagnosis-board{padding-inline:16px}.paired-route{grid-template-columns:minmax(0,1fr) 78px minmax(0,1fr)}.paired-route .stage h3{font-size:15px}.diagnosis-pain .pain{font-size:23px}.shared-pain .pain,.split-pain .pain{font-size:23px}.shared-pains,.split-pains{padding-inline:18px}}
+
+/* 第二轮版本二：五步按覆盖范围直接对齐三条核心痛点。 */
+.phase-board{display:grid;grid-template-columns:.9fr 90px .9fr 90px 1fr 90px 1fr 90px 1.7fr;background:#fff;border:1px solid #c8d7cd;border-radius:6px;overflow:hidden}
+.phase-board>.stage{grid-row:1;min-height:158px;padding:26px 8px 38px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.phase-board>.break{grid-row:1;align-self:center;transform:translateY(-4px)}
+.phase-board>.break p{font-size:12px}
+.phase-pain{grid-row:2;background:var(--pink);position:relative;padding:30px 26px 33px;border-top:1px solid #dfccc5;min-width:0}
+.phase-pain+.phase-pain{border-left:1px solid #dfccc5}
+.phase-pain::before{content:"";position:absolute;left:20px;right:20px;top:-25px;height:12px;border:1px solid #bc887a;border-top:0;border-radius:0 0 3px 3px}
+.phase-pain::after{content:"";position:absolute;top:-12px;left:50%;height:12px;border-left:1px solid #bc887a}
+.phase-pain-one{grid-column:1/4}.phase-pain-two{grid-column:4/8}.phase-pain-three{grid-column:8/10}
+.phase-pain .pain{font-size:25px}
+/* 第二轮版本三：三条核心痛点组成同一块连续大字陈述。 */
+.narrative-board{background:#fff;border:1px solid #c8d7cd;border-radius:6px;overflow:hidden}
+.narrative-board .horizontal-route{padding-bottom:28px}
+.narrative-pains{padding:26px 40px 33px;border-top:1px solid #dfccc5;background:#f7f0ec;display:grid;gap:6px}
+.narrative-pains .pain{font-size:35px;line-height:1.55}
+@media(max-width:1100px){.phase-board{grid-template-columns:.9fr 80px .9fr 80px 1fr 80px 1fr 80px 1.7fr}.phase-board>.stage h3{font-size:18px}.phase-board>.break p{font-size:11px}.phase-pain{padding-inline:20px}.phase-pain .pain{font-size:22px}.narrative-pains{padding-inline:28px}.narrative-pains .pain{font-size:29px}}
+@media(max-width:800px){.phase-board{display:flex;flex-direction:column}.phase-board>.stage{min-height:70px;padding:14px 18px}.phase-board>.stage h3{font-size:20px}.phase-board>.stage h3 br{display:none}.phase-board>.break{transform:none;align-self:stretch;display:flex;align-items:center;justify-content:center;gap:14px;height:52px}.phase-board>.break .break-line{width:55px;transform:rotate(90deg)}.phase-board>.break p{margin-top:0;font-size:13px}.phase-pain{padding:24px;border-bottom:1px solid #dfccc5;border-left:0!important}.phase-pain::before,.phase-pain::after{display:none}.phase-pain .pain{font-size:24px}.phase-save{order:1}.phase-save-break{order:2}.phase-design{order:3}.phase-pain-one{order:4}.phase-intent-break{order:5}.phase-prompt{order:6}.phase-evaluate-break{order:7}.phase-generate{order:8}.phase-pain-two{order:9}.phase-asset-break{order:10}.phase-reuse{order:11}.phase-pain-three{order:12;border-bottom:0}.narrative-pains{padding:26px 24px;gap:24px}.narrative-pains .pain{font-size:25px;line-height:1.5}}
+@media(max-width:760px){.phase-pain{padding-inline:20px}.narrative-pains{padding-inline:20px}.narrative-pains .pain{font-size:24px}}
+@media(max-width:380px){.phase-pain{padding-inline:18px}.phase-pain .pain,.narrative-pains .pain{font-size:23px}.narrative-pains{padding-inline:18px}}
+
+@media(max-width:800px){.narrative-pains .pain>span{display:block}}
+
+/* 第三轮：采用同一对应分区结构，上下统一底色；仅配色与文字对齐/间距微调。 */
+.palette-board{background:var(--diagram-bg);border-color:var(--diagram-line)}
+.palette-board>.stage{color:var(--diagram-ink)}
+.palette-board .stage-note{color:var(--diagram-muted)}
+.palette-board>.break{color:var(--pain-ink)}
+.palette-board .break-line>span{border-color:var(--trace)}
+.palette-board .phase-pain{background:var(--diagram-bg);border-color:var(--diagram-line)}
+.palette-board .phase-pain+.phase-pain{border-left-color:var(--diagram-line)}
+.palette-board .phase-pain::before,.palette-board .phase-pain::after{border-color:var(--trace)}
+.palette-board .pain{color:var(--pain-ink)}
+.warm-board{--diagram-bg:#f4f2ec;--diagram-ink:#153b2d;--pain-ink:#a55442;--trace:#b68a78;--diagram-line:#ddd3c7;--diagram-muted:#687567}
+.warm-board>.stage{min-height:148px}
+.warm-board .phase-pain{padding:27px 26px 30px}
+.warm-board .pain{font-size:26px;line-height:1.5}
+.sage-board{--diagram-bg:#eaf0e8;--diagram-ink:#214832;--pain-ink:#9c5b49;--trace:#b38b76;--diagram-line:#c9d8c9;--diagram-muted:#5f7562}
+.sage-board>.stage{min-height:162px}
+.sage-board .phase-pain{padding:30px 26px;text-align:center}
+.sage-board .pain{font-size:25px;line-height:1.55}
+.forest-board{--diagram-bg:#1d3b2f;--diagram-ink:#edf4ec;--pain-ink:#e5c7b4;--trace:#bf9b84;--diagram-line:#486251;--diagram-muted:#b6c6b8}
+.forest-board>.stage{min-height:154px}
+.forest-board .phase-pain{padding:28px 26px 32px}
+.forest-board .pain{font-size:28px;line-height:1.45}
+@media(max-width:1100px){.warm-board .pain,.sage-board .pain{font-size:22px}.forest-board .pain{font-size:24px}.palette-board .phase-pain{padding-inline:20px}}
+@media(max-width:800px){.palette-board>.stage{min-height:70px;padding:14px 18px}.palette-board .phase-pain{padding:24px 20px}.palette-board .phase-pain .pain{font-size:24px;line-height:1.5}.forest-board .phase-pain .pain{font-size:25px}}
+@media(max-width:380px){.palette-board .phase-pain{padding-inline:18px}.palette-board .phase-pain .pain{font-size:23px}}
+
+/* 用户最终选择：暖白版去掉外框和分区描边，括线保留表达对应关系。 */
+.warm-board{border:0}.warm-board .phase-pain{border:0}

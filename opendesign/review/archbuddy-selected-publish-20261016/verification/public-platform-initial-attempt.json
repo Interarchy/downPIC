@@ -1,0 +1,35 @@
+{
+  "generated": "2026-10-15T17:35:26.586Z",
+  "scope": "public",
+  "base": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=selected-workflows-20261016",
+  "cases": [
+    {
+      "width": 1440,
+      "errors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failedRequests": [],
+      "httpErrors": [
+        {
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=selected-workflows-20261016",
+          "status": 404
+        }
+      ],
+      "documents": [
+        {
+          "url": "https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=selected-workflows-20261016",
+          "status": 404,
+          "type": "text/html; charset=utf-8",
+          "disposition": null
+        }
+      ],
+      "chapters": [],
+      "initialHttp": 404
+    }
+  ],
+  "failures": [
+    "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#workflow .ab-workflow-chart') to be visible\u001b[22m\n"
+  ]
+}

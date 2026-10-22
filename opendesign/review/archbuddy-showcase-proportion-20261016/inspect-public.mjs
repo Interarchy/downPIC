@@ -1,0 +1,10 @@
+import {createRequire} from 'node:module';
+const require=createRequire('C:/Users/lee/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/runtime.cjs');
+const {chromium}=require('playwright');
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+const page=await browser.newPage({viewport:{width:2436,height:1240}});
+const response=await page.goto('https://archbuddy-dev-showcase-dev-mel-d9guu8bpu44029179.webapps.tcloudbase.com/?v=proportion-white-install-20261016',{waitUntil:'load'});
+await page.waitForTimeout(4000);
+console.log(JSON.stringify({status:response.status(),url:page.url(),title:await page.title(),text:(await page.locator('body').innerText()).slice(0,1000),links:await page.locator('a,button').evaluateAll(es=>es.slice(0,20).map(e=>({tag:e.tagName,text:e.textContent,href:e.href})))},null,2));
+await page.screenshot({path:'opendesign/review/archbuddy-showcase-proportion-20261016/public-inspect.png'});
+await browser.close();

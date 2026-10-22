@@ -1,0 +1,1260 @@
+[
+  {
+    "variant": "one",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "failures": [],
+    "metrics": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": 0,
+      "variant": "one",
+      "flows": [
+        {
+          "flow": "design",
+          "rect": {
+            "x": 105,
+            "y": 544.890625,
+            "width": 592,
+            "height": 328,
+            "right": 697,
+            "bottom": 872.890625
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "采集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 180,
+                "y": 553.890625,
+                "width": 146,
+                "height": 98,
+                "right": 326,
+                "bottom": 651.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "create",
+              "text": "方案创作\n\n由设计师完成",
+              "rect": {
+                "x": 476,
+                "y": 553.890625,
+                "width": 146,
+                "height": 98,
+                "right": 622,
+                "bottom": 651.890625
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀参考图库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 328,
+                "y": 757.890625,
+                "width": 146,
+                "height": 98,
+                "right": 474,
+                "bottom": 855.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            }
+          ],
+          "opportunities": 2,
+          "edges": [
+            {
+              "id": "capture-create",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "create-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用参考",
+              "rect": {
+                "x": 222,
+                "y": 701.6953125,
+                "width": 62,
+                "height": 22.390625,
+                "right": 284,
+                "bottom": 724.0859375
+              }
+            }
+          ]
+        },
+        {
+          "flow": "ai",
+          "rect": {
+            "x": 743,
+            "y": 544.890625,
+            "width": 592,
+            "height": 328,
+            "right": 1335,
+            "bottom": 872.890625
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "收集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 764.71875,
+                "y": 553.890625,
+                "width": 146,
+                "height": 98,
+                "right": 910.71875,
+                "bottom": 651.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "prompt",
+              "text": "反推提示词\nArchBuddy\nAI 反推",
+              "rect": {
+                "x": 966,
+                "y": 553.890625,
+                "width": 146,
+                "height": 98,
+                "right": 1112,
+                "bottom": 651.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "generate",
+              "text": "生成 AI 效果图\n\n外部工具完成\nArchBuddy 未介入",
+              "rect": {
+                "x": 1167.265625,
+                "y": 553.890625,
+                "width": 146,
+                "height": 98,
+                "right": 1313.265625,
+                "bottom": 651.890625
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "iterate",
+              "text": "迭代提示词\nArchBuddy\nAI 评估",
+              "rect": {
+                "x": 1167.265625,
+                "y": 757.890625,
+                "width": 146,
+                "height": 98,
+                "right": 1313.265625,
+                "bottom": 855.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀提示词库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 764.71875,
+                "y": 757.890625,
+                "width": 146,
+                "height": 98,
+                "right": 910.71875,
+                "bottom": 855.890625
+              },
+              "background": "rgb(228, 238, 227)"
+            }
+          ],
+          "opportunities": 4,
+          "edges": [
+            {
+              "id": "capture-prompt",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "prompt-generate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "generate-iterate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-generate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "评估",
+              "rect": {
+                "x": 1196.265625,
+                "y": 693.6953125,
+                "width": 38,
+                "height": 22.390625,
+                "right": 1234.265625,
+                "bottom": 716.0859375
+              }
+            },
+            {
+              "text": "再生成",
+              "rect": {
+                "x": 1240.265625,
+                "y": 693.6953125,
+                "width": 50,
+                "height": 22.390625,
+                "right": 1290.265625,
+                "bottom": 716.0859375
+              }
+            },
+            {
+              "text": "复用图词",
+              "rect": {
+                "x": 806.71875,
+                "y": 693.6953125,
+                "width": 62,
+                "height": 22.390625,
+                "right": 868.71875,
+                "bottom": 716.0859375
+              }
+            }
+          ]
+        }
+      ],
+      "markColors": [
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)"
+      ],
+      "imageSources": [
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        }
+      ],
+      "overflowElements": []
+    }
+  },
+  {
+    "variant": "two",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "failures": [],
+    "metrics": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": 0,
+      "variant": "two",
+      "flows": [
+        {
+          "flow": "design",
+          "rect": {
+            "x": 317,
+            "y": 498.09375,
+            "width": 1018,
+            "height": 183,
+            "right": 1335,
+            "bottom": 681.09375
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "采集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 325,
+                "y": 506.09375,
+                "width": 164,
+                "height": 88,
+                "right": 489,
+                "bottom": 594.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            },
+            {
+              "id": "create",
+              "text": "方案创作\n\n由设计师完成",
+              "rect": {
+                "x": 744,
+                "y": 506.09375,
+                "width": 164,
+                "height": 88,
+                "right": 908,
+                "bottom": 594.09375
+              },
+              "background": "rgb(37, 75, 59)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀参考图库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 1163,
+                "y": 506.09375,
+                "width": 164,
+                "height": 88,
+                "right": 1327,
+                "bottom": 594.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          ],
+          "opportunities": 2,
+          "edges": [
+            {
+              "id": "capture-create",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "create-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用参考",
+              "rect": {
+                "x": 795,
+                "y": 634.8984375,
+                "width": 62,
+                "height": 22.390625,
+                "right": 857,
+                "bottom": 657.2890625
+              }
+            }
+          ]
+        },
+        {
+          "flow": "ai",
+          "rect": {
+            "x": 317,
+            "y": 720.09375,
+            "width": 1018,
+            "height": 236,
+            "right": 1335,
+            "bottom": 956.09375
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "收集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 325,
+                "y": 728.09375,
+                "width": 152,
+                "height": 88,
+                "right": 477,
+                "bottom": 816.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            },
+            {
+              "id": "prompt",
+              "text": "反推提示词\nArchBuddy\nAI 反推",
+              "rect": {
+                "x": 537.5,
+                "y": 728.09375,
+                "width": 152,
+                "height": 88,
+                "right": 689.5,
+                "bottom": 816.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            },
+            {
+              "id": "generate",
+              "text": "生成 AI 效果图\n\n外部工具完成\nArchBuddy 未介入",
+              "rect": {
+                "x": 750,
+                "y": 728.09375,
+                "width": 152,
+                "height": 88,
+                "right": 902,
+                "bottom": 816.09375
+              },
+              "background": "rgb(37, 75, 59)"
+            },
+            {
+              "id": "iterate",
+              "text": "迭代提示词\nArchBuddy\nAI 评估",
+              "rect": {
+                "x": 962.5,
+                "y": 728.09375,
+                "width": 152,
+                "height": 88,
+                "right": 1114.5,
+                "bottom": 816.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀提示词库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 1175,
+                "y": 728.09375,
+                "width": 152,
+                "height": 88,
+                "right": 1327,
+                "bottom": 816.09375
+              },
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          ],
+          "opportunities": 4,
+          "edges": [
+            {
+              "id": "capture-prompt",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "prompt-generate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "generate-iterate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-generate",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用图词",
+              "rect": {
+                "x": 795,
+                "y": 913.8984375,
+                "width": 62,
+                "height": 22.390625,
+                "right": 857,
+                "bottom": 936.2890625
+              }
+            },
+            {
+              "text": "调整后再生成",
+              "rect": {
+                "x": 889.25,
+                "y": 847.8984375,
+                "width": 86,
+                "height": 22.390625,
+                "right": 975.25,
+                "bottom": 870.2890625
+              }
+            }
+          ]
+        }
+      ],
+      "markColors": [
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)"
+      ],
+      "imageSources": [
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        }
+      ],
+      "overflowElements": []
+    }
+  },
+  {
+    "variant": "three",
+    "width": 1440,
+    "status": 200,
+    "errors": [],
+    "failures": [],
+    "metrics": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "overflow": 0,
+      "variant": "three",
+      "flows": [
+        {
+          "flow": "design",
+          "rect": {
+            "x": 105,
+            "y": 544.890625,
+            "width": 592,
+            "height": 380,
+            "right": 697,
+            "bottom": 924.890625
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "采集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 330,
+                "y": 548.890625,
+                "width": 142,
+                "height": 88,
+                "right": 472,
+                "bottom": 636.890625
+              },
+              "background": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "create",
+              "text": "方案创作\n\n由设计师完成",
+              "rect": {
+                "x": 450.375,
+                "y": 757.390625,
+                "width": 142,
+                "height": 88,
+                "right": 592.375,
+                "bottom": 845.390625
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀参考图库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 209.609375,
+                "y": 757.390625,
+                "width": 142,
+                "height": 88,
+                "right": 351.609375,
+                "bottom": 845.390625
+              },
+              "background": "rgb(255, 175, 69)"
+            }
+          ],
+          "opportunities": 2,
+          "edges": [
+            {
+              "id": "main-cycle",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用参考",
+              "rect": {
+                "x": 371.875,
+                "y": 718.390625,
+                "width": 58.25,
+                "height": 19,
+                "right": 430.125,
+                "bottom": 737.390625
+              }
+            }
+          ]
+        },
+        {
+          "flow": "ai",
+          "rect": {
+            "x": 743,
+            "y": 544.890625,
+            "width": 592,
+            "height": 380,
+            "right": 1335,
+            "bottom": 924.890625
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "收集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 968,
+                "y": 548.890625,
+                "width": 142,
+                "height": 88,
+                "right": 1110,
+                "bottom": 636.890625
+              },
+              "background": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "prompt",
+              "text": "反推提示词\nArchBuddy\nAI 反推",
+              "rect": {
+                "x": 1100.1875,
+                "y": 644.921875,
+                "width": 142,
+                "height": 88,
+                "right": 1242.1875,
+                "bottom": 732.921875
+              },
+              "background": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "generate",
+              "text": "生成 AI 效果图\n\n外部工具完成\nArchBuddy 未介入",
+              "rect": {
+                "x": 1049.6875,
+                "y": 800.34375,
+                "width": 142,
+                "height": 88,
+                "right": 1191.6875,
+                "bottom": 888.34375
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "iterate",
+              "text": "迭代提示词\nArchBuddy\nAI 评估",
+              "rect": {
+                "x": 886.296875,
+                "y": 800.34375,
+                "width": 142,
+                "height": 88,
+                "right": 1028.296875,
+                "bottom": 888.34375
+              },
+              "background": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀提示词库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 835.796875,
+                "y": 644.921875,
+                "width": 142,
+                "height": 88,
+                "right": 977.796875,
+                "bottom": 732.921875
+              },
+              "background": "rgb(255, 175, 69)"
+            }
+          ],
+          "opportunities": 4,
+          "edges": [
+            {
+              "id": "main-cycle",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-generate",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用图词",
+              "rect": {
+                "x": 1009.875,
+                "y": 707.390625,
+                "width": 58.25,
+                "height": 19,
+                "right": 1068.125,
+                "bottom": 726.390625
+              }
+            },
+            {
+              "text": "调整后再生成",
+              "rect": {
+                "x": 996,
+                "y": 775.6953125,
+                "width": 86,
+                "height": 22.390625,
+                "right": 1082,
+                "bottom": 798.0859375
+              }
+            }
+          ]
+        }
+      ],
+      "markColors": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)"
+      ],
+      "imageSources": [
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        }
+      ],
+      "overflowElements": []
+    }
+  },
+  {
+    "variant": "one",
+    "width": 360,
+    "status": 200,
+    "errors": [],
+    "failures": [],
+    "metrics": {
+      "viewport": 360,
+      "documentWidth": 360,
+      "overflow": 0,
+      "variant": "one",
+      "flows": [
+        {
+          "flow": "design",
+          "rect": {
+            "x": 16,
+            "y": 515.375,
+            "width": 328,
+            "height": 328,
+            "right": 344,
+            "bottom": 843.375
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "采集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 36.5,
+                "y": 524.375,
+                "width": 123,
+                "height": 98,
+                "right": 159.5,
+                "bottom": 622.375
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "create",
+              "text": "方案创作\n\n由设计师完成",
+              "rect": {
+                "x": 200.5,
+                "y": 524.375,
+                "width": 123,
+                "height": 98,
+                "right": 323.5,
+                "bottom": 622.375
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀参考图库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 118.5,
+                "y": 728.375,
+                "width": 123,
+                "height": 98,
+                "right": 241.5,
+                "bottom": 826.375
+              },
+              "background": "rgb(228, 238, 227)"
+            }
+          ],
+          "opportunities": 2,
+          "edges": [
+            {
+              "id": "capture-create",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "create-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "复用参考",
+              "rect": {
+                "x": 72,
+                "y": 673.78125,
+                "width": 52,
+                "height": 19.1875,
+                "right": 124,
+                "bottom": 692.96875
+              }
+            }
+          ]
+        },
+        {
+          "flow": "ai",
+          "rect": {
+            "x": 16,
+            "y": 927.375,
+            "width": 328,
+            "height": 402,
+            "right": 344,
+            "bottom": 1329.375
+          },
+          "nodes": [
+            {
+              "id": "capture",
+              "text": "收集参考图\nArchBuddy\n采集提效",
+              "rect": {
+                "x": 36.5,
+                "y": 934.375,
+                "width": 123,
+                "height": 98,
+                "right": 159.5,
+                "bottom": 1032.375
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "prompt",
+              "text": "反推提示词\nArchBuddy\nAI 反推",
+              "rect": {
+                "x": 200.5,
+                "y": 934.375,
+                "width": 123,
+                "height": 98,
+                "right": 323.5,
+                "bottom": 1032.375
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "generate",
+              "text": "生成 AI 效果图\n\n外部工具完成\nArchBuddy 未介入",
+              "rect": {
+                "x": 200.5,
+                "y": 1076.375,
+                "width": 123,
+                "height": 98,
+                "right": 323.5,
+                "bottom": 1174.375
+              },
+              "background": "rgb(245, 247, 244)"
+            },
+            {
+              "id": "iterate",
+              "text": "迭代提示词\nArchBuddy\nAI 评估",
+              "rect": {
+                "x": 200.5,
+                "y": 1218.375,
+                "width": 123,
+                "height": 98,
+                "right": 323.5,
+                "bottom": 1316.375
+              },
+              "background": "rgb(228, 238, 227)"
+            },
+            {
+              "id": "library",
+              "text": "沉淀提示词库\nArchBuddy\n沉淀复用",
+              "rect": {
+                "x": 36.5,
+                "y": 1218.375,
+                "width": 123,
+                "height": 98,
+                "right": 159.5,
+                "bottom": 1316.375
+              },
+              "background": "rgb(228, 238, 227)"
+            }
+          ],
+          "opportunities": 4,
+          "edges": [
+            {
+              "id": "capture-prompt",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "prompt-generate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "generate-iterate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-generate",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "iterate-library",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "id": "library-capture",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "arrows": [
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            },
+            {
+              "color": "rgb(255, 175, 69)",
+              "stroke": "rgb(255, 175, 69)"
+            }
+          ],
+          "labels": [
+            {
+              "text": "评估",
+              "rect": {
+                "x": 222,
+                "y": 1186.78125,
+                "width": 30,
+                "height": 19.1875,
+                "right": 252,
+                "bottom": 1205.96875
+              }
+            },
+            {
+              "text": "再生成",
+              "rect": {
+                "x": 266.5,
+                "y": 1186.78125,
+                "width": 41,
+                "height": 19.1875,
+                "right": 307.5,
+                "bottom": 1205.96875
+              }
+            },
+            {
+              "text": "复用图词",
+              "rect": {
+                "x": 72,
+                "y": 1115.78125,
+                "width": 52,
+                "height": 19.1875,
+                "right": 124,
+                "bottom": 1134.96875
+              }
+            }
+          ]
+        }
+      ],
+      "markColors": [
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)",
+        "rgb(255, 175, 69)"
+      ],
+      "imageSources": [
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        },
+        {
+          "src": "assets/brand-mark.svg",
+          "complete": true,
+          "width": 150
+        }
+      ],
+      "overflowElements": []
+    }
+  }
+]

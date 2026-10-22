@@ -1,0 +1,219 @@
+{
+  "checks": [
+    {
+      "type": "button",
+      "width": 1440,
+      "key": "two",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "button",
+      "width": 1440,
+      "key": "three",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "button",
+      "width": 1440,
+      "key": "one",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "button",
+      "width": 360,
+      "key": "two",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "button",
+      "width": 360,
+      "key": "three",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "button",
+      "width": 360,
+      "key": "one",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "hash",
+      "width": 360,
+      "key": "three",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "hash",
+      "width": 360,
+      "key": "two",
+      "pass": true,
+      "nodes": 8
+    },
+    {
+      "type": "hash",
+      "width": 360,
+      "key": "one",
+      "pass": true,
+      "nodes": 8
+    }
+  ],
+  "errors": [],
+  "summary": [
+    {
+      "variant": "one",
+      "width": 1440,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "146 x 98"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "two",
+      "width": 1440,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "164 x 88",
+        "152 x 88"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "three",
+      "width": 1440,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "142 x 88"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "one",
+      "width": 360,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "123 x 98"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "two",
+      "width": 360,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "222 x 94"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "three",
+      "width": 360,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "123 x 98"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    },
+    {
+      "variant": "two",
+      "width": 780,
+      "overflow": 0,
+      "overflowElementCount": 0,
+      "nodeSizes": [
+        "164 x 88",
+        "120.390625 x 88"
+      ],
+      "wireColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "arrowColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "productColors": [
+        "rgb(255, 175, 69)"
+      ],
+      "labelNodeCollisions": [],
+      "errors": [],
+      "failures": []
+    }
+  ]
+}

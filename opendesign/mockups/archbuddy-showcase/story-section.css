@@ -1,0 +1,61 @@
+/* 已选方案：浅底章节接力与01三处断点逐次显露。 */
+:root{--story-top:100px;--story-stage:660px}
+.story-chapter{position:relative;padding:48px 28px 56px;background:#e4eae2}
+.story-pin{position:relative;width:min(1360px,100%);margin-inline:auto}
+.story-shell{transform-origin:center top}
+.story-window{position:relative;min-width:0;background:#153b2d;border-radius:12px;overflow:hidden}
+.story-panel{margin:0}
+.story-panel>.container{width:calc(100% - 64px)}
+.story-progress{display:flex;align-items:center;justify-content:center;gap:15px;height:36px;color:#375a45;font-size:11px}
+.story-progress-label{font:inherit;border:0;padding:4px 0;background:none;color:inherit}
+.story-progress-track{width:112px;height:2px;background:#bbccbd;overflow:hidden}
+.story-progress-track i{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:#25634b}
+body[data-story-layout="pinned"] .story-pin{position:sticky;top:var(--story-top)}
+body[data-story-layout="pinned"] .story-window{height:var(--story-stage)}
+body[data-story-layout="pinned"] .story-panel{position:absolute;inset:0 0 auto;width:100%;transform-origin:center top;will-change:transform,opacity;contain:layout style}
+body[data-story-layout="pinned"] #problem,body[data-story-layout="pinned"] #workflow{padding:30px 0 24px}
+body[data-story-layout="pinned"] #problem .section-heading{padding-bottom:18px}
+body[data-story-layout="pinned"] #problem .section-heading h2,body[data-story-layout="pinned"] #workflow .section-heading h2{font-size:38px;line-height:1.2}
+body[data-story-layout="pinned"] #problem .section-label,body[data-story-layout="pinned"] #workflow .section-label{font-size:25px;margin-bottom:14px;gap:10px;font-weight:650}
+body[data-story-layout="pinned"] #problem .section-label>span,body[data-story-layout="pinned"] #workflow .section-label>span{font-size:34px;font-weight:600}
+body[data-story-layout="pinned"] #problem .radial-layout{min-height:0;padding:0;grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);gap:28px}
+body[data-story-layout="pinned"] #problem .radial-disc{max-width:450px}
+body[data-story-layout="pinned"] #problem .diagnosis{padding:16px 0 19px;gap:14px}
+body[data-story-layout="pinned"] #problem .diagnosis h3{font-size:23px}
+body[data-story-layout="pinned"] #problem .diagnosis p{font-size:14px;margin-top:8px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-diagrams{margin-top:24px;gap:32px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-heading{padding-top:14px;margin-bottom:12px}
+body[data-story-layout="pinned"] #workflow .ab-workflow-heading h3{font-size:20px}
+body[data-story-layout="natural"] .story-window{overflow:clip;background:transparent}
+body[data-story-layout="natural"] .story-panel{position:relative;border-radius:12px;will-change:transform,opacity}
+body[data-story-layout="natural"] #workflow{margin-top:28px}
+body[data-story-layout="natural"] .story-progress{display:none}
+#problem .ring-svg .chain-label{fill:#f5f8ef;font-weight:600;text-anchor:middle;dominant-baseline:middle;letter-spacing:.045em}
+#problem .diagnosis p{color:#f4f7ee}
+#problem .diagnosis:nth-child(2){margin-left:8%}
+#problem .diagnosis:nth-child(3){margin-left:16%}
+#problem .diagnosis{will-change:transform,opacity,clip-path}
+#problem .ring-svg .break-group{will-change:transform}
+#problem .section-label,#workflow .section-label,#problem .section-label>span,#workflow .section-label>span{color:#ffaf45}
+@media(max-width:860px){#problem .diagnosis:nth-child(2),#problem .diagnosis:nth-child(3){margin-left:0}}
+@media(max-width:760px){.story-chapter{padding:30px 12px 34px}.story-panel>.container{width:calc(100% - 32px)}#problem.ab-problem,#workflow.ab-workflow{padding:32px 0}}
+@media(prefers-reduced-motion:reduce){.story-panel,.story-shell,#problem .diagnosis{transform:none!important;opacity:1!important;clip-path:none!important;will-change:auto!important}}
+
+/* 宽屏演示：收拢外框留白，并让图解和说明占据画面主体。 */
+@media(min-width:1800px) and (min-height:1050px){
+ .story-pin{width:min(1640px,100%)}
+ .story-panel>.container{width:calc(100% - 88px)}
+ body[data-story-layout="pinned"] #problem,body[data-story-layout="pinned"] #workflow{padding:38px 0 32px}
+ body[data-story-layout="pinned"] #problem .section-heading h2,body[data-story-layout="pinned"] #workflow .section-heading h2{font-size:45px}
+ body[data-story-layout="pinned"] #problem .section-label,body[data-story-layout="pinned"] #workflow .section-label{font-size:29px}
+ body[data-story-layout="pinned"] #problem .section-label>span,body[data-story-layout="pinned"] #workflow .section-label>span{font-size:39px}
+ body[data-story-layout="pinned"] #problem .radial-layout{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:36px}
+ body[data-story-layout="pinned"] #problem .radial-disc{max-width:550px}
+ body[data-story-layout="pinned"] #problem .diagnosis{padding:20px 0 23px;gap:18px}
+ body[data-story-layout="pinned"] #problem .diagnosis-id{width:36px;height:36px;font-size:18px}
+ body[data-story-layout="pinned"] #problem .diagnosis h3{font-size:28px}
+ body[data-story-layout="pinned"] #problem .diagnosis p{font-size:16px}
+ body[data-story-layout="pinned"] #workflow .ab-workflow-legend{font-size:14px}
+ body[data-story-layout="pinned"] #workflow .ab-workflow-heading h3{font-size:25px}
+ body[data-story-layout="pinned"] #workflow .ab-workflow-diagrams{gap:40px;margin-top:32px}
+}

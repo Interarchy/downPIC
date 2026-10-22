@@ -1,0 +1,38 @@
+[
+  {
+    "label": "direct-one",
+    "hash": "#one",
+    "active": "one",
+    "dots": 75
+  },
+  {
+    "label": "click-two",
+    "hash": "#two",
+    "active": "two",
+    "dots": 45
+  },
+  {
+    "label": "key-right-three",
+    "hash": "#three",
+    "active": "three",
+    "dots": 108
+  },
+  {
+    "label": "key-home-one",
+    "hash": "#one",
+    "active": "one",
+    "dots": 75
+  },
+  {
+    "label": "key-end-three",
+    "hash": "#three",
+    "active": "three",
+    "dots": 108
+  },
+  {
+    "label": "direct-two",
+    "hash": "#two",
+    "active": "two",
+    "dots": 45
+  }
+]

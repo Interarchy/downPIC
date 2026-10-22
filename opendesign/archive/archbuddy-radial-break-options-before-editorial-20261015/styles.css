@@ -1,0 +1,53 @@
+:root{--paper:#f5f7f4;--ink:#24332d;--forest:#153b2d;--green:#25634b;--muted:#617168;--clay:#a55442;--rule:#cfdbd0;--font:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible{outline:3px solid #85ae92;outline-offset:3px}
+h1,h2,p,ol{margin:0}
+.container{width:min(100% - 64px,1230px);margin-inline:auto}
+.site-header{height:74px;border-bottom:1px solid #dce5db;background:var(--paper)}
+.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;color:var(--forest);font-size:22px;font-weight:700;letter-spacing:-.035em}
+.brand img{display:block;border-radius:6px}
+.header-context{font-size:13px;color:#748478}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:24px}
+.options button{display:flex;align-items:center;gap:16px;text-align:left;padding:14px 20px;border:0;border-radius:8px;background:#e8eee7;color:#465d4d;cursor:pointer}
+.options button:not([aria-pressed="true"]):hover{background:#dce8dc}
+.options button[aria-pressed="true"]{background:var(--forest);color:white}
+.option-no{font-size:25px;line-height:1;font-weight:400;opacity:.72;font-variant-numeric:tabular-nums}
+.options button strong{display:block;font-size:17px;line-height:1.3;font-weight:600}
+.options button small{display:block;margin-top:3px;font-size:12px;line-height:1.45;font-weight:400;opacity:.77}
+.option-description{min-height:23px;margin-top:14px;color:var(--muted);font-size:13px;line-height:1.7}
+.section-heading{padding:38px 0 25px}
+.section-label{display:flex;align-items:center;gap:13px;color:var(--green);font-size:20px;font-weight:600;letter-spacing:.02em}
+.section-label span{font-size:30px;line-height:1;font-weight:500;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+h1{margin-top:18px;color:var(--forest);font-size:42px;line-height:1.28;font-weight:600;letter-spacing:-.038em}
+.radial-layout{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(350px,.84fr);align-items:center;gap:clamp(20px,3vw,58px);min-height:615px;padding:22px 0 48px}
+.radial-visual{min-width:0;display:grid;place-items:center}
+.radial-disc{width:min(100%,560px);aspect-ratio:1}
+.ring-svg{display:block;width:100%;height:100%;overflow:visible}
+.ring-svg .outer-guide{fill:none;stroke:#b6cdb8;stroke-width:1.25}
+.ring-svg .flow{fill:none;stroke:#226f51;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+.ring-svg .break-shape{fill:#b57568;stroke:#dca79b;stroke-width:1.6;stroke-linejoin:round}
+.ring-svg .break-dot{fill:#fffaf7}
+.ring-svg .break-letter{fill:#fffaf7;font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.ring-svg .step-label{fill:#153b2d;font-size:16px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
+.ring-svg .step-number{fill:#336f52;font-size:14px;font-weight:600}
+.ring-svg .center-title{fill:#153b2d;font-size:31px;font-weight:600;text-anchor:middle;dominant-baseline:middle;letter-spacing:-.045em}
+.diagnoses{min-width:0}
+.diagnoses ol{list-style:none;margin:0;padding:0}
+.diagnosis{display:grid;grid-template-columns:34px minmax(0,1fr);gap:17px;padding:21px 0 24px;border-top:1px solid var(--rule)}
+.diagnosis:last-child{border-bottom:1px solid var(--rule)}
+.diagnosis-id{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#a55442;color:white;font-size:15px;line-height:1;font-weight:700}
+.diagnosis h2{display:flex;align-items:center;min-height:30px;color:#a55442;font-size:27px;line-height:1.3;font-weight:600;letter-spacing:-.04em}
+.diagnosis p{margin-top:10px;color:#59685e;font-size:15px;line-height:1.65}
+.footer{display:flex;justify-content:space-between;gap:16px;padding:22px 0 35px;border-top:1px solid #dce5db;color:#7d8a7f;font-size:12px}
+.footer a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1080px){.radial-layout{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:15px}.radial-disc{width:min(100%,500px)}.diagnosis h2{font-size:23px}.diagnosis p{font-size:14px}}
+@media(max-width:860px){.radial-layout{display:block;min-height:0;padding:14px 0 42px}.radial-disc{width:min(100%,410px);margin-inline:auto}.diagnoses{max-width:610px;margin:30px auto 0}.diagnosis{padding-block:17px 20px}}
+@media(max-width:450px){.container{width:min(100% - 32px,1230px)}.site-header{height:65px}.header-context{font-size:11px}.brand{font-size:19px}.options{gap:6px;margin-top:18px}.options button{display:block;padding:10px 8px}.option-no{font-size:19px}.options button strong{font-size:12px}.options button small{display:none}.option-description{font-size:12px;margin-top:12px}.section-heading{padding:28px 0 19px}.section-label{font-size:17px}.section-label span{font-size:25px}h1{font-size:31px}.radial-disc{width:min(100%,370px)}.diagnoses{margin-top:28px;padding-inline:4px}.diagnosis{grid-template-columns:29px minmax(0,1fr);gap:12px}.diagnosis-id{width:27px;height:27px;font-size:13px}.diagnosis h2{font-size:23px}.diagnosis p{font-size:14px}.footer{font-size:11px}}
+@media(max-width:380px){.radial-disc{width:calc(100% - 18px)}.diagnosis h2{font-size:22px}.diagnosis p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

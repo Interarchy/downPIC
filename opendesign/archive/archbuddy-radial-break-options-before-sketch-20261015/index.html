@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArchBuddy · 01 断点环三版比较</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand-mark.svg">
+  <link rel="stylesheet" href="styles.css?v=dot-breaks-arrows-20261015">
+  <script src="app.js?v=dot-breaks-arrows-20261015" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="container header-inner"><a class="brand" href="#one" aria-label="ArchBuddy 断点环比较"><img src="assets/brand-mark.svg" width="32" height="32" alt=""><span>ArchBuddy</span></a><span class="header-context">01 图示细节 · 本地比较</span></div></header>
+  <main class="container">
+    <nav class="options" aria-label="切换三种断口方案">
+      <button type="button" data-option="one" aria-pressed="true"><span class="option-no">1</span><span><strong>轻点网</strong><small>稀疏点阵，完整填入断口</small></span></button>
+      <button type="button" data-option="two" aria-pressed="false"><span class="option-no">2</span><span><strong>留白点桥</strong><small>空白为主，中段点群提示断裂</small></span></button>
+      <button type="button" data-option="three" aria-pressed="false"><span class="option-no">3</span><span><strong>反白点阵</strong><small>柔和暗红底，浅色点孔</small></span></button>
+    </nav>
+    <p class="option-description" id="option-description" aria-live="polite">轻点网：暗红细点融进三处断口，保留清晰的绿色环线和箭头。</p>
+    <section class="problem-section" aria-labelledby="problem-title">
+      <div class="section-heading"><p class="section-label"><span>01</span>方案创作中的断点</p><h1 id="problem-title">方案创作是连续的，<br>工作流程却常常断开。</h1></div>
+      <div class="radial-layout treatment-one" id="radial-stage" aria-label="五步创作环及 A、B、C 三处工作断点">
+        <div class="radial-visual"><div class="radial-disc">
+          <div class="outer-guide" aria-hidden="true"></div>
+          <div class="step-band" aria-hidden="true"></div>
+          <div class="break-wedge wedge-a" aria-hidden="true"></div>
+          <div class="break-wedge wedge-b" aria-hidden="true"></div>
+          <div class="break-wedge wedge-c" aria-hidden="true"></div>
+          <div class="gap-cloud cloud-a" aria-hidden="true"></div>
+          <div class="gap-cloud cloud-b" aria-hidden="true"></div>
+          <div class="gap-cloud cloud-c" aria-hidden="true"></div>
+          <div class="flow-track" aria-hidden="true"></div>
+          <div class="flow-arrow arrow-a" aria-hidden="true"></div>
+          <div class="flow-arrow arrow-b" aria-hidden="true"></div>
+          <div class="flow-arrow arrow-c" aria-hidden="true"></div>
+          <div class="center-title"><strong>创作流程<br>断点分析</strong></div>
+          <ol class="steps" aria-label="五步方案创作过程">
+            <li class="step step-one"><span>01</span><strong>收集参考图</strong></li>
+            <li class="step step-two"><span>02</span><strong>构思<br class="narrow-break">新方案</strong></li>
+            <li class="step step-three"><span>03</span><strong>编写提示词</strong></li>
+            <li class="step step-four"><span>04</span><strong>AI 生图迭代</strong></li>
+            <li class="step step-five"><span>05</span><strong>复用<br class="narrow-break">图与词</strong></li>
+          </ol>
+          <span class="break-id break-a" aria-label="断点 A">A</span>
+          <span class="break-id break-b" aria-label="断点 B">B</span>
+          <span class="break-id break-c" aria-label="断点 C">C</span>
+        </div></div>
+        <div class="diagnoses"><ol aria-label="三个工作断点的解释">
+          <li class="diagnosis"><span class="diagnosis-id">A</span><div><h2>保存打断思路</h2><p>逐张保存占用注意，<br>创作时参考难找回。</p></div></li>
+          <li class="diagnosis"><span class="diagnosis-id">B</span><div><h2>意图难以表达</h2><p>提示词从零编写，<br>多轮修改缺少依据。</p></div></li>
+          <li class="diagnosis"><span class="diagnosis-id">C</span><div><h2>成果难以复用</h2><p>图片与提示词堆积，<br>下次创作难以复用。</p></div></li>
+        </ol></div>
+      </div>
+    </section>
+  </main>
+  <footer class="container footer"><span>仅供本地选择 · 三版均未同步正式页面</span><a href="../archbuddy-problem-options/?round=7#three">查看上一轮</a></footer>
+</body>
+</html>

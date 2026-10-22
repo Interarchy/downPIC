@@ -1,0 +1,806 @@
+[
+  {
+    "width": 1440,
+    "variant": "one",
+    "svg": 560,
+    "fullWidth": true,
+    "background": "rgb(236, 239, 238)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.91,
+      8.68,
+      7.51,
+      5.95,
+      4.43
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 25.24,
+    "smallestGlyphFlowGap": -0.38,
+    "textBounds": true,
+    "breakOuterExtension": 12,
+    "haloSideVisible": 3.38,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "13.5",
+      "computed": "13.5px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -19.5546875,
+        "y": -11.625,
+        "width": 40.595947265625,
+        "height": 18
+      },
+      "transform": "translate(68.42044517241871 342.67271939799895) rotate(343.5)",
+      "characters": [
+        {
+          "x": -19.5546875,
+          "y": -11.625,
+          "width": 8.390625,
+          "height": 18
+        },
+        {
+          "x": -11.1796875,
+          "y": -11.625,
+          "width": 3.734375,
+          "height": 18
+        },
+        {
+          "x": -7.4609375,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        },
+        {
+          "x": 6.0390625,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "variant": "two",
+    "svg": 560,
+    "fullWidth": true,
+    "background": "rgb(231, 239, 231)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      11.05,
+      9.27,
+      7.43,
+      5.64,
+      4.06
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 25.24,
+    "smallestGlyphFlowGap": -0.38,
+    "textBounds": true,
+    "breakOuterExtension": 12,
+    "haloSideVisible": 3.38,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "13.5",
+      "computed": "13.5px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -19.5546875,
+        "y": -11.625,
+        "width": 40.595947265625,
+        "height": 18
+      },
+      "transform": "translate(68.42044517241871 342.67271939799895) rotate(343.5)",
+      "characters": [
+        {
+          "x": -19.5546875,
+          "y": -11.625,
+          "width": 8.390625,
+          "height": 18
+        },
+        {
+          "x": -11.1796875,
+          "y": -11.625,
+          "width": 3.734375,
+          "height": 18
+        },
+        {
+          "x": -7.4609375,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        },
+        {
+          "x": 6.0390625,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "variant": "three",
+    "svg": 560,
+    "fullWidth": true,
+    "background": "rgb(21, 59, 45)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.88,
+      8.25,
+      6.83,
+      5.38,
+      4.07
+    ],
+    "deepBodyContrast": 7.76,
+    "smallestGlyphOuterMargin": 25.24,
+    "smallestGlyphFlowGap": -0.38,
+    "textBounds": true,
+    "breakOuterExtension": 12,
+    "haloSideVisible": 3.38,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "13.5",
+      "computed": "13.5px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -19.5546875,
+        "y": -11.625,
+        "width": 40.595947265625,
+        "height": 18
+      },
+      "transform": "translate(68.42044517241871 342.67271939799895) rotate(343.5)",
+      "characters": [
+        {
+          "x": -19.5546875,
+          "y": -11.625,
+          "width": 8.390625,
+          "height": 18
+        },
+        {
+          "x": -11.1796875,
+          "y": -11.625,
+          "width": 3.734375,
+          "height": 18
+        },
+        {
+          "x": -7.4609375,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        },
+        {
+          "x": 6.0390625,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "variant": "four",
+    "svg": 560,
+    "fullWidth": true,
+    "background": "rgb(242, 236, 224)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.77,
+      8.6,
+      7.27,
+      6.01,
+      4.59
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 25.24,
+    "smallestGlyphFlowGap": -0.38,
+    "textBounds": true,
+    "breakOuterExtension": 12,
+    "haloSideVisible": 3.38,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "13.5",
+      "computed": "13.5px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -19.5546875,
+        "y": -11.625,
+        "width": 40.595947265625,
+        "height": 18
+      },
+      "transform": "translate(68.42044517241871 342.67271939799895) rotate(343.5)",
+      "characters": [
+        {
+          "x": -19.5546875,
+          "y": -11.625,
+          "width": 8.390625,
+          "height": 18
+        },
+        {
+          "x": -11.1796875,
+          "y": -11.625,
+          "width": 3.734375,
+          "height": 18
+        },
+        {
+          "x": -7.4609375,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        },
+        {
+          "x": 6.0390625,
+          "y": -11.625,
+          "width": 13.515625,
+          "height": 18
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "variant": "one",
+    "svg": 358,
+    "fullWidth": true,
+    "background": "rgb(236, 239, 238)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.91,
+      8.68,
+      7.51,
+      5.95,
+      4.43
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 15.52,
+    "smallestGlyphFlowGap": -0.82,
+    "textBounds": true,
+    "breakOuterExtension": 7.67,
+    "haloSideVisible": 2.16,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(43.740213163796255 219.06577418657787) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "variant": "two",
+    "svg": 358,
+    "fullWidth": true,
+    "background": "rgb(231, 239, 231)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      11.05,
+      9.27,
+      7.43,
+      5.64,
+      4.06
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 15.52,
+    "smallestGlyphFlowGap": -0.82,
+    "textBounds": true,
+    "breakOuterExtension": 7.67,
+    "haloSideVisible": 2.16,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(43.740213163796255 219.06577418657787) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "variant": "three",
+    "svg": 358,
+    "fullWidth": true,
+    "background": "rgb(21, 59, 45)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.88,
+      8.25,
+      6.83,
+      5.38,
+      4.07
+    ],
+    "deepBodyContrast": 7.76,
+    "smallestGlyphOuterMargin": 15.52,
+    "smallestGlyphFlowGap": -0.82,
+    "textBounds": true,
+    "breakOuterExtension": 7.67,
+    "haloSideVisible": 2.16,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(43.740213163796255 219.06577418657787) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "variant": "four",
+    "svg": 358,
+    "fullWidth": true,
+    "background": "rgb(242, 236, 224)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.77,
+      8.6,
+      7.27,
+      6.01,
+      4.59
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 15.52,
+    "smallestGlyphFlowGap": -0.82,
+    "textBounds": true,
+    "breakOuterExtension": 7.67,
+    "haloSideVisible": 2.16,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(43.740213163796255 219.06577418657787) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 360,
+    "variant": "one",
+    "svg": 328,
+    "fullWidth": true,
+    "background": "rgb(236, 239, 238)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.91,
+      8.68,
+      7.51,
+      5.95,
+      4.43
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 12.92,
+    "smallestGlyphFlowGap": -1.98,
+    "textBounds": true,
+    "breakOuterExtension": 7.03,
+    "haloSideVisible": 2.13,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(40.07483217241668 200.7083070759708) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 360,
+    "variant": "two",
+    "svg": 328,
+    "fullWidth": true,
+    "background": "rgb(231, 239, 231)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      11.05,
+      9.27,
+      7.43,
+      5.64,
+      4.06
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 12.92,
+    "smallestGlyphFlowGap": -1.98,
+    "textBounds": true,
+    "breakOuterExtension": 7.03,
+    "haloSideVisible": 2.13,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(40.07483217241668 200.7083070759708) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 360,
+    "variant": "three",
+    "svg": 328,
+    "fullWidth": true,
+    "background": "rgb(21, 59, 45)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.88,
+      8.25,
+      6.83,
+      5.38,
+      4.07
+    ],
+    "deepBodyContrast": 7.76,
+    "smallestGlyphOuterMargin": 12.92,
+    "smallestGlyphFlowGap": -1.98,
+    "textBounds": true,
+    "breakOuterExtension": 7.03,
+    "haloSideVisible": 2.13,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(40.07483217241668 200.7083070759708) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  },
+  {
+    "width": 360,
+    "variant": "four",
+    "svg": 328,
+    "fullWidth": true,
+    "background": "rgb(242, 236, 224)",
+    "numberColor": [
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)",
+      "rgb(21, 59, 45)"
+    ],
+    "stageContrast": [
+      9.77,
+      8.6,
+      7.27,
+      6.01,
+      4.59
+    ],
+    "deepBodyContrast": null,
+    "smallestGlyphOuterMargin": 12.92,
+    "smallestGlyphFlowGap": -1.98,
+    "textBounds": true,
+    "breakOuterExtension": 7.03,
+    "haloSideVisible": 2.13,
+    "c": {
+      "class": "break-label",
+      "text": "C 点断",
+      "attr": "10.1",
+      "computed": "10.1px",
+      "color": "rgb(255, 250, 247)",
+      "bbox": {
+        "x": -14.625,
+        "y": -8.46875,
+        "width": 30.1495361328125,
+        "height": 14
+      },
+      "transform": "translate(40.07483217241668 200.7083070759708) rotate(343.5)",
+      "characters": [
+        {
+          "x": -14.625,
+          "y": -8.46875,
+          "width": 6.28125,
+          "height": 14
+        },
+        {
+          "x": -8.359375,
+          "y": -8.46875,
+          "width": 2.796875,
+          "height": 14
+        },
+        {
+          "x": -5.578125,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        },
+        {
+          "x": 4.515625,
+          "y": -8.46875,
+          "width": 10.109375,
+          "height": 14
+        }
+      ]
+    }
+  }
+]

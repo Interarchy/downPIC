@@ -32,6 +32,9 @@ if ($runtimeConfigText -notmatch 'export\s+const\s+BACKEND_MODE\s*=\s*[''"]cloud
 $requiredFiles = @(
   'manifest.json',
   'background.mjs',
+  'account-session.mjs',
+  'account-ui.mjs',
+  'account-ui.css',
   'runtime-config.mjs',
   'shared.mjs',
   'source-image-store.mjs',

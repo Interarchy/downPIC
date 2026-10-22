@@ -1,0 +1,30 @@
+[
+  {
+    "file": "index.html",
+    "sha256": "bad355262003e880c7cab077b166735e9df007bc1d3ad952dc670dc77d03d94c"
+  },
+  {
+    "file": "styles.css",
+    "sha256": "0aee137ade5eb141d3fcffdbd0f681113c881c56a08eb321f3f62258b0820967"
+  },
+  {
+    "file": "app.js",
+    "sha256": "608fe716ad72c0c5ebfc51e7ace5efcc96a70a4cdc6e31879e323a65980b49f4"
+  },
+  {
+    "file": "problem-section.css",
+    "sha256": "7924d18b1f56160119330631c69febb1acc4ba3eda76eb3a1db66767596448fb"
+  },
+  {
+    "file": "problem-section.js",
+    "sha256": "5ffe84d237c410084c33ed3b6c1b7deae3fe996520082391828d8e3cbd1eb189"
+  },
+  {
+    "file": "workflow-section.css",
+    "sha256": "1de153af0ddf46095f2225206c405d15522d97eafec4d48c5bbe552f9fffedc4"
+  },
+  {
+    "file": "workflow-section.js",
+    "sha256": "e0a1363fcad68ab5fcee9841f9768589505525cf3225bc3c8e0a6be0299e4b1c"
+  }
+]
