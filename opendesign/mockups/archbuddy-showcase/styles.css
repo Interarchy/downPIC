@@ -121,3 +121,50 @@ body[data-motion="reveal"] .motion-stage{transition-delay:.08s}
 body[data-motion="reveal"] .motion-part.is-revealed{opacity:1;transform:translate3d(0,0,0)}
 @media(max-width:760px){body[data-motion="reveal"] .motion-part{transform:translate3d(0,14px,0)}}
 @media(prefers-reduced-motion:reduce){body[data-motion="reveal"] .motion-part{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* 统一官网增量：保留原展示内容，补充图词库与画布的完整设计链路。 */
+.archbuddy-chain-section{background:#edf3ee;padding-block:84px 88px;border-bottom:1px solid #d2dfd5}
+.archbuddy-chain-kicker,.canvas-introduction-kicker{font:700 12px/1.5 Consolas,"SFMono-Regular",monospace;letter-spacing:.16em}
+.archbuddy-chain-kicker{color:var(--green);margin-bottom:23px}
+.archbuddy-chain-heading{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:64px}
+.archbuddy-chain-heading h2,.canvas-introduction-head h2{font-size:clamp(34px,3.7vw,49px);line-height:1.28;letter-spacing:-.045em}
+.archbuddy-chain-heading p{max-width:32em;color:var(--muted);font-size:15px;line-height:1.9}
+.archbuddy-chain-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:34px}
+.archbuddy-chain-card{display:flex;flex-direction:column;min-width:0;background:#fff;padding:27px 30px 24px;border:1px solid #c1d5c6;min-height:285px}
+.archbuddy-chain-card-canvas{background:#dfeae2}
+.archbuddy-chain-card-top{display:flex;justify-content:space-between;gap:12px;padding-bottom:17px;border-bottom:1px solid #c9d9ce;color:var(--green);font:700 11px/1.5 Consolas,"SFMono-Regular",monospace;letter-spacing:.12em}
+.archbuddy-chain-card h3{font-size:29px;color:var(--forest);margin-top:20px}
+.archbuddy-chain-card>p{font-size:14px;line-height:1.85;color:var(--muted);margin-top:13px;max-width:34em}
+.archbuddy-chain-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:19px}
+.archbuddy-chain-tags span{font-size:11px;color:var(--green);border:1px solid #a6c6ae;padding:4px 8px}
+.archbuddy-chain-card>a{display:flex;justify-content:space-between;gap:15px;margin-top:auto;padding-top:19px;font-size:13px;font-weight:700;color:var(--green)}
+.archbuddy-chain-card>a:hover{color:var(--forest)}
+.archbuddy-chain-note{margin-top:19px;padding:14px 18px;border-left:3px solid var(--green);background:#ffffffb8;color:var(--muted);font-size:12px;line-height:1.8}
+.canvas-introduction-section{background:var(--forest);color:#f4f8f3;padding-block:80px 82px}
+.canvas-introduction-kicker{color:#b2d1bc;margin-bottom:20px}
+.canvas-introduction-head{display:grid;grid-template-columns:1fr .76fr;gap:65px;align-items:end}
+.canvas-introduction-head>p{color:#c2d9c9;font-size:15px;line-height:1.9}
+.canvas-introduction-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:46px;align-items:center;margin-top:39px}
+.canvas-introduction-copy{min-width:0}
+.canvas-introduction-row{display:grid;grid-template-columns:36px 1fr;gap:14px;padding-block:19px;border-top:1px solid #769985}
+.canvas-introduction-row>span{font:700 12px Consolas,monospace;color:#a6c7af;padding-top:4px}
+.canvas-introduction-row h3{font-size:19px;letter-spacing:-.025em}
+.canvas-introduction-row p{font-size:13px;line-height:1.8;color:#c0d7c5;margin-top:7px}
+.canvas-introduction-actions{padding-top:25px}
+.canvas-introduction-actions .button{min-width:210px}
+.canvas-introduction-actions p{font-size:11px;line-height:1.7;color:#a8c6b0;margin-top:14px}
+.canvas-introduction-visual{min-height:385px;padding:19px;background:#1a221d;background-image:radial-gradient(#496452 1px,transparent 1px);background-size:18px 18px;border:1px solid #84a78f;box-shadow:18px 18px 0 #0c2b1e}
+.canvas-visual-heading,.canvas-visual-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 10px/1.5 Consolas,monospace;letter-spacing:.12em;color:#bad0bf}
+.canvas-visual-stage{display:flex;align-items:center;justify-content:center;gap:8px;height:295px}
+.canvas-visual-node{flex:1;min-width:0;min-height:122px;padding:15px 11px;border:1px solid #809b86;background:#2b3c30;box-shadow:0 9px 22px #0005}
+.canvas-visual-node:nth-of-type(3){transform:translateY(-22px)}
+.canvas-visual-node:nth-of-type(5){transform:translateY(18px)}
+.canvas-visual-node small{display:block;font:700 10px Consolas,monospace;letter-spacing:.1em;color:#b4d1bb}
+.canvas-visual-node strong{display:block;font-size:18px;margin-top:17px}
+.canvas-visual-node span{display:block;color:#bfd2c3;font-size:10px;margin-top:5px}
+.canvas-visual-line{width:17px;height:1px;flex-shrink:0;background:#a6c3ac}
+.canvas-visual-footer{border-top:1px solid #668371;padding-top:12px}
+.canvas-introduction-boundary{font-size:12px;line-height:1.8;color:#bbd2c1;border-left:2px solid #9cbaa4;padding:10px 15px;margin-top:34px;background:#ffffff0c}
+@media(max-width:1000px){.archbuddy-chain-heading,.canvas-introduction-head{gap:30px}.canvas-introduction-layout{gap:28px}.canvas-visual-node{padding:10px 7px}.canvas-visual-node strong{font-size:15px}.canvas-visual-node span{font-size:9px}}
+@media(max-width:760px){.archbuddy-chain-section,.canvas-introduction-section{padding-block:54px 58px}.archbuddy-chain-heading,.canvas-introduction-head,.canvas-introduction-layout{display:block}.archbuddy-chain-heading h2,.canvas-introduction-head h2{font-size:33px}.archbuddy-chain-heading p,.canvas-introduction-head>p{font-size:13px;margin-top:19px}.archbuddy-chain-grid{grid-template-columns:1fr;gap:16px;margin-top:27px}.archbuddy-chain-card{min-height:0;padding:23px}.archbuddy-chain-card>a{margin-top:19px}.canvas-introduction-layout{margin-top:30px}.canvas-introduction-visual{margin:34px 16px 0 0;min-height:310px;box-shadow:12px 12px 0 #0c2b1e}.canvas-visual-stage{height:225px}.canvas-visual-node{min-height:98px;padding:9px 6px}.canvas-visual-node strong{font-size:13px;margin-top:12px}.canvas-visual-node small,.canvas-visual-node span{font-size:8px}.canvas-visual-line{width:7px}.canvas-introduction-boundary{margin-top:33px}}
+@media(max-width:380px){.archbuddy-chain-heading h2,.canvas-introduction-head h2{font-size:30px}.archbuddy-chain-card h3{font-size:25px}.canvas-introduction-visual{padding:11px}.canvas-visual-node strong{font-size:12px}}
