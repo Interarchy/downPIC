@@ -12,9 +12,9 @@
 
 用户确认 ArchBuddy 是一个产品，图词库与 Canvas 应在同一官网首页按完整设计链路介绍；无需各自的独立营销介绍页。图词库通过 Chrome 扩展使用，Canvas 保留进入网页画布的入口。沿用原 CloudBase 展示站全部已确认内容，在其首屏后新增完整链路总览，在原功能区后新增 Canvas 说明和入口。原案例、图片、下载、隐私链接与交互文件未删改。
 
-GitHub 分支 `feature/archbuddy-unified-home` 自 `direction/plugin` 创建，草稿 PR：https://github.com/Interarchy/downPIC/pull/1。Vercel 静态项目 `archbuddy-official-site` 的功能分支生产部署 READY；`www.archbuddy.top` 访问别名已切至该部署，首页、样式、品牌图标、脚本返回 HTTP 200。`archbuddy.top` 继续 308 跳转至 `www`。阿里云 `canvas` CNAME 已生效，Vercel 域名配置正确，Canvas 项目部署首页返回 HTTP 200。详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
+GitHub 分支 `feature/archbuddy-unified-home` 自 `direction/plugin` 创建，草稿 PR：https://github.com/Interarchy/downPIC/pull/1。Vercel 静态项目 `archbuddy-official-site` 的功能分支生产部署 READY；`www.archbuddy.top` 访问别名已切至该部署，首页、样式、品牌图标、脚本返回 HTTP 200。`archbuddy.top` 继续 308 跳转至 `www`。阿里云 `canvas` CNAME 已生效；补签自动续期 HTTPS 证书后，独立浏览器渲染 `canvas.archbuddy.top` 返回 HTTP 200，并识别出 Canvas 限额预览页。详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
 
-重要待办：`www.archbuddy.top` 的项目域名登记仍在 Canvas 项目，Vercel 插件只完成访问别名切换，尚缺项目域名 move 操作；Canvas 后续部署可能重新分配 `www`。需在 Vercel 控制台或官方 API 正式移动项目域名，并配置官网项目可持续生产来源。Canvas 新域名真实浏览器 HTTPS、测试集实际下载及商店入口等仍待验收。统一账号、额度与自动素材流转仍未实现，Canvas 云端业务未开放。本轮未改 CloudBase 应用、扩展功能、后端、隐私站、用户数据或每日额度。
+重要待办：`www.archbuddy.top` 的项目域名登记仍在 Canvas 项目，Vercel 插件只完成访问别名切换，尚缺项目域名 move 操作；Canvas 后续部署可能重新分配 `www`。需在 Vercel 控制台或官方 API 正式移动项目域名，并配置官网项目可持续生产来源。官网测试集下载地址 HEAD 为 HTTP 200，但完整下载与包哈希、商店和隐私入口仍待验收。统一账号、额度与自动素材流转仍未实现，Canvas 云端业务未开放。本轮未改 CloudBase 应用、扩展功能、后端、隐私站、用户数据或每日额度。
 
 ## V4.1 本轮交接摘要（2026-10-08）
 
