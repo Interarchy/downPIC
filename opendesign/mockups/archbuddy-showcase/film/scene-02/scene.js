@@ -4,6 +4,9 @@
   const film = document.getElementById('film');
   const cards = [...document.querySelectorAll('.reference-card')];
   const panel = document.getElementById('prompt-panel');
+  const joinOne = document.getElementById('join-one');
+  const joinTwo = document.getElementById('join-two');
+  const combineArrow = document.getElementById('combine-arrow');
   const panelRows = [...document.querySelectorAll('.panel-row')];
   const progress = document.getElementById('progress-bar');
   const compositionProgress = document.getElementById('composition-progress');
@@ -14,9 +17,9 @@
   const confirm = document.getElementById('confirm-button');
   const footer = document.getElementById('footer-caption');
   const copy = [
-    ['沿水岸展开的公共文化建筑', '低矮舒展的水平体量'],
-    ['高位鸟瞰，呈现河岸曲线', '绿地步道连接建筑与水面'],
-    ['木构、浅色石材与通透玻璃', '柔和自然光，温暖克制']
+    ['沿水岸连续展开的公共文化建筑，连接城市步道与亲水平台。', '低矮而舒展的水平体量，以层叠屋面回应河岸的自然走势。'],
+    ['高位鸟瞰同时呈现河道、绿地与建筑的整体空间关系。', '滨水步道穿行于草地与树影之间，形成开放连续的公共界面。'],
+    ['温润木构搭配浅色石材和通透玻璃，呈现清晰细腻的质感。', '柔和自然光落在廊道与庭院，营造克制而温暖的氛围。']
   ];
   const assembled = copy.flat();
   let timers = [], runId = 0;
@@ -43,6 +46,7 @@
       card.querySelector('.action-label').textContent = '加入整体 Prompt';
     });
     panel.classList.remove('visible'); panel.style.left = '1350px';
+    joinOne.classList.remove('visible'); joinTwo.classList.remove('visible'); combineArrow.classList.remove('visible');
     panelRows.forEach(row => { row.classList.remove('visible'); const line = row.querySelector('.panel-typed'); line.textContent = ''; line.classList.remove('typing'); });
     compositionProgress.style.width = '0%';
     compositionPercent.textContent = '00%';
@@ -57,7 +61,7 @@
     if (token !== runId) return;
     cards.slice(0, count).forEach((card, index) => {
       if (!card.classList.contains('visible')) { card.classList.add('visible'); void card.offsetWidth; }
-      card.style.left = (999 - (count - 1 - index) * 333) + 'px';
+      card.style.left = (index * 330) + 'px';
     });
     compositionProgress.style.width = (count * 25) + '%';
     compositionPercent.textContent = String(count * 25).padStart(2, '0') + '%';
@@ -76,11 +80,14 @@
     cards[index].classList.add('selected');
     cards[index].querySelector('.action-label').textContent = '已加入整体 Prompt';
     selectedCount.textContent = '已选 ' + (index + 1) + ' / 3 张参考图';
+    if (index === 0) joinOne.classList.add('visible');
+    if (index === 1) joinTwo.classList.add('visible');
+    if (index === 2) combineArrow.classList.add('visible');
   }
   function assemble(token) {
     if (token !== runId) return;
-    cards.forEach((card, index) => { card.style.left = (index * 333) + 'px'; });
-    panel.classList.add('visible'); void panel.offsetWidth; panel.style.left = '999px';
+    cards.forEach((card, index) => { card.style.left = (index * 330) + 'px'; });
+    panel.classList.add('visible'); void panel.offsetWidth; panel.style.left = '1000px';
     compositionProgress.style.width = '100%';
     compositionPercent.textContent = '100%';
     compositionLabel.textContent = '设计维度汇入整体 Prompt';
@@ -113,11 +120,12 @@
     reset(); film.classList.add('is-playing');
     cards.forEach((card, index) => {
       card.classList.add('visible', 'has-copy', 'selected');
-      card.style.left = (index * 333) + 'px';
+      card.style.left = (index * 330) + 'px';
       card.querySelectorAll('.typed').forEach((line, lineIndex) => { line.textContent = copy[index][lineIndex]; });
       card.querySelector('.action-label').textContent = '已加入整体 Prompt';
     });
-    panel.classList.add('visible'); panel.style.left = '999px';
+    joinOne.classList.add('visible'); joinTwo.classList.add('visible'); combineArrow.classList.add('visible');
+    panel.classList.add('visible'); panel.style.left = '1000px';
     panelRows.forEach((row, index) => { row.classList.add('visible'); row.querySelector('.panel-typed').textContent = assembled[index]; });
     selectedCount.textContent = '已选 3 / 3 张参考图';
     moduleCount.textContent = '6 个设计维度';

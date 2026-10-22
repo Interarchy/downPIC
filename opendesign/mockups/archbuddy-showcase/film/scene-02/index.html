@@ -24,7 +24,9 @@
           <div class="workspace-count"><span class="count-dot"></span><span id="selected-count">已选 0 / 3 张参考图</span></div>
         </div>
         <div class="card-stage" id="card-stage">
-          <div class="lane-guide" style="--lane:0"></div><div class="lane-guide" style="--lane:1"></div><div class="lane-guide" style="--lane:2"></div><div class="lane-guide" style="--lane:3"></div>
+          <div class="lane-guide"></div><div class="lane-guide"></div><div class="lane-guide"></div><div class="lane-guide"></div>
+          <div class="join-symbol" id="join-one" aria-hidden="true">+</div><div class="join-symbol" id="join-two" aria-hidden="true">+</div>
+          <div class="combine-arrow" id="combine-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><use href="../../assets/lucide.svg#arrow-up-right"></use></svg></div>
           <article class="reference-card" data-card="0" style="--x:0%;--y:0%" aria-label="参考图一：水岸文化中心主入口">
             <div class="card-photo"></div><div class="card-shade"></div>
             <div class="card-top"><span>REFERENCE 01</span><span>主入口</span></div>
@@ -43,9 +45,8 @@
             <div class="card-content"><div class="card-eyebrow">从图像提炼设计意图</div><div class="prompt-item"><span>材料与表面</span><p class="typed" data-line="0"></p></div><div class="prompt-item"><span>光线与氛围</span><p class="typed" data-line="1"></p></div></div>
             <div class="card-action"><span class="action-indicator"></span><span class="action-label">加入整体 Prompt</span></div>
           </article>
-          <aside class="prompt-panel" id="prompt-panel" aria-label="整体 Prompt 预览">
-            <div class="panel-header"><small>ARCHBUDDY / PROMPT BUILDER</small><h2>整体 Prompt 预览</h2><p>三张参考，汇成一个可编辑的创作方向。</p></div>
-            <div class="principle"><span>整体生成准则</span><p>保留原图视角与构图，呈现高品质建筑效果图…</p></div>
+          <aside class="prompt-panel" id="prompt-panel" aria-label="整体 Prompt">
+            <div class="panel-header"><small>ARCHBUDDY / PROMPT BUILDER</small><h2>整体 Prompt</h2></div>
             <div class="panel-list">
               <div class="panel-row"><span>场景与主体</span><p class="panel-typed"></p></div>
               <div class="panel-row"><span>空间与体量</span><p class="panel-typed"></p></div>
