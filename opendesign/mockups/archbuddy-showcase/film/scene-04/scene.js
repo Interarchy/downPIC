@@ -48,6 +48,13 @@
     const x = -118 * focus - 62 * detailZoom;
     const y = -3 * focus - 18 * detailZoom;
     $('app-camera').style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+    const lens=F.ease(F.ramp(t,3.3,3.8))*(1-F.ease(F.ramp(t,8.0,8.8)));
+    $('search-magnifier').style.opacity=String(lens);
+    $('search-magnifier').style.transform='translateY('+((1-lens)*18)+'px) scale('+(.96+.04*lens)+')';
+    $('search-focus-shade').style.opacity=String(lens*.5);
+    F.type($('magnifier-query'),query,t,4.0,6.5);
+    $('magnifier-caret').style.opacity=t<7.1?'1':'0';
+    $('magnifier-search').classList.toggle('pressed',t>=7&&t<7.45);
     const queryProgress = F.ramp(t, 4.0, 6.5);
     F.type($('query-text'), query, t, 4.0, 6.5);
     $('query-placeholder').style.display = queryProgress > 0 ? 'none' : '';

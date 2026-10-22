@@ -14,6 +14,16 @@
   window.addEventListener('error', event => window.__filmErrors.push(event.message));
   window.ArchBuddyFilm = { ramp, ease, type, show, create({ duration, render }) {
     const film = document.querySelector('.film');
+    const profiles={"1":[[0,0],[1,1.8],[2.4,3.8],[3.6,7],[4.8,10.2],[6,13.5],[7,14.5],[8,16]],"2":[[0,0],[0.5,0.9],[2.8,4.1],[5,7.3],[7.2,10.5],[10.8,16.5],[12,18.5]],"3":[[0,0],[0.8,1],[2.6,4.8],[4,7.5],[5.5,11],[8.3,15],[11,18],[14.8,22.3],[16,24]],"4":[[0,0],[1,2.4],[2,4],[5.2,7.4],[6,9.1],[7.2,11.5],[9.6,16],[12,19.65],[14,22.5]]};
+    const profile=profiles[film.dataset.chapter];
+    if(profile) duration=profile[profile.length-1][0];
+    const sceneTime=t=>{
+      if(!profile)return t;
+      for(let i=1;i<profile.length;i++)if(t<=profile[i][0]){
+        const [a,x]=profile[i-1],[b,y]=profile[i];return x+(y-x)*Math.max(0,(t-a)/(b-a));
+      }
+      return profile[profile.length-1][1];
+    };
     const params = new URLSearchParams(location.search);
     const clean = params.get('clean') === '1';
     document.body.classList.toggle('clean', clean);
@@ -25,7 +35,7 @@
     const draw = t => {
       film.dataset.time = t.toFixed(2);
       film.dataset.complete = String(t >= duration);
-      render(t);
+      render(sceneTime(t));
       window.renderFilmCaption?.(t);
       const time = document.getElementById('player-time');
       if (time) time.textContent = Math.min(duration, t).toFixed(0) + ' / ' + duration + ' 秒';

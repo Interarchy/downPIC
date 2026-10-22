@@ -8,9 +8,10 @@
   const blend=(a,b,p)=>a+(b-a)*p;
   const opacity=(el,p)=>{el.style.opacity=String(p);};
   F.create({duration:24,render(t){
+    $('iteration-node').style.visibility=t>=8?'visible':'hidden';
     const intro=F.ease(F.ramp(t,.2,1));opacity(stage,intro);stage.style.transform='translateY('+((1-intro)*15)+'px)';
     const focus=F.ease(F.ramp(t,5.2,7)),pan=F.ease(F.ramp(t,8,11));
-    const s=blend(blend(.92,1.02,focus),.86,pan),x=blend(blend(25,-60,focus),-620,pan),y=blend(blend(20,-14,focus),-15,pan);
+    const s=blend(blend(.98,1.02,focus),.86,pan),x=blend(blend(8,-60,focus),-620,pan),y=blend(blend(8,-14,focus),-15,pan);
     camera.style.transform='translate('+x+'px,'+y+'px) scale('+s+')';$('zoom-label').textContent=Math.round(s*100)+'%';
     F.type($('creative-prompt'),original,t,.9,3.1);
     edges.forEach(e=>{const p=F.ease(F.ramp(t,e.start,e.end));opacity(e.group,p>0?1:0);e.path.style.strokeDashoffset=String(1-p);e.halo.style.opacity=String(p*.45);const q=p<1?p:((t-e.end)*.42)%1;const point=e.path.getPointAtLength(q*e.length);e.dot.setAttribute('cx',point.x);e.dot.setAttribute('cy',point.y);opacity(e.dot,t<e.start?0:1);});

@@ -36,3 +36,10 @@
 /* Keep all four matches visible beside the saved prompt. */
 .results-grid .asset-photo{aspect-ratio:3.5}
 .results-grid .asset-copy{padding:8px 10px 9px}.results-grid .asset-excerpt{margin-top:5px;padding-top:5px}
+
+.search-focus-shade{position:absolute;left:62px;top:169px;width:1316px;height:572px;border-radius:13px;background:#081c15;opacity:0;pointer-events:none;z-index:22}
+.search-magnifier{position:absolute;left:180px;top:300px;width:1080px;padding:28px 32px 25px;border-radius:13px;background:#f6faf5;border:1px solid #d7e7d5;box-shadow:0 32px 90px #001a12a8,0 0 0 8px #a8c9a52b;color:#234733;opacity:0;z-index:23;transform-origin:50% 50%;pointer-events:none}
+.magnifier-label{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:600;color:#50755a;margin-bottom:18px}.magnifier-label .icon{width:25px;height:25px}
+.magnifier-field{height:91px;border:2px solid #5c966e;border-radius:8px;display:flex;align-items:center;padding:0 14px 0 23px;background:#fff;font-size:40px;letter-spacing:.035em;color:#173f29}
+.magnifier-caret{width:2px;height:40px;background:#35764c;margin-left:4px}.magnifier-field b{margin-left:auto;flex:none;background:#276345;color:#fff;border-radius:6px;padding:18px 20px;font-size:23px;font-weight:600;letter-spacing:.02em}.magnifier-field b.pressed{background:#173d2a;box-shadow:0 0 0 5px #a8c5aa}
+.search-magnifier p{margin:17px 0 0;font-size:22px;color:#6b836f;line-height:1.4}

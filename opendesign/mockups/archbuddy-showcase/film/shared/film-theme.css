@@ -4,9 +4,9 @@
 .film::before{background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(90deg,transparent,#000 50%)}
 .film::after{display:none}
 .film-header,.film-title>p,.film-title>span,.film-footer{display:none}
-.film-title{position:absolute;top:67px;left:62px;right:62px;z-index:30;display:flex;align-items:center;gap:38px;height:66px}
-.film-title h1{flex:none;margin:0;font-size:58px;font-weight:700;line-height:1.12;letter-spacing:.035em;color:#f4f7ef}
-.film-title .action-caption{display:block;flex:1;min-width:0;margin:0;padding:3px 0 3px 28px;border-left:1px solid #bcd5b84a;font-size:21px;font-weight:400;line-height:1.65;letter-spacing:.045em;color:#c9decd}
+.film-title{position:absolute;top:49px;left:62px;right:62px;z-index:30;display:flex;align-items:center;gap:36px;height:100px}
+.film-title h1{flex:none;margin:0;font-size:54px;font-weight:700;line-height:1.12;letter-spacing:.035em;color:#f4f7ef}
+.film-title .action-caption{display:block;flex:1;min-width:0;margin:0;padding:3px 0 3px 28px;border-left:1px solid #bcd5b84a;font-size:32px;font-weight:500;line-height:1.36;letter-spacing:.025em;color:#e1eddd}
 .action-caption:empty{border-color:transparent}
 .action-caption.is-typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:4px;background:#cee8b8;vertical-align:-2px}
 .clean .viewer{padding:0}.clean .player-controls,.clean .preview-note{display:none}.clean .film{box-shadow:none}
