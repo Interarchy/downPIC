@@ -1,0 +1,13 @@
+:root{color-scheme:dark;--green:#102d23;--mint:#ccebb8;--paper:#f5f7ee}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#071c15;color:#f4f7ef}body{font-family:"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif}
+.viewer{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow:hidden}
+.film{position:relative;width:1440px;height:810px;flex:none;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 82% 14%,#2c5a43 0,#183c2d 30%,#102d23 72%);box-shadow:0 24px 80px #0008}
+.film::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(90deg,transparent,#000 50%);pointer-events:none}
+.film-title{position:absolute;top:67px;left:62px;z-index:30}.film-title h1{font-size:58px;font-weight:700;line-height:1.12;letter-spacing:-.06em;margin:0}.title-period{color:#c4e9a7}
+.icon{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;flex:none;vertical-align:middle}
+.player-controls{width:min(100%,1440px);display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:15px;color:#b8d1bd;font-size:12px}.control-actions{display:flex;align-items:center;gap:8px}
+.control-actions a,.control-actions button{appearance:none;border:1px solid #668c72;background:#143729;color:#e3f2df;border-radius:5px;padding:8px 12px;font:600 12px/1.2 "Segoe UI","Microsoft YaHei UI",sans-serif;text-decoration:none;cursor:pointer}
+.control-actions a:hover,.control-actions button:hover{background:#25553b}.control-actions a:focus-visible,.control-actions button:focus-visible{outline:2px solid #b5dab5;outline-offset:3px}.preview-note{margin:8px 0 0;color:#8ba795;font-size:11px;text-align:center;max-width:80em;line-height:1.5}
+.clean .viewer{padding:0}.clean .player-controls,.clean .preview-note{display:none}.clean .film{box-shadow:none}
+@media(max-width:700px){.viewer{padding:8px}.player-controls{gap:8px}.control-actions{gap:4px}.control-actions a,.control-actions button{font-size:10px;padding:6px}.preview-note{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

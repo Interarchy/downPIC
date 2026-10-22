@@ -1,0 +1,30 @@
+(() => {
+  'use strict';
+  const F = window.ArchBuddyFilm, $ = id => document.getElementById(id);
+  const stage=document.querySelector('.canvas-viewport'), camera=$('camera');
+  const original='沿水岸连续展开的公共文化建筑。低矮舒展的层叠屋面，温润木构、浅色石材与通透玻璃；保持开放的亲水界面，柔和自然光，建筑摄影质感。';
+  const prompts=['保持现有体量、视角与构图。将偏冷的光照调整为柔和的傍晚暖光，提亮木构廊道，保留自然的水面反射。','延续上一轮的暖光氛围。增强岸线与绿地的层次，降低屋面高光，使亲水平台、材质与室内外空间更清晰。'];
+  const edges=[['edge-text',3.1,4],['edge-image',3.8,4.8],['edge-iteration',7.7,9.1]].map(([id,start,end])=>{const group=$(id),path=group.querySelector('.edge-core');return {group,path,halo:group.querySelector('.edge-halo'),dot:group.querySelector('circle'),length:path.getTotalLength(),start,end};});
+  const blend=(a,b,p)=>a+(b-a)*p;
+  const opacity=(el,p)=>{el.style.opacity=String(p);};
+  F.create({duration:24,render(t){
+    const intro=F.ease(F.ramp(t,.2,1));opacity(stage,intro);stage.style.transform='translateY('+((1-intro)*15)+'px)';
+    const focus=F.ease(F.ramp(t,5.2,7)),pan=F.ease(F.ramp(t,8,11));
+    const s=blend(blend(.92,1.02,focus),.86,pan),x=blend(blend(25,-60,focus),-620,pan),y=blend(blend(20,-14,focus),-15,pan);
+    camera.style.transform='translate('+x+'px,'+y+'px) scale('+s+')';$('zoom-label').textContent=Math.round(s*100)+'%';
+    F.type($('creative-prompt'),original,t,.9,3.1);
+    edges.forEach(e=>{const p=F.ease(F.ramp(t,e.start,e.end));opacity(e.group,p>0?1:0);e.path.style.strokeDashoffset=String(1-p);e.halo.style.opacity=String(p*.45);const q=p<1?p:((t-e.end)*.42)%1;const point=e.path.getPointAtLength(q*e.length);e.dot.setAttribute('cx',point.x);e.dot.setAttribute('cy',point.y);opacity(e.dot,t<e.start?0:1);});
+    const generating=t>=4.8&&t<6.8,result=F.ease(F.ramp(t,6.7,7.5));
+    $('generation-status').textContent=t>=7.5?'生成完成':generating?'正在生成':'准备就绪';
+    $('generation-label').textContent=generating?'正在生成':'连接提示词与参考图';
+    opacity($('generation-empty'),1-result);opacity($('generated-image'),result);opacity($('generation-results'),result);
+    opacity($('generation-scan'),generating?.65:0);$('generation-scan').style.transform='translateY('+(((t-4.8)*180)%410-110)+'px)';
+    const hasOrigin=t>=9.1;$('iteration-empty').style.display=hasOrigin?'none':'block';$('archive-content').style.display=hasOrigin?'block':'none';
+    $('edit-origin').classList.toggle('active',t>=10.5&&t<11.3);
+    $('round-count').textContent=(t>=17.3?2:t>=13.3?1:0)+' 轮优化';
+    $('round-placeholder').style.display=t<11.2?'block':'none';
+    [1,2].forEach(n=>{const a=n===1?11.2:15.2,p=F.ease(F.ramp(t,a,a+.45));opacity($('round-'+n),p);$('round-'+n).style.transform='translateY('+((1-p)*10)+'px)';F.type($('history-prompt-'+n),prompts[n-1],t,a+.2,a+1.8);opacity($('round-results-'+n),F.ease(F.ramp(t,a+2.1,a+2.7)));});
+    const sweep=t<18.5?.5:t<19.7?blend(.5,.78,F.ease(F.ramp(t,18.5,19.7))):t<21.2?blend(.78,.28,F.ease(F.ramp(t,19.7,21.2))):blend(.28,.5,F.ease(F.ramp(t,21.2,22.3)));
+    document.querySelectorAll('.iteration-curtain').forEach(el=>{const q=el.dataset.round==='2'?sweep:.5;el.querySelector('.after-image').style.clipPath='inset(0 0 0 '+q*100+'%)';el.querySelector('.curtain-line').style.left=q*100+'%';});
+  }});
+})();
