@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const W = 1440, H = 810, DURATION = 14500;
+  const W = 1440, H = 810, DURATION = 16000;
   const film = document.getElementById('film');
   const page = document.getElementById('case-page');
   const viewport = document.getElementById('browser-viewport');
@@ -28,6 +28,7 @@
   function clearRun() {
     timers.forEach(clearTimeout); timers = [];
     animations.forEach(animation => { try { animation.cancel(); } catch {} }); animations = [];
+    film.querySelectorAll('.save-flight').forEach(element => element.remove());
   }
   function hideToolbar() {
     toolbar.classList.remove('visible', 'pressed');
@@ -35,6 +36,7 @@
     feedback.hidden = true;
     ring.classList.remove('pulse');
     shots.forEach(shot => shot.classList.remove('active'));
+    shots.forEach(shot => shot.querySelector('.case-image')?.classList.remove('extracting'));
   }
   function reset() {
     clearRun(); runId++;
@@ -43,7 +45,7 @@
     scroll = 0; page.style.transform = 'translateY(0px)';
     folder.classList.remove('visible', 'pulse');
     folderContent.classList.remove('visible');
-    saved.forEach(item => item.classList.remove('visible'));
+    saved.forEach(item => item.classList.remove('visible', 'arriving', 'just-arrived'));
     folderSubtitle.textContent = '新建项目文件夹';
     fileStatus.textContent = '已有 2 个项目文件夹';
     fileCount.textContent = '0 张新保存';
@@ -96,12 +98,48 @@
     ring.style.left = ((buttonRect.left - viewRect.left + buttonRect.width / 2) / scale) + 'px';
     ring.style.top = ((buttonRect.top - viewRect.top + buttonRect.height / 2) / scale) + 'px';
     ring.classList.remove('pulse'); void ring.offsetWidth; ring.classList.add('pulse');
+    if (index === 0) { folder.classList.add('visible'); folderContent.classList.add('visible'); }
+    saved[index].classList.add('arriving');
     fileStatus.textContent = index === 0 ? '正在创建项目文件夹…' : '正在保存第 ' + (index + 1) + ' 张图片…';
+  }
+  function launchFlight(index, token) {
+    if (token !== runId) return;
+    const source = shots[index].querySelector('.case-image');
+    const destination = saved[index];
+    const filmRect = film.getBoundingClientRect();
+    const sourceRect = source.getBoundingClientRect();
+    const destRect = destination.getBoundingClientRect();
+    const scale = scaleFactor();
+    const startX = (sourceRect.left - filmRect.left) / scale;
+    const startY = (sourceRect.top - filmRect.top) / scale;
+    const dx = (destRect.left - sourceRect.left) / scale;
+    const dy = (destRect.top - sourceRect.top) / scale;
+    const endScaleX = destRect.width / sourceRect.width;
+    const endScaleY = destRect.height / sourceRect.height;
+    const flight = document.createElement('div');
+    flight.className = 'save-flight';
+    flight.style.cssText = 'left:' + startX + 'px;top:' + startY + 'px;width:' + (sourceRect.width / scale) + 'px;height:' + (sourceRect.height / scale) + 'px;--x:' + source.style.getPropertyValue('--x') + ';--y:' + source.style.getPropertyValue('--y') + ';';
+    film.append(flight);
+    source.classList.add('extracting');
+    fileStatus.textContent = '图片自动收进项目文件夹';
+    const animation = flight.animate([
+      { transform: 'translate(0px,0px) scale(1,1)', opacity: .98, filter: 'brightness(1.1)', offset: 0 },
+      { transform: 'translate(' + (dx * .36) + 'px,' + (dy * .30 - 40) + 'px) scale(.54,.58)', opacity: .96, filter: 'brightness(1.2) blur(.3px)', offset: .42 },
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + endScaleX + ',' + endScaleY + ')', opacity: 1, filter: 'brightness(1.15)', offset: 1 }
+    ], { duration: 850, easing: 'cubic-bezier(.22,.75,.2,1)', fill: 'forwards' });
+    animations.push(animation);
+    animation.onfinish = () => {
+      if (token !== runId) return;
+      source.classList.remove('extracting');
+      flight.remove();
+      finishSave(index, token);
+    };
   }
   function finishSave(index, token) {
     if (token !== runId) return;
-    if (index === 0) { folder.classList.add('visible'); folderContent.classList.add('visible'); }
-    saved[index].classList.add('visible');
+    saved[index].classList.remove('arriving');
+    saved[index].classList.add('visible', 'just-arrived');
+    later(() => saved[index].classList.remove('just-arrived'), 520);
     folder.classList.add('pulse');
     later(() => folder.classList.remove('pulse'), 450);
     folderSubtitle.textContent = (index + 1) + ' 张图片';
@@ -118,14 +156,14 @@
     void progress.offsetWidth;
     progress.style.transition = 'width ' + DURATION + 'ms linear';
     requestAnimationFrame(() => { if (token === runId) progress.style.width = '100%'; });
-    [1000, 3900, 6800, 9700].forEach((start, index) => {
+    [900, 4100, 7300, 10500].forEach((start, index) => {
       later(() => scrollToShot(index, token), start);
       later(() => showToolbar(index, token), start + 900);
       later(() => pressSave(index, token), start + 1450);
-      later(() => finishSave(index, token), start + 1800);
-      later(() => { if (token === runId) hideToolbar(); }, start + 2450);
+      later(() => launchFlight(index, token), start + 1600);
+      later(() => { if (token === runId) hideToolbar(); }, start + 2900);
     });
-    later(() => { if (token !== runId) return; fileStatus.textContent = '采集完成 · 1 个项目文件夹'; footer.textContent = '四张参考，沿着浏览路径自然归档。'; }, 12700);
+    later(() => { if (token !== runId) return; fileStatus.textContent = '采集完成 · 1 个项目文件夹'; footer.textContent = '四张参考，沿着浏览路径自然归档。'; }, 14500);
   }
   document.getElementById('replay').addEventListener('click', play);
   window.addEventListener('resize', fit, { passive: true });
