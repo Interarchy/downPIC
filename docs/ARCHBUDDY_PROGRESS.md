@@ -8,14 +8,13 @@
 > **当前工作区状态**：V4.1及交接摘要已推送（功能主提交 `362db0c`、摘要 `c576fe4`）。本轮修复扩展重新加载后旧网页浮框无法关闭的问题：总开关同步全部普通网页，清理旧节点与监听，开启后可恢复。标签 `archbuddy-v4.1` 保留指向原功能主提交；浮框关闭修复 `45de85c` 已提交并推送，结果见文末。未部署CloudBase或更新商店。
 
 
-## 2026-10-22：统一官网首页增量稿（预览，未切正式域名）
+## 2026-10-22：统一官网首页已上线，域名归属待收尾
 
-用户确认 ArchBuddy 是一个产品，图词库与 Canvas 应在同一官网首页按完整设计链路介绍；无需各自的独立营销介绍页。图词库通过 Chrome 扩展使用，Canvas 只保留进入网页画布的入口。本轮沿用原 CloudBase 展示站全部已确认内容，在其首屏后新增完整链路总览，在原功能区后新增 Canvas 说明和入口。原案例、图片、下载、隐私链接与交互文件未删改。
+用户确认 ArchBuddy 是一个产品，图词库与 Canvas 应在同一官网首页按完整设计链路介绍；无需各自的独立营销介绍页。图词库通过 Chrome 扩展使用，Canvas 保留进入网页画布的入口。沿用原 CloudBase 展示站全部已确认内容，在其首屏后新增完整链路总览，在原功能区后新增 Canvas 说明和入口。原案例、图片、下载、隐私链接与交互文件未删改。
 
-GitHub 分支 `feature/archbuddy-unified-home` 自 `direction/plugin` 创建。Vercel 新建静态项目 `archbuddy-official-site`，功能分支预览已 READY，首页、样式和案例首页 HTTP 200。独立浏览器渲染检查新增区域 390 px 与 1100 px，修复标题孤字；360 px 和 1100 px 无横向溢出。旧 HTML 内容和 CSS 原文均保留，新增部分的标签、ID、样式括号完成静态核对。详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
+GitHub 分支 `feature/archbuddy-unified-home` 自 `direction/plugin` 创建，草稿 PR：https://github.com/Interarchy/downPIC/pull/1。Vercel 静态项目 `archbuddy-official-site` 的功能分支生产部署 READY；`www.archbuddy.top` 访问别名已切至该部署，首页、样式、品牌图标、脚本返回 HTTP 200。`archbuddy.top` 继续 308 跳转至 `www`。阿里云 `canvas` CNAME 已生效，Vercel 域名配置正确，Canvas 项目部署首页返回 HTTP 200。详见 [统一官网记录](ARCHBUDDY_UNIFIED_HOMEPAGE.md)。
 
-Canvas 项目已添加 `canvas.archbuddy.top` 域名，但阿里云 DNS 尚无 `canvas` CNAME；`www.archbuddy.top` 仍绑定 Canvas 预览项目，正式官网未切换。统一账号、额度与自动素材流转仍未实现，Canvas 云端业务未开放。本轮没有修改原 CloudBase 应用、扩展功能、后端、隐私站、用户数据或每日额度。下一步先完成 Canvas DNS 与访问验证，再将 `www` 和根域跳转迁至新官网项目并做真实公网复核。
-
+重要待办：`www.archbuddy.top` 的项目域名登记仍在 Canvas 项目，Vercel 插件只完成访问别名切换，尚缺项目域名 move 操作；Canvas 后续部署可能重新分配 `www`。需在 Vercel 控制台或官方 API 正式移动项目域名，并配置官网项目可持续生产来源。Canvas 新域名真实浏览器 HTTPS、测试集实际下载及商店入口等仍待验收。统一账号、额度与自动素材流转仍未实现，Canvas 云端业务未开放。本轮未改 CloudBase 应用、扩展功能、后端、隐私站、用户数据或每日额度。
 
 ## V4.1 本轮交接摘要（2026-10-08）
 
