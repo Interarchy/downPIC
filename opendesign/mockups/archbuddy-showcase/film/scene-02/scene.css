@@ -38,3 +38,25 @@
 .panel-footer{bottom:7px}
 
 .panel-row{height:50px}
+
+/* Film canvas: one chapter title, layered references and a dominant prompt. */
+.film-header,.film-title p,.film-title>span,.workspace-head,.composition-rail,.film-footer,.lane-guide{display:none}
+.film-title{top:67px;left:62px}.film-title h1{font-size:58px;line-height:1.12}
+.workspace{top:206px;height:448px}.card-stage{height:448px;perspective:1100px}
+.reference-card{transition:left .95s cubic-bezier(.18,.78,.19,1),opacity .35s ease,transform .95s cubic-bezier(.18,.78,.19,1);transform:perspective(1100px) rotateY(-16deg) rotateZ(2deg) scale(.9);transform-origin:center;box-shadow:0 24px 46px #00170fbd}
+.reference-card.visible{transform:perspective(1100px) rotateY(var(--tilt)) rotateZ(var(--roll)) scale(var(--scale))}
+.reference-card[data-card="0"]{top:24px;z-index:1;--tilt:-7deg;--roll:-1.1deg;--scale:.955}
+.reference-card[data-card="1"]{top:16px;z-index:2;--tilt:-4.5deg;--roll:.4deg;--scale:.978}
+.reference-card[data-card="2"]{top:9px;z-index:3;--tilt:-2deg;--roll:.7deg;--scale:1}
+.card-top,.card-eyebrow,.prompt-item>span{opacity:0;transform:translateY(7px);transition:opacity .24s ease,transform .24s ease}
+.reference-card.is-typing .card-top,.card-eyebrow.revealed,.prompt-item.revealed>span{opacity:1;transform:none}
+.join-symbol{top:207px;width:42px;height:42px;border-radius:50%;border:1px solid #f0f8e4d9;background:#1b4331ed;color:#f8fff2;font:500 34px/1 "Segoe UI",sans-serif;box-shadow:0 0 0 5px #163c2cb0,0 8px 22px #00180eaf;text-shadow:0 0 12px #ffffffa0}
+.join-symbol.visible{opacity:1;transform:scale(1)}
+#join-one{left:229px}#join-two{left:479px}
+.combine-arrow{left:790px;top:201px;width:50px;height:50px}
+.combine-arrow .icon{width:25px;height:25px}
+.prompt-panel{width:466px;border-radius:12px;box-shadow:0 30px 72px #00190dc9}
+.panel-header{padding:14px 22px 5px}.panel-header h2{font-size:29px;line-height:1.1;margin:4px 0 3px}
+.panel-list{padding:0 22px}.panel-row{height:50px;transform:translateY(7px)}.panel-row.visible{transform:none}
+.panel-row span{font-size:11.5px}.panel-row p{max-width:395px;font-size:11px;line-height:1.25;margin-top:2px;font-weight:500}
+.panel-footer{left:22px;right:22px}

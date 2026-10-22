@@ -21,7 +21,14 @@
     ['高位鸟瞰同时呈现河道、绿地与建筑的整体空间关系。', '滨水步道穿行于草地与树影之间，形成开放连续的公共界面。'],
     ['温润木构搭配浅色石材和通透玻璃，呈现清晰细腻的质感。', '柔和自然光落在廊道与庭院，营造克制而温暖的氛围。']
   ];
-  const assembled = copy.flat();
+  const assembled = [
+    '一座沿水岸连续展开的公共文化建筑，串联城市步道、开放展厅与亲水平台；以开放界面回应滨水公共生活。',
+    '以低矮舒展的水平体量组织展厅与廊道，层叠屋面顺应河岸走势，保留通向水面的视线与步行体验。',
+    '采用高位鸟瞰视角，同时呈现河道、绿地、建筑与城市背景；让主体建筑清晰位于整体空间关系的中心。',
+    '让滨水步道穿行于草地与树影之间，配置缓坡、停留平台和疏朗树群，形成连续开放的公共界面。',
+    '使用温润木构、浅色石材与通透玻璃；突出屋檐、廊柱和细部节点的层次，呈现克制而精确的质感。',
+    '以柔和自然光照亮廊道和庭院，控制水面反射与材质高光，营造安静、温暖且具有真实感的建筑氛围。'
+  ];
   let timers = [], runId = 0;
   function fit() {
     const scale = Math.min((innerWidth - 40) / W, (innerHeight - 100) / H, 1);
@@ -40,7 +47,9 @@
     timers.forEach(clearTimeout); timers = []; runId++;
     film.classList.remove('is-playing');
     cards.forEach(card => {
-      card.classList.remove('visible', 'has-copy', 'selected');
+      card.classList.remove('visible', 'has-copy', 'selected', 'is-typing');
+      card.querySelector('.card-eyebrow').classList.remove('revealed');
+      card.querySelectorAll('.prompt-item').forEach(item => item.classList.remove('revealed'));
       card.style.left = '1350px';
       card.querySelectorAll('.typed').forEach(line => { line.textContent = ''; line.classList.remove('typing'); });
       card.querySelector('.action-label').textContent = '加入整体 Prompt';
@@ -61,7 +70,7 @@
     if (token !== runId) return;
     cards.slice(0, count).forEach((card, index) => {
       if (!card.classList.contains('visible')) { card.classList.add('visible'); void card.offsetWidth; }
-      card.style.left = (index * 330) + 'px';
+      card.style.left = (index * 250) + 'px';
     });
     compositionProgress.style.width = (count * 25) + '%';
     compositionPercent.textContent = String(count * 25).padStart(2, '0') + '%';
@@ -70,10 +79,17 @@
   function typeCard(index, token) {
     if (token !== runId) return;
     const card = cards[index];
-    const lines = [...card.querySelectorAll('.typed')];
-    typeText(lines[0], copy[index][0], 0, 42, token);
-    typeText(lines[1], copy[index][1], 750, 42, token);
-    later(() => { if (token === runId) card.classList.add('has-copy'); }, 1340);
+    const items = [...card.querySelectorAll('.prompt-item')];
+    card.classList.add('is-typing');
+    later(() => { if (token === runId) card.querySelector('.card-eyebrow').classList.add('revealed'); }, 100);
+    let start = 170;
+    items.forEach((item, lineIndex) => {
+      later(() => { if (token === runId) item.classList.add('revealed'); }, start);
+      const bodyStart = start + 110;
+      typeText(item.querySelector('.typed'), copy[index][lineIndex], bodyStart, 14, token);
+      start = bodyStart + Array.from(copy[index][lineIndex]).length * 14 + 80;
+    });
+    later(() => { if (token === runId) card.classList.add('has-copy'); }, start);
   }
   function selectCard(index, token) {
     if (token !== runId) return;
@@ -86,16 +102,19 @@
   }
   function assemble(token) {
     if (token !== runId) return;
-    cards.forEach((card, index) => { card.style.left = (index * 330) + 'px'; });
-    panel.classList.add('visible'); void panel.offsetWidth; panel.style.left = '1000px';
+    cards.forEach((card, index) => { card.style.left = (index * 250) + 'px'; });
+    panel.classList.add('visible'); void panel.offsetWidth; panel.style.left = '850px';
     compositionProgress.style.width = '100%';
     compositionPercent.textContent = '100%';
     compositionLabel.textContent = '设计维度汇入整体 Prompt';
+    let start = 930;
     panelRows.forEach((row, index) => {
-      later(() => { if (token !== runId) return; row.classList.add('visible'); moduleCount.textContent = (index + 1) + ' 个设计维度'; }, 1150 + index * 470);
-      typeText(row.querySelector('.panel-typed'), assembled[index], 1280 + index * 470, 22, token);
+      later(() => { if (token !== runId) return; row.classList.add('visible'); moduleCount.textContent = (index + 1) + ' 个设计维度'; }, start);
+      const bodyStart = start + 120;
+      typeText(row.querySelector('.panel-typed'), assembled[index], bodyStart, 11, token);
+      start = bodyStart + Array.from(assembled[index]).length * 11 + 80;
     });
-    later(() => { if (token !== runId) return; confirm.classList.add('ready'); footer.textContent = '三张参考，汇成一个可编辑的 Prompt。'; }, 4550);
+    later(() => { if (token !== runId) return; confirm.classList.add('ready'); footer.textContent = '三张参考，汇成一个可编辑的 Prompt。'; }, start + 50);
   }
   function play() {
     reset(); const token = runId; film.classList.add('is-playing');
@@ -119,13 +138,15 @@
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     reset(); film.classList.add('is-playing');
     cards.forEach((card, index) => {
-      card.classList.add('visible', 'has-copy', 'selected');
-      card.style.left = (index * 330) + 'px';
+      card.classList.add('visible', 'has-copy', 'selected', 'is-typing');
+      card.querySelector('.card-eyebrow').classList.add('revealed');
+      card.querySelectorAll('.prompt-item').forEach(item => item.classList.add('revealed'));
+      card.style.left = (index * 250) + 'px';
       card.querySelectorAll('.typed').forEach((line, lineIndex) => { line.textContent = copy[index][lineIndex]; });
       card.querySelector('.action-label').textContent = '已加入整体 Prompt';
     });
     joinOne.classList.add('visible'); joinTwo.classList.add('visible'); combineArrow.classList.add('visible');
-    panel.classList.add('visible'); panel.style.left = '1000px';
+    panel.classList.add('visible'); panel.style.left = '850px';
     panelRows.forEach((row, index) => { row.classList.add('visible'); row.querySelector('.panel-typed').textContent = assembled[index]; });
     selectedCount.textContent = '已选 3 / 3 张参考图';
     moduleCount.textContent = '6 个设计维度';
