@@ -1,6 +1,6 @@
 # ArchBuddy 统一官网首页：增量调整与发布记录
 
-更新日期：2026-10-22。状态：统一官网已部署到 `www.archbuddy.top`，项目域名正式迁移完成；持续部署来源仍待配置。
+更新日期：2026-10-22。状态：统一官网已按 CloudBase 展示站第十七版源码更新到 `www.archbuddy.top`，项目域名正式迁移完成；持续部署来源仍待配置。
 
 ## 产品决策
 
@@ -49,4 +49,12 @@ ArchBuddy 是一个完整产品，图词库与 Canvas 是同一设计链路上�
 
 ## 2026-10-22：第十七版基线纠正
 
-用户指出当前 `www.archbuddy.top` 展示的是旧版。核对 CloudBase 公网与 GitHub `codex/showcase-site-017`：公网首页 HTML 与该分支逐字节一致，旧官网分支来自 `direction/plugin` 的较早版本。官网现整合第十七版完整站点资源、图解和滚动交互，再只增加统一链路及 Canvas 内容；原第十七版 HTML 去除新增段落和样式缓存标识后与原件一致，原 CSS 保持完整前缀。发布与公网核对结果随后补记。
+用户指出当前 `www.archbuddy.top` 展示的是旧版。核对 CloudBase 公网与 GitHub `codex/showcase-site-017`：公网首页 HTML 与该分支逐字节一致，旧官网分支来自 `direction/plugin` 的较早版本。官网现整合第十七版完整站点资源、图解和滚动交互，再只增加统一链路及 Canvas 内容；原第十七版 HTML 去除新增段落和样式缓存标识后与原件一致，原 CSS 保持完整前缀。第十七版源码与统一官网增量已发布并完成以下公网核对。
+
+### 第十七版官网发布核对
+
+- GitHub 功能分支合入 `codex/showcase-site-017` 归档提交，保留第十七版完整 01/02 图解、滚动接力、白色安装区、样式与脚本，并保留统一官网增量及既有域名记录。CloudBase 原站未重新部署。
+- Vercel 预览部署 `dpl_EE1fGu1qBzBTxx6HJeXnBu577BVo` 与生产部署 `dpl_FmsKdGU9boEhv3XtQTNXjKBrm56m` 均为 READY；生产部署提交为 `5fccc6f326a96fa5e5ef671b583bbd1bfff74377`，自动绑定 `www.archbuddy.top`、根域及官网项目别名，`aliasError` 为空。
+- 预览首页、样式表、01 图解脚本、02 图解样式、滚动接力脚本和案例首页均返回 HTTP 200。
+- 独立浏览器访问 `www.archbuddy.top` 返回 HTTP 200，并识别到第十七版 `story-chapter`、统一链路 `#archbuddy-chain` 和画布 `#canvas`。1100px 宽度下滚动接力使用 pinned 布局，断点图生成 3 组元素、两条业务链路图各完成节点渲染；390px 宽度下使用 natural 布局。两种宽度均无横向溢出，Canvas 按钮指向 `https://canvas.archbuddy.top/`。
+- 测试集完整下载及原包哈希尚未在本轮复核；Chrome 商店安装行为和跨端账号额度仍需在对应产品发布时单独验收。
