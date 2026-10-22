@@ -10,30 +10,30 @@ html{scroll-snap-type:none;scroll-behavior:auto}.journey{height:660svh;position:
 .section-controls{flex:none}.section-controls output{min-width:110px}.journey-hint{color:#92b39b;font-size:13px;letter-spacing:.06em;margin:8px 0 0}.screen{border-radius:0;box-shadow:none}.story-nav nav button{position:relative}.story-nav nav button.done{color:#b8d2b9}
 @media(max-width:700px){.sticky-stage{padding:64px 8px 20px}.section-controls output{min-width:80px;font-size:10px}.journey-hint{font-size:11px}}
 
-/* 扉页以图词平面、汇合点和版本轮廓说明关系；具体操作留给后续真实界面。 */
+/* 图词库扉页以图词平面和提取关系承接搜索复用。 */
 .abstract-diagram{position:absolute;left:90px;top:235px;width:1260px;height:480px}
 .diagram-lightpaths{position:absolute;inset:0;width:1260px;height:480px;overflow:visible}
 .lightpath-halo{stroke-width:10;opacity:.42}.lightpath-core{stroke-width:2.3;opacity:.9}
 .diagram-photo{background-repeat:no-repeat;background-position:var(--px) var(--py);background-color:#789584}
 .diagram-photo.water{background-image:url("scene-01/assets/waterfront-references.png");background-size:200% 200%}
 .diagram-photo.sheet{background-image:url("../case-study/assets/01-project-library-1280x800.png");background-size:581.818% 606.061%}
-.input-plane{position:absolute;left:72px;width:205px;transform:perspective(1100px) rotateY(-9deg) rotateZ(-3deg);transform-origin:center}
-.input-plane>span,.output-planes>span,.retrieved-asset>span,.collection-label{position:absolute;display:block;font-size:26px;font-weight:500;letter-spacing:.08em;color:#d4e9d0;white-space:nowrap}
-.image-plane{top:60px;height:136px}.image-plane .diagram-photo{height:100%;border:1px solid #bddbc199;border-radius:5px;box-shadow:0 16px 35px #001a1266}
-.image-plane>span{left:0;top:-43px}
-.text-plane{top:288px;height:112px;border:1px solid #b8dbbf77;border-radius:5px;background:linear-gradient(135deg,#93b79e1c,#c6e6c308);box-shadow:0 16px 35px #001a1244;padding:23px}
-.text-plane>span{left:0;top:126px}
+
+.retrieved-asset>span,.collection-label{position:absolute;display:block;font-size:26px;font-weight:500;letter-spacing:.08em;color:#d4e9d0;white-space:nowrap}
+
+
+
+
 .diagram-text-lines{display:flex;flex-direction:column;gap:12px}
 .diagram-text-lines i{display:block;height:3px;border-radius:3px;background:#c7dfc6b3;width:100%}
 .diagram-text-lines i:nth-child(2){width:76%}.diagram-text-lines i:nth-child(3){width:90%}.diagram-text-lines i:nth-child(4){width:57%}
-.confluence{position:absolute;left:512px;top:202px;width:76px;height:76px;border:1px solid #a9dfb89c;border-radius:50%;background:#234d38;box-shadow:0 0 0 12px #9fe2b409,0 0 45px #baf8c018}
-.confluence i{position:absolute;inset:13px;border:1px solid #c4ebc366;border-radius:50%}.confluence b{position:absolute;width:9px;height:9px;border-radius:50%;background:#d5ffd3;left:33px;top:33px;box-shadow:0 0 18px #c9ffd6}
-.confluence>span{position:absolute;top:96px;left:50%;transform:translateX(-50%);font-size:24px;letter-spacing:.1em;white-space:nowrap;color:#bed7bf}
-.output-planes{position:absolute;left:865px;top:112px;width:280px;height:196px;transform:perspective(1100px) rotateY(-9deg) rotateZ(-3deg)}
-.output-photo{position:absolute;inset:0;border:1px solid #c9eac4c2;border-radius:6px;box-shadow:0 24px 50px #001a1277}
+
+
+
+
+
 .version-echo{position:absolute;inset:0;border:1px solid #a7d9ae6b;border-radius:6px;background:#6fa5860b}
 .version-echo.back{transform:translate(36px,-30px);opacity:.42}.version-echo.front{transform:translate(18px,-15px);opacity:.8}
-.output-planes>span{left:0;top:228px}
+
 .asset-constellation{position:absolute;left:43px;top:55px;display:grid;grid-template-columns:repeat(4,132px);gap:22px;width:594px;transform:perspective(1400px) rotateY(-8deg) rotateZ(-3deg);transform-origin:50% 50%}
 .paired-asset{height:137px;border:1px solid #a1c6a65e;border-radius:5px;background:#163b2d;overflow:hidden;box-shadow:0 14px 24px #00180f4d;opacity:.8}
 .paired-asset.chosen{opacity:1;border-color:#caedc6;box-shadow:0 0 0 3px #b8e4be12,0 14px 30px #00180f66}

@@ -32,3 +32,7 @@
 
 /* 数学符号与相邻卡片的投影中心对齐。 */
 .join-symbol{width:36px;height:36px;font-size:30px;line-height:1;box-shadow:0 0 0 3px #163c2cb0,0 6px 18px #00180eaf}
+
+/* Lucide Plus 的两条线相交于24×24视盒正中心，避免文本字形基线造成偏移。 */
+.join-symbol{display:flex;align-items:center;justify-content:center;font-size:0;line-height:0;text-shadow:none}
+.join-symbol .join-icon{display:block;flex:none;width:22px;height:22px;margin:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px #ffffff50)}

@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id),frames=[1,2,3,4].map(n=>$('chapter-'+n)),durations=[8,12,16,14],pre=[.8,.6,.8,.4];
+  const hasIntro=i=>Boolean($('intro-'+i));
   const names=['图片快速采集','快速构建提示词','画布创作','搜索复用'],params=new URLSearchParams(location.search);
   const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
   let ready=false,current=0,scheduled=0,autoFrame=0,auto=false,autoStart=0,autoFrom=0,autoTo=0,autoDuration=0;
@@ -19,16 +20,25 @@
     });
   }
   function draw(q){
-    if(!ready)return;current=Math.max(0,Math.min(4,q));const i=Math.min(3,Math.floor(current)),p=current>=4?1:current-i,start=i===0?0:.16;
+    if(!ready)return;current=Math.max(0,Math.min(4,q));const i=Math.min(3,Math.floor(current)),p=current>=4?1:current-i,start=hasIntro(i) ? .16 : 0;
     frames.forEach(f=>{f.style.opacity='0';f.setAttribute('aria-hidden','true');});
     [1,2,3].forEach(n=>showIntro(n,0,1));
     const phase=clamp((p-start)/(.9-start)),local=pre[i]+(durations[i]-pre[i])*phase;
     frames[i].contentWindow.__archbuddyFilm.seek(local);frames[i].setAttribute('aria-hidden','false');
     let alpha=1,zoom=.90+.10*ease(clamp(p/.30));
-    if(i>0&&p<.16){const out=1-ease((p-.10)/.06);showIntro(i,out,1);alpha=1-out;}
-    if(i<3&&p>.9){const cross=ease((p-.9)/.1);alpha*=1-cross;showIntro(i+1,cross,cross);}
+    if(hasIntro(i)&&p<.16){const out=1-ease((p-.10)/.06);showIntro(i,out,1);alpha=1-out;}
+    if(i<3&&p>.9){
+      const cross=ease((p-.9)/.1);alpha*=1-cross;
+      if(hasIntro(i+1))showIntro(i+1,cross,cross);
+      else {
+        // 无扉页的章节直接淡入真实界面，边界两侧保持同一开场时刻与缩放。
+        const next=frames[i+1];next.contentWindow.__archbuddyFilm.seek(pre[i+1]);
+        next.style.opacity=String(cross);next.style.transform='scale(.9)';
+        next.setAttribute('aria-hidden',cross>0?'false':'true');
+      }
+    }
     frames[i].style.opacity=String(alpha);frames[i].style.transform='scale('+zoom+')';
-    const entering=i>0&&p<.16,leaving=i<3&&p>.9;
+    const entering=hasIntro(i)&&p<.16,leaving=i<3&&p>.9;
     $('section-number').textContent='0'+(i+1)+' / 04';
     $('stage-label').textContent=entering?'进入'+names[i]:leaving?'接下来 · '+names[i+1]:names[i];
     $('journey-progress').value=String(current);
