@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102d23">
+  <title>04 搜索复用 · ArchBuddy 产品短片</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../shared/film-base.css">
+  <link rel="stylesheet" href="scene.css">
+  <script src="../shared/film-player.js" defer></script>
+  <script src="scene.js" defer></script>
+</head>
+<body>
+  <main class="viewer">
+    <div class="film" id="film" aria-label="ArchBuddy 第四章搜索复用动效">
+      <div class="film-title"><h1>搜索复用<span>.</span></h1></div>
+      <div class="library-stage">
+        <div class="app-camera" id="app-camera">
+          <div class="library-app">
+            <header class="library-topbar">
+              <div class="library-brand"><img src="../../assets/brand-mark.svg" alt=""><strong>ArchBuddy</strong><span>图词库</span></div>
+              <div class="search-field" id="search-field">
+                <svg class="icon"><use href="../../assets/lucide.svg#search"></use></svg>
+                <div class="search-text"><span id="query-text"></span><span id="query-placeholder">描述你想找的图片或提示词（回车搜索）</span><i id="query-caret"></i></div>
+                <button class="search-button" id="search-button" type="button" tabindex="-1">语义搜索</button>
+              </div>
+              <button class="open-panel" type="button" tabindex="-1">打开侧栏</button>
+            </header>
+            <aside class="library-sidebar">
+              <div class="mode-tabs"><div><svg class="icon"><use href="../../assets/lucide.svg#image"></use></svg>图库</div><div class="active"><svg class="icon"><use href="../../assets/lucide.svg#file-text"></use></svg>词库</div></div>
+              <p class="sidebar-heading">我的分组</p>
+              <div class="group active"><strong>全部提示词</strong><small>20 张图片卡</small></div>
+              <div class="group"><strong>未分组</strong><small>2 张图片卡</small></div>
+              <div class="group"><strong>滨水公共建筑</strong><small>4 张图片卡</small></div>
+              <div class="group"><strong>文化与展览</strong><small>6 张图片卡</small></div>
+              <div class="group"><strong>材料与空间</strong><small>8 张图片卡</small></div>
+              <div class="group-tools"><span>新建分组</span><div><i>输入分组名称</i><b>新建</b></div><span>移动所选图片卡</span><div><i>选择目标分组</i><b class="muted">移入</b></div></div>
+            </aside>
+            <div class="library-content">
+              <div class="content-toolbar"><span>全部分类<svg class="icon"><use href="../../assets/lucide.svg#chevron-down"></use></svg></span><span class="selection-state">未选择图片卡</span><span id="result-count">显示 20 / 20 项</span></div>
+              <div class="search-status" id="search-status"><span class="status-dot"></span><span id="status-text"></span></div>
+              <div class="asset-grid" id="asset-grid" aria-label="演示图词资产"></div>
+              <div class="results-grid" id="results-grid" aria-label="语义搜索匹配结果"></div>
+              <aside class="asset-detail" id="asset-detail" aria-label="保存的提示词版本">
+                <div class="detail-title"><svg class="icon"><use href="../../assets/lucide.svg#history"></use></svg><h2>Prompt 版本历史</h2></div>
+                <div class="version-select"><span>版本 3 · 2026/10/23 09:30</span><svg class="icon"><use href="../../assets/lucide.svg#chevron-down"></use></svg></div>
+                <p class="version-meta">关联参考图 3 张</p>
+                <div class="saved-prompt">
+                  <h3>场景与主体</h3><p>沿水岸连续展开的公共文化建筑，串联城市步道、开放展厅与亲水平台。</p>
+                  <h3>空间与体量</h3><p>低矮舒展的水平体量，层叠屋面顺应河岸走势，保留通向水面的视线。</p>
+                  <h3>材料与光线</h3><p>温润木构搭配浅色石材与通透玻璃；柔和自然光照亮廊道和庭院，形成安静、温暖的建筑氛围。</p>
+                </div>
+                <button id="copy-button" class="copy-button" type="button" tabindex="-1"><svg class="icon"><use href="../../assets/lucide.svg#copy"></use></svg>复制此版本</button>
+                
+              </aside>
+            </div>
+            <div class="copy-toast" id="copy-toast"><svg class="icon"><use href="../../assets/lucide.svg#copy"></use></svg><span>Prompt 已复制</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="player-controls"><span>第四章动效稿 · 约 23 秒</span><div class="control-actions"><a href="../scene-03/">返回第三段</a><button type="button" id="replay">重新播放</button></div></div>
+    <p class="preview-note">界面依据插件图词库；以演示图词展示语义搜索与“复制此版本”，不代表实时检索或跨端自动同步。</p>
+  </main>
+</body>
+</html>
