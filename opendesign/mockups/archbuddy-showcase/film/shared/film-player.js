@@ -26,6 +26,7 @@
       film.dataset.time = t.toFixed(2);
       film.dataset.complete = String(t >= duration);
       render(t);
+      window.renderFilmCaption?.(t);
       const time = document.getElementById('player-time');
       if (time) time.textContent = Math.min(duration, t).toFixed(0) + ' / ' + duration + ' 秒';
     };
@@ -38,7 +39,8 @@
     document.getElementById('replay')?.addEventListener('click', play);
     window.addEventListener('resize', fit, { passive:true });
     fit();
-    if (params.has('t')) draw(Math.max(0, Math.min(duration, Number(params.get('t')) || 0)));
+    if (params.get('controlled') === '1') draw(0);
+    else if (params.has('t')) draw(Math.max(0, Math.min(duration, Number(params.get('t')) || 0)));
     else if (matchMedia('(prefers-reduced-motion: reduce)').matches) draw(duration);
     else play();
     window.__archbuddyFilm = { seek(t) { cancelAnimationFrame(frame); draw(Math.max(0, Math.min(duration, t))); }, play, duration };
