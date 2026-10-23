@@ -1,12 +1,25 @@
-/* 保留系统指针，仅用三层柔光呈现轻微的环境反馈。 */
-.cursor-aura{display:none}
-@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
-.cursor-aura{display:block;position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:300;opacity:0;transition:opacity .8s ease}
-.cursor-aura.is-visible{opacity:1}
-.cursor-aura-cloud{position:absolute;left:-300px;top:-230px;width:600px;height:460px;will-change:transform,opacity;
-background:radial-gradient(ellipse at 37% 44%,rgba(174,215,164,.12),rgba(133,188,158,.035) 30%,transparent 64%),radial-gradient(ellipse at 66% 59%,rgba(151,199,174,.08),transparent 53%)}
-.cursor-aura-cloud:nth-child(2){left:-235px;top:-260px;width:470px;height:520px;background:radial-gradient(ellipse at 42% 62%,rgba(186,211,150,.085),rgba(149,195,162,.025) 32%,transparent 65%)}
-.cursor-aura-cloud:nth-child(3){left:-290px;top:-170px;width:580px;height:340px;background:radial-gradient(ellipse at 61% 38%,rgba(126,186,169,.09),transparent 62%)}
-.cursor-aura[data-surface=light]{mix-blend-mode:multiply}
-.cursor-aura[data-surface=light] .cursor-aura-cloud{background:radial-gradient(ellipse at 38% 46%,rgba(113,152,121,.08),transparent 64%),radial-gradient(ellipse at 65% 58%,rgba(142,162,118,.045),transparent 52%)}
+/* 光感属于首屏背景，保留系统光标，不向页面前景叠加指针特效。 */
+.cursor-aura{display:none!important}
+body[data-hero-variant=c] .abhero .hero-light{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 48% 86%,rgba(57,111,76,.13),transparent 76%),
+    linear-gradient(116deg,rgba(67,102,79,.025),transparent 52%,rgba(39,82,68,.025));
+}
+.hero-light .ambient-field{
+  position:absolute;inset:0;pointer-events:none;
+  transition:opacity 1.4s cubic-bezier(.22,.61,.36,1)
+}
+.hero-light .ambient-field--west{
+  opacity:.5;
+  background:
+    radial-gradient(ellipse 110% 135% at -18% 34%,rgba(94,133,98,.13),rgba(74,113,88,.035) 48%,transparent 82%),
+    linear-gradient(125deg,rgba(90,129,95,.025),transparent 70%)
+}
+.hero-light .ambient-field--east{
+  opacity:.5;
+  background:radial-gradient(ellipse 100% 145% at 112% 68%,rgba(67,120,103,.12),rgba(49,96,80,.025) 52%,transparent 85%)
+}
+@media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){
+  .hero-light .ambient-field{transition:none;opacity:.5!important}
 }
