@@ -1,0 +1,111 @@
+/* ArchBuddy 首屏入口位置三案：独立静态预览，不影响正式首页。 */
+body[data-entry-variant]{background:#071e18;color:#e9f6e9}
+body[data-entry-variant] .site-header{background:#071e18}
+body[data-entry-variant] .header-inner{display:flex;align-items:center}
+.preview-nav{display:flex;align-items:center;gap:6px;margin-left:auto;padding:4px;border:1px solid #9dc5a340;border-radius:10px}
+.preview-nav-label{padding:0 15px 0 10px;color:#8faf9d;font-size:11px;letter-spacing:.08em}
+.preview-nav a{display:grid;place-items:center;width:34px;height:30px;border-radius:6px;color:#b1cbb8;font-size:12px;font-weight:650;text-decoration:none}
+.preview-nav a[aria-current=page]{background:#b7e2ae1f;color:#e0f4d6}
+.preview-nav a:hover{background:#b7e2ae15;color:#f3fff0}
+.preview-back{display:inline-flex;align-items:center;gap:8px;margin-left:26px;color:#b6d0bd;font-size:12px;text-decoration:none}
+.preview-back:hover{color:#f2f9ed}
+.preview-back .icon{width:15px;height:15px}
+body[data-entry-variant] .hero-type-line{font-size:clamp(21px,min(2.5vw,3.8svh),36px)}
+body[data-entry-variant] .type-caret{display:none}
+body[data-entry-variant] .abhero{overflow:hidden}
+body[data-entry-variant] .tool-slot .tool-card{pointer-events:none}
+body[data-entry-variant] .tool-slot .tool-card-detail{display:none}
+body[data-entry-variant] .hero-foot{width:min(1320px,100%);justify-content:space-between;font-size:11px}
+.preview-caption{color:#b5d4b9;letter-spacing:.12em}
+.preview-note{color:#7ea18d;letter-spacing:.12em}
+.launch-area{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(1020px,100%);color:#eef9eb;text-align:left}
+.launch-item{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;color:inherit;text-decoration:none}
+.launch-item .launch-index{display:block;color:#83a994;font-size:10px;font-weight:600;letter-spacing:.14em;white-space:nowrap}
+.launch-item strong{display:block;margin-top:8px;font-size:20px;font-weight:570;line-height:1.1;letter-spacing:-.025em;white-space:nowrap}
+.launch-item strong span{margin-left:3px;color:#b6d4bc;font-size:13px;font-weight:400;letter-spacing:.02em}
+.launch-item .launch-end{position:absolute;right:16px;bottom:0;display:flex;align-items:center;gap:8px;color:#c9e4ca;font-size:11px;white-space:nowrap}
+.launch-item .launch-end .icon{width:15px;height:15px;transition:transform .2s}
+a.launch-item:hover .launch-end .icon{transform:translate(2px,-2px)}
+a.launch-item:focus-visible{outline:2px solid #cceebd;outline-offset:4px}
+.launch-item--pending{color:#d9e8d2}
+.launch-item--pending .launch-end{color:#9db6a5}
+
+/* A：文字与工具之间的轻量横向入口。 */
+[data-entry-variant=a] .launch-area{margin:29px auto 0;border-top:1px solid #a5d4ac55;border-bottom:1px solid #a5d4ac55}
+[data-entry-variant=a] .launch-item{height:80px;padding:12px 22px}
+[data-entry-variant=a] .launch-item+.launch-item{border-left:1px solid #a5d4ac40}
+[data-entry-variant=a] .launch-item .launch-end{right:20px;bottom:19px}
+[data-entry-variant=a] a.launch-item:hover{background:#a5daaa12}
+[data-entry-variant=a] .hero-tool-stage{padding-top:9px}
+
+/* B：入口作为工具箱的轻量操作底座。 */
+[data-entry-variant=b] .hero-tool-stage{flex-direction:column;gap:13px;padding-top:10px}
+[data-entry-variant=b] .toolbox{height:min(310px,60%);flex:none}
+[data-entry-variant=b] .launch-area{gap:12px;width:min(1120px,100%)}
+[data-entry-variant=b] .launch-item{height:78px;padding:13px 19px;border:1px solid #9ccda34a;border-radius:10px;background:linear-gradient(140deg,#153529c7,#0b251dd9)}
+[data-entry-variant=b] .launch-item .launch-index{font-size:9px}
+[data-entry-variant=b] .launch-item strong{margin-top:9px;font-size:18px}
+[data-entry-variant=b] .launch-item .launch-end{right:16px;bottom:25px}
+[data-entry-variant=b] a.launch-item:hover{border-color:#b4dfab99;background:#1a3e2d}
+[data-entry-variant=b] .launch-item--pending{background:linear-gradient(140deg,#263a2c,#11281e)}
+
+/* C：主视觉右侧的竖向快捷入口。 */
+[data-entry-variant=c] .hero-tool-stage{width:min(1390px,100%);margin:auto;display:flex;flex-direction:row;gap:28px;justify-content:center}
+[data-entry-variant=c] .toolbox{width:min(1000px,calc(100% - 300px));flex:1}
+[data-entry-variant=c] .launch-area{display:flex;flex-direction:column;align-self:center;flex:none;width:270px;padding:4px 0 4px 22px;border-left:1px solid #b1d8ae68}
+[data-entry-variant=c] .launch-item{min-height:93px;padding:12px 9px 11px 10px;border-bottom:1px solid #98bd9e32}
+[data-entry-variant=c] .launch-item:last-child{border-bottom:0}
+[data-entry-variant=c] .launch-item strong{font-size:22px}
+[data-entry-variant=c] .launch-item .launch-end{right:6px;bottom:23px}
+[data-entry-variant=c] a.launch-item:hover{background:#a6d0a50d}
+[data-entry-variant=c] .launch-item--pending{color:#cbdcc6}
+@media(max-height:760px) and (min-width:761px){
+ body[data-entry-variant] .abhero{padding-top:12px;padding-bottom:15px}
+ body[data-entry-variant] .abhero h1{font-size:clamp(54px,min(7.6vw,10.5svh),110px)}
+ [data-entry-variant=a] .launch-area{margin-top:14px}
+ [data-entry-variant=a] .launch-item{height:65px}
+ [data-entry-variant=a] .launch-item .launch-end{bottom:13px}
+ [data-entry-variant=b] .toolbox{height:min(270px,57%)}
+ [data-entry-variant=b] .launch-item{height:65px}
+ [data-entry-variant=b] .launch-item .launch-end{bottom:20px}
+ [data-entry-variant=c] .launch-item{min-height:78px}
+}
+@media(max-width:1050px) and (min-width:761px){
+ [data-entry-variant=a] .launch-item strong,[data-entry-variant=b] .launch-item strong{font-size:17px}
+ [data-entry-variant=a] .launch-item strong span,[data-entry-variant=b] .launch-item strong span{font-size:11px}
+ [data-entry-variant=c] .launch-area{width:235px}
+ [data-entry-variant=c] .toolbox{width:calc(100% - 265px)}
+ [data-entry-variant=c] .launch-item strong{font-size:19px}
+}
+@media(max-width:760px){
+ body[data-entry-variant] .header-inner{gap:8px}
+ .preview-nav{margin-left:auto}
+ .preview-nav-label,.preview-back{display:none}
+ body[data-entry-variant] .abhero{height:auto;min-height:calc(100svh - 72px);padding:19px 18px 20px;display:flex;flex-direction:column;gap:16px;overflow:visible}
+ body[data-entry-variant] .abhero h1{font-size:clamp(53px,14vw,76px);margin:14px 0 5px}
+ body[data-entry-variant] .hero-type-line{font-size:clamp(18px,4.8vw,24px);margin-top:7px;white-space:normal}
+ body[data-entry-variant] .hero-tool-stage{width:100%;flex:0 0 auto;padding-top:0}
+ body[data-entry-variant] .toolbox{height:201px;flex:none;width:100%}
+ body[data-entry-variant] .hero-foot{margin-top:auto;padding-top:2px}
+ .launch-area{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .launch-item .launch-index{font-size:8px;letter-spacing:.04em}
+ .launch-item strong{font-size:14px;letter-spacing:-.03em}
+ .launch-item strong span{display:block;margin:3px 0 0;font-size:10px}
+ .launch-item .launch-end{position:static;margin-top:11px;font-size:9px;gap:3px}
+ .launch-item .launch-end .icon{width:12px;height:12px}
+ [data-entry-variant=a] .launch-area{margin-top:23px}
+ [data-entry-variant=a] .launch-item{height:87px;padding:8px 8px 8px 10px}
+ [data-entry-variant=a] .launch-item .launch-end{margin-top:8px}
+ [data-entry-variant=b] .hero-tool-stage,[data-entry-variant=c] .hero-tool-stage{flex-direction:column;gap:15px}
+ [data-entry-variant=b] .launch-area{gap:6px}
+ [data-entry-variant=b] .launch-item{height:92px;padding:9px 9px}
+ [data-entry-variant=b] .launch-item .launch-end{margin-top:6px}
+ [data-entry-variant=c] .launch-area{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;padding:0;border-left:0;border-top:1px solid #b1d8ae68}
+ [data-entry-variant=c] .launch-item{min-height:91px;padding:10px 8px;border-bottom:0;border-right:1px solid #98bd9e32}
+ [data-entry-variant=c] .launch-item:last-child{border-right:0}
+ [data-entry-variant=c] .launch-item strong{font-size:14px}
+ [data-entry-variant=c] .launch-item .launch-end{margin-top:9px}
+ .preview-caption{font-size:10px}
+ .preview-note{display:none}
+}
+@media(prefers-reduced-motion:reduce){.launch-item .launch-end .icon{transition:none}}
