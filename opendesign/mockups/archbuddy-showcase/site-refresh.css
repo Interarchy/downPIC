@@ -38,3 +38,21 @@ body[data-site-theme=forest] #features .figure-heading{background:#fff;border-co
 body[data-site-theme=forest] #features .asset-support{background:#153b2d;border-color:transparent;color:#f5f7f4}
 body[data-site-theme=forest] #features .asset-support .feature-title{color:#f5f7f4}
 body[data-hero-live=true] .abhero{grid-template-rows:auto minmax(0,1fr);padding-bottom:clamp(24px,4svh,46px)}
+
+/* 浅色外围衬托深绿分析框；浅底上的文字重新设置对比度。 */
+body[data-site-theme=forest] .story-chapter{background:#f5f7f4}
+body[data-site-theme=forest] #concept .section-label,
+body[data-site-theme=forest] #features .section-label,
+body[data-site-theme=forest] #features .feature-title,
+body[data-site-theme=forest] #features .feature-title h3,
+body[data-site-theme=forest] #features .feature-title>span{color:#ffaf45}
+body[data-site-theme=forest] #concept .section-label>span,
+body[data-site-theme=forest] #features .section-label>span{background:none;color:#ffaf45}
+body[data-site-theme=forest] #concept .section-heading h2,
+body[data-site-theme=forest] #features .section-heading h2{color:#24332d}
+body[data-site-theme=forest] #concept :is(.concept-description,.loop-note),
+body[data-site-theme=forest] #features :is(.feature-intro,.feature-list span){color:#52685c}
+body[data-site-theme=forest] #features .asset-support :is(.feature-intro,.feature-list span){color:#cfdfd1}
+body[data-site-theme=forest] #features .figure-heading>button,
+body[data-site-theme=forest] #features .variant-switch button{color:#426451}
+body[data-site-theme=forest] #features .variant-switch button[aria-pressed=true]{color:#153b2d;border-color:#25634b}

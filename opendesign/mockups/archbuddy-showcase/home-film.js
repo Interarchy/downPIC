@@ -14,24 +14,6 @@
   const clamp=value=>Math.max(0,Math.min(1,value));
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   let ready=false,scheduled=false,last=-1;
-  let filmRequested=false;
-  function requestFilm(){
-    if(filmRequested)return;
-    filmRequested=true;
-    frame.src=frame.dataset.src;
-    window.removeEventListener('scroll',requestOnScroll);
-  }
-  function requestOnScroll(){if(scrollY>80)requestFilm();}
-  window.addEventListener('scroll',requestOnScroll,{passive:true});
-  window.addEventListener('hashchange',()=>{if(location.hash==='#product-film')requestFilm();});
-  if(scrollY>80||location.hash==='#product-film')requestFilm();
-  else if('IntersectionObserver' in window){
-    const observer=new IntersectionObserver(entries=>{
-      if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();requestFilm();}
-    });
-    observer.observe(section);
-  }
-
   function geometry(){
     const viewportTop=section.getBoundingClientRect().top;
     const top=viewportTop+scrollY-(header?.offsetHeight||0);
@@ -55,7 +37,28 @@
     if(event.origin!==location.origin||event.source!==frame.contentWindow||event.data?.type!=='archbuddy-film-ready')return;
     ready=true;loading.hidden=true;last=-1;requestPaint();
   });
-  frame.addEventListener('load',()=>{if(frame.contentWindow?.__archbuddyScroll){ready=true;loading.hidden=true;last=-1;requestPaint();}});
+  let checkTimer=0,deadline=Date.now()+30000;
+  function checkReady(){
+    try{
+      if(frame.contentWindow?.__archbuddyScroll){
+        ready=true;loading.hidden=true;last=-1;clearTimeout(checkTimer);requestPaint();return;
+      }
+    }catch{}
+    if(Date.now()<deadline){checkTimer=setTimeout(checkReady,200);return;}
+    loading.hidden=false;
+    loading.textContent=document.documentElement.lang.startsWith('en')?'The demo did not load. ':'演示未能加载，请点击重试。';
+    const retry=document.createElement('button');
+    retry.type='button';retry.textContent=document.documentElement.lang.startsWith('en')?'Retry':'重新加载';
+    retry.style.cssText='margin:16px auto;padding:10px 20px;border:1px solid #a8c9b2;border-radius:6px;background:#153b2d;color:#f5f7f4;cursor:pointer';
+    retry.onclick=()=>{
+      loading.textContent=document.documentElement.lang.startsWith('en')?'Loading demo…':'正在加载演示…';
+      const url=new URL(frame.src,location.href);url.searchParams.set('retry',Date.now());
+      ready=false;deadline=Date.now()+30000;frame.src=url.href;checkReady();
+    };
+    loading.append(retry);
+  }
+  frame.addEventListener('load',()=>{clearTimeout(checkTimer);checkReady();});
+  checkReady();
   window.addEventListener('scroll',requestPaint,{passive:true});
   window.addEventListener('resize',requestPaint,{passive:true});
   requestPaint();
