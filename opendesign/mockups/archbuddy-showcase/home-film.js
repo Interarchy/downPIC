@@ -8,14 +8,20 @@
   const titles=['图片快速采集','快速构建提示词','画布创作','搜索复用'];
   const summaries=['浏览网页时一键保存参考图，自动归入项目资料。','从多张参考图提炼设计意图，组合成可编辑的提示词。','连接提示词与参考图，生成效果图并逐轮优化。','按画面特征找回图片与提示词版本，继续复用。'];
   const clamp=value=>Math.max(0,Math.min(1,value));
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   let ready=false,scheduled=false,last=-1;
   function geometry(){
-    const top=section.getBoundingClientRect().top+scrollY-(header?.offsetHeight||0);
-    return {top,range:Math.max(1,section.offsetHeight-pin.offsetHeight)};
+    const viewportTop=section.getBoundingClientRect().top;
+    const top=viewportTop+scrollY-(header?.offsetHeight||0);
+    return {top,viewportTop,range:Math.max(1,section.offsetHeight-pin.offsetHeight)};
   }
   function paint(){
     scheduled=false;
-    const {top,range}=geometry(),q=4*clamp((scrollY-top)/range),step=Math.min(3,Math.floor(q));
+    const {top,viewportTop,range}=geometry(),q=4*clamp((scrollY-top)/range),step=Math.min(3,Math.floor(q));
+    const arrival=reducedMotion.matches?1:clamp((innerHeight-viewportTop)/Math.max(1,innerHeight-(header?.offsetHeight||0)));
+    section.style.setProperty('--film-entry-opacity',String(.28+.72*arrival));
+    section.style.setProperty('--film-entry-shift',`${Math.round((1-arrival)*24)}px`);
+    document.body.dataset.filmEnhanced='true';
     mobileNumber.textContent='0'+(step+1)+' / 04';
     mobileTitle.textContent=titles[step];mobileCopy.textContent=summaries[step];
     if(ready&&Math.abs(q-last)>.0001){

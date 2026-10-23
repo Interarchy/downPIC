@@ -35,3 +35,7 @@ body[data-site-theme=forest] .dialog-header{background:#102d23;color:#e4efdf}
 body[data-site-theme=forest] .dialog-header button{color:#cee5c8}
 
 body[data-site-theme=forest] .product-diagram{background:#0a241c;border-color:#89ad9533}
+
+/* 首屏和短片之间不显示导航分隔线或浮起的阴影。 */
+body[data-hero-live=true] .header-inner{border-bottom-color:transparent}
+body[data-hero-live=true] .site-header.is-scrolled{box-shadow:none}
