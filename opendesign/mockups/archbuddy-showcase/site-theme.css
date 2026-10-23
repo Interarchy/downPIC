@@ -40,33 +40,18 @@ body[data-site-theme=forest] .product-diagram{background:#0a241c;border-color:#8
 body[data-hero-live=true] .header-inner{border-bottom-color:transparent}
 body[data-hero-live=true] .site-header.is-scrolled{box-shadow:none}
 
-/* 三个产品入口与安装说明 */
+/* 插件安装区保留轻量商店链接与安装说明。 */
 body[data-site-theme=forest] #install .install-heading{max-width:900px}
 body[data-site-theme=forest] #install .entry-intro{max-width:45em;margin-top:20px;color:#acc7b7;font-size:15px;line-height:1.85}
-body[data-site-theme=forest] #install .entry-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}
-body[data-site-theme=forest] #install .entry-card{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:336px;padding:27px 28px 25px;border:1px solid #8cb39c44;border-radius:18px;background:linear-gradient(145deg,#17382a 0%,#102a21 58%,#0a221b 100%);color:#eef6e8;text-decoration:none;overflow:hidden;transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease}
-body[data-site-theme=forest] #install .entry-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--entry-accent),transparent);opacity:.8;z-index:-1}
-body[data-site-theme=forest] #install .entry-card--chrome{--entry-accent:#d8eac6}
-body[data-site-theme=forest] #install .entry-card--edge{--entry-accent:#a4d6c7;background:linear-gradient(145deg,#14372e 0%,#102b25 58%,#0a211e 100%)}
-body[data-site-theme=forest] #install .entry-card--canvas{--entry-accent:#d3d8b7;background:linear-gradient(145deg,#243a2c 0%,#172b21 58%,#0d201a 100%)}
-body[data-site-theme=forest] #install a.entry-card:hover{transform:translateY(-5px);border-color:#c5e2c19c;box-shadow:0 20px 45px #00120d52}
-body[data-site-theme=forest] #install a.entry-card:focus-visible{outline:2px solid #d8eac6;outline-offset:4px}
-body[data-site-theme=forest] #install .entry-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#a9c8b1;font-size:11px;font-weight:650;letter-spacing:.14em}
-body[data-site-theme=forest] #install .entry-card-top .icon{width:19px;height:19px;color:#d6ead2}
-body[data-site-theme=forest] #install .entry-card-status{padding:5px 9px;border:1px solid #cad9b85c;border-radius:100px;color:#d5e4c4;letter-spacing:.04em;white-space:nowrap}
-body[data-site-theme=forest] #install .entry-card-name{display:block;margin:45px 0 0;font-size:clamp(38px,4vw,57px);line-height:1;letter-spacing:-.055em;font-weight:600;color:#f1f7eb}
-body[data-site-theme=forest] #install .entry-card-action{display:block;margin:14px 0 0;font-size:17px;font-weight:600;line-height:1.4;color:#e4f0df}
-body[data-site-theme=forest] #install .entry-card-description{display:block;max-width:27em;margin:12px 0 28px;color:#a9c6b3;font-size:13px;line-height:1.8}
-body[data-site-theme=forest] #install .entry-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:19px;border-top:1px solid #a6c9aa39;color:#d7ebd3;font-size:12px;font-weight:600}
-body[data-site-theme=forest] #install .entry-card-bottom .icon{width:17px;height:17px;flex:none}
-body[data-site-theme=forest] #install .entry-card-bottom--pending{color:#b7c8ab}
+body[data-site-theme=forest] #install .install-quick-links{display:flex;align-items:center;flex-wrap:wrap;gap:16px 24px;margin-top:32px;padding:19px 0;border-top:1px solid #9abb9d3f;border-bottom:1px solid #9abb9d3f;font-size:13px}
+body[data-site-theme=forest] #install .install-quick-links>span{margin-right:12px;color:#93b29e;font-size:11px;letter-spacing:.12em}
+body[data-site-theme=forest] #install .install-quick-links a{display:inline-flex;align-items:center;gap:7px;color:#dfedda;text-decoration:none}
+body[data-site-theme=forest] #install .install-quick-links a:hover{text-decoration:underline;text-underline-offset:4px}
+body[data-site-theme=forest] #install .install-quick-links .icon{width:15px;height:15px}
 body[data-site-theme=forest] #install .entry-testset{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:20px 0 0;color:#a9c3af;font-size:12px;line-height:1.6}
 body[data-site-theme=forest] #install .entry-testset a{display:inline-flex;align-items:center;gap:5px;color:#e0edcf;text-decoration:underline;text-underline-offset:4px}
 body[data-site-theme=forest] #install .entry-testset a:hover{color:#fff}
 body[data-site-theme=forest] #install .entry-testset .icon{width:14px;height:14px}
 body[data-site-theme=forest] #install .entry-testset>span{color:#7f9d88}
 body[data-site-theme=forest] #install .install-steps{margin-top:36px}
-body[data-site-theme=forest] #canvas-entry{scroll-margin-top:108px}
-@media(max-width:900px){body[data-site-theme=forest] #install .entry-cards{grid-template-columns:1fr 1fr}body[data-site-theme=forest] #install .entry-card--canvas{grid-column:1/-1;min-height:260px}}
-@media(max-width:600px){body[data-site-theme=forest] #install .entry-cards{grid-template-columns:1fr;gap:12px;margin-top:27px}body[data-site-theme=forest] #install .entry-card{min-height:256px;padding:22px 23px}body[data-site-theme=forest] #install .entry-card--canvas{grid-column:auto}body[data-site-theme=forest] #install .entry-card-name{margin-top:28px;font-size:43px}body[data-site-theme=forest] #install .entry-intro{font-size:13px}body[data-site-theme=forest] #install .entry-card-description{margin-bottom:18px}}
-@media(prefers-reduced-motion:reduce){body[data-site-theme=forest] #install .entry-card{transition:none}}
+@media(max-width:600px){body[data-site-theme=forest] #install .entry-intro{font-size:13px}body[data-site-theme=forest] #install .install-quick-links{gap:12px 18px}body[data-site-theme=forest] #install .install-quick-links>span{width:100%}}

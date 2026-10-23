@@ -1,0 +1,53 @@
+/* 首屏使用入口：沿用 A 的轻量横条，放在四张功能卡下方。 */
+body[data-hero-live=true] .abhero{min-height:650px}
+body[data-hero-live=true] .hero-tool-stage{flex-direction:column;gap:14px;padding-top:10px}
+body[data-hero-live=true] .hero-tool-stage .toolbox{flex:1 1 320px;width:min(1120px,100%);height:auto;max-height:320px;min-height:0}
+body[data-hero-live=true] .hero-entry-rail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:none;width:min(1120px,100%);min-height:80px;border-top:1px solid #a5d4ac55;border-bottom:1px solid #a5d4ac55;color:#eef9eb}
+body[data-hero-live=true] .hero-entry{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;padding:12px 22px;color:inherit;text-decoration:none}
+body[data-hero-live=true] .hero-entry+.hero-entry{border-left:1px solid #a5d4ac40}
+body[data-hero-live=true] .hero-entry-index{display:block;color:#8db19a;font-size:10px;font-weight:600;letter-spacing:.13em;white-space:nowrap}
+body[data-hero-live=true] .hero-entry strong{display:block;margin-top:8px;font-size:20px;font-weight:570;line-height:1.1;letter-spacing:-.025em;white-space:nowrap}
+body[data-hero-live=true] .hero-entry strong span{margin-left:3px;color:#bdd8c2;font-size:13px;font-weight:400;letter-spacing:.02em}
+body[data-hero-live=true] .hero-entry-action{position:absolute;right:20px;bottom:20px;display:flex;align-items:center;gap:8px;color:#d2e7d0;font-size:11px;white-space:nowrap}
+body[data-hero-live=true] .hero-entry-action .icon{width:15px;height:15px;transition:transform .2s}
+body[data-hero-live=true] a.hero-entry:hover{background:#a5daaa12}
+body[data-hero-live=true] a.hero-entry:hover .icon{transform:translate(2px,-2px)}
+body[data-hero-live=true] a.hero-entry:focus-visible{outline:2px solid #cceebd;outline-offset:-3px}
+body[data-hero-live=true] .hero-entry--pending{color:#dcebd5}
+body[data-hero-live=true] .hero-entry--pending .hero-entry-action{color:#9fb9a8}
+body[data-hero-live=true] #hero-canvas-entry{scroll-margin-top:110px}
+@media(max-height:760px) and (min-width:761px){
+ body[data-hero-live=true] .abhero{min-height:610px}
+ body[data-hero-live=true] .hero-tool-stage{gap:10px}
+ body[data-hero-live=true] .hero-tool-stage .toolbox{flex-basis:270px;max-height:270px}
+ body[data-hero-live=true] .hero-entry-rail{min-height:66px}
+ body[data-hero-live=true] .hero-entry{padding-block:8px}
+ body[data-hero-live=true] .hero-entry strong{margin-top:5px;font-size:18px}
+ body[data-hero-live=true] .hero-entry-action{bottom:13px}
+}
+@media(max-width:1050px) and (min-width:761px){
+ body[data-hero-live=true] .hero-entry strong{font-size:17px}
+ body[data-hero-live=true] .hero-entry strong span{font-size:11px}
+ body[data-hero-live=true] .hero-entry{padding-inline:16px}
+ body[data-hero-live=true] .hero-entry-action{right:14px}
+}
+@media(max-width:760px){
+ body[data-hero-live=true] .abhero{height:auto;min-height:calc(100svh - 72px);overflow:visible;display:flex;flex-direction:column;gap:13px}
+ body[data-hero-live=true] .hero-tool-stage{flex:0 0 auto;gap:11px;padding-top:0}
+ body[data-hero-live=true] .hero-tool-stage .toolbox{flex:none;width:100%;height:201px;max-height:none;min-height:0}
+ body[data-hero-live=true] .tool-mobile-detail{min-height:86px}
+ body[data-hero-live=true] .hero-entry-rail{width:100%;min-height:0;grid-template-columns:repeat(3,minmax(0,1fr))}
+ body[data-hero-live=true] .hero-entry{min-height:87px;padding:8px 8px 8px 10px}
+ body[data-hero-live=true] .hero-entry-index{font-size:8px;letter-spacing:.035em}
+ body[data-hero-live=true] .hero-entry strong{margin-top:7px;font-size:14px;letter-spacing:-.03em}
+ body[data-hero-live=true] .hero-entry strong span{display:block;margin:3px 0 0;font-size:10px}
+ body[data-hero-live=true] .hero-entry-action{position:static;gap:4px;margin-top:8px;font-size:9px}
+ body[data-hero-live=true] .hero-entry-action .icon{width:12px;height:12px}
+ body[data-hero-live=true] .hero-foot{margin-top:auto}
+}
+@media(max-height:700px) and (max-width:760px){
+ body[data-hero-live=true] .hero-tool-stage .toolbox{height:176px}
+ body[data-hero-live=true] .tool-mobile-detail{min-height:78px}
+ body[data-hero-live=true] .hero-entry{min-height:78px}
+}
+@media(prefers-reduced-motion:reduce){body[data-hero-live=true] .hero-entry-action .icon{transition:none}}
