@@ -1,6 +1,7 @@
 (() => {
 'use strict';
 const NS='http://www.w3.org/2000/svg';
+const en=document.documentElement.lang.startsWith('en');
 const selected = { colors:['#e1e9cf','#c3d9bd','#a5c9af','#87b59b','#6a9f84'], flow:getComputedStyle(document.documentElement).getPropertyValue('--diagram-accent').trim() || '#ffaf45',stroke:3.8,minStroke:2.6,dash:4.8,gap:2.4,curvedBreak:true,red:getComputedStyle(document.documentElement).getPropertyValue('--diagram-accent').trim() || '#ffaf45',outline:'#ffcb82',ink:'#492a0c' };
 const stages = [
   { number: '01', title: '收集参考图', from: 324, to: 396, center: 360 },
@@ -9,6 +10,7 @@ const stages = [
   { number: '04', title: 'AI 生图迭代', from: 180, to: 252, center: 216 },
   { number: '05', title: '复用图与词', from: 252, to: 324, center: 288 }
 ];
+if(en) ['Collect','Design','Write Prompts','Iterate Images','Reuse Assets'].forEach((title,i)=>{stages[i].title=title;});
 const breaks = [{ id: 'A', center: 36 }, { id: 'B', center: 108 }, { id: 'C', center: 252 }];
 const svg = document.getElementById('problem-ring-svg');
 const disc = document.querySelector('#problem .radial-disc');
@@ -70,7 +72,7 @@ function flowPath(center, radius, from, to, scale, option) {
 }
 function drawLabels(center, flow, size, defs) {
   const scale = size / 560;
-  const titleSize = Math.max(11.2, 17 * scale) * 1.15;
+  const titleSize = en ? Math.max(9.5, 12.5 * scale) : Math.max(11.2, 17 * scale) * 1.15;
   const numberSize = Math.max(9.7, 12.8 * scale) * 1.15;
   const titleRadius = flow + Math.max(15, 25 * scale);
   for (const step of stages) {
@@ -93,6 +95,7 @@ function drawChainLabels(center, inner, size, defs) {
     { id: 'design', title: '方案创作链路', from: 342, to: 450, reverse: false },
     { id: 'ai', title: 'AI 效果图迭代链路', from: 288, to: 144, reverse: true }
   ];
+  if(en){chains[0].title='Design Path';chains[1].title='AI Rendering Path';}
   for (const chain of chains) {
     const path = element('path', {
       id: `problem-chain-${chain.id}`,
@@ -114,7 +117,7 @@ function drawCenteredBreakLabel(group, id, position, rotation, fontSize, scale) 
   }, group);
   const context = document.createElement('canvas').getContext('2d');
   const family = getComputedStyle(svg).fontFamily;
-  const parts = id === 'C'
+  const parts = en ? [{text:'BREAK',size:fontSize*.63},{text:id,size:fontSize*1.12}] : id === 'C'
     ? [{ text: id, size: fontSize * 1.2 }, { text: '点断', size: fontSize }]
     : [{ text: '断点', size: fontSize }, { text: id, size: fontSize * 1.2 }];
   const spacing = Math.max(2.5, 3.5 * scale);
@@ -187,14 +190,14 @@ function renderDiagram() {
         transform: `translate(${labelPosition.x} ${labelPosition.y}) rotate(${rotation})`,
         'font-size': fontSize
       }, group);
-      label.textContent = gap.id === 'C' ? 'C 点断' : `断点 ${gap.id}`;
+      label.textContent = en ? `Break ${gap.id}` : gap.id === 'C' ? 'C 点断' : `断点 ${gap.id}`;
     }
   }
   drawLabels(center, flow, size, defs);
   drawChainLabels(center, inner, size, defs);
   const titleSize = Math.max(18, 28 * scale);
   const lineGap = Math.max(25, 34 * scale);
-  for (const [line, y] of [['创作流程', center - lineGap / 2], ['断点分析', center + lineGap / 2]]) {
+  for (const [line, y] of (en ? [['Design Flow', center - lineGap / 2], ['Breaks', center + lineGap / 2]] : [['创作流程', center - lineGap / 2], ['断点分析', center + lineGap / 2]])) {
     const title = element('text', { class: 'center-title', x: center, y, 'font-size': titleSize });
     title.textContent = line;
   }

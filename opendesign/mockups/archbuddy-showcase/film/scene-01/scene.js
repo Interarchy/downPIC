@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const F=window.ArchBuddyFilm, $=id=>document.getElementById(id);
+  const F=window.ArchBuddyFilm, $=id=>document.getElementById(id),en=document.documentElement.lang.startsWith('en');
   const film=$('film'),page=$('case-page'),viewport=$('browser-viewport');
   const shots=[...document.querySelectorAll('.case-shot')],saved=[...document.querySelectorAll('.saved-image')];
   const toolbar=$('floating-toolbar'),save=toolbar.querySelector('[data-action="save"]');
@@ -22,11 +22,11 @@
     F.show(folder,hasFolder);F.show(content,hasFolder);folder.style.opacity=hasFolder?1:0;folder.style.transform='none';
     saved.forEach((el,i)=>{F.show(el,i<count);el.classList.toggle('just-arrived',t>=starts[i]+2.45&&t<starts[i]+2.97);});
     folder.classList.toggle('pulse',local>=2.45&&local<2.9);
-    $('folder-subtitle').textContent=count?count+' 张图片':'新建项目文件夹';
-    $('file-count').textContent=count+' 张新保存';
-    $('file-status').textContent=t>=14.5?'采集完成 · 1 个项目文件夹':local>=1.6&&local<2.45?'图片自动收进项目文件夹':local>=2.45?'图片已加入水岸文化中心':hasFolder?'继续向下浏览':'浏览案例页面';
+    $('folder-subtitle').textContent=count?(en?count+' Images':count+' 张图片'):(en?'New Project Folder':'新建项目文件夹');
+    $('file-count').textContent=en?count+' New Images':count+' 张新保存';
+    $('file-status').textContent=t>=14.5?(en?'Capture Complete · 1 Project Folder':'采集完成 · 1 个项目文件夹'):local>=1.6&&local<2.45?(en?'Image Filed in Project Folder':'图片自动收进项目文件夹'):local>=2.45?(en?'Image Added to Waterfront Cultural Center':'图片已加入水岸文化中心'):hasFolder?(en?'Continue Scrolling':'继续向下浏览'):(en?'Browsing Project Page':'浏览案例页面');
     toolbar.classList.toggle('visible',visible);toolbar.classList.toggle('pressed',pressed);toolbar.setAttribute('aria-hidden',String(!visible));
-    save.textContent=local>=2.45?'已保存':pressed?'保存中…':'保存图片';$('toolbar-feedback').hidden=local<2.45;
+    save.textContent=local>=2.45?(en?'Saved':'已保存'):pressed?(en?'Saving…':'保存中…'):(en?'Save Image':'保存图片');$('toolbar-feedback').hidden=local<2.45;
     shots.forEach((shot,i)=>{shot.classList.toggle('active',visible&&i===index);shot.querySelector('.case-image').classList.toggle('extracting',i===index&&local>=1.6&&local<2.45);});
     const scale=film.getBoundingClientRect().width/1440||1,image=shots[index].querySelector('.case-image');
     const ir=image.getBoundingClientRect(),vr=viewport.getBoundingClientRect();

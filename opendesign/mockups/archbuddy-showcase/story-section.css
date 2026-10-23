@@ -1,15 +1,11 @@
 /* 已选方案：浅底章节接力与01三处断点逐次显露。 */
 :root{--story-top:100px;--story-stage:660px}
-.story-chapter{position:relative;padding:48px 28px 56px;background:#e4eae2}
+.story-chapter{position:relative;padding:48px 28px 24px;background:#e4eae2}
 .story-pin{position:relative;width:min(1360px,100%);margin-inline:auto}
 .story-shell{transform-origin:center top}
 .story-window{position:relative;min-width:0;background:#153b2d;border-radius:12px;overflow:hidden}
 .story-panel{margin:0}
 .story-panel>.container{width:calc(100% - 64px)}
-.story-progress{display:flex;align-items:center;justify-content:center;gap:15px;height:36px;color:#375a45;font-size:11px}
-.story-progress-label{font:inherit;border:0;padding:4px 0;background:none;color:inherit}
-.story-progress-track{width:112px;height:2px;background:#bbccbd;overflow:hidden}
-.story-progress-track i{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:#25634b}
 body[data-story-layout="pinned"] .story-pin{position:sticky;top:var(--story-top)}
 body[data-story-layout="pinned"] .story-window{height:var(--story-stage)}
 body[data-story-layout="pinned"] .story-panel{position:absolute;inset:0 0 auto;width:100%;transform-origin:center top;will-change:transform,opacity;contain:layout style}
@@ -29,7 +25,6 @@ body[data-story-layout="pinned"] #workflow .ab-workflow-heading h3{font-size:20p
 body[data-story-layout="natural"] .story-window{overflow:clip;background:transparent}
 body[data-story-layout="natural"] .story-panel{position:relative;border-radius:12px;will-change:transform,opacity}
 body[data-story-layout="natural"] #workflow{margin-top:28px}
-body[data-story-layout="natural"] .story-progress{display:none}
 #problem .ring-svg .chain-label{fill:#f5f8ef;font-weight:600;text-anchor:middle;dominant-baseline:middle;letter-spacing:.045em}
 #problem .diagnosis p{color:#f4f7ee}
 #problem .diagnosis:nth-child(2){margin-left:8%}
@@ -38,7 +33,7 @@ body[data-story-layout="natural"] .story-progress{display:none}
 #problem .ring-svg .break-group{will-change:transform}
 #problem .section-label,#workflow .section-label,#problem .section-label>span,#workflow .section-label>span{color:#ffaf45}
 @media(max-width:860px){#problem .diagnosis:nth-child(2),#problem .diagnosis:nth-child(3){margin-left:0}}
-@media(max-width:760px){.story-chapter{padding:30px 12px 34px}.story-panel>.container{width:calc(100% - 32px)}#problem.ab-problem,#workflow.ab-workflow{padding:32px 0}}
+@media(max-width:760px){.story-chapter{padding:30px 12px 20px}.story-panel>.container{width:calc(100% - 32px)}#problem.ab-problem,#workflow.ab-workflow{padding:32px 0}}
 @media(prefers-reduced-motion:reduce){.story-panel,.story-shell,#problem .diagnosis{transform:none!important;opacity:1!important;clip-path:none!important;will-change:auto!important}}
 
 /* 宽屏演示：收拢外框留白，并让图解和说明占据画面主体。 */

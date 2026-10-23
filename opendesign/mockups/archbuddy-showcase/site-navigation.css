@@ -20,7 +20,7 @@
 .site-top-nav .nav-library-menu .icon{width:16px;height:16px;stroke-width:1.8}
 .site-top-nav .nav-language{display:inline-flex;align-items:center;gap:8px;min-height:30px;margin-left:4px;padding-left:22px;border-left:1px solid #c9e4ce40;color:#b0cbb8;font-size:12px;white-space:nowrap}
 .site-top-nav .nav-language :is(a,span){color:#a8c4b0;text-decoration:none}
-.site-top-nav .nav-language a:hover,.site-top-nav .nav-language [aria-current=true]{color:#f1f8ec}
+.site-top-nav .nav-language a:hover,.site-top-nav .nav-language [aria-current=true],.site-top-nav a.nav-language:hover{color:#f1f8ec}
 body[data-hero-live=true] .abhero{height:calc(100svh - 84px);min-height:610px}
 html[lang=en] .tool-title{letter-spacing:-.015em}
 html[lang=en] .tool-action{font-size:clamp(11px,1.12vw,16px)}

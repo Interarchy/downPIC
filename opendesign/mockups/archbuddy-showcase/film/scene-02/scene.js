@@ -15,6 +15,8 @@
     '使用温润木构、浅色石材与通透玻璃；突出屋檐、廊柱和细部节点的层次，呈现克制而精确的质感。',
     '以柔和自然光照亮廊道和庭院，控制水面反射与材质高光，营造安静、温暖且具有真实感的建筑氛围。'
   ];
+  const en=document.documentElement.lang.startsWith('en');
+  if(en){copy.splice(0,copy.length,...[["A cultural building stretches along the riverbank.","Low roof planes follow the curve of the water."],["Aerial framing joins river, greenery, and building.","Paths thread through lawns and shaded trees."],["Warm timber meets pale stone and clear glass.","Soft daylight gives the courtyards a calm glow."]]);assembled.splice(0,assembled.length,...["A public cultural building extends along the waterfront, linking an urban promenade, open galleries, and accessible riverside terraces.","Compose galleries and walkways as low, expansive horizontal volumes. Layered roofs follow the riverbank while maintaining views toward the water.","Use an elevated aerial viewpoint to show the river, greenery, architecture, and city together, with the building clearly anchoring the scene.","Let riverside paths move through grass and trees, with gentle slopes, places to pause, and a continuous open public edge.","Combine warm timber, pale stone, and clear glass. Define the eaves, columns, and joints with a restrained, carefully detailed material palette.","Light the walkways and courtyards with soft daylight. Control water reflections and material highlights for a calm, warm, photorealistic atmosphere."]);}
 
   const begins=[.9,4.1,7.3],selected=[3.4,6.6,9.8],mix=(a,b,p)=>a+(b-a)*p;
   document.body.classList.add('time-driven');film.classList.add('is-playing');
@@ -35,7 +37,7 @@
         F.type(item.querySelector('.typed'),copy[i][j],t,bodyStart,end);start=end+.08;
       });
       card.classList.toggle('has-copy',t>=start);card.classList.toggle('selected',t>=selected[i]);
-      card.querySelector('.action-label').textContent=t>=selected[i]?'已加入整体 Prompt':'加入整体 Prompt';
+      card.querySelector('.action-label').textContent=t>=selected[i]?(en?'Added to Full Prompt':'已加入整体 Prompt'):(en?'Add to Full Prompt':'加入整体 Prompt');
     });
     [[$('join-one'),3.4],[$('join-two'),6.6],[$('combine-arrow'),9.8]].forEach(([el,start])=>{
       F.show(el,t>=start);const p=F.ease(F.ramp(t,start,start+.45));el.style.opacity=p;el.style.transform='scale('+mix(.7,1,p)+')';
@@ -59,7 +61,7 @@
       F.type(row.querySelector('.panel-typed'),assembled[i],t,bodyStart,end);start=end+.08;
     });
     $('confirm-button').classList.toggle('ready',t>=start+.05);
-    const count=selected.filter(at=>t>=at).length;$('selected-count').textContent='已选 '+count+' / 3 张参考图';
-    $('module-count').textContent=visibleRows+' 个设计维度';$('progress-bar').style.width=t/18.5*100+'%';
+    const count=selected.filter(at=>t>=at).length;$('selected-count').textContent=(en?count+' / 3 Reference Images Selected':'已选 '+count+' / 3 张参考图');
+    $('module-count').textContent=(en?visibleRows+' Design Dimensions':visibleRows+' 个设计维度');$('progress-bar').style.width=t/18.5*100+'%';
   }});
 })();

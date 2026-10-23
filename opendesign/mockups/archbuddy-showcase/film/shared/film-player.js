@@ -38,7 +38,7 @@
       render(sceneTime(t));
       window.renderFilmCaption?.(t);
       const time = document.getElementById('player-time');
-      if (time) time.textContent = Math.min(duration, t).toFixed(0) + ' / ' + duration + ' 秒';
+      if (time) time.textContent = Math.min(duration, t).toFixed(0) + ' / ' + duration + (document.documentElement.lang.startsWith('en') ? ' sec' : ' 秒');
     };
     const tick = now => {
       const time = Math.min((now - started) / 1000, duration);

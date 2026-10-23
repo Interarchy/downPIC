@@ -2,7 +2,7 @@
   'use strict';
   const F = window.ArchBuddyFilm;
   const $ = id => document.getElementById(id);
-  const query = '沿水面舒展展开的建筑';
+  const query = document.documentElement.lang.startsWith('en') ? 'Low buildings along the waterfront' : '沿水面舒展展开的建筑';
   const candidates = [
     { title:'水岸文化中心 · 主入口', kind:'water', x:'0%', y:'0%', tag:'参考图 · 水平体量', text:'沿水岸展开的低矮公共建筑，连接城市步道与亲水平台。', match:true },
     { title:'玻璃中庭', kind:'sheet', x:'31.132%', y:'33.982%', tag:'文化建筑 · 玻璃', text:'通透明亮的中庭，连续结构与室内绿植。' },

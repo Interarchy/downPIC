@@ -1,0 +1,18 @@
+/* English copy is longer than Chinese copy; keep all four chapters inside the filmed UI. */
+html[lang=en] .reference-card .card-top span:last-child{max-width:110px;white-space:normal;text-align:right;font-size:9px;line-height:1.15}
+html[lang=en] .reference-card .card-eyebrow{font-size:8px;letter-spacing:.08em}
+html[lang=en] .reference-card .prompt-item>span{font-size:10px}
+html[lang=en] .reference-card .prompt-item p{font-size:11px;line-height:1.28}
+html[lang=en] .prompt-panel .panel-row span{font-size:10.5px}
+html[lang=en] .prompt-panel .panel-row p{font-size:10.5px;line-height:1.2}
+html[lang=en] .search-magnifier .magnifier-label{font-size:21px}
+html[lang=en] .search-magnifier .magnifier-field{font-size:31px;letter-spacing:0}
+html[lang=en] .search-magnifier .magnifier-field b{font-size:19px;padding:18px 16px}
+html[lang=en] .search-magnifier p{font-size:19px}
+html[lang=en] .saved-prompt p{font-size:9px;line-height:1.5;margin-bottom:6px}
+html[lang=en] .saved-prompt h3{font-size:9px;margin-bottom:2px}
+html[lang=en] .folder-row strong,html[lang=en] .folder-row small{overflow:hidden;text-overflow:ellipsis}
+html[lang=en] .folder-row>div{max-width:calc(100% - 42px)}
+html[lang=en] .downpic-toolbar-row{gap:6px}
+html[lang=en] .studio-node .node-head strong{font-size:13px}
+html[lang=en] .studio-node .node-body,html[lang=en] .studio-node .iteration-archive{overflow-wrap:anywhere}
