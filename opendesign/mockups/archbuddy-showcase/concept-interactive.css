@@ -27,7 +27,7 @@
 .concept-demo-note{display:block;margin-top:auto;padding-top:8px;font-size:11px;letter-spacing:.02em;color:#aac4ad}
 .reference-back{background:#234737}
 .reference-stack{position:relative;flex:1;min-height:195px;margin:2px 8px 0}
-.reference-sheet{position:absolute;top:20px;width:47%;height:172px;border:5px solid #f8f8f2;border-bottom-width:19px;border-radius:3px;box-shadow:0 14px 24px rgba(0,0,0,.28);background-image:url('assets/concept/reference-triptych.png');background-repeat:no-repeat;background-size:300% auto;transition:transform .45s ease}
+.reference-sheet{position:absolute;top:20px;width:47%;height:172px;border:5px solid #f8f8f2;border-bottom-width:19px;border-radius:3px;box-shadow:0 14px 24px rgba(0,0,0,.28);background-repeat:no-repeat;background-size:300% auto;transition:transform .45s ease}
 .reference-sheet-one{left:3%;z-index:1;transform:rotate(-10deg);background-position:left center}
 .reference-sheet-two{left:27%;z-index:2;transform:rotate(2deg) translateY(-5px);background-position:center center}
 .reference-sheet-three{left:51%;z-index:3;transform:rotate(10deg) translateY(4px);background-position:right center}
@@ -47,7 +47,7 @@
 @keyframes concept-type{from{width:0}to{width:100%}}
 .compare-back{background:#203f31}
 .comparison{position:relative;flex:1;min-height:0;overflow:hidden;margin-top:10px;border-radius:4px;--split:0%;touch-action:none}
-.compare-image{position:absolute;inset:0;background-image:url('assets/concept/iteration-triptych.png');background-size:300% auto;background-repeat:no-repeat;background-position:left center}
+.compare-image{position:absolute;inset:0;background-size:300% auto;background-repeat:no-repeat;background-position:left center}
 .compare-after{background-position:center center;clip-path:inset(0 0 0 var(--split))}
 .compare-divider{position:absolute;top:0;bottom:0;left:var(--split);width:2px;transform:translateX(-50%);background:white;box-shadow:0 0 7px rgba(0,0,0,.3);pointer-events:none}
 .compare-divider span{position:absolute;top:50%;left:50%;display:grid;place-items:center;width:32px;height:32px;transform:translate(-50%,-50%);border-radius:50%;background:white;color:#173c2e;box-shadow:0 3px 12px rgba(0,0,0,.23)}
@@ -107,3 +107,7 @@
   .concept-flip,.reference-sheet,.creation-reveal,.creation-reveal-inner,.creation-storage-hint .icon{transition-duration:.01ms}
   .concept-card-prompt.is-open .prompt-typed,.concept-card-prompt:hover .prompt-typed{animation:none;width:100%;border-right:0}
 }
+
+/* 章节接近视口时才请求示意图，避免首屏下载下方大图。 */
+.concept-section.is-assets-ready .reference-sheet{background-image:url('assets/concept/reference-triptych.png')}
+.concept-section.is-assets-ready .compare-image{background-image:url('assets/concept/iteration-triptych.png')}

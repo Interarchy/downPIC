@@ -1,6 +1,18 @@
 (() => {
   const section = document.querySelector('#concept');
   if (!section) return;
+  if ('IntersectionObserver' in window) {
+    const assetsObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        section.classList.add('is-assets-ready');
+        assetsObserver.disconnect();
+      }
+    }, { rootMargin: '500px 0px' });
+    assetsObserver.observe(section);
+  } else {
+    section.classList.add('is-assets-ready');
+  }
+
 
   const cards = [...section.querySelectorAll('[data-concept-card]')];
   const comparison = section.querySelector('.comparison');

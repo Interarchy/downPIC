@@ -39,15 +39,9 @@
     if(!frame.getAttribute('src'))frame.src=frame.dataset.src;
     return framePromises[i];
   }
-  function preloadNext(i){
-    if(i>=frames.length)return;
-    const start=()=>ensureFrame(i).then(ok=>{if(ok)setTimeout(()=>preloadNext(i+1),700);});
-    if('requestIdleCallback' in window)requestIdleCallback(start,{timeout:1600});
-    else setTimeout(start,600);
-  }
   function draw(q){
     if(!ready)return;current=Math.max(0,Math.min(4,q));const i=Math.min(3,Math.floor(current)),p=current>=4?1:current-i,start=hasIntro(i) ? .16 : 0;
-    ensureFrame(i);if(i<3&&p>.65)ensureFrame(i+1);
+    ensureFrame(i);if(i<3&&p>.35)ensureFrame(i+1);
     frames.forEach(f=>{f.style.opacity='0';f.setAttribute('aria-hidden','true');});
     [1,2,3].forEach(n=>showIntro(n,0,1));
     const phase=clamp((p-start)/(.9-start)),local=pre[i]+(durations[i]-pre[i])*phase;
@@ -105,6 +99,6 @@
     const q=params.has('q')?Number(params.get('q')):params.has('scene')?Number(params.get('scene'))-1:4*scrollY/range();
     if(embedded){draw(0);parent.postMessage({type:'archbuddy-film-ready'},location.origin);}
     else setProgress(Number.isFinite(q)?q:0);
-    preloadNext(1);
+
   }).catch(e=>{$('loading-state').textContent=e.message;window.__filmErrors.push(e.message);});
 })();

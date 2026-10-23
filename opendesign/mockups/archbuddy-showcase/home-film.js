@@ -14,6 +14,24 @@
   const clamp=value=>Math.max(0,Math.min(1,value));
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   let ready=false,scheduled=false,last=-1;
+  let filmRequested=false;
+  function requestFilm(){
+    if(filmRequested)return;
+    filmRequested=true;
+    frame.src=frame.dataset.src;
+    window.removeEventListener('scroll',requestOnScroll);
+  }
+  function requestOnScroll(){if(scrollY>80)requestFilm();}
+  window.addEventListener('scroll',requestOnScroll,{passive:true});
+  window.addEventListener('hashchange',()=>{if(location.hash==='#product-film')requestFilm();});
+  if(scrollY>80||location.hash==='#product-film')requestFilm();
+  else if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();requestFilm();}
+    });
+    observer.observe(section);
+  }
+
   function geometry(){
     const viewportTop=section.getBoundingClientRect().top;
     const top=viewportTop+scrollY-(header?.offsetHeight||0);
