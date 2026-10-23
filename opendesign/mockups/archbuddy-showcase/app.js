@@ -5,6 +5,8 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
   const imageBase = 'case-study/assets/';
+  const english = document.documentElement.lang.startsWith('en');
+  const englishAlt = {'ArchBuddy 提示词构建实际界面':'Actual ArchBuddy prompt-building interface','ArchBuddy 效果评估入口实际界面':'Actual ArchBuddy rendering review interface','ArchBuddy 提示词库实际界面':'Actual ArchBuddy prompt library','ArchBuddy 参考图详情实际界面':'Actual ArchBuddy reference detail interface'};
   const galleries = {
     prompt: [
       {image:'04-prompt-builder-1280x800.png',alt:'ArchBuddy 提示词构建实际界面'},
@@ -21,7 +23,7 @@
       if (!variant) return;
       const image = figure.querySelector('img');
       image.src = imageBase + variant.image;
-      image.alt = variant.alt;
+      image.alt = english ? englishAlt[variant.alt] : variant.alt;
       figure.querySelectorAll('[data-variant]').forEach(other => other.setAttribute('aria-pressed',String(other === button)));
     }));
   });

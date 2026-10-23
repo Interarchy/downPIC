@@ -115,7 +115,7 @@
   const setExpanded = expanded => {
     shell.classList.toggle('is-expanded', expanded);
     storage.setAttribute('aria-expanded', String(expanded));
-    storage.setAttribute('aria-label', `${expanded ? '收起' : '展开查看'} ArchBuddy 项目图库实际界面`);
+    storage.setAttribute('aria-label', document.documentElement.lang.startsWith('en') ? `${expanded ? 'Collapse' : 'Expand'} the ArchBuddy Project Library` : `${expanded ? '收起' : '展开查看'} ArchBuddy 项目图库实际界面`);
     reveal.setAttribute('aria-hidden', String(!expanded));
   };
   const hasFineHover = () => matchMedia('(hover:hover) and (pointer:fine)').matches;
