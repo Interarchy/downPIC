@@ -1,0 +1,50 @@
+/* 官网主导航：产品入口、定价与语言；保持首屏四张能力卡独立。 */
+.site-header{position:sticky;top:0;z-index:120}
+.site-header .header-inner{width:min(1460px,calc(100% - 80px));height:84px;min-height:84px}
+.site-top-nav{display:flex;align-items:center;gap:clamp(18px,2.2vw,34px);margin-left:auto}
+.site-header .header-inner .site-top-nav{gap:clamp(18px,2.2vw,34px)}
+.site-top-nav .nav-library{position:relative}
+.site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{display:inline-flex;align-items:center;gap:8px;min-height:39px;color:#e8f2e9;font-size:13px;font-weight:570;letter-spacing:.005em;white-space:nowrap;text-decoration:none}
+.site-top-nav .nav-library summary{list-style:none;cursor:pointer}
+.site-top-nav .nav-library summary::-webkit-details-marker{display:none}
+.site-top-nav .nav-library summary .icon{width:15px;height:15px;stroke-width:1.8;transition:transform .2s ease}
+.site-top-nav .nav-library[open] summary .icon{transform:rotate(180deg)}
+.site-top-nav .nav-canvas .icon{width:14px;height:14px;stroke-width:1.8}
+.site-top-nav .nav-pricing[aria-current=page]{color:#c6eabf}
+.site-top-nav .nav-library summary:hover,.site-top-nav .nav-canvas:hover,.site-top-nav .nav-pricing:hover{color:#c6eabf}
+.site-top-nav :is(summary,a):focus-visible{outline:2px solid #c6eabf;outline-offset:4px;border-radius:2px}
+.site-top-nav .nav-library-menu{position:absolute;right:-15px;top:calc(100% + 12px);width:195px;padding:6px;border:1px solid #b9d8be50;border-radius:7px;background:#eaf1e9;box-shadow:0 25px 50px #00100880;color:#173b2d}
+.site-top-nav .nav-library-menu::before{content:"";position:absolute;left:0;right:0;top:-13px;height:13px}
+.site-top-nav .nav-library-menu a{display:flex;align-items:center;justify-content:space-between;min-height:43px;padding:0 11px;border-radius:4px;color:#173b2d;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.site-top-nav .nav-library-menu a:hover{background:#d8e7da;color:#102c22}
+.site-top-nav .nav-library-menu .icon{width:16px;height:16px;stroke-width:1.8}
+.site-top-nav .nav-language{display:inline-flex;align-items:center;gap:8px;min-height:30px;margin-left:4px;padding-left:22px;border-left:1px solid #c9e4ce40;color:#b0cbb8;font-size:12px;white-space:nowrap}
+.site-top-nav .nav-language :is(a,span){color:#a8c4b0;text-decoration:none}
+.site-top-nav .nav-language a:hover,.site-top-nav .nav-language [aria-current=true]{color:#f1f8ec}
+body[data-hero-live=true] .abhero{height:calc(100svh - 84px);min-height:610px}
+html[lang=en] .tool-title{letter-spacing:-.015em}
+html[lang=en] .tool-action{font-size:clamp(11px,1.12vw,16px)}
+html[lang=en] .tool-card-detail{font-size:12px;line-height:1.38}
+html[lang=en] .tool-card-footer{font-size:10px}
+@media(max-width:1050px){
+ .site-header .header-inner{width:calc(100% - 48px)}
+ .site-header .header-inner .site-top-nav{gap:16px}
+ .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{font-size:12px}
+ .site-top-nav .nav-language{padding-left:15px}
+}
+@media(max-width:760px){
+ .site-header .header-inner{display:flex;flex-wrap:wrap;align-content:center;row-gap:0;width:calc(100% - 32px);height:104px;min-height:104px}
+ .site-header .brand{height:45px}
+ .site-header .header-inner .site-top-nav{order:2;flex:none;justify-content:space-between;gap:12px;width:100%;height:45px;margin:0;overflow-x:auto;scrollbar-width:none}
+ .site-header .header-inner .site-top-nav::-webkit-scrollbar{display:none}
+ .site-top-nav .nav-language{margin-left:0;padding-left:12px}
+ .site-top-nav .nav-library-menu{position:fixed;top:96px;left:16px;right:auto;z-index:130;width:195px}
+ body[data-hero-live=true] .abhero{height:auto;min-height:calc(100svh - 104px)}
+}
+@media(max-width:440px){
+ .site-header .header-inner .site-top-nav{gap:11px}
+ .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{font-size:11px}
+ .site-top-nav .nav-language{gap:5px;padding-left:9px;font-size:11px}
+ .site-top-nav .nav-canvas .icon{display:none}
+}
+@media(prefers-reduced-motion:reduce){.site-top-nav .nav-library summary .icon{transition:none}}

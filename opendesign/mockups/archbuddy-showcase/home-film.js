@@ -7,6 +7,10 @@
   const mobileNumber=document.getElementById('site-film-mobile-number'),mobileTitle=document.getElementById('site-film-mobile-title'),mobileCopy=document.getElementById('site-film-mobile-copy');
   const titles=['图片快速采集','快速构建提示词','画布创作','搜索复用'];
   const summaries=['浏览网页时一键保存参考图，自动归入项目资料。','从多张参考图提炼设计意图，组合成可编辑的提示词。','连接提示词与参考图，生成效果图并逐轮优化。','按画面特征找回图片与提示词版本，继续复用。'];
+  if(document.documentElement.lang.startsWith('en')){
+    titles.splice(0,titles.length,'Capture images quickly','Build prompts quickly','Create on Canvas','Search and reuse');
+    summaries.splice(0,summaries.length,'Save references in one click while browsing.','Extract intent from multiple references and compose editable prompts.','Connect prompts and images, then generate and refine renderings.','Find images and prompt versions by visual features.');
+  }
   const clamp=value=>Math.max(0,Math.min(1,value));
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   let ready=false,scheduled=false,last=-1;
@@ -25,7 +29,7 @@
     mobileNumber.textContent='0'+(step+1)+' / 04';
     mobileTitle.textContent=titles[step];mobileCopy.textContent=summaries[step];
     if(ready&&Math.abs(q-last)>.0001){
-      try{frame.contentWindow.__archbuddyScroll.seekEmbedded(q);last=q;}catch(error){ready=false;loading.textContent='演示加载遇到问题，请刷新页面';loading.hidden=false;}
+      try{frame.contentWindow.__archbuddyScroll.seekEmbedded(q);last=q;}catch(error){ready=false;loading.textContent=document.documentElement.lang.startsWith('en')?'The demo could not load. Please refresh.':'演示加载遇到问题，请刷新页面';loading.hidden=false;}
     }
   }
   function requestPaint(){if(!scheduled){scheduled=true;requestAnimationFrame(paint);}}

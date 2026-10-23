@@ -10,6 +10,16 @@
     b:{name:'B / 建筑档案匣',sub:'把所见、所想与每次推敲，收进自己的设计档案。',tray:'DESIGN ARCHIVE',lines:['收藏所见，构筑所想','让参考图，说出设计意图','让每一次推敲，都有迹可循']},
     c:{name:'C / 光轨工作台',sub:'四项核心能力，连接从参考到创作的每一步。',tray:'CONNECTED WORKSPACE',lines:['从一张参考，到新的可能','把设计意图，连接成画布','让创作循环，持续向前']}
   };
+  const english=document.documentElement.lang.startsWith('en');
+  if(english){
+    features.splice(0,features.length,
+      {title:'Images · Capture',desc:'Save reference images as you browse and organize them by project.'},
+      {title:'Prompts · Build and refine',desc:'Turn massing, material, light, and composition into structured prompts.'},
+      {title:'Renderings · Canvas creation',desc:'Connect references and prompts, then keep every rendering and revision.'},
+      {title:'Visual knowledge · Search and reuse',desc:'Find images and prompt versions by describing their visual features.'}
+    );
+    variants.c.lines=['From one reference to new possibilities','Connect design intent on a canvas','Keep every iteration in motion'];
+  }
   let variant='a',timer=0,closeTimer=0,visible=true,stage='brand',index=0,line=0,active=-1;
   function schedule(delay){clearTimeout(timer);if(visible&&!document.hidden&&!motion.matches)timer=setTimeout(tick,delay);}
   function tick(){
@@ -27,9 +37,9 @@
     clearTimeout(closeTimer);active=n;box.classList.toggle('has-open',n>=0);
     slots.forEach((slot,i)=>slot.classList.toggle('is-open',i===n));
     cards.forEach((card,i)=>{card.setAttribute('aria-expanded',String(i===n));document.getElementById('tool-detail-'+i).setAttribute('aria-hidden',String(i!==n));});
-    mobile.querySelector('strong').textContent=n>=0?features[n].title:'你的四件设计工具';
-    mobile.querySelector('p').textContent=n>=0?features[n].desc:'轻点一张卡片，抽取它的完整能力。';
-    document.getElementById('tool-hint').textContent=n>=0?'移向另一张卡片，继续探索':'悬停卡片，抽取一项创作能力';
+    mobile.querySelector('strong').textContent=n>=0?features[n].title :english?'Four tools for your design process':'你的四件设计工具';
+    mobile.querySelector('p').textContent=n>=0?features[n].desc :english?'Tap a card to explore its full capability.':'轻点一张卡片，抽取它的完整能力。';
+    document.getElementById('tool-hint').textContent=n>=0?(english?'Move to another card to keep exploring':'移向另一张卡片，继续探索'):(english?'Hover over a card to explore a capability':'悬停卡片，抽取一项创作能力');
   }
   function selectVariant(value,updateUrl){
     variant=Object.hasOwn(variants,value)?value:'a';
