@@ -45,9 +45,9 @@ body[data-site-theme=forest] #concept .section-label,
 body[data-site-theme=forest] #features .section-label,
 body[data-site-theme=forest] #features .feature-title,
 body[data-site-theme=forest] #features .feature-title h3,
-body[data-site-theme=forest] #features .feature-title>span{color:#ffaf45}
+body[data-site-theme=forest] #features .feature-title>span{color:#25634b}
 body[data-site-theme=forest] #concept .section-label>span,
-body[data-site-theme=forest] #features .section-label>span{background:none;color:#ffaf45}
+body[data-site-theme=forest] #features .section-label>span{background:#25634b;color:#fff}
 body[data-site-theme=forest] #concept .section-heading h2,
 body[data-site-theme=forest] #features .section-heading h2{color:#24332d}
 body[data-site-theme=forest] #concept :is(.concept-description,.loop-note),
@@ -56,3 +56,18 @@ body[data-site-theme=forest] #features .asset-support :is(.feature-intro,.featur
 body[data-site-theme=forest] #features .figure-heading>button,
 body[data-site-theme=forest] #features .variant-switch button{color:#426451}
 body[data-site-theme=forest] #features .variant-switch button[aria-pressed=true]{color:#153b2d;border-color:#25634b}
+
+/* 深绿标题与实底章节数字保持一致；深色资产区用浅底承托标题。 */
+body[data-site-theme=forest] #concept .section-label>span,
+body[data-site-theme=forest] #features .section-label>span{
+  display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;
+  border-radius:4px;font-size:22px;line-height:1;background:#25634b;color:#fff
+}
+body[data-site-theme=forest] #features .asset-support .feature-title{
+  width:fit-content;max-width:100%;padding:10px 14px;border-radius:4px;background:#e8f0ec;color:#25634b
+}
+body[data-site-theme=forest] #features .asset-support .feature-title>.icon{color:#25634b}
+@media(max-width:760px){
+  body[data-site-theme=forest] #concept .section-label>span,
+  body[data-site-theme=forest] #features .section-label>span{width:40px;height:40px;flex-basis:40px;font-size:20px}
+}
