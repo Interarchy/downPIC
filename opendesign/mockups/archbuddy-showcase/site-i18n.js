@@ -7,13 +7,15 @@
   const attributes=['aria-label','title','alt','placeholder'];
   const translateText=node=>{
     if(!node || node.nodeType!==Node.TEXT_NODE || !node.nodeValue?.trim())return;
-    if(node.parentElement?.closest('script,style,noscript'))return;
+    if(node.parentElement?.closest('script,style,noscript,.nav-language'))return;
     const original=node.nodeValue,trimmed=original.trim(),replacement=dict[trimmed];
     if(replacement)node.nodeValue=original.replace(trimmed,replacement);
   };
   const translateElement=element=>{
     if(element.nodeType!==Node.ELEMENT_NODE)return;
-    for(const attribute of attributes){const value=element.getAttribute(attribute);if(value&&dict[value])element.setAttribute(attribute,dict[value]);}
+    const translateAttributes=node=>{for(const attribute of attributes){const value=node.getAttribute(attribute);if(value&&dict[value])node.setAttribute(attribute,dict[value]);}};
+    translateAttributes(element);
+    element.querySelectorAll('[aria-label],[title],[alt],[placeholder]').forEach(translateAttributes);
     const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);while(walker.nextNode())translateText(walker.currentNode);
   };
   translateElement(document.body);
