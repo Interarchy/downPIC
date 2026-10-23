@@ -46,3 +46,9 @@ html{scroll-snap-type:none;scroll-behavior:auto}.journey{height:660svh;position:
 .retrieved-surface{position:absolute;inset:0;border:1px solid #c3e8be;border-radius:6px;background:#224b37;overflow:hidden;box-shadow:0 24px 55px #00180f77}
 .retrieved-surface .diagram-photo{height:173px}.retrieved-surface .diagram-text-lines{padding:19px 22px;gap:11px}
 .retrieved-asset>span{left:0;top:305px}
+
+/* 官网嵌入时由外层原生滚动驱动，隐藏重复的导航与播放控件。 */
+html.embedded,html.embedded body{height:100%;overflow:hidden}
+.embedded .journey{height:100svh}
+.embedded .sticky-stage{height:100svh;padding:0}
+.embedded .story-nav,.embedded .section-controls,.embedded .journey-hint{display:none}

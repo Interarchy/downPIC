@@ -2,12 +2,14 @@
   'use strict';
   const $=id=>document.getElementById(id),frames=[1,2,3,4].map(n=>$('chapter-'+n)),durations=[8,12,16,14],pre=[.8,.6,.8,.4];
   const hasIntro=i=>Boolean($('intro-'+i));
+  const embedded=new URLSearchParams(location.search).get('embedded')==='1';
+  if(embedded)document.documentElement.classList.add('embedded');
   const names=['图片快速采集','快速构建提示词','画布创作','搜索复用'],params=new URLSearchParams(location.search);
   const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
   let ready=false,current=0,scheduled=0,autoFrame=0,auto=false,autoStart=0,autoFrom=0,autoTo=0,autoDuration=0;
   window.__filmErrors=[];window.addEventListener('error',e=>window.__filmErrors.push(e.message));
   const range=()=>Math.max(1,$('journey').offsetHeight-innerHeight);
-  function fit(){const s=Math.max(.15,Math.min((innerWidth-48)/1440,(innerHeight-175)/810,1));$('screen').style.width=1440*s+'px';$('screen').style.height=810*s+'px';$('film-shell').style.transform='scale('+s+')';$('controls').style.maxWidth=1440*s+'px';}
+  function fit(){const s=Math.max(.15,Math.min((innerWidth-(embedded?24:48))/1440,(innerHeight-(embedded?24:175))/810,1));$('screen').style.width=1440*s+'px';$('screen').style.height=810*s+'px';$('film-shell').style.transform='scale('+s+')';$('controls').style.maxWidth=1440*s+'px';}
   function showIntro(i,opacity,progress){
     const el=$('intro-'+i);if(!el)return;
     el.style.visibility=opacity>0?'visible':'hidden';el.style.opacity=String(opacity);
@@ -71,8 +73,9 @@
   });
   Promise.all(frames.map(waitFrame)).then(()=>{
     ready=true;$('loading').style.display='none';document.querySelectorAll('button,input').forEach(e=>e.disabled=false);
-    window.__archbuddyScroll={seekProgress(q){stopAuto();setProgress(q);},play:playChapter,pause:stopAuto,durations,get progress(){return current;}};
+    window.__archbuddyScroll={seekProgress(q){stopAuto();setProgress(q);},seekEmbedded(q){if(embedded)draw(q);},play:playChapter,pause:stopAuto,durations,get progress(){return current;}};
     const q=params.has('q')?Number(params.get('q')):params.has('scene')?Number(params.get('scene'))-1:4*scrollY/range();
-    setProgress(Number.isFinite(q)?q:0);
+    if(embedded){draw(0);parent.postMessage({type:'archbuddy-film-ready'},location.origin);}
+    else setProgress(Number.isFinite(q)?q:0);
   }).catch(e=>{$('loading-state').textContent=e.message;window.__filmErrors.push(e.message);});
 })();
