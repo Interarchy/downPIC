@@ -4,7 +4,8 @@
   const hasIntro=i=>Boolean($('intro-'+i));
   const embedded=new URLSearchParams(location.search).get('embedded')==='1';
   if(embedded)document.documentElement.classList.add('embedded');
-  const names=['图片快速采集','快速构建提示词','画布创作','搜索复用'],params=new URLSearchParams(location.search);
+  const english=document.documentElement.lang.startsWith('en');
+  const names=english?['Capture images','Build prompts','Create on Canvas','Search and reuse']:['图片快速采集','快速构建提示词','画布创作','搜索复用'],params=new URLSearchParams(location.search);
   const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x);};
   const frameReady=[false,false,false,false],framePromises=[null,null,null,null],frameFailed=[false,false,false,false];
   let ready=false,current=0,scheduled=0,autoFrame=0,auto=false,autoStart=0,autoFrom=0,autoTo=0,autoDuration=0;
@@ -52,7 +53,7 @@
     const phase=clamp((p-start)/(.9-start)),local=pre[i]+(durations[i]-pre[i])*phase;
     if(frameReady[i]){frames[i].contentWindow.__archbuddyFilm.seek(local);frames[i].setAttribute('aria-hidden','false');}
     else if(hasIntro(i))showIntro(i,1,1);
-    $('loading-state').textContent=frameFailed[i]?'章节加载失败，请刷新页面':'正在打开'+names[i]+'…';
+    $('loading-state').textContent=frameFailed[i]?(english?'Chapter failed to load. Please refresh.':'章节加载失败，请刷新页面'):(english?'Opening ':'正在打开')+names[i]+'…';
     $('loading').style.display=frameReady[i]||(hasIntro(i)&&!frameFailed[i])?'none':'grid';
     let alpha=frameReady[i]?1:0,zoom=.90+.10*ease(clamp(p/.30));
     if(frameReady[i]&&hasIntro(i)&&p<.16){const out=1-ease((p-.10)/.06);showIntro(i,out,1);alpha=1-out;}
@@ -69,20 +70,20 @@
     frames[i].style.opacity=String(alpha);frames[i].style.transform='scale('+zoom+')';
     const entering=hasIntro(i)&&p<.16,leaving=i<3&&p>.9;
     $('section-number').textContent='0'+(i+1)+' / 04';
-    $('stage-label').textContent=entering?'进入'+names[i]:leaving?'接下来 · '+names[i+1]:names[i];
+    $('stage-label').textContent=entering?(english?'Entering ':'进入')+names[i]:leaving?(english?'Next · ':'接下来 · ')+names[i+1]:names[i];
     $('journey-progress').value=String(current);
-    $('next-step').textContent=i<3?'下一步 ↓':'回到开始 ↑';
-    $('journey-hint').textContent=current>=3.9?'图片与提示词，再次成为创作的起点':'滚动推进 · 停下细看 · 向上回看';
+    $('next-step').textContent=i<3?(english?'Next ↓':'下一步 ↓'):(english?'Back to start ↑':'回到开始 ↑');
+    $('journey-hint').textContent=current>=3.9?(english?'Images and prompts become a new starting point':'图片与提示词，再次成为创作的起点'):(english?'Scroll to advance · Pause to explore · Scroll up to revisit':'滚动推进 · 停下细看 · 向上回看');
     document.querySelectorAll('[data-go]').forEach(b=>{const n=Number(b.dataset.go);b.classList.toggle('active',n===i);b.classList.toggle('done',n<i);b.setAttribute('aria-current',n===i?'step':'false');});
     $('film-shell').dataset.progress=current.toFixed(4);$('film-shell').dataset.chapter=String(i+1);$('film-shell').dataset.time=local.toFixed(2);
   }
   function setProgress(q){q=Math.max(0,Math.min(4,q));window.scrollTo({top:$('journey').offsetTop+range()*q/4,behavior:'instant'});draw(q);}
-  function stopAuto(){auto=false;cancelAnimationFrame(autoFrame);$('demo').textContent='播放本段';}
+  function stopAuto(){auto=false;cancelAnimationFrame(autoFrame);$('demo').textContent=(english?'Play this chapter':'播放本段');}
   function autoTick(now){if(!auto)return;const p=clamp((now-autoStart)/autoDuration);setProgress(autoFrom+(autoTo-autoFrom)*p);if(p<1)autoFrame=requestAnimationFrame(autoTick);else stopAuto();}
   function playChapter(){
     if(!ready)return;if(auto){stopAuto();return;}
     const i=Math.min(3,Math.floor(current));if(current-i>=.9)setProgress(i+(i?0:.001));
-    autoFrom=current;autoTo=i+.9;autoDuration=Math.max(900,durations[i]*1000*(autoTo-autoFrom)/.9);autoStart=performance.now();auto=true;$('demo').textContent='暂停演示';autoFrame=requestAnimationFrame(autoTick);
+    autoFrom=current;autoTo=i+.9;autoDuration=Math.max(900,durations[i]*1000*(autoTo-autoFrom)/.9);autoStart=performance.now();auto=true;$('demo').textContent=(english?'Pause demo':'暂停演示');autoFrame=requestAnimationFrame(autoTick);
   }
   function go(i){stopAuto();setProgress(Math.max(0,Math.min(3,i))+.001);}
   $('demo').addEventListener('click',playChapter);

@@ -1,6 +1,9 @@
 (() => {
   'use strict';
   const chapters={"1":[[0.1,"浏览案例，一键保存参考图"],[2.5,"图片自动归档，连续采集更快"],[6.2,"四张参考，集中收进项目文件夹"]],"2":[[0.1,"从参考图提炼主体与体量"],[2.9,"补充视角、景观与空间关系"],[5.1,"加入材料与光线，表达设计意图"],[7.4,"组合成完整、可编辑的提示词"]],"3":[[0.1,"输入提示词，放入参考图片"],[2.7,"连接文字与图像，生成效果图"],[5.6,"第一轮优化，保留提示词与结果"],[8.4,"继续第二轮，历史版本仍然保留"],[11.2,"对照各版图片，回看修改过程"]],"4":[[0.1,"积累图片、提示词与版本记录"],[1.8,"描述图片特征，进行语义搜索"],[6.1,"快速找到符合设计意图的参考"],[7.5,"查看提示词版本与关联图片"],[11.3,"保留这一版提示词，随时复制复用"]]};
+  if(document.documentElement.lang.startsWith('en')){
+    Object.assign(chapters,{"1":[[0.1,"Browse projects and save references in one click"],[2.5,"Images are filed automatically as you browse"],[6.2,"Four references collected into one project"]],"2":[[0.1,"Extract subject and massing from references"],[2.9,"Add viewpoint, landscape, and spatial relationships"],[5.1,"Describe materials and light"],[7.4,"Combine an editable design prompt"]],"3":[[0.1,"Add a prompt and reference images"],[2.7,"Connect inputs and generate a rendering"],[5.6,"First refinement keeps the prompt and image"],[8.4,"Refine again while preserving earlier versions"],[11.2,"Compare results and review the changes"]],"4":[[0.1,"Store images, prompts, and versions"],[1.8,"Describe visual features for semantic search"],[6.1,"Find references that match your intent"],[7.5,"Review prompt versions and linked images"],[11.3,"Keep a prompt ready for reuse"]]});
+  }
   window.renderFilmCaption=(t)=>{
     const film=document.querySelector('.film');
     const list=chapters[film.dataset.chapter];
