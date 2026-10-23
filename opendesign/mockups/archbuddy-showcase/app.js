@@ -42,9 +42,9 @@
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   if (motionPreference.matches || !('IntersectionObserver' in window)) return;
   const motionParts = [];
-  ['concept', 'features', 'install'].forEach(id => {
+  ['concept', 'features'].forEach(id => {
     const section = document.getElementById(id);
-    let heading = section.querySelector('.section-heading,.install-heading');
+    let heading = section.querySelector('.section-heading');
     if (!heading) {
       const label = section.querySelector('.section-label');
       const title = section.querySelector('h2');

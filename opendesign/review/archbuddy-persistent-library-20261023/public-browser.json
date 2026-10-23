@@ -1,0 +1,26 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "version": "concept-interactive.js?v=persistent-library-20261023",
+    "opened": true,
+    "afterScroll": true,
+    "aria": "true",
+    "overflow": 0,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "version": "concept-interactive.js?v=persistent-library-20261023",
+    "opened": true,
+    "afterScroll": true,
+    "aria": "true",
+    "overflow": 0,
+    "errors": []
+  }
+]

@@ -1,0 +1,527 @@
+[
+  {
+    "viewport": [
+      1440,
+      1000
+    ],
+    "status": 200,
+    "opening": {
+      "scrollY": 0,
+      "firstSection": "problem",
+      "storyTop": 84,
+      "step": "0",
+      "storyLayout": "pinned",
+      "heroCount": 0
+    },
+    "story0": {
+      "step": "0",
+      "transition": "0.0000",
+      "scrollY": 824
+    },
+    "story1": {
+      "step": "1",
+      "transition": "1.0000",
+      "scrollY": 1670
+    },
+    "check": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "sections": {
+        "story": {
+          "top": -5092,
+          "bottom": -2294,
+          "height": 2798
+        },
+        "concept": {
+          "top": -2294,
+          "bottom": -1494.421875,
+          "height": 799.578125
+        },
+        "features": {
+          "top": -1494.421875,
+          "bottom": 134.765625,
+          "height": 1629.1875
+        },
+        "install": {
+          "top": 134.765625,
+          "bottom": 905.03125,
+          "height": 770.265625
+        }
+      },
+      "conceptColors": {
+        "foundation": "rgb(21, 59, 45)",
+        "foundationIcon": "rgb(245, 247, 244)",
+        "foundationText": "rgb(245, 247, 244)"
+      },
+      "featuresColors": {
+        "asset": "rgb(21, 59, 45)",
+        "assetIcon": "rgb(245, 247, 244)"
+      },
+      "installLinks": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+        },
+        {
+          "text": "下载 Edge 插件",
+          "href": "https://microsoftedge.microsoft.com/addons/detail/archbuddy/bdbnnnababglblekgnfpdcmeihjhflok?hl=zh-CN"
+        }
+      ],
+      "installText": "05\n下载与安装\n\n把创作的循环，\n放进你的浏览器。\n下载 Chrome 插件\n\nChrome 应用商店 · 适用于桌面 Chrome\n\n下载 Edge 插件\n\nMicrosoft Edge 加载项商店 · 适用于桌面 Edge\n\n1\n选择浏览器商店\n\n按正在使用的浏览器，进入 Chrome 或 Edge 的 ArchBuddy 商品页。\n\n2\n添加扩展程序\n\n点击商店中的安装按钮，并按浏览器提示确认。\n\n3\n固定并开始使用\n\n在浏览器的扩展程序菜单中固定 ArchBuddy，再从图标菜单打开图词库或提示词工具。\n\nAI 功能需要联网吗？\n图片和提示词存在哪里？",
+      "conceptText": "03\n我们的产品思路\n\n从参考到表达，\n让创作持续向前。\n01 / 参考\n采集图片\n\n留下值得继续推敲的参考\n\n02 / 意图\n提示词编写与迭代\n\n把设计意图转为可调整的表达\n\n03 / 表达\n效果图生成与优化\n\n在画布中生成、比对与优化\n\n参考图\n提示词版本\n效果图与迭代记录\n沉淀图词资产\n\n汇集每次产出，复用到下一轮创作",
+      "brokenImages": [],
+      "overflow": [
+        {
+          "tag": "SECTION",
+          "id": "problem",
+          "className": "problem-section ab-problem story-panel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "container"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "section-heading"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "className": "section-label"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "H2",
+          "id": "problem-title",
+          "className": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "radial-stage",
+          "className": "radial-layout"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "radial-visual"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "radial-disc"
+        },
+        {
+          "tag": "svg",
+          "id": "problem-ring-svg",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "g",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "g",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "text",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "text",
+          "id": "",
+          "className": ""
+        }
+      ]
+    },
+    "errors": [],
+    "badResponses": []
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "status": 200,
+    "opening": {
+      "scrollY": 0,
+      "firstSection": "problem",
+      "storyTop": 72,
+      "step": "0",
+      "storyLayout": "natural",
+      "heroCount": 0
+    },
+    "story1": {
+      "step": "1",
+      "transition": "1",
+      "scrollY": 1034
+    },
+    "check": {
+      "scrollWidth": 390,
+      "innerWidth": 390,
+      "sections": {
+        "story": {
+          "top": -6006,
+          "bottom": -3778.5625,
+          "height": 2227.4375
+        },
+        "concept": {
+          "top": -3778.5625,
+          "bottom": -2809.046875,
+          "height": 969.515625
+        },
+        "features": {
+          "top": -2809.046875,
+          "bottom": 85.078125,
+          "height": 2894.125
+        },
+        "install": {
+          "top": 85.078125,
+          "bottom": 1057.09375,
+          "height": 972.015625
+        }
+      },
+      "conceptColors": {
+        "foundation": "rgb(21, 59, 45)",
+        "foundationIcon": "rgb(245, 247, 244)",
+        "foundationText": "rgb(245, 247, 244)"
+      },
+      "featuresColors": {
+        "asset": "rgb(21, 59, 45)",
+        "assetIcon": "rgb(245, 247, 244)"
+      },
+      "installLinks": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+        },
+        {
+          "text": "下载 Edge 插件",
+          "href": "https://microsoftedge.microsoft.com/addons/detail/archbuddy/bdbnnnababglblekgnfpdcmeihjhflok?hl=zh-CN"
+        }
+      ],
+      "installText": "05\n下载与安装\n\n把创作的循环，\n放进你的浏览器。\n下载 Chrome 插件\n\nChrome 应用商店 · 适用于桌面 Chrome\n\n下载 Edge 插件\n\nMicrosoft Edge 加载项商店 · 适用于桌面 Edge\n\n1\n选择浏览器商店\n\n按正在使用的浏览器，进入 Chrome 或 Edge 的 ArchBuddy 商品页。\n\n2\n添加扩展程序\n\n点击商店中的安装按钮，并按浏览器提示确认。\n\n3\n固定并开始使用\n\n在浏览器的扩展程序菜单中固定 ArchBuddy，再从图标菜单打开图词库或提示词工具。\n\nAI 功能需要联网吗？\n图片和提示词存在哪里？",
+      "conceptText": "03\n我们的产品思路\n\n从参考到表达，\n让创作持续向前。\n01 / 参考\n采集图片\n\n留下值得继续推敲的参考\n\n02 / 意图\n提示词编写与迭代\n\n把设计意图转为可调整的表达\n\n03 / 表达\n效果图生成与优化\n\n在画布中生成、比对与优化\n\n参考图\n提示词版本\n效果图与迭代记录\n沉淀图词资产\n\n汇集每次产出，复用到下一轮创作",
+      "brokenImages": [],
+      "overflow": []
+    },
+    "errors": [],
+    "badResponses": []
+  },
+  {
+    "viewport": [
+      1920,
+      1080
+    ],
+    "status": 200,
+    "opening": {
+      "scrollY": 0,
+      "firstSection": "problem",
+      "storyTop": 84,
+      "step": "0",
+      "storyLayout": "pinned",
+      "heroCount": 0
+    },
+    "story0": {
+      "step": "0",
+      "transition": "0.0000",
+      "scrollY": 868
+    },
+    "story1": {
+      "step": "1",
+      "transition": "1.0000",
+      "scrollY": 1782
+    },
+    "check": {
+      "scrollWidth": 1920,
+      "innerWidth": 1920,
+      "sections": {
+        "story": {
+          "top": -5198,
+          "bottom": -2214,
+          "height": 2984
+        },
+        "concept": {
+          "top": -2214,
+          "bottom": -1414.421875,
+          "height": 799.578125
+        },
+        "features": {
+          "top": -1414.421875,
+          "bottom": 214.765625,
+          "height": 1629.1875
+        },
+        "install": {
+          "top": 214.765625,
+          "bottom": 985.03125,
+          "height": 770.265625
+        }
+      },
+      "conceptColors": {
+        "foundation": "rgb(21, 59, 45)",
+        "foundationIcon": "rgb(245, 247, 244)",
+        "foundationText": "rgb(245, 247, 244)"
+      },
+      "featuresColors": {
+        "asset": "rgb(21, 59, 45)",
+        "assetIcon": "rgb(245, 247, 244)"
+      },
+      "installLinks": [
+        {
+          "text": "下载 Chrome 插件",
+          "href": "https://chromewebstore.google.com/detail/archbuddy/hkbnjlapflleibeodhghbephgpacbhle?authuser=0&hl=zh-CN"
+        },
+        {
+          "text": "下载 Edge 插件",
+          "href": "https://microsoftedge.microsoft.com/addons/detail/archbuddy/bdbnnnababglblekgnfpdcmeihjhflok?hl=zh-CN"
+        }
+      ],
+      "installText": "05\n下载与安装\n\n把创作的循环，\n放进你的浏览器。\n下载 Chrome 插件\n\nChrome 应用商店 · 适用于桌面 Chrome\n\n下载 Edge 插件\n\nMicrosoft Edge 加载项商店 · 适用于桌面 Edge\n\n1\n选择浏览器商店\n\n按正在使用的浏览器，进入 Chrome 或 Edge 的 ArchBuddy 商品页。\n\n2\n添加扩展程序\n\n点击商店中的安装按钮，并按浏览器提示确认。\n\n3\n固定并开始使用\n\n在浏览器的扩展程序菜单中固定 ArchBuddy，再从图标菜单打开图词库或提示词工具。\n\nAI 功能需要联网吗？\n图片和提示词存在哪里？",
+      "conceptText": "03\n我们的产品思路\n\n从参考到表达，\n让创作持续向前。\n01 / 参考\n采集图片\n\n留下值得继续推敲的参考\n\n02 / 意图\n提示词编写与迭代\n\n把设计意图转为可调整的表达\n\n03 / 表达\n效果图生成与优化\n\n在画布中生成、比对与优化\n\n参考图\n提示词版本\n效果图与迭代记录\n沉淀图词资产\n\n汇集每次产出，复用到下一轮创作",
+      "brokenImages": [],
+      "overflow": [
+        {
+          "tag": "SECTION",
+          "id": "problem",
+          "className": "problem-section ab-problem story-panel"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "container"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "section-heading"
+        },
+        {
+          "tag": "P",
+          "id": "",
+          "className": "section-label"
+        },
+        {
+          "tag": "SPAN",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "H2",
+          "id": "problem-title",
+          "className": ""
+        },
+        {
+          "tag": "DIV",
+          "id": "radial-stage",
+          "className": "radial-layout"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "radial-visual"
+        },
+        {
+          "tag": "DIV",
+          "id": "",
+          "className": "radial-disc"
+        },
+        {
+          "tag": "svg",
+          "id": "problem-ring-svg",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "line",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "g",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "path",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "g",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "text",
+          "id": "",
+          "className": ""
+        },
+        {
+          "tag": "text",
+          "id": "",
+          "className": ""
+        }
+      ]
+    },
+    "errors": [],
+    "badResponses": []
+  }
+]

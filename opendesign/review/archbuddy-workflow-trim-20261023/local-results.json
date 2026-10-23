@@ -1,0 +1,290 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "hash": "problem",
+    "metrics": {
+      "layout": "pinned",
+      "storyWindow": {
+        "top": 129,
+        "bottom": 929,
+        "height": 800
+      },
+      "panel": {
+        "top": 193,
+        "bottom": 865,
+        "height": 672
+      },
+      "chapter": {
+        "top": -711,
+        "bottom": 1799,
+        "height": 2510
+      },
+      "next": {
+        "top": 1799,
+        "bottom": 2719,
+        "height": 920
+      },
+      "step": "0",
+      "progressCount": 0,
+      "visibleNodes": 1,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "hash": "workflow",
+    "metrics": {
+      "layout": "pinned",
+      "storyWindow": {
+        "top": 129,
+        "bottom": 929,
+        "height": 800
+      },
+      "panel": {
+        "top": 198,
+        "bottom": 860,
+        "height": 662
+      },
+      "chapter": {
+        "top": -1539,
+        "bottom": 971,
+        "height": 2510
+      },
+      "next": {
+        "top": 971,
+        "bottom": 1891,
+        "height": 920
+      },
+      "step": "1",
+      "progressCount": 0,
+      "visibleNodes": 6,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 2436,
+      "height": 1240
+    },
+    "hash": "problem",
+    "metrics": {
+      "layout": "pinned",
+      "storyWindow": {
+        "top": 219,
+        "bottom": 1079,
+        "height": 860
+      },
+      "panel": {
+        "top": 243,
+        "bottom": 1055,
+        "height": 812
+      },
+      "chapter": {
+        "top": -811,
+        "bottom": 2152,
+        "height": 2963
+      },
+      "next": {
+        "top": 2152,
+        "bottom": 3072,
+        "height": 920
+      },
+      "step": "0",
+      "progressCount": 0,
+      "visibleNodes": 1,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 2436,
+      "height": 1240
+    },
+    "hash": "workflow",
+    "metrics": {
+      "layout": "pinned",
+      "storyWindow": {
+        "top": 219,
+        "bottom": 1079,
+        "height": 860
+      },
+      "panel": {
+        "top": 246,
+        "bottom": 1052,
+        "height": 807
+      },
+      "chapter": {
+        "top": -1838,
+        "bottom": 1125,
+        "height": 2963
+      },
+      "next": {
+        "top": 1125,
+        "bottom": 2045,
+        "height": 920
+      },
+      "step": "1",
+      "progressCount": 0,
+      "visibleNodes": 6,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hash": "problem",
+    "metrics": {
+      "layout": "natural",
+      "storyWindow": {
+        "top": 88,
+        "bottom": 2554,
+        "height": 2466
+      },
+      "panel": {
+        "top": 88,
+        "bottom": 1082,
+        "height": 994
+      },
+      "chapter": {
+        "top": 58,
+        "bottom": 2574,
+        "height": 2516
+      },
+      "next": {
+        "top": 2574,
+        "bottom": 4049,
+        "height": 1475
+      },
+      "step": "0",
+      "progressCount": 0,
+      "visibleNodes": 1,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hash": "workflow",
+    "metrics": {
+      "layout": "natural",
+      "storyWindow": {
+        "top": -934,
+        "bottom": 1532,
+        "height": 2466
+      },
+      "panel": {
+        "top": 88,
+        "bottom": 1532,
+        "height": 1444
+      },
+      "chapter": {
+        "top": -964,
+        "bottom": 1552,
+        "height": 2516
+      },
+      "next": {
+        "top": 1552,
+        "bottom": 3027,
+        "height": 1475
+      },
+      "step": "1",
+      "progressCount": 0,
+      "visibleNodes": 6,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "hash": "problem",
+    "metrics": {
+      "layout": "natural",
+      "storyWindow": {
+        "top": 132,
+        "bottom": 2779,
+        "height": 2647
+      },
+      "panel": {
+        "top": 132,
+        "bottom": 1287,
+        "height": 1155
+      },
+      "chapter": {
+        "top": 84,
+        "bottom": 2803,
+        "height": 2719
+      },
+      "next": {
+        "top": 2803,
+        "bottom": 3711,
+        "height": 907
+      },
+      "step": "0",
+      "progressCount": 0,
+      "visibleNodes": 1,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "hash": "workflow",
+    "metrics": {
+      "layout": "natural",
+      "storyWindow": {
+        "top": -1042,
+        "bottom": 1605,
+        "height": 2647
+      },
+      "panel": {
+        "top": 141,
+        "bottom": 1605,
+        "height": 1464
+      },
+      "chapter": {
+        "top": -1090,
+        "bottom": 1629,
+        "height": 2719
+      },
+      "next": {
+        "top": 1629,
+        "bottom": 2537,
+        "height": 907
+      },
+      "step": "1",
+      "progressCount": 0,
+      "visibleNodes": 6,
+      "wireCount": 6,
+      "overflow": 0
+    },
+    "errors": []
+  }
+]

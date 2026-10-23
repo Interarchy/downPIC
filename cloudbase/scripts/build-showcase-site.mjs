@@ -6,15 +6,14 @@ import { createHash } from 'node:crypto';
 // 仅构建公开静态站的明确白名单；真实环境配置、开发目录与用户资料不进入上传目录。
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const source = path.join(root, 'opendesign/mockups/archbuddy-showcase');
-const delivery = path.join(root, 'cloudbase/dist/showcase-proportion-white-install-20261016');
+const delivery = path.join(root, 'cloudbase/dist/showcase-workflow-space-20261023');
 const output = path.join(delivery, 'site');
 const pages = ['index.html', 'problem.html', 'workflow.html', 'decisions.html', 'outcomes.html'];
 const assets = ['01-project-library-1280x800.png', '02-image-description-1280x800.png', '03-prompt-library-1280x800.png', '04-prompt-builder-1280x800.png', '05-prompt-optimization-1280x800.png', 'logo.svg', 'tokens.css'];
-const files = ['index.html', 'styles.css', 'app.js', 'problem-section.css', 'problem-section.js', 'workflow-section.css', 'workflow-section.js', 'story-section.css', 'story-section.js', ...pages.map(name => 'case-study/' + name), 'case-study/styles.css', 'case-study/app.js', ...assets.map(name => 'case-study/assets/' + name), 'downloads/ArchBuddy-0.6.0-Chrome.zip', 'downloads/ArchBuddy-test-images.7z', 'assets/lucide.svg', 'assets/lucide-LICENSE.txt', 'assets/favicon.svg', 'assets/brand-mark.svg'];
+const files = ['index.html', 'styles.css', 'product-section.css', 'concept-interactive.css', 'concept-interactive.js', 'app.js', 'problem-section.css', 'problem-section.js', 'workflow-section.css', 'workflow-section.js', 'story-section.css', 'story-section.js', ...pages.map(name => 'case-study/' + name), 'case-study/styles.css', 'case-study/app.js', ...assets.map(name => 'case-study/assets/' + name), 'downloads/ArchBuddy-0.6.0-Chrome.zip', 'assets/lucide.svg', 'assets/lucide-LICENSE.txt', 'assets/favicon.svg', 'assets/brand-mark.svg', 'assets/concept/reference-triptych.png', 'assets/concept/iteration-triptych.png'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex').toUpperCase();
 const archivePath = path.join(source, 'downloads/ArchBuddy-0.6.0-Chrome.zip');
 const expectedArchiveHash = '34B10BDF1C17FB712FDD721CCF06ED33EA72D87B318402C3471212A021FC113D';
-const expectedTestsetHash = '18E01EDB67EDCF5A1AC32CB6545DAED6C064D0AFA3C3DD3B2EBFA7BF91D7D8AD';
 const originalArchive = await readFile(archivePath);
 if (hash(originalArchive) !== expectedArchiveHash) throw new Error('插件原始交付包哈希发生变化，请先重新核验。');
 await mkdir(output, { recursive: true });
@@ -22,7 +21,6 @@ const results = [];
 for (const name of files) {
   const bytes = await readFile(path.join(source, name));
   if (name.endsWith('.zip') && hash(bytes) !== expectedArchiveHash) throw new Error('公开下载包与原交付包不一致。');
-  if (name.endsWith('.7z') && hash(bytes) !== expectedTestsetHash) throw new Error('公开测试集与用户提供的原归档不一致。');
   if (/\.(html|css|js)$/.test(name) && /(?:sk-[A-Za-z0-9_-]{16,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})/.test(bytes.toString('utf8'))) throw new Error('疑似凭据文件，停止构建：' + name);
   const destination = path.join(output, name);
   await mkdir(path.dirname(destination), { recursive: true });
@@ -52,6 +50,6 @@ for (const name of files.filter(name => /\.(html|css|js)$/.test(name))) {
     if (!files.includes(resolved)) throw new Error('缺少公开引用资源：' + name + ' → ' + resolved);
   }
 }
-const manifest = { date: '2026-10-16', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, testsetSha256: expectedTestsetHash, contentVersion: 'proportion-white-install-20261016', files: results };
+const manifest = { date: '2026-10-23', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, contentVersion: 'workflow-space-20261023', files: results };
 await writeFile(path.join(delivery,'deployment-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({ output, fileCount: manifest.fileCount, bytes:manifest.bytes, archiveSha256:expectedArchiveHash }));

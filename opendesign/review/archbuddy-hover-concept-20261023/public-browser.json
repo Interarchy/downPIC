@@ -1,0 +1,34 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "middle": "36%",
+    "final": "78%",
+    "version": "concept-interactive.css?v=hover-concept-20261023",
+    "expanded": "true",
+    "libraryLoaded": true,
+    "section05": false,
+    "downloadNav": false,
+    "captionRemoved": true,
+    "overflow": 0,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "middle": "36%",
+    "final": "78%",
+    "version": "concept-interactive.css?v=hover-concept-20261023",
+    "expanded": "true",
+    "libraryLoaded": true,
+    "section05": false,
+    "downloadNav": false,
+    "captionRemoved": true,
+    "overflow": 0,
+    "errors": []
+  }
+]

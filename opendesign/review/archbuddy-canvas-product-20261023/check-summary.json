@@ -1,0 +1,414 @@
+[
+  {
+    "width": 1440,
+    "height": 1000,
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "storyLayout": "pinned",
+      "installBackground": "rgb(21, 59, 45)",
+      "stages": [
+        {
+          "text": "采集图片",
+          "width": 341.328125,
+          "scrollWidth": 341,
+          "parentWidth": 397.328125
+        },
+        {
+          "text": "提示词编写与迭代",
+          "width": 341.328125,
+          "scrollWidth": 341,
+          "parentWidth": 397.328125
+        },
+        {
+          "text": "效果图生成与优化",
+          "width": 341.34375,
+          "scrollWidth": 341,
+          "parentWidth": 397.34375
+        }
+      ],
+      "overflow": [],
+      "brokenImages": [
+        ""
+      ]
+    },
+    "gallery": [
+      {
+        "name": "prompt",
+        "v": 1,
+        "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "prompt",
+        "v": 0,
+        "src": "case-study/assets/04-prompt-builder-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 1,
+        "src": "case-study/assets/02-image-description-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 0,
+        "src": "case-study/assets/03-prompt-library-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      }
+    ],
+    "dialog": [
+      {
+        "id": "capture-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "prompt-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "assets-image",
+        "open": true,
+        "matching": true
+      }
+    ],
+    "story": [
+      {
+        "step": "0",
+        "transition": "0.0000",
+        "scrollY": 1437
+      },
+      {
+        "step": "1",
+        "transition": "1.0000",
+        "scrollY": 2283
+      }
+    ],
+    "errors": [],
+    "badResponses": []
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "layout": {
+      "scrollWidth": 1920,
+      "innerWidth": 1920,
+      "storyLayout": "pinned",
+      "installBackground": "rgb(21, 59, 45)",
+      "stages": [
+        {
+          "text": "采集图片",
+          "width": 341.328125,
+          "scrollWidth": 341,
+          "parentWidth": 397.328125
+        },
+        {
+          "text": "提示词编写与迭代",
+          "width": 341.328125,
+          "scrollWidth": 341,
+          "parentWidth": 397.328125
+        },
+        {
+          "text": "效果图生成与优化",
+          "width": 341.34375,
+          "scrollWidth": 341,
+          "parentWidth": 397.34375
+        }
+      ],
+      "overflow": [],
+      "brokenImages": [
+        ""
+      ]
+    },
+    "gallery": [
+      {
+        "name": "prompt",
+        "v": 1,
+        "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "prompt",
+        "v": 0,
+        "src": "case-study/assets/04-prompt-builder-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 1,
+        "src": "case-study/assets/02-image-description-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 0,
+        "src": "case-study/assets/03-prompt-library-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      }
+    ],
+    "dialog": [
+      {
+        "id": "capture-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "prompt-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "assets-image",
+        "open": true,
+        "matching": true
+      }
+    ],
+    "story": [
+      {
+        "step": "0",
+        "transition": "0.0000",
+        "scrollY": 1495
+      },
+      {
+        "step": "1",
+        "transition": "1.0000",
+        "scrollY": 2409
+      }
+    ],
+    "errors": [],
+    "badResponses": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "layout": {
+      "scrollWidth": 390,
+      "innerWidth": 390,
+      "storyLayout": "natural",
+      "installBackground": "rgb(21, 59, 45)",
+      "stages": [
+        {
+          "text": "采集图片",
+          "width": 302,
+          "scrollWidth": 302,
+          "parentWidth": 350
+        },
+        {
+          "text": "提示词编写与迭代",
+          "width": 302,
+          "scrollWidth": 302,
+          "parentWidth": 350
+        },
+        {
+          "text": "效果图生成与优化",
+          "width": 302,
+          "scrollWidth": 302,
+          "parentWidth": 350
+        }
+      ],
+      "overflow": [],
+      "brokenImages": [
+        ""
+      ]
+    },
+    "gallery": [
+      {
+        "name": "prompt",
+        "v": 1,
+        "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "prompt",
+        "v": 0,
+        "src": "case-study/assets/04-prompt-builder-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 1,
+        "src": "case-study/assets/02-image-description-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 0,
+        "src": "case-study/assets/03-prompt-library-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      }
+    ],
+    "dialog": [
+      {
+        "id": "capture-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "prompt-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "assets-image",
+        "open": true,
+        "matching": true
+      }
+    ],
+    "story": [
+      {
+        "step": "0",
+        "transition": "0",
+        "scrollY": 720
+      },
+      {
+        "step": "1",
+        "transition": "1",
+        "scrollY": 1742
+      }
+    ],
+    "errors": [],
+    "badResponses": []
+  },
+  {
+    "width": 768,
+    "height": 1024,
+    "layout": {
+      "scrollWidth": 768,
+      "innerWidth": 768,
+      "storyLayout": "natural",
+      "installBackground": "rgb(21, 59, 45)",
+      "stages": [
+        {
+          "text": "采集图片",
+          "width": 181.328125,
+          "scrollWidth": 181,
+          "parentWidth": 221.328125
+        },
+        {
+          "text": "提示词编写与迭代",
+          "width": 181.328125,
+          "scrollWidth": 181,
+          "parentWidth": 221.328125
+        },
+        {
+          "text": "效果图生成与优化",
+          "width": 181.328125,
+          "scrollWidth": 181,
+          "parentWidth": 221.328125
+        }
+      ],
+      "overflow": [],
+      "brokenImages": [
+        ""
+      ]
+    },
+    "gallery": [
+      {
+        "name": "prompt",
+        "v": 1,
+        "src": "case-study/assets/05-prompt-optimization-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "prompt",
+        "v": 0,
+        "src": "case-study/assets/04-prompt-builder-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 1,
+        "src": "case-study/assets/02-image-description-1280x800.png",
+        "pressed": [
+          "false",
+          "true"
+        ]
+      },
+      {
+        "name": "assets",
+        "v": 0,
+        "src": "case-study/assets/03-prompt-library-1280x800.png",
+        "pressed": [
+          "true",
+          "false"
+        ]
+      }
+    ],
+    "dialog": [
+      {
+        "id": "capture-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "prompt-image",
+        "open": true,
+        "matching": true
+      },
+      {
+        "id": "assets-image",
+        "open": true,
+        "matching": true
+      }
+    ],
+    "story": [
+      {
+        "step": "0",
+        "transition": "0",
+        "scrollY": 666
+      },
+      {
+        "step": "1",
+        "transition": "1",
+        "scrollY": 1849
+      }
+    ],
+    "errors": [],
+    "badResponses": []
+  }
+]

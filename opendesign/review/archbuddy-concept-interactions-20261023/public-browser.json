@@ -1,0 +1,30 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "promptVisible": true,
+    "errors": [],
+    "version": "concept-interactive.css?v=concept-interactions-20261023",
+    "cards": 3,
+    "split": "68%",
+    "expanded": "true",
+    "libraryLoaded": true,
+    "horizontalOverflow": 0
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "promptVisible": true,
+    "errors": [],
+    "version": "concept-interactive.css?v=concept-interactions-20261023",
+    "cards": 3,
+    "split": "68%",
+    "expanded": "true",
+    "libraryLoaded": true,
+    "horizontalOverflow": 0
+  }
+]

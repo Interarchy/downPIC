@@ -1,0 +1,187 @@
+{
+  "version": "full-chain-20261023",
+  "matching": 29,
+  "total": 29,
+  "mismatches": [],
+  "privacy": {
+    "status": 200,
+    "bytes": 6364,
+    "sha256": "D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8"
+  },
+  "results": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 19057,
+      "match": true
+    },
+    {
+      "path": "styles.css",
+      "status": 200,
+      "bytes": 35941,
+      "match": true
+    },
+    {
+      "path": "product-section.css",
+      "status": 200,
+      "bytes": 8829,
+      "match": true
+    },
+    {
+      "path": "app.js",
+      "status": 200,
+      "bytes": 3639,
+      "match": true
+    },
+    {
+      "path": "problem-section.css",
+      "status": 200,
+      "bytes": 4210,
+      "match": true
+    },
+    {
+      "path": "problem-section.js",
+      "status": 200,
+      "bytes": 11843,
+      "match": true
+    },
+    {
+      "path": "workflow-section.css",
+      "status": 200,
+      "bytes": 5497,
+      "match": true
+    },
+    {
+      "path": "workflow-section.js",
+      "status": 200,
+      "bytes": 4697,
+      "match": true
+    },
+    {
+      "path": "story-section.css",
+      "status": 200,
+      "bytes": 5442,
+      "match": true
+    },
+    {
+      "path": "story-section.js",
+      "status": 200,
+      "bytes": 6202,
+      "match": true
+    },
+    {
+      "path": "case-study/index.html",
+      "status": 200,
+      "bytes": 3531,
+      "match": true
+    },
+    {
+      "path": "case-study/problem.html",
+      "status": 200,
+      "bytes": 4831,
+      "match": true
+    },
+    {
+      "path": "case-study/workflow.html",
+      "status": 200,
+      "bytes": 4113,
+      "match": true
+    },
+    {
+      "path": "case-study/decisions.html",
+      "status": 200,
+      "bytes": 5801,
+      "match": true
+    },
+    {
+      "path": "case-study/outcomes.html",
+      "status": 200,
+      "bytes": 3704,
+      "match": true
+    },
+    {
+      "path": "case-study/styles.css",
+      "status": 200,
+      "bytes": 25566,
+      "match": true
+    },
+    {
+      "path": "case-study/app.js",
+      "status": 200,
+      "bytes": 6820,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "bytes": 942643,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/02-image-description-1280x800.png",
+      "status": 200,
+      "bytes": 696388,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200,
+      "bytes": 563382,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200,
+      "bytes": 503984,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200,
+      "bytes": 946580,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/logo.svg",
+      "status": 200,
+      "bytes": 290,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/tokens.css",
+      "status": 200,
+      "bytes": 318,
+      "match": true
+    },
+    {
+      "path": "downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "status": 200,
+      "bytes": 179857,
+      "match": true
+    },
+    {
+      "path": "assets/lucide.svg",
+      "status": 200,
+      "bytes": 7024,
+      "match": true
+    },
+    {
+      "path": "assets/lucide-LICENSE.txt",
+      "status": 200,
+      "bytes": 2004,
+      "match": true
+    },
+    {
+      "path": "assets/favicon.svg",
+      "status": 200,
+      "bytes": 385,
+      "match": true
+    },
+    {
+      "path": "assets/brand-mark.svg",
+      "status": 200,
+      "bytes": 290,
+      "match": true
+    }
+  ]
+}

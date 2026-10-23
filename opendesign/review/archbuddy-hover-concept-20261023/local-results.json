@@ -1,0 +1,32 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "start": "0%",
+    "mid": "49%",
+    "end": "78%",
+    "expanded": "true",
+    "section05": false,
+    "downloadNav": false,
+    "captionRemoved": true,
+    "overflow": 0,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "start": "0%",
+    "mid": "49%",
+    "end": "78%",
+    "expanded": "true",
+    "section05": false,
+    "downloadNav": false,
+    "captionRemoved": true,
+    "overflow": 0,
+    "errors": []
+  }
+]

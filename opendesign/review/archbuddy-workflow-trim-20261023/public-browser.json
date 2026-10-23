@@ -1,0 +1,47 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "version": "story-section.js?v=workflow-space-20261023",
+    "layout": "pinned",
+    "step": "1",
+    "progressCount": 0,
+    "visibleNodes": 6,
+    "wireCount": 6,
+    "gap": 24,
+    "overflow": 0,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 2436,
+      "height": 1240
+    },
+    "version": "story-section.js?v=workflow-space-20261023",
+    "layout": "pinned",
+    "step": "1",
+    "progressCount": 0,
+    "visibleNodes": 6,
+    "wireCount": 6,
+    "gap": 24,
+    "overflow": 0,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "version": "story-section.js?v=workflow-space-20261023",
+    "layout": "natural",
+    "step": "1",
+    "progressCount": 0,
+    "visibleNodes": 6,
+    "wireCount": 6,
+    "gap": 20,
+    "overflow": 0,
+    "errors": []
+  }
+]

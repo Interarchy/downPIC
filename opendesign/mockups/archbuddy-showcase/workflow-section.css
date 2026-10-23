@@ -1,44 +1,37 @@
-/* 用户选定的 02 双栏紧凑回环；单一琥珀色与 01 共用。 */
-.ab-workflow{--accent:var(--diagram-accent,#ffaf45);--forest:var(--diagram-forest,#153b2d);--workflow-paper:#f5f7f4;--workflow-sage:#e4eee3;--workflow-rule:#416451;background:var(--forest);color:var(--workflow-paper);padding-block:66px 48px}
+/* 02：共用起点与资产库的创作全链路。 */
+.ab-workflow{--accent:var(--diagram-accent,#ffaf45);--forest:var(--diagram-forest,#153b2d);background:var(--forest);color:#f5f8f1;padding-block:66px 48px}
 .ab-workflow .section-heading{margin-bottom:0}
-.ab-workflow .section-label{color:#b9d1be;font-size:24px;gap:14px;margin:0 0 18px}
-.ab-workflow .section-label>span{font-size:30px;line-height:1;width:auto;height:auto;background:none;border:0;border-radius:0;color:inherit;font-weight:500}
-.ab-workflow .section-heading h2{color:var(--workflow-paper);font-size:42px;line-height:1.28;font-weight:600;letter-spacing:-.038em}
-.ab-workflow-legend{display:flex;align-items:center;gap:9px;color:#d2e0d3;font-size:12px;padding-bottom:6px;white-space:nowrap}
+.ab-workflow .section-label{color:var(--accent);font-size:24px;gap:14px;margin:0 0 18px}
+.ab-workflow .section-label>span{font-size:30px;line-height:1;width:auto;height:auto;background:none;border:0;border-radius:0;color:inherit;font-weight:600}
+.ab-workflow .section-heading h2{color:#f5f8f1;font-size:42px;line-height:1.28;font-weight:600;letter-spacing:-.038em}
+.ab-workflow-legend{display:flex;align-items:center;gap:9px;color:#d4e4d9;font-size:13px;padding-bottom:6px;white-space:nowrap}
 .ab-workflow-legend img{display:block;width:20px;height:20px}
-.ab-workflow-diagrams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:46px;margin-top:42px}
-.ab-workflow-panel{min-width:0}
-.ab-workflow-heading{display:flex;align-items:center;gap:12px;margin-bottom:17px;padding-top:19px;border-top:1px solid var(--workflow-rule)}
-.ab-workflow-number{font-size:14px;color:var(--accent);font-variant-numeric:tabular-nums}
-.ab-workflow-heading h3{font-size:22px;line-height:1.4;letter-spacing:-.025em;font-weight:600}
-.ab-workflow-chart{position:relative;width:100%;isolation:isolate}
-.ab-workflow-wires{position:absolute;inset:0;overflow:visible;pointer-events:none;width:100%;height:100%;z-index:0}
-.ab-workflow-wire{stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ab-workflow-arrow{color:var(--accent);fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ab-workflow-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px 8px;border-radius:7px;background:var(--workflow-sage);color:var(--forest);z-index:2;text-align:center}
-.ab-workflow-node h4{font-size:16px;line-height:1.35;font-weight:650;white-space:nowrap;letter-spacing:-.035em}
-.ab-workflow-manual,.ab-workflow-external{background:var(--workflow-paper)}
-.ab-workflow-note{font-size:11px;line-height:1.55;margin-top:8px;color:#617568}
-.ab-workflow-mark{margin-top:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:112px;padding:5px 7px;background:var(--accent);color:var(--forest);border-radius:4px}
-.ab-workflow-brand{display:flex;align-items:center;gap:5px;line-height:1}
-.ab-workflow-brand img{width:16px;height:16px;display:block}
-.ab-workflow-brand strong{font-size:10px;font-weight:650;letter-spacing:-.02em}
-.ab-workflow-caption{font-size:11px;line-height:1.25;font-weight:600}
-.ab-workflow-edge-label{position:absolute;transform:translate(-50%,-50%);color:var(--accent);background:var(--forest);padding:4px 7px;font-size:12px;line-height:1.2;white-space:nowrap;z-index:1}
-@media(max-width:1100px){.ab-workflow-diagrams{gap:24px}.ab-workflow-heading h3{font-size:20px}}
-@media(max-width:980px){.ab-workflow-diagrams{grid-template-columns:1fr;gap:24px}.ab-workflow-panel{max-width:620px;width:100%;margin-inline:auto}.ab-workflow-legend{font-size:11px}}
-@media(max-width:760px){.ab-workflow{padding-block:48px 36px}.ab-workflow .section-label{font-size:21px}.ab-workflow .section-label>span{font-size:27px}.ab-workflow .section-heading h2{font-size:31px}.ab-workflow .section-heading{display:block}.ab-workflow-legend{margin-top:22px}}
-@media(max-width:620px){.ab-workflow-diagrams{margin-top:29px}}
-@media(max-width:450px){.ab-workflow-node h4{font-size:14px}.ab-workflow-mark{min-width:106px}.ab-workflow-heading{gap:10px;margin-bottom:12px}.ab-workflow-heading h3{font-size:20px}.ab-workflow-number{font-size:13px}.ab-workflow-edge-label{font-size:11px;padding:3px 4px}}
-
-@media(min-width:1800px) and (min-height:1050px){
- .ab-workflow-node{padding:14px 11px;border-radius:9px}
- .ab-workflow-node h4{font-size:19px}
- .ab-workflow-note{font-size:13px;margin-top:10px}
- .ab-workflow-mark{min-width:138px;margin-top:10px;padding:7px 9px}
- .ab-workflow-brand img{width:19px;height:19px}
- .ab-workflow-brand strong{font-size:12px}
- .ab-workflow-caption{font-size:13px}
- .ab-workflow-edge-label{font-size:14px}
- .ab-workflow-number{font-size:17px}
-}
+.ab-flow-map{position:relative;isolation:isolate;height:440px;width:100%;margin-top:28px;overflow:visible}
+.ab-flow-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
+.ab-flow-wire{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+.ab-flow-node{position:absolute;z-index:2;transform:translate(-50%,-50%);width:clamp(164px,15%,190px);height:136px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 15px;border-radius:10px;color:#153b2d;text-align:center;box-shadow:0 10px 24px rgba(7,30,22,.1)}
+.ab-flow-product{background:#e5eee4}
+.ab-flow-manual{background:#f4f6f0}
+.ab-flow-capture{left:10%;top:50%}
+.ab-flow-scheme{left:40%;top:26%}
+.ab-flow-reverse{left:31%;top:75%}
+.ab-flow-generate{left:50%;top:75%}
+.ab-flow-iterate{left:69%;top:75%}
+.ab-flow-library{left:88.5%;top:50%;width:clamp(188px,17%,220px);height:160px;background:#f0f5e9;border:1px solid rgba(255,175,69,.64)}
+.ab-flow-kicker{font-size:11px;line-height:1.2;font-weight:650;letter-spacing:.05em;color:#50745d;margin-bottom:8px}
+.ab-flow-node h3{font-size:19px;line-height:1.27;font-weight:700;letter-spacing:-.035em;margin:0}
+.ab-flow-note{font-size:12px;line-height:1.3;color:#6d7e70;margin-top:10px}
+.ab-flow-badge{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 9px;margin:11px auto 0;border-radius:5px;background:var(--accent);color:#153b2d;font-size:11px;line-height:1;font-weight:700;white-space:nowrap}
+.ab-flow-badge img{display:block;width:14px;height:14px}
+.ab-flow-library p{font-size:12px;color:#53745f;margin:8px 0 0;white-space:nowrap}
+.ab-flow-map.is-ready .ab-flow-node:not(.ab-flow-capture){opacity:0}
+.ab-flow-map.is-ready .ab-flow-wire{opacity:0;stroke-dasharray:var(--wire-length);stroke-dashoffset:var(--wire-length)}
+.ab-flow-map.is-playing .ab-flow-node:not(.ab-flow-capture){animation:ab-flow-node-in .55s cubic-bezier(.2,.75,.2,1) var(--flow-delay) both}
+.ab-flow-map.is-playing .ab-flow-wire{animation:ab-flow-draw .65s ease-out var(--flow-delay) both}
+@keyframes ab-flow-node-in{from{opacity:0;transform:translate(-50%,-50%) translateY(10px) scale(.97)}to{opacity:1;transform:translate(-50%,-50%)}}
+@keyframes ab-flow-draw{from{opacity:0;stroke-dashoffset:var(--wire-length)}to{opacity:.92;stroke-dashoffset:0}}
+@media(min-width:1800px) and (min-height:1050px){.ab-flow-map{height:540px;margin-top:34px}.ab-flow-node{width:clamp(172px,14.5%,215px);height:168px;padding:18px 20px}.ab-flow-library{width:clamp(214px,17%,250px);height:188px}.ab-flow-node h3{font-size:23px}.ab-flow-kicker{font-size:13px}.ab-flow-note,.ab-flow-library p{font-size:14px}.ab-flow-badge{font-size:13px;padding:6px 9px}.ab-flow-badge img{width:17px;height:17px}}
+@media(max-width:1100px){.ab-flow-node{width:16.5%;height:132px;padding:10px}.ab-flow-node h3{font-size:16px}.ab-flow-library{width:19%;height:154px;padding:12px}.ab-flow-badge{font-size:10px}.ab-flow-capture{left:11%}.ab-flow-iterate{left:68%}.ab-flow-library{left:88%}}
+@media(max-width:980px){.ab-workflow{padding-block:48px 36px}.ab-workflow .section-label{font-size:21px}.ab-workflow .section-label>span{font-size:27px}.ab-workflow .section-heading h2{font-size:31px}.ab-workflow .section-heading{display:block}.ab-workflow-legend{margin-top:22px}.ab-flow-map{height:1170px;max-width:460px;margin:34px auto 0}.ab-flow-node{left:50%;width:210px;height:128px;padding:12px 16px}.ab-flow-node h3{font-size:18px}.ab-flow-capture{top:8%}.ab-flow-scheme{top:24%}.ab-flow-reverse{top:43%}.ab-flow-generate{top:60%}.ab-flow-iterate{top:77%}.ab-flow-library{left:50%;top:94%;width:225px;height:150px}.ab-flow-badge{margin-top:10px}}
+@media(max-width:390px){.ab-flow-node{width:190px}.ab-flow-library{width:210px}.ab-flow-node h3{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.ab-flow-map.is-ready .ab-flow-node,.ab-flow-map.is-ready .ab-flow-wire{opacity:1!important;stroke-dashoffset:0!important;animation:none!important}}

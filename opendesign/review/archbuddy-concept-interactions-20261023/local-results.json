@@ -1,0 +1,70 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "hoverState": {
+      "hovered": true,
+      "open": false,
+      "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+    },
+    "split": "73%",
+    "storageExpanded": "true",
+    "screenshotLoaded": true,
+    "horizontalOverflow": 0,
+    "cardHeight": 350,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "hoverState": {
+      "hovered": true,
+      "open": false,
+      "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+    },
+    "split": "74%",
+    "storageExpanded": "true",
+    "screenshotLoaded": true,
+    "horizontalOverflow": 0,
+    "cardHeight": 350,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hoverState": {
+      "hovered": false,
+      "open": true,
+      "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+    },
+    "split": "72%",
+    "storageExpanded": "true",
+    "screenshotLoaded": true,
+    "horizontalOverflow": 0,
+    "cardHeight": 330,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 360,
+      "height": 780
+    },
+    "hoverState": {
+      "hovered": true,
+      "open": true,
+      "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+    },
+    "split": "72%",
+    "storageExpanded": "true",
+    "screenshotLoaded": true,
+    "horizontalOverflow": 0,
+    "cardHeight": 330,
+    "errors": []
+  }
+]

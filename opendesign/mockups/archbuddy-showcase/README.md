@@ -46,3 +46,49 @@
 2026-10-16第十六版motion-install-20261016：已选浅底接力正式上线。01三断点按滚动强调/说明逐条显露、圆环内侧两条链路，之后与02左右接力；05改全宽墨绿。正式页无比较控件，窄屏纵向阅读。29文件白名单输出cloudbase/dist/showcase-motion-install-20261016/site，元数据016/SUCCESS；详见展示站文档和本轮验收报告。
 
 2026-10-16第十七版proportion-white-install-20261016：针对2436×1240公网图幅，01/02深绿容器宽屏最大1640×900px，圆图550px、02节点176×116px并同步放大文字；05黄色强调改白。29文件限定输出cloudbase/dist/showcase-proportion-white-install-20261016/site，元数据017/SUCCESS，验收见展示站文档。
+
+## 2026-10-23：03/04 纳入 Canvas 统一产品方向（仅本地）
+
+用户提出插件与 Canvas 未来合并为统一产品。本轮只更新展示层：03 以采集图片、提示词编写与迭代、效果图生成与优化三个创作环节连接共享图词资产底座；04 调整为上方采集/提示词/Canvas 三项功能，下方第04项资产沉淀。延续 #153B2D、浅绿与 #FFAF45 琥珀色，复用官方 Lucide sprite。
+
+源码依据：Interarchy/archbuddy-canvas 的 develop README 明确独立开发与未来整合；用户提到的方案迭代节点位于 feature/canvas-workbench，而非 develop。已读取该分支提交 5637107d238fba3b7aa61eee28811e5e1a5e5d45 的 src/components/studio/StudioIterationNode.tsx、src/lib/studio/nodeCatalog.ts、src/lib/studio/comparisonAnalysis.ts，确认源码包含底图与生成图拖动对比、选择已有版本继续修改、按轮保存提示词/输入/结果。官网 Canvas 图为明确标记的功能示意，不是假造实际截图，也不代表真实模型输出质量已验证。
+
+02 保留现有插件的五步链路与四处介入，只将范围文字明确为插件当前能力；03/04 明示 Canvas 独立开发、后续整合，避免下载商店插件即可使用画布的误读。未新增插件入口、跨端通信、账号同步、共享存储或云端执行。
+
+本地版本 canvas-product-20261023；新增 product-section.css 并登记进30文件构建白名单。输出 cloudbase/dist/showcase-canvas-product-20261023/site；构建资源引用、下载包哈希与疑似凭据检查通过，app.js/workflow-section.js 语法检查通过，限定文件 git diff --check 通过。浏览器视觉记录见 opendesign/review/archbuddy-canvas-product-20261023/。
+
+仅本地预览，未部署公网、未提交或推送 Git；公网仍为017。没有访问或变更云端资源、用户数据、身份、日志、密钥、额度和预算，也未修改账号积分工作区。
+
+## 2026-10-23：展示站第018版移除首屏和测试集，加入 Edge 商店
+
+用户要求首页直接从01开始，03删除两处产品方向说明并将橙色连接改深绿、资产底座图标改白，04底座橙色改白；05取消图片测试集入口及教程，新增用户提供的 Edge 加载项商品链接，与 Chrome 商店并列，并将安装步骤改为双浏览器通用。
+
+实现沿用本地 Canvas 产品版本，03/04仍保留三项创作能力与图词资产底座。无首屏后，01断点 A 初始显现，B/C仍随下滑出现，避免右侧初始空白。仅移除测试集公开构建与云端对象，本地原始7z归档保留用于历史溯源；旧ZIP仍属于历史公开资源，不作为首页下载入口。
+
+发布只更新已登记的 archbuddy / development / archbuddy-dev-showcase 静态应用与 archbuddy/dev/showcase/ 前缀。发布前只读核对017/SUCCESS、前缀29文件与删除预演单命中1对象，原隐私页200、6364字节、SHA256 D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8。构建29文件4002157字节、白名单/资源引用/ZIP哈希/疑似凭据检查通过；app deploy退出0，元数据 archbuddy-dev-showcase-018/SUCCESS。随后只删除 archbuddy/dev/showcase/downloads/ArchBuddy-test-images.7z 一项，删除成功。发布后固定前缀29/29与清单精确一致、额外0、临时配置0；主域29/29资源SHA256匹配，本页200/新版本与Edge链接存在/无hero或测试集文字；旧测试集URL加查询参数HEAD404，隐私页哈希不变。临时cloudbaserc.json已移除。
+
+本地独立浏览器1440×1000、1920×1080、390×844核验01首屏、01→02接力、03/04色彩、05双商店、无溢出和脚本/资源错误；详情见 opendesign/review/archbuddy-no-hero-edge-20261023/report.md。Edge外部商店页面无法从此环境打开，仅核对页面href与用户给出的链接一致，未验证商品内容或安装。没有变更插件、后端、用户数据、身份、日志、密钥、额度、预算、共享配置或其他项目。未提交或推送Git。
+
+## 2026-10-23：02 创作全链路图
+
+用户将原来两张独立链路图合成一张图。共同起点是“采集参考图”，上支路进入由设计师主导的“方案创作”，下支路进入“反推与迭代提示词→生成与优化效果图→迭代提示词与效果图”，最后均汇入“沉淀图词库”。仅方案创作不标 ArchBuddy；Canvas 仍在04标示为独立开发。02入场后上路先画完，下路随后逐步出现；窄屏改为纵向共用起止点、两侧回环。源码仍为 workflow-section.css/js 和 index.html，发布构建为 cloudbase/dist/showcase-full-chain-20261023/site。
+
+## 2026-10-23：02 卡片居中
+
+全链路图各节点采用统一的卡片高度、文字间距和居中对齐；共用图词库卡片略大。移除上下两条装饰标签与横线，其中下方标签此前被采集卡片遮挡，只露出“A”。卡片内黄色ArchBuddy品牌标记保持一致，分支关系与入场时序不变。版本centered-flow-20261023，29文件白名单构建输出cloudbase/dist/showcase-centered-flow-20261023/site，发布与核验见展示站文档。
+
+## 2026-10-23：03 交互展示
+
+三张创作卡支持翻面：堆叠建筑参考图、逐行结构化提示词、同一建筑效果版本拖动对比。资产底座点击或向下拖动展开真实项目图库截图。前两张桌面悬停可翻面，三张均支持点击、键盘和触屏；示意生成图与真实图库截图有明确标注。第021版已部署既有 CloudBase 展示站，独立验收见 opendesign/review/archbuddy-concept-interactions-20261023/。
+
+## 2026-10-23：03 全悬停版
+
+三张创作卡和图词资产底座在桌面均以悬停触发，效果图翻面后自动缓慢拉帘；触屏仍轻点操作。连接圆标始终位于卡片上层。图库展开图只保留插件实际图库截图。05下载与安装及顶部下载体验入口已移除。构建版本hover-concept-20261023，第022版已发布并核验；记录见opendesign/review/archbuddy-hover-concept-20261023/。
+
+## 2026-10-23：图词资产展开后保持打开
+
+图库悬停展开后不再因鼠标离开而自动收起，向下滚动可连续阅读完整界面；触屏仍用轻点操作。第023版已发布，证据见opendesign/review/archbuddy-persistent-library-20261023/。
+
+## 2026-10-23：02 底部收束
+
+去掉01/02深绿舞台下方的小型章节提示与进度条；适度压缩桌面舞台高度和02完成后的空白，保留01→02接力及02图解的六节点/六线。第024版已发布并核验，证据见opendesign/review/archbuddy-workflow-trim-20261023/。

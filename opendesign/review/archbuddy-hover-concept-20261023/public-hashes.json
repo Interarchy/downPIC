@@ -1,0 +1,178 @@
+{
+  "version": "hover-concept-20261023",
+  "matched": 33,
+  "total": 33,
+  "mismatches": [],
+  "privacy": {
+    "status": 200,
+    "bytes": 6364,
+    "sha256": "D01C5E2B44C55F6C64CB1647749B2C307326255CAA1259304B45E5B169A05DA8"
+  },
+  "files": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "styles.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "product-section.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "concept-interactive.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "concept-interactive.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "app.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "problem-section.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "problem-section.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "workflow-section.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "workflow-section.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "story-section.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "story-section.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/index.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/problem.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/workflow.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/decisions.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/outcomes.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/styles.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/app.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/01-project-library-1280x800.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/02-image-description-1280x800.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/03-prompt-library-1280x800.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/04-prompt-builder-1280x800.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/05-prompt-optimization-1280x800.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/logo.svg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "case-study/assets/tokens.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "downloads/ArchBuddy-0.6.0-Chrome.zip",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/lucide.svg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/lucide-LICENSE.txt",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/favicon.svg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/brand-mark.svg",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/concept/reference-triptych.png",
+      "status": 200,
+      "match": true
+    },
+    {
+      "path": "assets/concept/iteration-triptych.png",
+      "status": 200,
+      "match": true
+    }
+  ]
+}
