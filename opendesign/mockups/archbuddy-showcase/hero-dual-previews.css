@@ -116,12 +116,15 @@ body[data-hero-dual] .hero-foot{width:min(1320px,100%);justify-content:space-bet
  [data-hero-dual=b] .dual-entry{min-height:92px;padding:13px 8px}
  [data-hero-dual=b] .dual-entry+.dual-entry{border-left:0;border-top:1px solid #bed6be55}
  [data-hero-dual=b] .dual-entry h2{font-size:23px}
- [data-hero-dual=c] .dual-entry-surface{display:grid;grid-template-columns:1fr 1fr;min-height:160px;padding:0 12px}
- [data-hero-dual=c] .dual-entry{min-width:0;padding:16px 10px}
- [data-hero-dual=c] .dual-entry+.dual-entry{border-top:0;border-left:1px solid #42644a4a}
- [data-hero-dual=c] .dual-entry h2{font-size:20px}
- [data-hero-dual=c] .browser-choice{gap:4px}
- [data-hero-dual=c] .browser-choice a{padding:5px;font-size:10px}
+ [data-hero-dual=c] .dual-entry-surface{display:flex;flex-direction:column;min-height:0;padding:0 14px}
+ [data-hero-dual=c] .dual-entry{min-width:0;min-height:100px;padding:12px 3px}
+ [data-hero-dual=c] .dual-entry+.dual-entry{border-top:1px solid #42644a4a;border-left:0}
+ [data-hero-dual=c] .dual-entry h2{font-size:21px}
+ [data-hero-dual=c] .dual-entry h2 span{display:inline;margin-left:6px}
+ [data-hero-dual=c] .browser-choice{display:flex;gap:6px;margin-top:9px}
+ [data-hero-dual=c] .browser-choice>span{margin-right:5px}
+ [data-hero-dual=c] .browser-choice a{padding:5px 8px;font-size:10px}
+ [data-hero-dual=c] .dual-pending{margin-top:9px}
 }
 @media(max-height:700px) and (max-width:760px){
  body[data-hero-dual] .toolbox{height:176px}
