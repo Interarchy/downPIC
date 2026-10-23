@@ -16,3 +16,25 @@ html[lang=en] #problem .ring-svg .step-label{letter-spacing:0}
 html[lang=en] #problem .ring-svg .chain-label{letter-spacing:0}
 @media(max-width:760px){[data-hero-variant=c] .tray-journey span{width:5px;height:5px}html[lang=en] [data-hero-variant=c] .tool-object{font-size:clamp(10px,3vw,16px);letter-spacing:-.02em}html[lang=en] [data-hero-variant=c] .tool-action{font-size:clamp(8px,2vw,10px);line-height:1.25;white-space:normal;text-align:center}}
 @media(prefers-reduced-motion:reduce){[data-hero-variant=c] .tool-tray.is-tracing .tray-journey::after{animation:none;display:none}.site-top-nav a.nav-language,[data-hero-variant=c] .tray-journey span{transition:none}}
+
+/* Restore the source site's chapter palette: forest, forest, paper, sage. */
+body[data-site-theme=forest] .story-chapter,
+body[data-site-theme=forest] .story-window,
+body[data-site-theme=forest] #problem.ab-problem,
+body[data-site-theme=forest] #workflow.ab-workflow{background:#153b2d}
+body[data-site-theme=forest] #problem.ab-problem{--diagram-forest:#153b2d;--section-bg:#153b2d;--section-rule:#416452}
+body[data-site-theme=forest] #workflow.ab-workflow{--forest:#153b2d}
+body[data-site-theme=forest] #concept.unified-concept,
+body[data-site-theme=forest] #features.unified-features{
+  --paper:#f5f7f4;--ink:#24332d;--muted:#63746a;--green:#25634b;
+  --forest:#153b2d;--sage:#e8f0ec;--line:#d8e1da;color:var(--ink)
+}
+body[data-site-theme=forest] #concept.unified-concept{background:#f5f7f4}
+body[data-site-theme=forest] #features.unified-features{background:#e8f0ec}
+body[data-site-theme=forest] #concept .section-label>span,
+body[data-site-theme=forest] #features .section-label>span{background:#25634b;color:#fff}
+body[data-site-theme=forest] #features .feature-module{background:#f5f7f4;border-color:#bfd1c3;color:#24332d}
+body[data-site-theme=forest] #features .figure-heading{background:#fff;border-color:#d8e1da;color:#24332d}
+body[data-site-theme=forest] #features .asset-support{background:#153b2d;border-color:transparent;color:#f5f7f4}
+body[data-site-theme=forest] #features .asset-support .feature-title{color:#f5f7f4}
+body[data-hero-live=true] .abhero{grid-template-rows:auto minmax(0,1fr);padding-bottom:clamp(24px,4svh,46px)}

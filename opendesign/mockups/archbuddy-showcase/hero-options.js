@@ -44,7 +44,7 @@
     cards.forEach((card,i)=>{card.setAttribute('aria-expanded',String(i===n));document.getElementById('tool-detail-'+i).setAttribute('aria-hidden',String(i!==n));});
     mobile.querySelector('strong').textContent=n>=0?features[n].title :english?'Four tools for your design process':'你的四件设计工具';
     mobile.querySelector('p').textContent=n>=0?features[n].desc :english?'Tap a card to explore its full capability.':'轻点一张卡片，抽取它的完整能力。';
-    document.getElementById('tool-hint').textContent=n>=0?(english?'Move to another card to keep exploring':'移向另一张卡片，继续探索'):(english?'Hover over a card to explore a capability':'悬停卡片，抽取一项创作能力');
+
   }
   function selectVariant(value,updateUrl){
     variant=Object.hasOwn(variants,value)?value:'a';

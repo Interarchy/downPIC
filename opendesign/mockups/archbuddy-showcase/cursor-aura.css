@@ -1,0 +1,10 @@
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  body.has-cursor-aura,body.has-cursor-aura *{cursor:none!important}
+  .cursor-aura{position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;z-index:300;opacity:0;will-change:transform;transition:opacity .18s ease}
+  .cursor-aura.is-visible{opacity:1}
+  .cursor-aura-glow{position:absolute;left:-190px;top:-190px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(150,228,152,.14) 0,rgba(120,210,142,.07) 32%,transparent 70%);mix-blend-mode:screen}
+  .cursor-aura-ring{position:absolute;left:-13px;top:-13px;width:26px;height:26px;border:1px solid rgba(230,255,227,.85);border-radius:50%;box-shadow:0 0 14px rgba(179,235,170,.27),inset 0 0 8px rgba(210,255,209,.10);transition:transform .16s ease,background .16s ease,border-color .16s ease}
+  .cursor-aura.is-link .cursor-aura-ring{transform:scale(1.4);background:rgba(213,250,199,.13)}
+  .cursor-aura[data-surface=light] .cursor-aura-glow{background:radial-gradient(circle,rgba(72,128,84,.09) 0,rgba(72,128,84,.04) 32%,transparent 70%);mix-blend-mode:multiply}
+  .cursor-aura[data-surface=light] .cursor-aura-ring{border-color:rgba(27,75,48,.82);box-shadow:0 0 12px rgba(37,99,75,.16)}
+}

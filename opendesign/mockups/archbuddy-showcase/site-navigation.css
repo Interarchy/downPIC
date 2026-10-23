@@ -13,9 +13,9 @@
 .site-top-nav .nav-pricing[aria-current=page]{color:#c6eabf}
 .site-top-nav .nav-library summary:hover,.site-top-nav .nav-canvas:hover,.site-top-nav .nav-pricing:hover{color:#c6eabf}
 .site-top-nav :is(summary,a):focus-visible{outline:2px solid #c6eabf;outline-offset:4px;border-radius:2px}
-.site-top-nav .nav-library-menu{position:absolute;right:-15px;top:calc(100% + 12px);width:195px;padding:6px;border:1px solid #b9d8be50;border-radius:7px;background:#eaf1e9;box-shadow:0 25px 50px #00100880;color:#173b2d}
+.site-top-nav .nav-library-menu{position:absolute;right:-15px;top:calc(100% + 12px);width:170px;padding:6px;border:1px solid #b9d8be50;border-radius:7px;background:rgba(234,241,233,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 25px 50px #00100880;color:#173b2d}
 .site-top-nav .nav-library-menu::before{content:"";position:absolute;left:0;right:0;top:-13px;height:13px}
-.site-top-nav .nav-library-menu a{display:flex;align-items:center;justify-content:space-between;min-height:43px;padding:0 11px;border-radius:4px;color:#173b2d;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.site-top-nav .nav-library-menu a{display:flex;align-items:center;justify-content:space-between;min-height:41px;padding:0 9px;border-radius:4px;color:#173b2d;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
 .site-top-nav .nav-library-menu a:hover{background:#d8e7da;color:#102c22}
 .site-top-nav .nav-library-menu .icon{width:16px;height:16px;stroke-width:1.8}
 .site-top-nav .nav-language{display:inline-flex;align-items:center;gap:8px;min-height:30px;margin-left:4px;padding-left:22px;border-left:1px solid #c9e4ce40;color:#b0cbb8;font-size:12px;white-space:nowrap}
@@ -38,7 +38,7 @@ html[lang=en] .tool-card-footer{font-size:10px}
  .site-header .header-inner .site-top-nav{order:2;flex:none;justify-content:space-between;gap:12px;width:100%;height:45px;margin:0;overflow-x:auto;scrollbar-width:none}
  .site-header .header-inner .site-top-nav::-webkit-scrollbar{display:none}
  .site-top-nav .nav-language{position:absolute;right:0;top:9px;margin-left:0;padding-left:12px}
- .site-top-nav .nav-library-menu{position:fixed;top:96px;left:16px;right:auto;z-index:130;width:195px}
+ .site-top-nav .nav-library-menu{position:fixed;top:96px;left:16px;right:auto;z-index:130;width:170px}
  body[data-hero-live=true] .abhero{height:auto;min-height:calc(100svh - 104px)}
 }
 @media(max-width:440px){
