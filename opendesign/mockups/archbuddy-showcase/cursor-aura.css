@@ -6,20 +6,36 @@ body[data-hero-variant=c] .abhero .hero-light{
     radial-gradient(ellipse at 48% 86%,rgba(57,111,76,.13),transparent 76%),
     linear-gradient(116deg,rgba(67,102,79,.025),transparent 52%,rgba(39,82,68,.025));
 }
-.hero-light .ambient-field{
+.ambient-backdrop .ambient-field{
   position:absolute;inset:0;pointer-events:none;
   transition:opacity 1.4s cubic-bezier(.22,.61,.36,1)
 }
-.hero-light .ambient-field--west{
+.ambient-backdrop .ambient-field--west{
   opacity:.5;
   background:
-    radial-gradient(ellipse 110% 135% at -18% 34%,rgba(94,133,98,.13),rgba(74,113,88,.035) 48%,transparent 82%),
+    radial-gradient(ellipse 110% 135% at -18% 34%,rgba(94,133,98,.16),rgba(74,113,88,.043) 48%,transparent 82%),
     linear-gradient(125deg,rgba(90,129,95,.025),transparent 70%)
 }
-.hero-light .ambient-field--east{
+.ambient-backdrop .ambient-field--east{
   opacity:.5;
-  background:radial-gradient(ellipse 100% 145% at 112% 68%,rgba(67,120,103,.12),rgba(49,96,80,.025) 52%,transparent 85%)
+  background:radial-gradient(ellipse 100% 145% at 112% 68%,rgba(67,120,103,.15),rgba(49,96,80,.032) 52%,transparent 85%)
 }
 @media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){
-  .hero-light .ambient-field{transition:none;opacity:.5!important}
+  .ambient-backdrop .ambient-field{transition:none;opacity:.5!important}
+}
+
+/* 各章节独立的底层光感，不改变原有配色、定位或滚动舞台。 */
+[data-ambient-surface]{isolation:isolate}
+[data-ambient-position=relative]{position:relative}
+.ambient-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit}
+[data-ambient-tone=light]>.ambient-backdrop .ambient-field--west{
+  background:radial-gradient(ellipse 110% 135% at -18% 34%,rgba(83,131,98,.09),rgba(107,144,116,.025) 48%,transparent 82%)
+}
+[data-ambient-tone=light]>.ambient-backdrop .ambient-field--east{
+  background:radial-gradient(ellipse 100% 145% at 112% 68%,rgba(138,150,105,.08),rgba(116,151,128,.02) 52%,transparent 85%)
+}
+/* 片内时间轴禁用产品元素过渡，但背景保留缓慢的明暗响应。 */
+.time-driven .film .ambient-backdrop .ambient-field{transition:opacity 1.4s cubic-bezier(.22,.61,.36,1)!important}
+@media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){
+  .time-driven .film .ambient-backdrop .ambient-field{transition:none!important}
 }
