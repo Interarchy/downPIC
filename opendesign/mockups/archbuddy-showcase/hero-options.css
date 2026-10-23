@@ -181,3 +181,51 @@ body[data-hero-variant=c]{--hero-bg:#071e18;--hero-ink:#e9f6e9;--hero-muted:#89a
  .type-caret,.hero-scroll .icon{animation:none}
  .tool-card,.tool-slot,.tool-card-detail,.tool-art,.tool-card-footer{transition:none!important}
 }
+
+/* 已选 C：操作对象优先，工具底座承载品牌主张。 */
+.tray-slogan{display:none}
+[data-hero-variant=c] .hero-subline{display:none}
+[data-hero-variant=c] .tool-title{top:46px;left:20px;right:16px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;line-height:1.2}
+[data-hero-variant=c] .tool-object{display:block;font-size:28px;font-weight:550;letter-spacing:.05em;transform-origin:left center;transition:transform .45s cubic-bezier(.2,.8,.2,1),color .3s}
+[data-hero-variant=c] .tool-action{display:block;font-size:13px;line-height:1.5;font-weight:400;letter-spacing:.1em;color:#abc9b7}
+[data-hero-variant=c] .tool-slot.is-open .tool-object{transform:scale(1.24);color:#d6f5c8}
+[data-hero-variant=c] .tool-english,[data-hero-variant=c] .tool-card-footer{display:none}
+[data-hero-variant=c] .tool-card-detail{top:126px}
+[data-hero-variant=c] .tool-art{top:137px;height:70px}
+[data-hero-variant=c] .tool-card{bottom:66px}
+[data-hero-variant=c] .tool-back{bottom:30px}
+[data-hero-variant=c] .tool-tray{height:57px;bottom:0;display:flex;align-items:center;justify-content:center;border-color:#a0c9a53d;background:linear-gradient(180deg,#163a2c,#0c291f);box-shadow:0 14px 32px #00120c55}
+[data-hero-variant=c] .tool-tray .tray-slogan{display:block;color:#e1efda;font-size:19px;font-weight:500;line-height:1.4;letter-spacing:.13em;text-align:center}
+[data-hero-variant=c] .tool-tray i{width:72%;left:14%;opacity:.55;box-shadow:0 0 10px #a4da8233}
+[data-hero-live=true] .header-inner .live-navigation{gap:28px;font-size:13px}
+[data-hero-live=true] .header-download{border-color:#a2c4ad55;border-radius:6px}
+[data-hero-live=true] .hero-overline{letter-spacing:.17em}
+@media(max-height:730px) and (min-width:761px){
+ [data-hero-variant=c] .tool-title{top:40px;gap:4px}
+ [data-hero-variant=c] .tool-object{font-size:25px}
+ [data-hero-variant=c] .tool-action{font-size:12px}
+ [data-hero-variant=c] .tool-card-detail{top:115px;font-size:12px;line-height:1.65}
+ [data-hero-variant=c] .tool-art{top:122px;height:66px}
+ [data-hero-variant=c] .tool-tray .tray-slogan{font-size:20px}
+}
+@media(max-width:760px){
+ [data-hero-live=true] .header-inner .live-navigation{gap:13px;font-size:11px}
+ [data-hero-live=true] .live-navigation>a:first-child{display:none}
+ [data-hero-live=true] .header-download{padding:6px 8px;gap:5px}
+ [data-hero-variant=c] .toolbox{height:201px}
+ [data-hero-variant=c] .tool-card{height:140px;bottom:52px}
+ [data-hero-variant=c] .tool-title{top:43px;left:0;right:0;align-items:center;gap:7px}
+ [data-hero-variant=c] .tool-object{font-size:18px;letter-spacing:.02em;transform-origin:center}
+ [data-hero-variant=c] .tool-action{font-size:10px;letter-spacing:0}
+ [data-hero-variant=c] .tool-slot.is-open .tool-object{transform:scale(1.15)}
+ [data-hero-variant=c] .tool-tray{height:45px}
+ [data-hero-variant=c] .tool-tray .tray-slogan{font-size:14px;letter-spacing:.045em}
+ [data-hero-variant=c] .tool-tray i{top:0;width:72%;left:14%;height:1px}
+}
+@media(max-height:700px) and (max-width:760px){
+ [data-hero-variant=c] .toolbox{height:176px}
+ [data-hero-variant=c] .tool-card{height:124px;bottom:46px}
+ [data-hero-variant=c] .tool-tray{height:40px}
+ [data-hero-variant=c] .tool-slot.is-open .tool-card{transform:translateY(-16px)}
+}
+@media(prefers-reduced-motion:reduce){.tool-object{transition:none!important}}

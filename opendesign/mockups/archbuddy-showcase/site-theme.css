@@ -1,0 +1,37 @@
+/* ArchBuddy 正式官网：沿用 C 方案近黑森林绿，真实产品截图保持原貌。 */
+body[data-site-theme=forest]{--forest:#071e18;--ink:#e6f0e9;--muted:#a8beb1;--green:#b5d9be;--sage:#102c22;--line:#2d493b;--diagram-forest:#071e18;background:#071e18;color:var(--ink)}
+body[data-site-theme=forest] :is(.abhero,.site-header,.site-header.is-scrolled,.site-film,.site-film-loading,.story-chapter,.story-window,.archbuddy-chain-section,.concept-section,.features-section,.canvas-introduction-section,.install-section,.site-footer){background:#071e18}
+body[data-site-theme=forest] .site-film-stage iframe{background:#071e18}
+body[data-site-theme=forest] #problem.ab-problem{--section-bg:#071e18;background:#071e18}
+body[data-site-theme=forest] #workflow.ab-workflow{--forest:#071e18;background:#071e18}
+body[data-site-theme=forest] :is(.archbuddy-chain-section,.concept-section,.features-section,.canvas-introduction-section,.install-section){border-color:#bdddc521}
+body[data-site-theme=forest] :is(.feature-module,.archbuddy-chain-card,.archbuddy-chain-card-canvas,.concept-node,.concept-foundation,.asset-support,.figure-heading,.image-dialog){background:#102d23;border-color:#9cbfa338;color:#e6f0e9}
+body[data-site-theme=forest] .archbuddy-chain-card-top{color:#a9d3b7;border-color:#7fa78e42}
+body[data-site-theme=forest] .archbuddy-chain-card h3{color:#eef5e9}
+body[data-site-theme=forest] .archbuddy-chain-tags span{color:#bddfc4;border-color:#87ab944f}
+body[data-site-theme=forest] .archbuddy-chain-card>a{color:#cbe6cd}
+body[data-site-theme=forest] .archbuddy-chain-note{background:#ffffff05;border-color:#90bc9d;color:#abc4b4}
+body[data-site-theme=forest] :is(.section-label,.feature-title,.concept-node,.concept-chevron,.concept-relations,.support-bridges){color:#c2dfc7}
+body[data-site-theme=forest] .section-label>span{background:#1b3f2d;color:#dcebd7}
+body[data-site-theme=forest] :is(.concept-foundation,.asset-support){border:1px solid #7ca78938}
+body[data-site-theme=forest] :is(.loop-note,.concept-description,.feature-intro,.feature-list span,.archbuddy-chain-heading p){color:#afc7b9}
+body[data-site-theme=forest] .figure-heading{color:#dce9df}
+body[data-site-theme=forest] .figure-heading>button{color:#c0dfc6}
+body[data-site-theme=forest] .variant-switch button{color:#a8c5b3}
+body[data-site-theme=forest] .variant-switch button[aria-pressed=true]{color:#e0efda;border-color:#b9dba8}
+body[data-site-theme=forest] .canvas-introduction-visual{background-color:#0c251c;border-color:#74927e60;box-shadow:18px 18px 0 #041610}
+body[data-site-theme=forest] .canvas-visual-node{background:#17392a;border-color:#93b49b70}
+body[data-site-theme=forest] .canvas-introduction-boundary{background:#ffffff05}
+body[data-site-theme=forest] #install.install-section{background:#071e18;color:#ecf3e9}
+body[data-site-theme=forest] #install .section-label>span{background:#1b3f2d}
+body[data-site-theme=forest] #install .button-green,body[data-site-theme=forest] .button-light{background:#d8eacc;color:#102c20}
+body[data-site-theme=forest] #install .button-outline{border-color:#89ad9566;color:#dfeddb}
+body[data-site-theme=forest] #install .testset-guide{background:#ffffff06;border-color:#89ad9533}
+body[data-site-theme=forest] .site-footer{border-color:#abc8b22b}
+body[data-site-theme=forest] .story-progress{color:#9fbea9}
+body[data-site-theme=forest] .story-progress-track{background:#7ba48726}
+body[data-site-theme=forest] .story-progress-track i{background:#b2d2a6}
+body[data-site-theme=forest] .dialog-header{background:#102d23;color:#e4efdf}
+body[data-site-theme=forest] .dialog-header button{color:#cee5c8}
+
+body[data-site-theme=forest] .product-diagram{background:#0a241c;border-color:#89ad9533}
