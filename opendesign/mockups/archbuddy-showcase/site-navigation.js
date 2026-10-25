@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const menus = [...document.querySelectorAll('.nav-library')];
+  const menus = [...document.querySelectorAll('.nav-library,.nav-account')];
   if (!menus.length) return;
   const closeOutside = event => {
     for (const menu of menus) if (menu.open && !menu.contains(event.target)) menu.open = false;
@@ -16,7 +16,7 @@
     }
   });
   for (const menu of menus) {
-    menu.querySelectorAll('.nav-library-menu a').forEach(link => {
+    menu.querySelectorAll('.nav-library-menu a,.account-menu a').forEach(link => {
       link.addEventListener('click', () => { menu.open = false; });
     });
   }

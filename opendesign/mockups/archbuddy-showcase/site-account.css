@@ -1,0 +1,65 @@
+/* 品牌、居中产品入口、右侧账户分成三个明确区域。 */
+.site-header .header-inner{display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(240px,1fr);gap:24px;align-items:center}
+.site-header .header-inner .site-products{margin:0;justify-self:center;gap:30px}
+.site-header .header-inner .site-utilities{margin:0;justify-self:end;gap:20px}
+.site-products .nav-library summary,.site-products .nav-canvas{font-size:16px;font-weight:650;min-height:44px;letter-spacing:.015em}
+.site-products .nav-library-menu{left:50%;right:auto;transform:translateX(-50%)}
+.site-utilities .nav-language{padding:0;margin:0;border:0}
+.nav-account{position:relative}
+.nav-account>summary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 14px;border:1px solid #a9c7ad66;border-radius:6px;background:#dce9d410;color:#e8f2e9;list-style:none;cursor:pointer;font-size:13px;white-space:nowrap;transition:background .2s ease,border-color .2s ease}
+.nav-account>summary::-webkit-details-marker{display:none}
+.nav-account>summary:hover,.nav-account[open]>summary{background:#dce9d421;border-color:#c2d8bba6}
+.nav-account summary>.icon{width:13px;height:13px}
+.nav-account [data-account-label]{max-width:100px;overflow:hidden;text-overflow:ellipsis}
+.nav-account [hidden]{display:none!important}
+.account-credit{padding-left:8px;border-left:1px solid #b9d8be40;color:#d2eac4;font-variant-numeric:tabular-nums}
+.account-menu{position:absolute;right:0;top:calc(100% + 14px);width:310px;max-width:calc(100vw - 32px);padding:24px;background:#f1f5ee;border:1px solid #c8d6c8;border-radius:10px;box-shadow:0 24px 60px #00180e50;color:#173b2d;text-align:left;white-space:normal}
+.account-eyebrow{font-size:9px;letter-spacing:.16em;color:#718575;margin:0 0 12px}
+.account-menu h2{font-size:21px;line-height:1.4;font-weight:600;letter-spacing:0;margin:0}
+.account-status{margin:9px 0 18px;font-size:12px;line-height:1.7;color:#5b7161}
+.account-metrics{margin:0 0 17px;padding:0;border-top:1px solid #cedbce}
+.account-metrics>div{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:13px 0;border-bottom:1px solid #d9e2d6}
+.account-metrics dt{font-size:12px;color:#526958}
+.account-metrics dd{margin:0;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.account-metrics>div:first-child dd{font-size:28px}
+.account-metrics dd[data-pending=true]{font-size:12px;font-weight:400;color:#728475}
+.account-note{font-size:11px;line-height:1.65;color:#728475;margin:0 0 17px}
+.account-menu .account-primary{display:flex;justify-content:center;align-items:center;min-height:42px;padding:8px 16px;background:#234e39;color:#f3f7ee;border-radius:5px;font-size:13px;font-weight:600;text-decoration:none}
+.account-menu .account-primary:hover{background:#173b2d;color:#fff}
+.account-refresh{display:block;margin:13px auto 0;border:0;background:none;color:#5b7161;font:inherit;font-size:11px;cursor:pointer;padding:6px 9px}
+.account-refresh:disabled{opacity:.6;cursor:wait}
+.account-refresh:hover{text-decoration:underline;text-underline-offset:4px}
+.account-session-frame{position:absolute;width:1px;height:1px;border:0;overflow:hidden;clip-path:inset(50%);pointer-events:none}
+@media(max-width:1120px){
+ .site-header .header-inner{gap:16px;grid-template-columns:minmax(125px,1fr) auto minmax(205px,1fr)}
+ .site-header .header-inner .site-products{gap:20px}
+ .site-products .nav-library summary,.site-products .nav-canvas{font-size:14px}
+ .site-header .header-inner .site-utilities{gap:13px}
+ .nav-account>summary{padding:0 10px}
+ .account-credit{display:none}
+}
+@media(max-width:900px){
+ .site-header .header-inner{grid-template-columns:1fr auto;grid-template-rows:54px 42px;column-gap:12px;row-gap:0;height:112px;min-height:112px;padding-bottom:8px;align-content:center}
+ .site-header .brand{grid-column:1;grid-row:1;height:auto}
+ .site-header .header-inner .site-utilities{grid-column:2;grid-row:1;order:initial;width:auto;height:auto;overflow:visible;flex:none}
+ .site-header .header-inner .site-products{grid-column:1/-1;grid-row:2;order:initial;display:flex;justify-content:center;width:auto;height:42px;overflow:visible;gap:38px}
+ .site-utilities .nav-language{position:static;font-size:11px}
+ .site-products .nav-library-menu{position:absolute;top:calc(100% + 8px);left:50%;width:170px}
+ .account-menu{top:calc(100% + 10px)}
+ body[data-hero-live=true] .abhero{height:calc(100svh - 112px);min-height:560px}
+ .site-film-pin{top:112px;height:calc(100svh - 112px)}
+}
+@media(max-width:480px){
+ .site-header .header-inner{width:calc(100% - 28px)}
+ .site-header .brand strong{font-size:15px}
+ .site-header .brand-icon,.site-header .brand-icon img{width:25px;height:25px}
+ .site-header .header-inner .site-utilities{gap:10px}
+ .site-utilities .nav-pricing{font-size:11px}
+ .nav-account>summary{font-size:11px;padding:0 9px;min-height:34px}
+ .nav-account [data-account-label]{max-width:64px}
+ .site-header .header-inner .site-products{gap:26px}
+ .site-products .nav-library summary,.site-products .nav-canvas{font-size:14px}
+ .account-menu{width:300px;padding:21px}
+ body[data-hero-live=true] .abhero{height:auto;min-height:calc(100svh - 112px)}
+}
+@media(prefers-reduced-motion:reduce){.nav-account>summary{transition:none}}
