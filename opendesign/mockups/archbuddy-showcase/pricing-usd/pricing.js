@@ -30,6 +30,19 @@ const offers = {
   analysis: ["简析扩展包 · $1.99", "100次下载及简析，需有效订阅，当期到期。"],
   reverse: ["反推扩展包 · $3.99", "50次深度反推，需有效订阅，当期到期。"],
 };
+if (document.documentElement.lang === "en") {
+  Object.assign(offers, {
+    free: ["Free", "$0 · 100 downloads and analyses, plus 10 deep prompt extractions per week. Library stays local. Buy BuddyCoin separately for generation."],
+    light: ["Light · $5.99 / month", "360 BuddyCoin, 1,000 analyses and 100 extractions each month. Local Library. Up to 40 Nano Banana 2.1 images at 4K."],
+    standard: ["Standard · $9.99 / month", "720 BuddyCoin, 2,000 analyses and 200 extractions each month. Local Library. Up to 80 Nano Banana 2.1 images at 4K; 2 concurrent jobs and up to 4 images per run are proposed."],
+    pro: ["Pro · $19.99 / month", "1,620 BuddyCoin, 5,000 analyses and 400 extractions each month. Up to 180 Nano Banana 2.1 images at 4K. Cloud sync, 4 concurrent jobs and up to 8 images per run are proposed."],
+    packLight: ["Light top-up · $7", "360 BuddyCoin with no expiry. About 16.9% more than the matching plan; does not include Library allowances."],
+    packStandard: ["Standard top-up · $11", "720 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include Library allowances."],
+    packPro: ["Pro top-up · $22", "1,620 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include Library allowances."],
+    analysis: ["Analysis extension · $1.99", "100 downloads and analyses for active subscribers, expiring with the current cycle."],
+    reverse: ["Prompt extraction extension · $3.99", "50 deep prompt extractions for active subscribers, expiring with the current cycle."],
+  });
+}
 const models = [
   ["GPT Image 2", [6, 10, 16]],
   ["GPT Image 2.5 Flare", [6, 10, 16]],
@@ -88,3 +101,8 @@ document.querySelectorAll('.nav a[href^="#"]').forEach((link) => {
     if (detail) detail.open = true;
   });
 });
+
+const languageLink = document.querySelector("[data-pricing-language]");
+if (languageLink && /^#(?:plans|packs|credits|features|faq)$/.test(location.hash)) {
+  languageLink.href = languageLink.href.replace(/#.*$/, location.hash);
+}
