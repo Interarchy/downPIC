@@ -9,6 +9,7 @@ const rootTop=element=>{let top=0;while(element){top+=element.offsetTop;element=
 let pinned=false,span=0,start=0,top=0,stage=0,scale=1,heights=[],scheduled=false,resizeTimer;
 function clearPanels(){panels.forEach(p=>{p.style.transform='';p.style.opacity='';p.style.clipPath='';p.style.zIndex='';p.inert=false;p.removeAttribute('aria-hidden');});shell.style.transform='';}
 function layout(){
+  body.style.removeProperty('--story-panel-height');
   const headerHeight=document.querySelector('.site-header').offsetHeight;
   const available=innerHeight-headerHeight-58;
   stage=innerWidth>=1800&&innerHeight>=1050?Math.min(860,available):Math.min(800,available);
@@ -17,8 +18,10 @@ function layout(){
   pinned=!reduced.matches&&innerWidth>=1100&&innerHeight>=760;
   body.dataset.storyLayout=pinned?'pinned':'natural';chapter.style.height='';clearPanels();
   window.dispatchEvent(new Event('story-layout'));
-  heights=panels.map(p=>p.offsetHeight);scale=Math.min(1,(stage-2)/Math.max(...heights));
-  if(pinned&&scale<.9){pinned=false;body.dataset.storyLayout='natural';window.dispatchEvent(new Event('story-layout'));heights=panels.map(p=>p.offsetHeight);scale=1;}
+  heights=panels.map(p=>p.offsetHeight);
+  if(pinned){const commonHeight=Math.max(stage,...heights);body.style.setProperty('--story-panel-height',commonHeight+'px');heights=[commonHeight,commonHeight];scale=Math.min(1,stage/commonHeight);}
+  else scale=1;
+  if(pinned&&scale<.9){pinned=false;body.dataset.storyLayout='natural';body.style.removeProperty('--story-panel-height');window.dispatchEvent(new Event('story-layout'));heights=panels.map(p=>p.offsetHeight);scale=1;}
   if(pinned){span=Math.max(1550,innerHeight*1.8);const style=getComputedStyle(chapter);chapter.style.height=(pin.offsetHeight+span*.91+parseFloat(style.paddingTop)+parseFloat(style.paddingBottom))+'px';start=rootTop(chapter)+parseFloat(style.paddingTop)-top;}
   paint();
 }

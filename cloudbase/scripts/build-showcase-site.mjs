@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 // 仅构建公开静态站的明确白名单；真实环境配置、开发目录与用户资料不进入上传目录。
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const source = path.join(root, 'opendesign/mockups/archbuddy-showcase');
-const delivery = path.join(root, 'cloudbase/dist/showcase-workflow-space-20261023');
+const delivery = path.join(root, 'cloudbase/dist/showcase-story-aligned-20261025');
 const output = path.join(delivery, 'site');
 const pages = ['index.html', 'problem.html', 'workflow.html', 'decisions.html', 'outcomes.html'];
 const assets = ['01-project-library-1280x800.png', '02-image-description-1280x800.png', '03-prompt-library-1280x800.png', '04-prompt-builder-1280x800.png', '05-prompt-optimization-1280x800.png', 'logo.svg', 'tokens.css'];
@@ -50,6 +50,6 @@ for (const name of files.filter(name => /\.(html|css|js)$/.test(name))) {
     if (!files.includes(resolved)) throw new Error('缺少公开引用资源：' + name + ' → ' + resolved);
   }
 }
-const manifest = { date: '2026-10-23', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, contentVersion: 'workflow-space-20261023', files: results };
+const manifest = { date: '2026-10-25', projectId: 'archbuddy', stage: 'development', application: 'archbuddy-dev-showcase', cloudPath: 'archbuddy/dev/showcase/', fileCount: results.length, bytes: results.reduce((sum,item)=>sum+item.bytes,0), archiveSha256: expectedArchiveHash, contentVersion: 'story-aligned-20261025', files: results };
 await writeFile(path.join(delivery,'deployment-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({ output, fileCount: manifest.fileCount, bytes:manifest.bytes, archiveSha256:expectedArchiveHash }));
