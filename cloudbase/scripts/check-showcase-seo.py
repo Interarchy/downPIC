@@ -8,6 +8,9 @@ ROOT = Path(__file__).resolve().parents[2] / 'opendesign/mockups/archbuddy-showc
 ORIGIN = 'https://www.archbuddy.top'
 PAGES = {
     'index.html': '/', 'index-en.html': '/index-en.html',
+    'guides/index.html': '/guides/',
+    'guides/organize-references.html': '/guides/organize-references.html',
+    'guides/reference-to-prompt.html': '/guides/reference-to-prompt.html',
     'case-study/index.html': '/case-study/',
     **{f'case-study/{name}.html': f'/case-study/{name}.html'
        for name in ('problem', 'workflow', 'decisions', 'outcomes')},

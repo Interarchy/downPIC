@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08T13:04:02.751Z",
+  "generated": "2026-10-25T17:36:41.240056+00:00",
   "sections": [
     {
       "id": "mockups",
@@ -89,8 +89,80 @@
               "path": "mockups/archbuddy-showcase/case-study/workflow.html"
             },
             {
+              "label": "film/index.html",
+              "path": "mockups/archbuddy-showcase/film/index.html"
+            },
+            {
+              "label": "film/scene-01/index.html",
+              "path": "mockups/archbuddy-showcase/film/scene-01/index.html"
+            },
+            {
+              "label": "film/scene-02/index.html",
+              "path": "mockups/archbuddy-showcase/film/scene-02/index.html"
+            },
+            {
+              "label": "film/scene-03/index.html",
+              "path": "mockups/archbuddy-showcase/film/scene-03/index.html"
+            },
+            {
+              "label": "film/scene-04/index.html",
+              "path": "mockups/archbuddy-showcase/film/scene-04/index.html"
+            },
+            {
+              "label": "guides/index.html",
+              "path": "mockups/archbuddy-showcase/guides/index.html"
+            },
+            {
+              "label": "guides/organize-references.html",
+              "path": "mockups/archbuddy-showcase/guides/organize-references.html"
+            },
+            {
+              "label": "guides/reference-to-prompt.html",
+              "path": "mockups/archbuddy-showcase/guides/reference-to-prompt.html"
+            },
+            {
+              "label": "hero-dual-a.html",
+              "path": "mockups/archbuddy-showcase/hero-dual-a.html"
+            },
+            {
+              "label": "hero-dual-b.html",
+              "path": "mockups/archbuddy-showcase/hero-dual-b.html"
+            },
+            {
+              "label": "hero-dual-c.html",
+              "path": "mockups/archbuddy-showcase/hero-dual-c.html"
+            },
+            {
+              "label": "hero-entry-a.html",
+              "path": "mockups/archbuddy-showcase/hero-entry-a.html"
+            },
+            {
+              "label": "hero-entry-b.html",
+              "path": "mockups/archbuddy-showcase/hero-entry-b.html"
+            },
+            {
+              "label": "hero-entry-c.html",
+              "path": "mockups/archbuddy-showcase/hero-entry-c.html"
+            },
+            {
+              "label": "hero-options.html",
+              "path": "mockups/archbuddy-showcase/hero-options.html"
+            },
+            {
+              "label": "index-en.html",
+              "path": "mockups/archbuddy-showcase/index-en.html"
+            },
+            {
               "label": "index.html",
               "path": "mockups/archbuddy-showcase/index.html"
+            },
+            {
+              "label": "pricing-en.html",
+              "path": "mockups/archbuddy-showcase/pricing-en.html"
+            },
+            {
+              "label": "pricing.html",
+              "path": "mockups/archbuddy-showcase/pricing.html"
             }
           ]
         }
@@ -104,12 +176,12 @@
           "slug": "archbuddy-portfolio",
           "files": [
             {
-              "label": "SKILL.md",
-              "path": "design-systems/archbuddy-portfolio/SKILL.md"
-            },
-            {
               "label": "colors_and_type.css",
               "path": "design-systems/archbuddy-portfolio/colors_and_type.css"
+            },
+            {
+              "label": "SKILL.md",
+              "path": "design-systems/archbuddy-portfolio/SKILL.md"
             }
           ]
         }
