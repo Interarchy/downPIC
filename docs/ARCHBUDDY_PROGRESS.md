@@ -1275,3 +1275,7 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 ## 2026-10-26：SEO 本地独立规划
 
 基于官网公开分支提交 2f500116，创建 codex/seo-local-20261026 独立工作树。用户要求先本地、待官网平行更新完成后同步。已记录统一首页、索引范围、关键词假设、内容证据、转化口径与分阶段同步方式，详见 ARCHBUDDY_SEO_STRATEGY.md。只读公网确认 robots.txt 与 sitemap.xml 返回 404。纯本地准备，不涉及云端资源；原有工作区改动保留。
+
+## 2026-10-26：SEO 基础改造本地完成
+
+在独立 codex/seo-local-20261026 分支完成正式页面元数据、首页语言关联/WebSite 结构化数据、robots 与 sitemap；未上线定价和短片页面增加 noindex。21 页静态校验通过：7 可索引、14 排除、7 sitemap URL；14 个改动页面正文与基线一致，git diff --check 通过。详见 ARCHBUDDY_SEO_VERIFICATION.md。只有本地提交，不推送、不部署；等待官网平行更新后用增量提交整合，复核现价/URL/索引范围与生产根目录。未涉及云端资源、用户数据、统计采集、模型或收费配置。
