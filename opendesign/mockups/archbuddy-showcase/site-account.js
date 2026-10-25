@@ -8,6 +8,15 @@
   const origin = document.body.dataset.accountOrigin;
   const allowed = new Set(['https://canvas.archbuddy.top','https://archbuddy-canvas-preview-ed82c1yc8-mel-96aa.vercel.app']);
   if (!allowed.has(origin)) return;
+  if (document.body.dataset.accountBridge === 'pending') {
+    ui.status.textContent = en
+      ? 'Account balance on this website is being connected. Sign in to Canvas to manage your account.'
+      : '官网账户额度查询接入中。你可以先登录 Canvas 管理账户。';
+    ui.login.href = origin + '/sign-in';
+    ui.workspace.href = origin + '/workspace';
+    ui.refresh.hidden = true;
+    return;
+  }
   const channel = 'archbuddy-account-v1';
   const bridge = new URL('/site-account', origin);
   bridge.searchParams.set('parent', location.origin);
