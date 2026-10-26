@@ -48,4 +48,4 @@
 2026-10-16第十七版proportion-white-install-20261016：针对2436×1240公网图幅，01/02深绿容器宽屏最大1640×900px，圆图550px、02节点176×116px并同步放大文字；05黄色强调改白。29文件限定输出cloudbase/dist/showcase-proportion-white-install-20261016/site，元数据017/SUCCESS，验收见展示站文档。
 
 
-2026-10-26：官网 Vercel Web Analytics 已在项目控制台开启；中英文首页、定价页和案例页的静态 HTML 接入匿名页面浏览与来源统计脚本。统计只针对 Vercel 站点页面，不采集插件、Canvas 的账户与创作内容；本改动需先在预览部署核对脚本返回及页面浏览请求，再经审核发布正式站点。
+2026-10-26：官网 Vercel Web Analytics 已在项目控制台开启；中英文首页、定价页和案例页的静态 HTML 接入匿名页面浏览与来源统计脚本。统计只针对 Vercel 站点页面，不采集插件、Canvas 的账户与创作内容；PR #2 已合并，正式站点 `www.archbuddy.top` 已指向部署 `dpl_GU9FVYGbWDazeWXU4NrLAt1JXkQH`；首页、定价页、案例页和统计脚本返回 200。真实浏览器页面浏览请求与后台计数待核对。
