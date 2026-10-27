@@ -100,4 +100,6 @@ Vercel 生产部署 dpl_Hq2BDP7TQia5wiChGwnw3EUQQczd 对应 Interarchy/downPIC �
 
 草稿 PR #4 已创建。Vercel 预览部署 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6 对应 SEO 提交 75e127d，状态 READY。通过 Vercel 连接器核对首页、英文首页、三页教程、案例、短片与定价；robots.txt 和 sitemap.xml 均返回 200，站点地图为 application/xml，包含上述 10 个规范 URL。两份美元定价方案与短片页在实际预览响应中含 noindex；旧定价跳转页保留 noindex。项目预览域名使用 Vercel 登录保护，生产自定义域名不受该保护。生产域名的 robots/sitemap 仍为 404，尚未发布 SEO 增量。
 
+浏览器复核还发现正式站原有的窄屏功能标题横向滚动：英文页 390px 显示为 452px，中文页 320px 显示为 335px；本轮仅针对对应语言和窄屏断点允许标题换行。修正后本机 Edge 在 320、390、760、1440px 检查中英文首页与教程，文档宽度均等于视口宽度。该 CSS 小修需在新的 Vercel 预览 SHA 再验收。
+
 2026-10-28 只读公网核对：首页 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200。教程页脚改用正式法律与支持链接，移除旧开发环境隐私地址。当前源码可索引范围为中英文首页、五页产品研究案例及三页教程，共 10 个 URL；16 个 HTML 页面排除索引。正式部署前再次确认生产分支、Chrome/Edge 商店版本与教程操作路径；部署后按上一节验收响应与索引配置，再将实际 sitemap 提交站长平台。

@@ -38,7 +38,8 @@ html{scroll-padding-top:116px}.site-header{position:sticky;top:0;z-index:50;back
 .has-opportunity{border-color:#91b59e;background:#e3eee6}
 @media(max-width:1100px){}
 @media(max-width:760px){.features-section #features-title{font-size:clamp(22px,6.5vw,30px);white-space:nowrap;letter-spacing:-.045em}}
-@media(max-width:380px){}
+@media(max-width:760px){html[lang="en"] .features-section #features-title{white-space:normal}}
+@media(max-width:380px){.features-section #features-title{white-space:normal}}
 
 /* 再生成先回到外部生图之前，避免回流绕过外部步骤。 */
 .external-caption{top:36px}
