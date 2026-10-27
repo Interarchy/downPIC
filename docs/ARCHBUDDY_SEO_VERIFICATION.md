@@ -44,3 +44,10 @@
 - 2026-10-28 只读正式域名：/ 为 200，/robots.txt 和 /sitemap.xml 仍为 404，/legal/privacy/ 为 200；这表明 SEO 增量尚未在生产发布。
 - 教程页脚已改用正式法律与客服链接。正式部署后的实际 HTTP meta、sitemap 类型、预览保护、商店版本和搜索收录仍待核查。
 - 本机 Edge 在 390/1440 宽度复核教程三页：状态 200、无脚本错误或横向滚动，滚动到截图后图片解码正常；新版中英文首页的 canonical、页脚教程入口和法律链接存在。英文首页 390 宽度的文档滚动宽度为 452px，正式站同样为 452px，移除本轮教程链接后数值不变；属现有布局问题，需另行修复，不能记为本轮通过的移动体验。
+
+## 2026-10-28：Vercel 预览部署验收
+
+- 草稿 PR #4 目标为 codex/waffo-legal-footer；GitHub 比较结果 ahead 5、behind 0、可合并。Vercel 预览部署 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6 为 READY，Git SHA 75e127d8b7164a607f758b593291bfedcf36170a。预览域名在项目设置中受 Vercel 登录保护。
+- 通过 Vercel 连接器检查实际响应：/、/index-en.html、/case-study/、/guides/、两篇教程、/film/、/pricing.html、两份 /pricing-usd/ 页面均为 200；首页和教程 canonical 指向生产规范 URL；短片、旧定价跳转页及两份美元方案含 noindex。
+- /robots.txt 返回 200、text/plain，声明正式站 sitemap；/sitemap.xml 返回 200、application/xml，列出 10 个正确的正式规范 URL，未包含定价、短片或预览域名。教程页未出现旧开发环境隐私链接，正式法律链接存在。
+- 预览验证不能代替生产验证。生产域名的 robots/sitemap 仍为 404；上线后需复查实际 HTTP 响应、X-Robots-Tag、站长平台验证与收录状态。

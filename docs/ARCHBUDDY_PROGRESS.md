@@ -1293,3 +1293,4 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 本地 SEO 校验 PASS：26 个 HTML，10 个可索引、16 个排除、10 个 sitemap URL；git diff --check 通过，无残留冲突标记。2026-10-28 正式域名 / 为 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200，说明本轮尚未发布。
 - Edge 在 390/1440 宽度复核三页教程均 200、无横向滚动或脚本错误，懒加载截图滚入视口后正常。英文首页 390 宽度已有 452px 文档滚动宽度，正式站与本地一致，移除本轮页脚教程链接后不变；作为既有移动布局问题单列，不归因于 SEO 改动。
 - 下一步：核对商店版本与教程操作路径，完成新版预览和 HTTP 验收，再审阅合并与生产发布；发布后提交站点地图并开始记录搜索查询、索引及教程入口数据。不改 Canvas、插件运行逻辑、CloudBase 数据与账户计费。
+- 草稿 PR #4 已创建，目标 codex/waffo-legal-footer，当前可合并。Vercel 预览 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6（75e127d）READY；连接器核对首页、英文首页、三页教程、案例、短片、旧定价与美元定价均 200，robots 为 text/plain 200，sitemap 为 application/xml 200 且含 10 个规范 URL；未开放方案与短片在预览响应中为 noindex。项目预览域名启用 Vercel 登录保护。正式域名未发布本轮 SEO，发布后仍须复核真实响应、商店版本和站长平台。

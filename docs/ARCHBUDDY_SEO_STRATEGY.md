@@ -1,6 +1,6 @@
 # ArchBuddy 官网 SEO 策略与本地交付
 
-初稿：2026-10-26；更新：2026-10-28。状态：已整合到 10 月 27 日官网生产代码基线，待预览与发布；尚未上线。
+初稿：2026-10-26；更新：2026-10-28。状态：已整合到官网最新目标分支并通过预览验收，待生产发布；尚未上线。
 
 ## 产品目标与取舍
 
@@ -97,5 +97,7 @@ Google 说明 noindex 页面必须允许抓取才能读取指令；站点地图�
 Vercel 生产部署 dpl_Hq2BDP7TQia5wiChGwnw3EUQQczd 对应 Interarchy/downPIC 的 codex/waffo-legal-footer 提交 513ac6bcfe2e8f567c391dee5b8f97c3da023430。整合分支 codex/seo-site-sync-20261028 从该提交创建，逐个合入原始 SEO 三项提交，保留新版账户入口、美元定价、访问统计及正式法律页脚。中文与英文首页只增加 SEO head 与教程页脚入口。新美元定价两页仍为支付未开放的方案预览，设置 noindex,follow；旧定价跳转页沿用 noindex。
 
 准备草稿 PR 时，目标分支又更新到 43b9e6d063fece1210cc17c4234f1ccd6c79130b。SEO 分支已重放到该提交，并在首页页脚保留新提交移除的 `margin-left:auto`，只增加教程链接。该目标提交尚未替代上面记录的 Vercel 生产部署；预览与正式发布应以各自部署 SHA 为准。
+
+草稿 PR #4 已创建。Vercel 预览部署 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6 对应 SEO 提交 75e127d，状态 READY。通过 Vercel 连接器核对首页、英文首页、三页教程、案例、短片与定价；robots.txt 和 sitemap.xml 均返回 200，站点地图为 application/xml，包含上述 10 个规范 URL。两份美元定价方案与短片页在实际预览响应中含 noindex；旧定价跳转页保留 noindex。项目预览域名使用 Vercel 登录保护，生产自定义域名不受该保护。生产域名的 robots/sitemap 仍为 404，尚未发布 SEO 增量。
 
 2026-10-28 只读公网核对：首页 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200。教程页脚改用正式法律与支持链接，移除旧开发环境隐私地址。当前源码可索引范围为中英文首页、五页产品研究案例及三页教程，共 10 个 URL；16 个 HTML 页面排除索引。正式部署前再次确认生产分支、Chrome/Edge 商店版本与教程操作路径；部署后按上一节验收响应与索引配置，再将实际 sitemap 提交站长平台。
