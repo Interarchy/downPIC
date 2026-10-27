@@ -51,4 +51,4 @@
 - 通过 Vercel 连接器检查实际响应：/、/index-en.html、/case-study/、/guides/、两篇教程、/film/、/pricing.html、两份 /pricing-usd/ 页面均为 200；首页和教程 canonical 指向生产规范 URL；短片、旧定价跳转页及两份美元方案含 noindex。
 - /robots.txt 返回 200、text/plain，声明正式站 sitemap；/sitemap.xml 返回 200、application/xml，列出 10 个正确的正式规范 URL，未包含定价、短片或预览域名。教程页未出现旧开发环境隐私链接，正式法律链接存在。
 - 预览验证不能代替生产验证。生产域名的 robots/sitemap 仍为 404；上线后需复查实际 HTTP 响应、X-Robots-Tag、站长平台验证与收录状态。
-- 本节所述预览 SHA 75e127d 早于随后提交的窄屏标题修正；该修正已在本机 Edge 验证，推送后须以新 SHA 的 Vercel 预览再次确认。
+- 窄屏标题修正提交 7abb43a 的 Vercel 预览 dpl_3LWZ6wtmFDmfRvSSsQ5Gpmsg4PNn 已 READY。实际预览中，中英文首页均为 200 并引用新 CSS 版本；styles.css 返回 200/text/css，含英文手机宽度及中文极窄宽度的换行规则；robots.txt、sitemap.xml 仍返回 200 且类型正确。GitHub 当前 SHA 的 Vercel 状态为 success，无检查注释。
