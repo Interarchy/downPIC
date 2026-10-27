@@ -57,3 +57,10 @@
 
 - 本机 Edge 无登录访问官方 Chrome 商店商品页，HTTP 200，显示 ArchBuddy 0.6.0、2026-10-05 更新；官方 Edge 商店商品页 HTTP 200，显示 ArchBuddy V4.1、2026-10-16 更新。仓库本地插件清单为 0.6.1，不能把本地版本当作 Chrome 商店已更新版本。
 - Chrome 商店公开说明确认网页参考图采集、多文件夹导入、按项目整理、语义检索、最多三张参考图和提示词编辑确认，与本轮教程的主要步骤一致。教程截图标明为 V4 演示、示例文字为手工撰写；未安装两个商店包逐控件或逐像素对照。上线后观察实际用户反馈，若控件差异影响操作，应及时修正文案。
+
+## 2026-10-28：正式域名发布验收
+
+- PR #4 已合并到 `codex/waffo-legal-footer`，合并提交 `8c24f6a95e6ab61873421dc7c716a06f0a182416`。Vercel 生产部署 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4` 为 READY，提交号一致，`www.archbuddy.top`、`archbuddy.top` 与项目正式域名已分配，未报告别名错误。
+- 无登录直访 `https://www.archbuddy.top/robots.txt` 返回 200、`text/plain`，包含 `Sitemap: https://www.archbuddy.top/sitemap.xml`；`/sitemap.xml` 返回 200、`application/xml`。其 10 个唯一 URL 均以 `https://www.archbuddy.top/` 开头，逐项返回 200，页面 canonical 与自身 URL 一致，无 `noindex`。中英文首页各有 3 条语言关联链接。
+- 正式站 `/guides/`、两篇教程、五页案例、`/index-en.html` 与原 `/legal/privacy/` 均可访问。`/pricing.html` 和 `/film/` 仍返回 200 并含 `noindex`；本次未开放支付页面索引。
+- Google 可从 `robots.txt` 发现站点地图；这不等于 Search Console 中已提交或已收录。当前工作环境未提供已验证的 Search Console 站点属性或授权连接，浏览器控制服务也未能启动，因此未声称完成站长平台内的提交、URL Inspection 或索引验证。下一步在已验证的 `archbuddy.top` 站点属性中提交完整 sitemap URL，记录平台回执，再观察索引覆盖和搜索表现。
