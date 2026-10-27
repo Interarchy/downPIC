@@ -9,7 +9,7 @@
 
 ## 2026-10-26：官网访问统计接入
 
-官网静态 HTML 的中英文首页、定价页与案例页接入 Vercel Web Analytics 页面浏览脚本，用于查看访客数、浏览量及来源网站。该统计属于 `archbuddy-official-site` Vercel 项目；不写入 CloudBase 的插件功能统计集合，也不关联账户、素材或提示词。控制台已由站点所有者开启 Hobby 统计。代码提交后先核对预览部署，再决定正式发布；尚未获得真实访问数据。
+官网静态 HTML 的中英文首页、定价页与案例页接入 Vercel Web Analytics 页面浏览脚本，用于查看访客数、浏览量及来源网站。该统计属于 `archbuddy-official-site` Vercel 项目；不写入 CloudBase 的插件功能统计集合，也不关联账户、素材或提示词。控制台已由站点所有者开启 Hobby 统计。代码已通过 PR #2 合并至 `feature/archbuddy-film-scene-01`，Vercel 正式部署 `dpl_GU9FVYGbWDazeWXU4NrLAt1JXkQH` 指向提交 `3ce29e2`。2026-10-26 已核对 `www.archbuddy.top` 中英文首页、定价页与案例页 HTTP 200 且含统计脚本，脚本地址 HTTP 200；真实浏览器访问后的页面浏览请求和后台计数仍待确认。
 
 
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。
