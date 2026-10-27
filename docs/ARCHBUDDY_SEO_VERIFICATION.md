@@ -38,7 +38,7 @@
 
 ## 2026-10-28：生产代码基线整合验收
 
-- 整合分支 codex/seo-site-sync-20261028 基于 513ac6bcfe2e8f567c391dee5b8f97c3da023430，保留该生产版本的账户菜单、美元定价、Web Analytics 和正式法律页脚。
+- 整合分支 codex/seo-site-sync-20261028 最初基于生产提交 513ac6bcfe2e8f567c391dee5b8f97c3da023430；目标分支又增加两项提交后，已重放到 codex/waffo-legal-footer 的 43b9e6d063fece1210cc17c4234f1ccd6c79130b。保留账户菜单、美元定价、Web Analytics 和最新法律页脚布局。
 - 合并了三项本地 SEO 工作；两份新版美元定价方案仍未开放支付，均增加 noindex,follow。旧定价跳转页保留现有 noindex。
 - python cloudbase/scripts/check-showcase-seo.py：PASS，26 个 HTML、10 可索引、16 排除、10 个 sitemap URL；git diff --check 通过，无残留冲突标记。
 - 2026-10-28 只读正式域名：/ 为 200，/robots.txt 和 /sitemap.xml 仍为 404，/legal/privacy/ 为 200；这表明 SEO 增量尚未在生产发布。
