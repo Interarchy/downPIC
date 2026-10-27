@@ -1,5 +1,12 @@
 # ArchBuddy 项目进度交接
 
+## 2026-10-28：官网法律入口与支持邮箱
+
+针对 Waffo 网站自检，仅在当前线上提交 3ce29e2 的公开官网 HTML 页脚补充服务条款、隐私政策及客服邮箱。链接为 https://www.archbuddy.top/legal/terms/ 和 https://www.archbuddy.top/legal/privacy/，联系邮箱为用户指定的 melyyang@163.com；移除页脚旧开发隐私域名。覆盖中英文首页、定价页及案例页。法律正文由独立 archbuddy-legal 静态项目维护，官网 /legal 路由提供公开访问。没有修改扩展、CloudBase API、用户数据、下载文件或模型调用。内容审核由运营者李宇阳负责，政策按已确认的人工处理流程披露，不宣称已实现自动输入输出审核。
+
+发布需核验无登录 HTTP 正文、页脚链接及联系方式，并确认原资源和 /legal 路由保持。此项不代表 Waffo 审核通过；现有模型输入输出审核能力仍需单独验收。
+
+
 ## 2026-10-26：官网访问统计接入
 
 官网静态 HTML 的中英文首页、定价页与案例页接入 Vercel Web Analytics 页面浏览脚本，用于查看访客数、浏览量及来源网站。该统计属于 `archbuddy-official-site` Vercel 项目；不写入 CloudBase 的插件功能统计集合，也不关联账户、素材或提示词。控制台已由站点所有者开启 Hobby 统计。代码提交后先核对预览部署，再决定正式发布；尚未获得真实访问数据。
