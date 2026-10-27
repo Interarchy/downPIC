@@ -104,4 +104,6 @@ Vercel 生产部署 dpl_Hq2BDP7TQia5wiChGwnw3EUQQczd 对应 Interarchy/downPIC �
 
 该修正已随 7abb43a 进入 Vercel 预览 dpl_3LWZ6wtmFDmfRvSSsQ5Gpmsg4PNn。首页与英文首页的实际 HTML 均引用新 CSS 版本，CSS 响应含对应规则；robots/sitemap 在该部署继续返回 200。生产站仍待发布。
 
+发布前再次读取官方商店公开页：Chrome 为 0.6.0（2026-10-05 更新），Edge 为 V4.1（2026-10-16 更新），均可访问。Chrome 页面确认本轮教程的核心操作路径；仓库本地插件 0.6.1 不等于已上架版本。公开教程保持“V4 演示、具体控件以安装版本为准”的提示，不把开发截图声明为 Chrome 0.6.0 的逐像素实录。
+
 2026-10-28 只读公网核对：首页 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200。教程页脚改用正式法律与支持链接，移除旧开发环境隐私地址。当前源码可索引范围为中英文首页、五页产品研究案例及三页教程，共 10 个 URL；16 个 HTML 页面排除索引。正式部署前再次确认生产分支、Chrome/Edge 商店版本与教程操作路径；部署后按上一节验收响应与索引配置，再将实际 sitemap 提交站长平台。

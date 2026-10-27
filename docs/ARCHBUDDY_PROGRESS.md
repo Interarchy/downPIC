@@ -1295,3 +1295,4 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 下一步：核对商店版本与教程操作路径，完成新版预览和 HTTP 验收，再审阅合并与生产发布；发布后提交站点地图并开始记录搜索查询、索引及教程入口数据。不改 Canvas、插件运行逻辑、CloudBase 数据与账户计费。
 - 草稿 PR #4 已创建，目标 codex/waffo-legal-footer，当前可合并。Vercel 预览 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6（75e127d）READY；连接器核对首页、英文首页、三页教程、案例、短片、旧定价与美元定价均 200，robots 为 text/plain 200，sitemap 为 application/xml 200 且含 10 个规范 URL；未开放方案与短片在预览响应中为 noindex。项目预览域名启用 Vercel 登录保护。正式域名未发布本轮 SEO，发布后仍须复核真实响应、商店版本和站长平台。
 - 窄屏修正提交 7abb43a 的预览 dpl_3LWZ6wtmFDmfRvSSsQ5Gpmsg4PNn READY；中英文首页与新 CSS 实际响应均 200，引用和换行规则存在，robots/sitemap 继续 200。GitHub Vercel 状态 success，未见检查注释；正式站仍保持原生产部署。
+- 2026-10-28 独立浏览器核对商店公开页：Chrome 0.6.0（10 月 5 日更新），Edge V4.1（10 月 16 日更新），均 HTTP 200。Chrome 公开说明覆盖教程中的采集、项目整理、语义检索、最多三张参考图和提示词编辑确认；仓库本地 0.6.1 未上架 Chrome。教程截图明确标为 V4 演示，未把开发界面冒充商店逐控件截图。PR #4 目标分支和生产部署截至本次核对未变化。
