@@ -51,6 +51,7 @@
 .guide-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:22px}
 .guide-site .site-footer{padding:24px 0;background:#f4f2ec;color:var(--forest);border-top:1px solid var(--line);font-size:13px}
 .guide-site .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.guide-site .footer-inner nav{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}
 @media(max-width:760px){.guide-shell,.guide-site .container{width:calc(100% - 40px)}.guide-site .header-inner{padding-block:16px;flex-wrap:wrap}.guide-site .header-inner nav{gap:18px;font-size:13px}.guide-intro{padding:40px 0 34px}.guide-lead{font-size:16px}.guide-row{grid-template-columns:1fr;gap:12px;padding:28px 0}.guide-row h2{font-size:25px}.guide-layout{grid-template-columns:1fr;gap:34px;padding-top:28px}.guide-toc{position:static;border-bottom:1px solid var(--line);padding-bottom:22px}.guide-article{font-size:16px}.guide-article h2{font-size:25px}.guide-example{padding:18px;font-size:15px}.guide-note{padding:20px}.guide-breadcrumb{font-size:12px;gap:8px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 

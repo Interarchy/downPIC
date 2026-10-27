@@ -1,6 +1,6 @@
 # ArchBuddy 官网 SEO 策略与本地交付
 
-日期：2026-10-26。状态：本地实施，等待与官网平行更新合并；未发布。
+初稿：2026-10-26；更新：2026-10-28。状态：已整合到 10 月 27 日官网生产代码基线，待预览与发布；尚未上线。
 
 ## 产品目标与取舍
 
@@ -12,8 +12,8 @@
 
 ## 基线和已知事实
 
-- 独立分支：codex/seo-local-20261026；来源仓库 Interarchy/downPIC。
-- 基线：2f50011687bb56566ab3a8ada5261a97e8cd0a16，官网公开分支 codex/showcase-025-public。
+- 原始独立分支：codex/seo-local-20261026；来源仓库 Interarchy/downPIC。
+- 原始基线：2f50011687bb56566ab3a8ada5261a97e8cd0a16，官网公开分支 codex/showcase-025-public；最新整合基线见文末记录。
 - 官网： https://www.archbuddy.top/ ；Canvas： https://canvas.archbuddy.top/ 。当前工作不修改 Canvas。
 - 2026-10-26 只读公网检查：首页、中英文入口及案例 URL 可访问；robots.txt 与 sitemap.xml 返回 404。
 - / 与 /index.html、/case-study/ 与 /case-study/index.html 均返回 200，需用 canonical 统一；本轮不新增服务器重定向。
@@ -56,7 +56,7 @@
 
 ## 数据口径与四周实验
 
-负责人建议：产品负责人负责选题/素材/市场与发布决定；开发负责索引配置、同步及技术复核。统计方案尚未接入，不默认启用追踪器或收集图片、提示词、用户身份。
+负责人建议：产品负责人负责选题/素材/市场与发布决定；开发负责索引配置、同步及技术复核。官网现已接入 Vercel Web Analytics 的页面访问与来源统计；搜索查询、索引状态及跨域激活尚无贯通口径。本轮不新增追踪器，也不收集图片、提示词或用户身份。
 
 - 第 1 周：合并基础改动并上线后验证 Search Console、Bing Webmaster Tools、百度搜索资源平台所有权，提交实际正式 sitemap；以 URL 检查确认抓取而非 site: 查询断言收录。
 - 第 2 周：发布首篇完成证据的教程；确认站内可点击进入且返回 200，无 noindex；每周记录查询、页面、国家、设备维度的展示、点击、CTR 和索引状态。
@@ -72,7 +72,7 @@
 
 执行 python cloudbase/scripts/check-showcase-seo.py 和 git diff --check。检查当前实际发布方式是否包含 robots.txt/sitemap.xml；若使用旧白名单构建则在目标分支显式补入，不能声称已自动兼容。预览部署沿用访问保护，若公开则仅预览环境返回 noindex，不能把它误带入正式站。不要放宽现有 Vercel 保护。
 
-发布前检查目标为 archbuddy-official-site/www.archbuddy.top，与 Canvas/CloudBase 原站区分。发布后验证首页、英文页、案例规范地址、robots、sitemap 的状态码/响应类型/实际 meta 和 HTTP X-Robots-Tag；再提交站长平台。当前用户要求先本地，本轮不推送、不触发部署。
+发布前检查目标为 archbuddy-official-site/www.archbuddy.top，与 Canvas/CloudBase 原站区分。发布后验证首页、英文页、案例规范地址、robots、sitemap 的状态码/响应类型/实际 meta 和 HTTP X-Robots-Tag；再提交站长平台。当前整合分支不直接修改生产域名；先完成预览和差异审阅。
 
 ## 官方依据
 
@@ -91,3 +91,9 @@ Google 说明 noindex 页面必须允许抓取才能读取指令；站点地图�
 已制作 guides/ 教程与案例入口、organize-references.html 参考图整理教程、reference-to-prompt.html 结构化提示词教程。中文与英文首页仅在页脚增加教程入口，英文标注内容为中文；不新增未翻译页面的 hreflang。两篇互相推荐并引导安装插件，教程入口链接既有产品研究案例。新增 3 个规范 URL 后共 10 个 sitemap 条目。
 
 文章是基于仓库界面与操作文档的使用说明，截图沿用官网已有 V4 系列演示材料，明确说明版本与手工示例属性。首轮采用可执行步骤及方法示例，没有声称完成真实模型生成效果实验。同步发布前仍须比对当时商店版本与实际操作路径。
+
+## 2026-10-28：官网新版整合
+
+Vercel 生产部署 dpl_Hq2BDP7TQia5wiChGwnw3EUQQczd 对应 Interarchy/downPIC 的 codex/waffo-legal-footer 提交 513ac6bcfe2e8f567c391dee5b8f97c3da023430。整合分支 codex/seo-site-sync-20261028 从该提交创建，逐个合入原始 SEO 三项提交，保留新版账户入口、美元定价、访问统计及正式法律页脚。中文与英文首页只增加 SEO head 与教程页脚入口。新美元定价两页仍为支付未开放的方案预览，设置 noindex,follow；旧定价跳转页沿用 noindex。
+
+2026-10-28 只读公网核对：首页 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200。教程页脚改用正式法律与支持链接，移除旧开发环境隐私地址。当前源码可索引范围为中英文首页、五页产品研究案例及三页教程，共 10 个 URL；16 个 HTML 页面排除索引。正式部署前再次确认生产分支、Chrome/Edge 商店版本与教程操作路径；部署后按上一节验收响应与索引配置，再将实际 sitemap 提交站长平台。
