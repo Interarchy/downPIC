@@ -1307,3 +1307,4 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 
 - 用户反馈官网看不到本轮 SEO 工作。核对生产部署仍为 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`；正式域名首页、`/guides/`、两篇教程、`robots.txt` 和 `sitemap.xml` 均为 200。原因是此前教程入口仅在首页页脚，主要 SEO 元数据也不会作为页面内容显示。
 - 在中英文首页顶部产品导航增加“教程 / Guides”直达入口，保留页脚入口；窄屏仅缩短原 Library 和 Canvas 导航文字，不改其他内容和账户入口。Edge 本地预览检查 320、390、480、760、900、1120、1440px 的中英文首页均无横向溢出、脚本错误，教程入口在视口内可见；SEO 静态校验仍为 26 页、10 可索引、16 排除、10 个 sitemap URL。此处为本地候选，发布状态以随后生产部署记录为准。
+- PR #6 已合并到 `codex/waffo-legal-footer`，合并提交 `1317a5e9193e6cf0ece2b6651fc7770c717e37d2`。Vercel 生产部署 `dpl_EngPm3HmBcWPoKNkHT6CKVGpjafi` 为 READY，`www.archbuddy.top` 和 `archbuddy.top` 已指向该部署，无别名错误。Vercel 连接器核对正式域名中英文首页均为 200，实际 HTML 含顶部教程导航和新 CSS 版本；`/guides/` 为 200。一次无登录直连公网检查遇到 TLS 握手超时，不能以此判断内容或页面 404，已以部署别名和连接器响应交叉核对。

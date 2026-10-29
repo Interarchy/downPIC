@@ -69,3 +69,4 @@
 
 - 正式站点直访正常，但首页教程链接仅位于页脚；顶部导航缺入口，造成用户在首屏看不到新增内容。中英文首页已本地补充顶部“教程 / Guides”入口，目标均为 `guides/`。
 - Edge 本地静态预览在 320、390、480、760、900、1120、1440px 逐一检查两种语言：首页 200、链接可见、文档宽度不超过视口、无脚本错误。320px 与 1440px 截图目视复核导航排布正常。`python cloudbase/scripts/check-showcase-seo.py` PASS，仍为 26 HTML、10 可索引、16 排除、10 sitemap URL；`git diff --check` PASS。生产站是否显示该导航待部署后验证。
+- PR #6 合并提交 `1317a5e9193e6cf0ece2b6651fc7770c717e37d2` 的 Vercel 生产部署 `dpl_EngPm3HmBcWPoKNkHT6CKVGpjafi` 为 READY，包含正式域名别名且无别名错误。部署连接器读取 `https://www.archbuddy.top/` 与 `/index-en.html` 均为 200，实际响应含 `nav-guides` 顶栏链接和 `seo-guides-20261029` 样式引用；`/guides/` 为 200。本轮修正已在生产可见，搜索收录状态仍待站长平台核查。
