@@ -34,3 +34,11 @@ form { max-width:760px;padding:24px;border-top:1px solid #d4e0d6; } label { disp
   form { padding: 20px 0; }
   .items { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* 窄屏刷新操作保持整词，不挤压标题。 */
+.page-heading > button { flex-shrink: 0; white-space: nowrap; }
+
+.library-pro-link { display: inline-flex; max-width: 100%; text-decoration: none; margin-bottom: 4px; }
+.library-pro-link[hidden] { display: none; }
+
+#notice[data-tone="info"] { color: #25634b; }

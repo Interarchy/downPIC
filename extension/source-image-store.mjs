@@ -53,11 +53,11 @@ async function transaction(mode, operation, explicitScope) {
   }
 }
 
-export async function putSourceImage(record = {}) {
+async function writeSourceImage(record = {}, explicitScope) {
   if (!validId(record.sourceReferenceId) || !validId(record.schemeId)
       || !(record.blob instanceof Blob) || !MIME_TYPES.has(record.blob.type)
-      || record.blob.size < 1 || record.blob.size > MAX_IMAGE_BYTES) {
-    throw storeError('INVALID_IMAGE', '来源图必须是 1 字节至 10 MB 的 PNG、JPEG 或 WebP');
+      || record.blob.size < 1 || record.blob.size > (explicitScope ? 20 * 1024 * 1024 : MAX_IMAGE_BYTES)) {
+    throw storeError('INVALID_IMAGE', explicitScope ? '云端来源图必须是 1 字节至 20 MB 的 PNG、JPEG 或 WebP' : '来源图必须是 1 字节至 10 MB 的 PNG、JPEG 或 WebP');
   }
   const stored = {
     sourceReferenceId: record.sourceReferenceId,
@@ -67,8 +67,8 @@ export async function putSourceImage(record = {}) {
     blob: record.blob,
     createdAt: new Date().toISOString(),
   };
-  await transaction('readwrite', store => store.put(stored));
-  const verified = await getSourceImage(record.sourceReferenceId);
+  await transaction('readwrite', store => store.put(stored), explicitScope);
+  const verified = explicitScope ? await getSourceImageForScope(record.sourceReferenceId, explicitScope) : await getSourceImage(record.sourceReferenceId);
   if (verified.schemeId !== stored.schemeId || verified.mimeType !== stored.mimeType || verified.byteSize !== stored.byteSize) {
     throw storeError('TRANSACTION_FAILED', '来源图写入后校验失败');
   }
@@ -110,4 +110,15 @@ export async function getSourceImageForScope(id, scope) {
   const record = await transaction('readonly', store => store.get(id), scope);
   if (!record) throw storeError('NOT_FOUND', '本机图片副本不存在，文字可单独同步');
   return record;
+}
+
+export function putSourceImage(record = {}) { return writeSourceImage(record); }
+// 后台下载绑定发起时的账号分区；切号不会把图片写入新账号。
+export function putSourceImageForScope(record, scope) {
+  if (typeof scope !== 'string' || !scope || ['signed-out', 'legacy', 'local-demo'].includes(scope)) throw storeError('OWNERSHIP_MISMATCH', '本地图片账号无效');
+  return writeSourceImage(record, scope);
+}
+export async function deleteSourceImageForScope(id, scope) {
+  if (!validId(id) || typeof scope !== 'string' || !scope || ['signed-out', 'legacy', 'local-demo'].includes(scope)) throw storeError('OWNERSHIP_MISMATCH', '本地图片账号无效');
+  await transaction('readwrite', store => store.delete(id), scope);
 }

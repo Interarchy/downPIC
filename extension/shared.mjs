@@ -378,7 +378,17 @@ export function normalizePromptVersion(input = {}, schemeId, fallbackNumber = 1)
   };
 }
 
+function normalizeCloudSource(input) {
+  if (!input || !/^[A-Za-z0-9-]{1,80}$/.test(input.id || '')
+      || !Number.isSafeInteger(input.revision) || input.revision < 0
+      || (input.assetId != null && !/^[A-Za-z0-9-]{1,80}$/.test(input.assetId))) return null;
+  return { id: input.id, revision: input.revision, assetId: input.assetId ?? null,
+    title: cleanText(input.title, 120), sourceUrl: normalizeSourcePageUrl(input.sourceUrl),
+    tags: normalizeLibraryTags(input.tags) };
+}
+
 export function normalizePromptScheme(input = {}, now = new Date().toISOString()) {
+  const cloudSource = normalizeCloudSource(input.cloudSource);
   const legacyId = cleanText(input.schemeId ?? input.draftId, 80);
   const schemeId = stableUuid(legacyId);
   const rawVersions = Array.isArray(input.versions) ? input.versions : [];
@@ -395,6 +405,7 @@ export function normalizePromptScheme(input = {}, now = new Date().toISOString()
     .map(reference => normalizeSourceReference(reference, schemeId));
   return {
     schemaVersion: 3,
+    ...(cloudSource ? { cloudSource } : {}),
     schemeId,
     draftId: schemeId,
     name: cleanText(input.name, 80) || '未命名提示词方案',

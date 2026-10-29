@@ -67,6 +67,20 @@ export async function secretStore(mode, operation) {
     });
   } finally { db.close(); }
 }
+export function publicLibraryView(value) {
+  const result = {};
+  if (!value || typeof value !== 'object') return result;
+  for (const key of ['count', 'usedBytes', 'reservedBytes', 'limitBytes', 'maxFileBytes']) {
+    if (Number.isSafeInteger(value[key]) && value[key] >= 0) result[key] = value[key];
+  }
+  if (['active', 'grace', 'expired', 'unavailable', 'free'].includes(value.status)) result.status = value.status;
+  if (typeof value.canWrite === 'boolean') result.canWrite = value.canWrite;
+  for (const key of ['expiresAt', 'graceEndsAt']) {
+    if (value[key] === null || (typeof value[key] === 'string' && Number.isFinite(Date.parse(value[key])))) result[key] = value[key];
+  }
+  return result;
+}
+
 export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, store = secretStore, browser = chrome, canSwitch = () => true, authTimeoutMs = 300000 }) {
   let busy = 0;
   let transitioning = false;
@@ -185,7 +199,7 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
           status: data.status, displayName: data.displayName,
           credits: { availableUnits: data.credits?.availableUnits, reservedUnits: data.credits?.reservedUnits },
           entitlements: { downloads: data.entitlements?.downloads, deepReverse: data.entitlements?.deepReverse },
-          library: { count: data.library?.count },
+          library: publicLibraryView(data.library),
         }, mode: 'unified', packages: [] });
         await assertActive(session);
         return view;
@@ -244,12 +258,20 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
     },
     async handle(type, payload = {}) {
       if (type === 'account.get') return { ok: true, ...await refresh() };
-      if (type === 'account.library.list') return { ok: true, ...await authenticated('/v1/library') };
-      if (type === 'account.library.get') return { ok: true, item: await authenticated('/v1/library/' + encodeURIComponent(payload.id)) };
+      if (type === 'account.library.list') {
+        if (payload.cursor != null && (typeof payload.cursor !== 'string' || payload.cursor.length > 200)) throw fail('INVALID_INPUT', '素材分页参数无效');
+        const query = payload.cursor ? '?cursor=' + encodeURIComponent(payload.cursor) : '';
+        return { ok: true, ...await authenticated('/v1/library' + query, { expectedAccountId: payload.expectedAccountId }) };
+      }
+      if (type === 'account.library.get') return { ok: true, item: await authenticated('/v1/library/' + encodeURIComponent(payload.id), { expectedAccountId: payload.expectedAccountId }) };
       if (type === 'account.library.put') return { ok: true, item: await authenticated('/v1/library/' + encodeURIComponent(payload.id), {
         method: 'PUT', body: payload.item, expectedAccountId: payload.expectedAccountId }) };
       if (type === 'account.library.canvas') return { ok: true, ...await authenticated('/v1/library/' + encodeURIComponent(payload.id) + '/canvas', { method: 'POST', body: {}, expectedAccountId: payload.expectedAccountId }) };
-      if (type === 'account.library.delete') return { ok: true, ...await authenticated('/v1/library/' + encodeURIComponent(payload.id), { method: 'DELETE' }) };
+      if (type === 'account.library.delete') {
+        if (!Number.isSafeInteger(payload.revision) || payload.revision < 1) throw fail('INVALID_INPUT', '素材版本无效，请刷新后重试');
+        return { ok: true, ...await authenticated('/v1/library/' + encodeURIComponent(payload.id) + '?revision=' + payload.revision, {
+          method: 'DELETE', expectedAccountId: payload.expectedAccountId }) };
+      }
       if (!['account.login', 'account.logout'].includes(type)) throw fail('INVALID_INPUT', '未知账号操作');
       if (busy || transitioning || !canSwitch()) throw fail('ACCOUNT_BUSY', '请等待当前操作完成再切换账号');
       transitioning = true;

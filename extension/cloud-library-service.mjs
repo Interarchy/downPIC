@@ -1,6 +1,6 @@
-import { accountStorage, currentScope, scopedKey } from './account-storage.mjs';
+import { accountStorage, currentScope, scopedKey, withLibraryWriteLock } from './account-storage.mjs';
 import { STORAGE, normalizePromptScheme } from './shared.mjs';
-import { getSourceImageForScope } from './source-image-store.mjs';
+import { getSourceImageForScope, putSourceImageForScope, deleteSourceImageForScope } from './source-image-store.mjs';
 
 const error = message => Object.assign(new Error(message), { code: 'INVALID_INPUT' });
 function rowsFromData(data, prefix = '', imageScope) {
@@ -13,7 +13,7 @@ function rowsFromData(data, prefix = '', imageScope) {
   for (const entry of data[STORAGE.importedAssetsV4] || []) rows.push({
     localId: 'import:' + entry.id, kind: 'capture', title: entry.name || '导入图片',
     prompt: entry.description || '', sourceUrl: '', tags: entry.tags || [],
-    sourceReferenceId: entry.id, imageQuality: 'original',
+    sourceReferenceId: entry.id, imageQuality: entry.imageQuality === 'preview' ? 'preview' : 'original',
   });
   for (const raw of data[STORAGE.promptSchemesV3] || []) {
     const scheme = normalizePromptScheme(raw);
@@ -36,6 +36,7 @@ export async function handleCloudLibrary(message, client) {
   const type = message.type;
   const payload = message.payload || {};
   const accountId = await client.identity();
+  if (type === 'account.local.restore') return restoreCloudLibraryItem(payload, client);
   if (type === 'account.local.list') {
     if (!['current', 'legacy'].includes(payload.scope)) throw error('请选择当前账号或本机历史素材');
     const rows = await localRows(payload.scope === 'legacy');
@@ -77,11 +78,98 @@ export async function handleCloudLibrary(message, client) {
   }
   if (type === 'account.library.media') {
     const blob = await client.api('/v1/library/' + encodeURIComponent(payload.id) + '/media', { binary: true, expectedAccountId: payload.expectedAccountId });
-    if (!['image/png','image/jpeg','image/webp'].includes(blob.type) || blob.size > 10 * 1024 * 1024) throw error('图片格式或大小不受支持');
+    if (!['image/png','image/jpeg','image/webp'].includes(blob.type) || blob.size > 20 * 1024 * 1024) throw error('图片格式或大小不受支持');
     const bytes = new Uint8Array(await blob.arrayBuffer());
     let binary = '';
     for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
     return { ok: true, dataUrl: 'data:' + blob.type + ';base64,' + btoa(binary) };
   }
   throw error('未知云素材操作');
+}
+
+
+// 明确点击才下载；服务端重读素材，页面不能提供任意图片地址或写入账号。
+export async function restoreCloudLibraryItem(payload, client, dependencies = {}) {
+  const storage = dependencies.storage || chrome.storage.local;
+  const writeImage = dependencies.writeImage || putSourceImageForScope;
+  const removeImage = dependencies.removeImage || deleteSourceImageForScope;
+  const accountId = await client.identity();
+  const assertAccount = async () => {
+    if (accountId !== payload.expectedAccountId || accountId !== await client.identity()) {
+      throw Object.assign(new Error('账号已切换，请重新选择素材'), { code: 'ACCOUNT_CHANGED' });
+    }
+  };
+  await assertAccount();
+  if (typeof payload.id !== 'string' || !/^[A-Za-z0-9-]{1,80}$/.test(payload.id)) throw error('素材标识无效');
+  const item = normalizedItem(await client.api('/v1/library/' + encodeURIComponent(payload.id), { expectedAccountId: accountId }));
+  await assertAccount();
+  if (!item || item.id !== payload.id || !['capture', 'prompt'].includes(item.kind)
+      || typeof item.title !== 'string' || typeof item.prompt !== 'string' || item.prompt.length > 30000
+      || !Number.isSafeInteger(item.revision) || item.revision < 0) throw error('云素材内容无效');
+  const imageRequested = Boolean(item.assetId) && payload.includeImage !== false;
+  const source = { id: item.id, revision: item.revision, assetId: imageRequested ? item.assetId : null,
+    title: item.title, sourceUrl: item.sourceUrl || '', tags: item.tags || [] };
+  const key = scopedKey(imageRequested && item.kind === 'capture' ? STORAGE.importedAssetsV4 : STORAGE.promptSchemesV3, accountId);
+  const matching = rows => rows.find(row => row.cloudSource?.id === source.id && row.cloudSource?.revision === source.revision && row.cloudSource?.assetId === source.assetId);
+  const duplicateResult = row => ({ ok: true, duplicate: true, localId: row.id || row.schemeId, imageSaved: imageRequested });
+  const prior = await storage.get([key]);
+  await assertAccount();
+  const priorMatch = matching(Array.isArray(prior[key]) ? prior[key] : []);
+  if (priorMatch) return duplicateResult(priorMatch);
+  const expiry = item.imageExpiresAt || item.expiresAt;
+  if (imageRequested && (item.imageState === 'expired' || item.imageAvailable === false || (expiry && Date.parse(expiry) <= Date.now()))) {
+    throw Object.assign(new Error('云端图片已到期，可单独保存文字信息'), { code: 'ASSET_EXPIRED' });
+  }
+  const id = crypto.randomUUID(), now = new Date().toISOString();
+  let image, imageWriteStarted = false, metadataCommitted = false;
+  try {
+    // 网络和大图读取在集合锁外，慢下载不会阻塞本地编辑。
+    if (imageRequested) {
+      const blob = await client.api('/v1/library/' + encodeURIComponent(item.id) + '/media', { binary: true, expectedAccountId: accountId });
+      await assertAccount();
+      if (!(blob instanceof Blob) || !['image/png','image/jpeg','image/webp'].includes(blob.type) || !blob.size || blob.size > 20 * 1024 * 1024) {
+        throw Object.assign(new Error('本地图词库仅支持不超过 20 MB 的 PNG、JPEG 或 WebP；云端素材保持不变'), { code: 'IMAGE_TOO_LARGE' });
+      }
+      imageWriteStarted = true;
+      image = await writeImage({ sourceReferenceId: id, schemeId: id, blob }, accountId);
+    }
+    const result = await withLibraryWriteLock(async () => {
+      await assertAccount();
+      const latest = await storage.get([key, scopedKey(STORAGE.customTypes, accountId)]);
+      const rows = Array.isArray(latest[key]) ? latest[key] : [];
+      const existing = matching(rows);
+      if (existing) return duplicateResult(existing);
+      let record;
+      if (imageRequested && item.kind === 'capture') {
+        record = { id, type: '云端素材', project: item.title, name: item.title, sourcePath: '',
+          fingerprint: 'cloud:' + item.id + ':' + item.revision, size: image.byteSize, date: now,
+          description: item.prompt, descriptionStatus: item.prompt ? 'ready' : 'missing', tags: item.tags || [],
+          imageQuality: item.imageQuality === 'preview' ? 'preview' : 'original', cloudSource: source };
+      } else {
+        record = normalizePromptScheme({ schemeId: id, name: item.title, category: '', projectName: item.title,
+          createdAt: now, updatedAt: now, overallConfirmedAt: now, cloudSource: source,
+          sourceReferences: image ? [{ sourceReferenceId: id, schemeId: id, displayName: item.title,
+            sourceType: 'file', mimeType: image.mimeType, byteSize: image.byteSize, assetState: 'available', tags: item.tags || [], createdAt: now }] : [],
+          versions: [{ versionId: crypto.randomUUID(), versionNumber: 1, origin: 'initial-confirm',
+            createdAt: now, modulesSnapshot: [], compiledPrompt: item.prompt, sourceReferenceIds: image ? [id] : [] }],
+        });
+      }
+      const values = { [key]: [...rows, record] };
+      if (imageRequested && item.kind === 'capture') {
+        const typesKey = scopedKey(STORAGE.customTypes, accountId);
+        values[typesKey] = [...new Set([...(Array.isArray(latest[typesKey]) ? latest[typesKey] : []), '云端素材'])];
+      }
+      await assertAccount();
+      await storage.set(values);
+      metadataCommitted = true;
+      return { ok: true, localId: id, imageSaved: imageRequested, duplicate: false };
+    });
+    if (result.duplicate && imageWriteStarted) await removeImage(id, accountId).catch(() => {});
+    await assertAccount();
+    return result;
+  } catch (reason) {
+    // 写入后读回失败也可能已提交 IDB；按新生成的 ID 清理，不触碰已有素材。
+    if (imageWriteStarted && !metadataCommitted) await removeImage(id, accountId).catch(() => {});
+    throw reason;
+  }
 }

@@ -184,6 +184,8 @@ let saveQueue = Promise.resolve();
 let workingQueue = Promise.resolve();
 let libraryHandoffBusy = false;
 let sidepanelReady = false;
+let captureHandoffBusy = false;
+let captureRetry = null;
 const imageUrls = new Map();
 
 function node(tag, className, text) {
@@ -454,7 +456,7 @@ function fileDataUrl(file) {
     reader.readAsDataURL(file);
   });
 }
-async function acceptReference(files, refId) {
+async function acceptReference(files, refId, webSelectionId = null) {
   if (analysisJobs.has(refId) || editingImage || confirming) return;
   const file = await imageFile(files);
   const ref = builder.references.find(item => item.id === refId);
@@ -472,8 +474,10 @@ async function acceptReference(files, refId) {
     ref.sourceReferenceId = sourceReferenceId; ref.name = file.name || '参考图'; ref.result = null;
     referenceMessages.delete(refId);
     focusedReference = refId; invalidateBuilder();
+    if (webSelectionId) builder.lastWebSelectionId = webSelectionId;
     await persistBuilder();
     feedback('builder-feedback', ui("图片已就绪，点击开始分析"));
+    return true;
   } finally { editingImage = false; await renderReferences(refId); }
 }
 async function analyzeReference(refId) {
@@ -834,11 +838,31 @@ async function refreshCapture() {
 }
 
 async function useCapture() {
-  if (!state.selection || !builder || !state.privacyAccepted || editingImage || confirming) return;
+  const selection = state.selection;
+  if (!selection || !builder || !state.privacyAccepted || captureHandoffBusy
+      || builder.lastWebSelectionId === selection.selectionId) return;
   const refId = focusedReference || builder.references[0].id;
-  const blob = await (await fetch(state.selection.imagePayload)).blob();
-  await acceptReference([new File([blob], state.selection.displayName || '网页参考图', { type: blob.type })], refId);
+  if (editingImage || confirming || analysisJobs.has(refId)) {
+    clearTimeout(captureRetry);
+    captureRetry = setTimeout(() => {
+      refreshCapture().then(useCapture).catch(error => feedback('builder-feedback', errorUi(error), 'error'));
+    }, 300);
+    return;
+  }
+  captureHandoffBusy = true;
+  try {
+    if (selection.pendingCapture) switchStage('analysis');
+    const blob = await (await fetch(selection.imagePayload)).blob();
+    await acceptReference([new File([blob], selection.displayName || '网页参考图', { type: blob.type })], refId, selection.selectionId);
+  } finally {
+    captureHandoffBusy = false;
+    // 如果期间又点了另一张图片，继续交接最新一张；从不自动发起模型调用。
+    if (state.selection?.selectionId !== selection.selectionId) {
+      void useCapture().catch(error => feedback('builder-feedback', errorUi(error), 'error'));
+    }
+  }
 }
+
 document.querySelectorAll('.tab[data-tab]').forEach(tab => {
   if (tab.dataset.tab !== 'library') action(tab, () => switchStage(tab.dataset.tab));
 });
@@ -847,7 +871,7 @@ action($('privacy-accept'), async () => {
   if (!(await ensureAccount())) return;
   await request('assets.consent', { enabled: true }); $('asset-ai-toggle').checked = true; state.privacyAccepted = true;
   document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true; await refreshBackend();
-  if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
+  if (state.selection?.pendingCapture || (!builder.references.some(ref => ref.sourceReferenceId) && state.selection)) await useCapture();
 });
 action($('asset-ai-toggle'), async () => {
   const enabled = $('asset-ai-toggle').checked;
@@ -899,7 +923,7 @@ document.addEventListener('paste', event => {
 chrome.runtime.onMessage.addListener(message => {
   if (message?.type === 'selection.changed' || message?.type === 'download.changed') {
     refreshCapture().then(() => {
-      if (message.type === 'selection.changed' && state.stage === 'analysis') return useCapture();
+      if (sidepanelReady && message.type === 'selection.changed') return useCapture();
     }).catch(error => feedback('builder-feedback', errorUi(error), 'error'));
   }
 });
@@ -943,9 +967,10 @@ async function init() {
   state.generated = session[STORAGE.generatedResultV3] || null;
   await persistBuilder();
   await refreshCapture(); await renderReferences(); await loadLibrary(); renderGenerated();
-  if (!builder.references.some(ref => ref.sourceReferenceId) && state.selection) await useCapture();
   switchStage(session[STORAGE.activeStageV4] || sessionStorage.getItem('archbuddy-active-stage') || 'analysis');
   sidepanelReady = true;
+  await refreshCapture();
+  if (state.selection?.pendingCapture || (!builder.references.some(ref => ref.sourceReferenceId) && state.selection)) await useCapture();
   const handoff = await chrome.storage.session.get([STORAGE.libraryHandoffV4, STORAGE.requestedStageV4]);
   if (handoff[STORAGE.libraryHandoffV4]) await handleLibraryHandoff(handoff[STORAGE.libraryHandoffV4]);
   if (handoff[STORAGE.requestedStageV4]) await handleRequestedStage(handoff[STORAGE.requestedStageV4]);

@@ -1,4 +1,4 @@
-import { accountStorage, scopeChanges } from './account-storage.mjs';
+import { accountStorage, scopeChanges, withLibraryWriteLock } from './account-storage.mjs';
 import { PRESET_TYPES, STORAGE, normalizeProjectType, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { putSourceImage, deleteSourceImagesByScheme } from './source-image-store.mjs';
 
@@ -112,8 +112,7 @@ async function doImport(files, progress) {
 
 export async function importLocalFolder(files, progress) {
   if (!files?.length) throw new Error('请选择包含图片的文件夹');
-  if (navigator.locks?.request) return navigator.locks.request('archbuddy-folder-import', () => doImport(files, progress));
-  return doImport(files, progress);
+  return withLibraryWriteLock(() => doImport(files, progress));
 }
 
 export function importSummary(result) {

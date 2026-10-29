@@ -6,9 +6,13 @@
 </head><body>
 <header class="app-header"><a class="brand" href="library.html"><img src="icons/logo.svg" alt="">ArchBuddy</a><nav><a href="library.html" data-i18n-en="Local library">本地图词库</a><a href="https://canvas.archbuddy.top/studio" target="_blank" rel="noopener">Canvas</a></nav><div id="account-area"></div></header>
 <main><div class="page-heading"><div><p class="eyebrow" data-i18n-en="One account · Shared creative assets">同一个账号 · 同一份创作资产</p><h1 data-i18n-en="Cloud library">云素材</h1><p data-i18n-en="Assets saved to ArchBuddy are available in Canvas. You choose which local history to import.">保存到 ArchBuddy 的素材可在 Canvas 使用。原有本机历史由你选择导入。</p></div><button id="refresh" class="account-button account-secondary" data-i18n-en="Refresh">刷新</button></div>
+<p id="library-summary" class="scope-note" role="status"></p>
+<p id="library-access" class="scope-note"></p>
+<a id="library-pro-link" class="account-button account-primary library-pro-link" href="https://canvas.archbuddy.top/account/checkout/pro_30d" target="_blank" rel="noopener noreferrer" hidden data-i18n-en="Get Pro">开通专业版</a>
 <p id="notice" role="status"></p>
 <div class="toolbar"><button id="remote-tab" class="account-button account-primary" data-i18n-en="Cloud assets">云端素材</button><button id="current-tab" class="account-button account-secondary" data-i18n-en="This account’s local assets">当前账号的本机素材</button><button id="legacy-tab" class="account-button account-secondary" data-i18n-en="Choose local history">选择本机历史素材</button></div>
 <p id="scope-note" class="scope-note" data-i18n-en="Cloud assets belong to the current account. Signing out or switching never reveals another account’s data.">云素材按当前账号保存；退出或切换账号后不会显示其他账号的数据。</p>
 <div id="items" class="items"></div>
-<form id="prompt-form"><h2 data-i18n-en="Save a prompt">保存提示词</h2><label><span data-i18n-en="Name">名称</span><input id="title" maxlength="160" required></label><label><span data-i18n-en="Prompt">提示词</span><textarea id="prompt" rows="5" maxlength="60000" required></textarea></label><button class="account-button account-primary" data-i18n-en="Save to ArchBuddy">保存到 ArchBuddy</button></form>
+<button id="load-more" type="button" class="account-button account-secondary" hidden data-i18n-en="Load more">加载更多</button>
+<form id="prompt-form"><h2 data-i18n-en="Save a prompt">保存提示词</h2><label><span data-i18n-en="Name">名称</span><input id="title" maxlength="120" required></label><label><span data-i18n-en="Prompt">提示词</span><textarea id="prompt" rows="5" maxlength="30000" required></textarea></label><button class="account-button account-primary" data-i18n-en="Save to ArchBuddy">保存到 ArchBuddy</button></form>
 </main><script type="module" src="cloud-library.mjs"></script></body></html>

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { authorizationRequest, base64url, validateCallback, createCloudAccountClient } from '../cloud-account.mjs';
+import { authorizationRequest, base64url, validateCallback, createCloudAccountClient, publicLibraryView } from '../cloud-account.mjs';
 import { accountStorage, scopedKey } from '../account-storage.mjs';
 
 function harness(fetchImpl, options = {}) {
@@ -445,4 +445,32 @@ test('login publishes the account when Chrome omits the automatic Origin on GET'
   assert.equal((await h.makeClient().refresh()).account.id, 'account-b');
   assert.ok(requests.some(request => request.method === 'GET'));
   assert.ok(requests.every(request => request.origin === `chrome-extension://${h.browser.runtime.id}` && request.credentials === 'omit'));
+});
+
+
+test('library account view retains only validated entitlement and capacity fields', () => {
+  const value = publicLibraryView({ count: 2, status: 'active', canWrite: true, usedBytes: 1024,
+    reservedBytes: 2048, limitBytes: 5000000000, maxFileBytes: 20971520,
+    expiresAt: '2026-12-01T00:00:00Z', graceEndsAt: null, accessToken: 'private', secret: 'private' });
+  assert.deepEqual(value, { count: 2, usedBytes: 1024, reservedBytes: 2048, limitBytes: 5000000000,
+    maxFileBytes: 20971520, status: 'active', canWrite: true, expiresAt: '2026-12-01T00:00:00Z', graceEndsAt: null });
+  assert.deepEqual(publicLibraryView({ count: -1, usedBytes: '500', status: 'invented', expiresAt: 'bad' }), {});
+});
+
+test('cloud library passes page cursor and bound account without discarding the next page', async () => {
+  let called;
+  const h = harness(async (url) => { called = new URL(url); return response({ items: [], nextCursor: '2026-10-30T00:00:00Z|item-two' }); });
+  const result = await h.client.handle('account.library.list', { cursor: '2026-10-29T00:00:00Z|item-one', expectedAccountId: 'account-a' });
+  assert.equal(called.searchParams.get('cursor'), '2026-10-29T00:00:00Z|item-one');
+  assert.equal(result.nextCursor, '2026-10-30T00:00:00Z|item-two');
+  await assert.rejects(h.client.handle('account.library.list', { expectedAccountId: 'account-b' }), { code: 'ACCOUNT_CHANGED' });
+});
+
+test('cloud library deletion carries the displayed revision and refuses a stale account', async () => {
+  let call;
+  const h = harness(async (url, options) => { call = { url: new URL(url), method: options.method }; return response({ deleted: true }); });
+  await h.client.handle('account.library.delete', { id: 'item-one', revision: 3, expectedAccountId: 'account-a' });
+  assert.equal(call.method, 'DELETE'); assert.equal(call.url.searchParams.get('revision'), '3');
+  await assert.rejects(h.client.handle('account.library.delete', { id: 'item-one', expectedAccountId: 'account-a' }), { code: 'INVALID_INPUT' });
+  await assert.rejects(h.client.handle('account.library.delete', { id: 'item-one', revision: 3, expectedAccountId: 'account-b' }), { code: 'ACCOUNT_CHANGED' });
 });

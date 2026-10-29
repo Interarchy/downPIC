@@ -1,5 +1,5 @@
 import { t, setText, setLocalizedAttribute, localizedError } from './i18n.mjs';
-import { accountStorage, scopeChanges } from './account-storage.mjs';
+import { accountStorage, scopeChanges, withLibraryWriteLock } from './account-storage.mjs';
 import { PRESET_TYPES, STORAGE, normalizePromptScheme, normalizeSourcePageUrl, normalizeProjectType, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
@@ -740,7 +740,10 @@ function resetCaptureSelection(type) {
   state.selectedFolder = null;
 }
 
-async function restoreHistoricalCaptureType(type) {
+function restoreHistoricalCaptureType(type) {
+  return withLibraryWriteLock(() => restoreHistoricalCaptureTypeUnlocked(type));
+}
+async function restoreHistoricalCaptureTypeUnlocked(type) {
   const saved = await accountStorage.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
   const custom = saved[STORAGE.customTypes] || [];
   const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
@@ -768,7 +771,10 @@ async function renameCaptureType(type, value) {
   toast(ui('分类已改名，已保存图片保留', "Category renamed. Saved images are unchanged."));
 }
 
-async function addCaptureType() {
+function addCaptureType() {
+  return withLibraryWriteLock(() => addCaptureTypeUnlocked());
+}
+async function addCaptureTypeUnlocked() {
   const input = $('custom-type');
   const type = normalizeProjectType(input.value);
   if (!type || type.length > 40 || /[<>:"/\\|?*\x00-\x1f]/.test(type)) throw new Error(t('请输入 1–40 字的有效分类名称', "Enter a valid category name of 1–40 characters."));
@@ -790,7 +796,10 @@ async function addCaptureType() {
   toast(ui('已新增分类，并设为浮框默认分类', "Category added and set as the capture default."));
 }
 
-async function deleteCaptureType(type) {
+function deleteCaptureType(type) {
+  return withLibraryWriteLock(() => deleteCaptureTypeUnlocked(type));
+}
+async function deleteCaptureTypeUnlocked(type) {
   // 分类整理不能隐式删除图库记录或电脑原图；已有拖动项目功能可先移走内容。
   await loadCaptures();
   if (state.captures.some(item => item.type === type)) throw new Error(t('分类中还有图片，请先将项目拖到其他分类，再删除此分类', "Move the projects to another category before deleting this category."));

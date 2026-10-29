@@ -62,3 +62,12 @@ export function watchScopeReload() {
     }
   });
 }
+
+// 与文件夹导入共用浏览器锁；只包本地集合读改写，网络请求必须在锁外。
+let libraryWrites = Promise.resolve();
+export function withLibraryWriteLock(operation) {
+  if (globalThis.navigator?.locks?.request) return navigator.locks.request('archbuddy-folder-import', operation);
+  const pending = libraryWrites.catch(() => {}).then(operation);
+  libraryWrites = pending;
+  return pending;
+}

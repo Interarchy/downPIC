@@ -1,6 +1,6 @@
 import { handleCloudLibrary } from './cloud-library-service.mjs';
 import { createUnifiedDownloads } from './unified-downloads.mjs';
-import { accountStorage, scopeChanges } from './account-storage.mjs';
+import { accountStorage, scopeChanges, withLibraryWriteLock } from './account-storage.mjs';
 import { BACKEND_MODE, METER_FILE_DOWNLOADS, backendUrl } from './runtime-config.mjs';
 import { createAccountClient, LOCAL_ACCOUNTS, ACCOUNT_REQUIRED } from './account-session.mjs';
 import {
@@ -105,7 +105,7 @@ async function blobAsDataUrl(blob) {
 async function fetchOriginalImage(payload) {
   const sourceUrl = String(payload.sourceUrl || '');
   if (!/^https?:\/\//i.test(sourceUrl)) return null;
-  const response = await fetch(sourceUrl, { credentials: 'omit', cache: 'force-cache' });
+  const response = await fetch(sourceUrl, { credentials: 'omit', cache: 'force-cache', signal: AbortSignal.timeout(8_000) });
   if (!response.ok) throw new Error(`原图请求失败：HTTP ${response.status}`);
   const blob = await response.blob();
   if (!['image/png', 'image/jpeg', 'image/webp'].includes(blob.type) || !blob.size || blob.size > MAX_IMAGE_BYTES) {
@@ -370,9 +370,24 @@ async function captureImageFromTab(payload, sender) {
   };
 }
 
+function openWebImagePanel(sender) {
+  try {
+    if (sender.id !== chrome.runtime.id || !Number.isInteger(sender.tab?.id) || sender.tab.id < 0
+        || !/^https?:\/\//i.test(sender.url || '')) {
+      throw backendError('FORBIDDEN', '请从网页上的 ArchBuddy 图片工具中打开侧栏');
+    }
+    if (typeof chrome.sidePanel?.open !== 'function') {
+      throw backendError('SIDEPANEL_UNAVAILABLE', '当前浏览器不支持侧栏，请更新 Chrome 或 Edge 后重试。');
+    }
+    // 必须在 onMessage 的同步调用栈内调用，不能先等待账户或存储。
+    return chrome.sidePanel.open({ tabId: sender.tab.id }).then(() => null, () =>
+      backendError('SIDEPANEL_OPEN_FAILED', '侧栏未能打开，请重试，或点击浏览器工具栏 ArchBuddy 中的打开侧栏。'));
+  } catch (error) {
+    return Promise.resolve(error?.code ? error : backendError('SIDEPANEL_OPEN_FAILED', '侧栏未能打开，请重试。'));
+  }
+}
+
 async function selectWebImage(payload, sender) {
-  if (!sender.tab?.id) throw new Error('无法识别当前网页，请重新打开插件');
-  chrome.sidePanel.open({ tabId: sender.tab.id }).catch(() => {});
   const local = await accountStorage.get(STORAGE.captureEnabled);
   if (!local[STORAGE.captureEnabled]) throw new Error('图片工具已关闭，请先在插件弹窗中开启');
   let captured = null;
@@ -398,7 +413,8 @@ async function selectWebImage(payload, sender) {
         selectedAt: new Date().toISOString(),
       }
     : await captureImageFromTab(fallbackPayload, sender);
-  await chrome.storage.session.set({ [STORAGE.selection]: selection, [STORAGE.result]: null });
+  // 保留待接收标记：侧栏首次加载、正在编辑或停在优化页时也不会丢图。
+  await chrome.storage.session.set({ [STORAGE.selection]: { ...selection, pendingCapture: true }, [STORAGE.result]: null });
   chrome.runtime.sendMessage({ type: 'selection.changed' }).catch(() => {});
   return { ok: true };
 }
@@ -508,7 +524,10 @@ async function draftState() {
   return { drafts, activeDraftId };
 }
 
-async function saveDraft(input) {
+function saveDraft(input) {
+  return withLibraryWriteLock(() => saveDraftUnlocked(input));
+}
+async function saveDraftUnlocked(input) {
   const { drafts } = await draftState();
   const now = new Date().toISOString();
   const existing = drafts.find(item => item.draftId === (input.draftId ?? input.schemeId));
@@ -546,7 +565,10 @@ async function restoreDraft(draftId) {
   return { ok: true, draft, drafts, activeDraftId: draft.draftId };
 }
 
-async function deleteDraft(draftId) {
+function deleteDraft(draftId) {
+  return withLibraryWriteLock(() => deleteDraftUnlocked(draftId));
+}
+async function deleteDraftUnlocked(draftId) {
   const { drafts, activeDraftId } = await draftState();
   const next = drafts.filter(item => item.draftId !== draftId);
   const nextActive = activeDraftId === draftId ? null : activeDraftId;
@@ -631,7 +653,10 @@ async function readSchemeCollection() {
   };
 }
 
-async function writeSchemeInCollection(scheme) {
+function writeSchemeInCollection(scheme) {
+  return withLibraryWriteLock(() => writeSchemeInCollectionUnlocked(scheme));
+}
+async function writeSchemeInCollectionUnlocked(scheme) {
   const { raw } = await readSchemeCollection();
   const normalized = normalizePromptScheme(scheme);
   const next = [normalized, ...raw.filter(item => (item.schemeId ?? item.draftId) !== normalized.schemeId)]
@@ -710,7 +735,10 @@ async function listSchemes() {
   };
 }
 
-async function saveLibraryMetadata(payload = {}) {
+function saveLibraryMetadata(payload = {}) {
+  return withLibraryWriteLock(() => saveLibraryMetadataUnlocked(payload));
+}
+async function saveLibraryMetadataUnlocked(payload = {}) {
   const schemeId = String(payload.schemeId || '');
   const projectName = String(payload.projectName ?? '').trim();
   const category = String(payload.category ?? '').trim();
@@ -817,7 +845,10 @@ async function attachSchemeSource(payload = {}) {
   return { ok: true, ...saved, sourceReference: target, reused: false };
 }
 
-async function deleteScheme(payload = {}) {
+function deleteScheme(payload = {}) {
+  return withLibraryWriteLock(() => deleteSchemeUnlocked(payload));
+}
+async function deleteSchemeUnlocked(payload = {}) {
   if (payload.confirmed !== true) throw categorizedError('CONFIRMATION_REQUIRED', '删除方案前需要确认', 'invalid_input');
   const schemeId = String(payload.schemeId || '');
   if (!/^[0-9a-f-]{36}$/i.test(schemeId)) throw categorizedError('SCHEME_NOT_FOUND', '方案标识无效', 'invalid_input');
@@ -1254,15 +1285,20 @@ async function confirmBuilder(payload = {}) {
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const panelOpening = message?.type === 'image.select' ? openWebImagePanel(sender) : null;
   const changingAccount = ['account.login', 'account.logout'].includes(message?.type);
   if (!changingAccount) activeOperations++;
   const run = async () => {
+    if (panelOpening) {
+      const panelError = await panelOpening;
+      if (panelError) throw panelError;
+    }
     await accountStartup;
     if (typeof message?.type === 'string' && message.type.startsWith('account.')) {
       if (sender.id !== chrome.runtime.id || ![chrome.runtime.getURL('library.html'), chrome.runtime.getURL('sidepanel.html'), chrome.runtime.getURL('popup.html'), chrome.runtime.getURL('cloud-library.html')].includes(sender.url?.split('?')[0])) {
         throw backendError('FORBIDDEN', '请在 ArchBuddy 中管理账号');
       }
-      if (!LOCAL_ACCOUNTS && ['account.local.list','account.local.publish','account.library.media'].includes(message.type)) return handleCloudLibrary(message, accountClient);
+      if (!LOCAL_ACCOUNTS && ['account.local.list','account.local.publish','account.local.restore','account.library.media'].includes(message.type)) return handleCloudLibrary(message, accountClient);
       const result = await accountClient.handle(message.type, message.payload ?? {});
       if (message.type === 'account.get') void unifiedDownloads?.reconcile().catch(() => {});
       return result;
@@ -1443,7 +1479,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 function queueCaptureMutation(operation) {
-  const pending = captureArchiveQueue.catch(() => {}).then(operation);
+  const pending = captureArchiveQueue.catch(() => {}).then(() => withLibraryWriteLock(operation));
   captureArchiveQueue = pending;
   return pending;
 }

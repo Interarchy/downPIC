@@ -243,6 +243,10 @@
   function responseError(response, zh, en) {
     if (response?.localConnectionError) {
       setStatus('扩展后台未响应，请在扩展管理页重新加载 ArchBuddy 后再试。', 'The extension background is not responding. Reload ArchBuddy on your extensions page and try again.', 'error');
+    } else if (response?.code === 'SIDEPANEL_OPEN_FAILED') {
+      setStatus('侧栏未能打开，请再点一次反推；也可点击浏览器工具栏的 ArchBuddy → 打开侧栏。', 'Could not open the sidebar. Retry, or open ArchBuddy in the browser toolbar and choose Open sidebar.', 'error');
+    } else if (response?.code === 'SIDEPANEL_UNAVAILABLE') {
+      setStatus('当前浏览器不支持侧栏，请更新 Chrome 或 Edge 后重试。', 'The sidebar is unavailable. Update Chrome or Edge and try again.', 'error');
     } else if (response?.error) setStatus(response.error, response.error, 'error');
     else setStatus(zh, en, 'error');
   }
@@ -288,7 +292,7 @@
     label(button, '正在取图…', 'Capturing…');
     setStatus('正在截取图片当前可见区域', 'Capturing the visible area of this image');
     toolbar.style.visibility = 'hidden';
-    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    // 消息必须在点击调用栈内发送；截图隐藏后的等待交给后台完成。
     const rect = image.getBoundingClientRect();
     const response = await request({
       type: 'image.select',
@@ -303,6 +307,9 @@
     });
     if (toolbar) toolbar.style.visibility = 'visible';
     busy = false;
+    button.disabled = false;
+    toolbarPinned = true;
+    clearTimeout(hideTimer);
     if (!response?.ok) {
       button.disabled = false;
       label(button, '重试反推', 'Retry prompt');
