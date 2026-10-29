@@ -1317,3 +1317,10 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 本机浏览器运行环境报错，尚未实测标签页渲染；构建及公网发布结果以随后部署记录为准。
 
 - 已提交并推送 e8731d0，Vercel 生产部署 dpl_5GEvrBBDVFZuEjCFwpUi1Ztu8w37 为 READY，www.archbuddy.top 与 archbuddy.top 均指向该提交。部署与资源引用已核对；浏览器实际标签图标渲染仍受本机运行环境故障限制。
+
+## 2026-10-29：修正官网标签页图标的品牌底色
+
+- 用户指出上一版白底不符合品牌主题；依据 docs/BRAND.md，直接复用 extension/icons/logo.svg 的正式绿色底（#25634B）、白色 A 图形，纠正 assets/favicon.svg。保留 Logo 几何形状，不重绘品牌。
+- 更新官网 26 份 HTML 的 favicon 查询版本为 brand-green-20261029，避免继续命中上一版白底图标缓存。页面正文、导航品牌资产、账户脚本及其他功能不变。
+- 静态核验：26 页图标引用各更新一次、正文逐字一致；favicon 与正式插件 Logo 源文件完全一致。无新增依赖、数据或 CloudBase 资源变化。
+- 本机命令环境仍报 helper_unknown_error，使用 GitHub 连接器完成最小修改与提交推送；未执行本机浏览器渲染验证。本轮按用户要求 commit and push，未手动发起生产部署。
