@@ -157,6 +157,14 @@ body.compact footer {
   }
 }
 @media (max-width: 620px) {
+  .pack-category-head {
+    display: block;
+  }
+  .pack-category-head p {
+    margin-top: 4px;
+  }
+}
+@media (max-width: 620px) {
   body.compact .nav {
     height: auto;
     padding: 12px 0;
@@ -651,30 +659,47 @@ tbody th:first-child {
 .pack button {
   width: 100%;
 }
-.plugin-packs {
-  margin-top: 30px;
-  padding: 28px 0;
+.pack-category + .pack-category {
+  margin-top: 38px;
+  padding-top: 30px;
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+}
+.pack-category-head {
   display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 16px;
-  align-items: center;
+  margin-bottom: 16px;
 }
-.plugin-packs > div {
-  flex: 1;
-}
-.plugin-packs h3 {
-  font-weight: 500;
-  font-size: 17px;
-  margin: 0 0 6px;
-}
-.plugin-packs p {
-  font-size: 12px;
-  color: var(--muted);
+.pack-category-head h3 {
   margin: 0;
+  font-size: 19px;
+  font-weight: 550;
 }
-.plugin-packs button {
+.pack-category-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.prompt-pack {
+  display: flex;
+  flex-direction: column;
+}
+.pack .prompt-allowance {
+  display: grid;
+  gap: 3px;
+  margin: 12px 0 0;
+  min-height: 65px;
   font-size: 13px;
+}
+.pack .prompt-allowance strong {
+  font-size: 20px;
+}
+.prompt-pack h3 {
+  margin: 14px 0 18px;
+}
+.prompt-pack button {
+  margin-top: auto;
 }
 .faq {
   display: grid;
