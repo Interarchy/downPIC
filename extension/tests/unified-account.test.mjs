@@ -60,6 +60,14 @@ test('callback rejects spoofed hosts, alternate paths, fragments and duplicate s
     good + '&code=duplicate',
   ]) assert.throws(() => validateCallback(url, expected), { code: 'AUTH_INVALID' });
 });
+test('cancellation ends the flow only with the original callback and state', () => {
+  const expected = { redirectUri: 'https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy', state: 'expected-state' };
+  const cancelled = expected.redirectUri + '?error=access_denied&state=expected-state';
+  assert.throws(() => validateCallback(cancelled, expected), { code: 'LOGIN_CANCELLED' });
+  assert.throws(() => validateCallback(cancelled.replace('expected-state', 'wrong-state'), expected), { code: 'AUTH_INVALID' });
+  assert.throws(() => validateCallback(cancelled + '&code=unexpected', expected), { code: 'AUTH_INVALID' });
+});
+
 test('account view never publishes the opaque access token', async () => {
   const h = harness(async () => response({ product: 'archbuddy', accountId: 'account-a', displayName: 'A', accessToken: 'must-not-publish', privateNotes: 'must-not-publish', credits: { availableUnits: 50 } }));
   await h.client.refresh();

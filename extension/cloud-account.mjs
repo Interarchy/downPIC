@@ -36,9 +36,13 @@ export function validateCallback(callback, expected) {
   const redirect = new URL(expected.redirectUri);
   if (result.origin !== redirect.origin || result.pathname !== redirect.pathname || result.hash ||
       result.username || result.password || result.searchParams.getAll('state').length !== 1 ||
-      result.searchParams.get('state') !== expected.state || result.searchParams.getAll('code').length !== 1) {
+      result.searchParams.get('state') !== expected.state) {
     throw fail('AUTH_INVALID', '登录返回地址校验失败');
   }
+  if (result.searchParams.getAll('error').length === 1 && result.searchParams.get('error') === 'access_denied' && !result.searchParams.has('code')) {
+    throw fail('LOGIN_CANCELLED', '已取消插件连接，可以重新登录。');
+  }
+  if (result.searchParams.getAll('code').length !== 1) throw fail('AUTH_INVALID', '登录返回地址校验失败');
   const code = result.searchParams.get('code');
   if (!code || code.length > 512 || result.searchParams.has('error')) throw fail('AUTH_INVALID', '登录授权未完成');
   return code;
