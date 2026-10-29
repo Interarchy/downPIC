@@ -26,6 +26,13 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 
 以上现状来自仓库实现及此前部署记录，不代表已完成云端全资源或权限审计。
 
+## 2026-10-29 统一执行器新增记录（仅本地实现）
+
+- 固定归属仍为 archbuddy / development / 原 archbuddy-api，不新建服务或集合。新增 `archbuddy_dev_requests` 中 `unified_` 文档前缀，与旧匿名记录分开。
+- 保存请求/账号摘要、操作、幂等状态和成功响应，成功响应可能含用户提示词、评估内容或向量，不再将此类记录描述为纯无正文统计。原请求图片和 payload 不落这些记录；结果30天到期，字段和查询到期拒绝已实现，TTL物理清理仍待线上核验。
+- 只接受统一Worker的 HMAC 调用，专用 `PRODUCT_EXECUTOR_SECRET` 只在两端服务设置中；旧匿名和管理员付费路由默认关闭。D1 是统一权益/预算主源，不在CloudBase再扣次数或本地积分。
+- 已用模拟数据核验跨账号/请求篡改、事务并发和失败状态；未读取真实用户记录、未配置Secret、未部署或变更共享环境。详见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。
+
 ## 2026-10-09 本地账号积分资源登记
 
 本轮为用户明确授权的本地开发，分支 `codex/phone-login-credits`。已核对 `cloudbase/environment.json`：既有云端仍为 archbuddy / development / archbuddy-api / 014，每日 50/500；本轮不变更该文件、云服务、集合、身份、凭据、日志、统计或其他项目资源。

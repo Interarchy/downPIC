@@ -6,7 +6,9 @@
 
 普通下载扣次口径仍由主会话澄清，`METER_FILE_DOWNLOADS=false`；下载预占模块存在但不启用，`ENABLE_UNIFIED_DESCRIBE=false` 阻止待确认的正式简析请求。执行失败不自动生成新付费请求标识。固定后端 `https://canvas.archbuddy.top`，协议与已实现内容见 [统一账号记录](ARCHBUDDY_UNIFIED_ACCOUNT.md)。本轮未部署云端、未提交商店、未运行付费模型，API可用性、真实登录和跨端资产仍待对应服务发布后的验收。
 
-验证：全部运行模块语法检查、33项扩展测试（含14项新增安全/计量边界检查）、22项现有后端测试通过；ZIP相对模块引用完整，无环境文件、账本或测试入包。0.7.0候选包位于 `extension/dist/archbuddy-beta-0.7.0.zip`（仅本地、Git忽略）；SHA-256 `30D8FE7E417A87CF803471428D630474659CE248A40691814137B0A4CBEE52A9`。解压测试的扩展ID需明确加入后端白名单，生产商店ID保持原值。
+验证：全部运行模块语法检查、41项扩展测试（新增会话撤销、持久请求ID和竞态检查）、27项后端测试（含5项统一HMAC/幂等/失败状态测试）通过；ZIP相对模块引用完整，无环境文件、账本或测试入包。商店0.7.0包213632字节，SHA-256 `660651131418786F798E989FD05660D2B6A8C7ED236DCAF3B9E838A0D3391802`；固定ID测试包214017字节，SHA-256 `9360A2D7705944E75EED43AD74786056E0ED4A0F846D2C7406AD14364BAB2216`。均在忽略目录extension/dist，测试ID `ikkmbpahejfapgnngdckocmfbcbnjedo` 仅准许A/B两账号，正式Chrome/Edge精确ID保持。插件提交 `b4fb82c`，会话失效与执行恢复安全修复 `66357c0`。
+
+另已准备CloudBase关闭匿名绕过：生产旧session/管理员paid入口410，仅服务端HMAC统一执行；现有ArchBuddy请求集合写30天幂等结果，可签名查单，超时/5xx保留pending，不盲退。成功不再扣旧CloudBase次数。源码包已构建但未部署、未配新Secret；TTL和权威美元单价待主会话上线前核验，Worker付费总开关保持关闭。具体协议、目标与CLI准备见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。
 
 
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。

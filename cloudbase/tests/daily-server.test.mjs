@@ -15,7 +15,8 @@ async function serve(run, options = {}) {
   const backend = fakeDatabase();
   let calls = 0;
   const server = createAnalysisServer({
-    environment: { DEEPSEEK_API_KEY: 'test-key-not-real', ARCHBUDDY_TEST_TOKEN: token, ARCHBUDDY_SESSION_SECRET: sessionSecret, ARCHBUDDY_QUOTA_MODE: 'cloudbase', ARCHBUDDY_CALLS_PER_MINUTE: '100', ...options.environment },
+    legacyTestMode: true,
+    environment: { NODE_ENV: 'test', DEEPSEEK_API_KEY: 'test-key-not-real', ARCHBUDDY_TEST_TOKEN: token, ARCHBUDDY_SESSION_SECRET: sessionSecret, ARCHBUDDY_QUOTA_MODE: 'cloudbase', ARCHBUDDY_CALLS_PER_MINUTE: '100', ...options.environment },
     quota: createQuotaService(backend.store),
     analyzerFactory: () => ({ analyze: async () => { calls++; if (options.fail) throw new Error('private upstream detail'); return result; } }),
   });
