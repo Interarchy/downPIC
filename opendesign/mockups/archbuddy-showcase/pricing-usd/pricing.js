@@ -4,45 +4,45 @@ const offers = {
     "$0 · 每周100次下载简析、10次深度反推。Library仅本地，无云同步。生图另购BuddyCoin。",
   ],
   light: [
-    "轻享版 · $5.99 / 月",
-    "每月360 BuddyCoin；1,000次简析、100次反推；Library仅本地，无云同步。可生成40张Nano Banana 2.1 · 4K。",
+    "轻享版 · $5.99 / 30 天",
+    "购买后到账360 BuddyCoin；1,000次简析、100次反推；Library仅本地，无云同步。可生成40张Nano Banana 2.1 · 4K。",
   ],
   standard: [
-    "标准版 · $9.99 / 月",
-    "每月720 BuddyCoin；2,000次简析、200次反推；Library仅本地，无云同步。可生成80张Nano Banana 2.1 · 4K；拟提供2任务并行、单次4张。",
+    "标准版 · $9.99 / 30 天",
+    "购买后到账720 BuddyCoin；2,000次简析、200次反推；Library仅本地，无云同步。可生成80张Nano Banana 2.1 · 4K；拟提供2任务并行、单次4张。",
   ],
   pro: [
-    "专业版 · $19.99 / 月",
-    "每月1,620 BuddyCoin；5,000次简析、400次反推。可生成180张Nano Banana 2.1 · 4K；拟提供Library云同步（容量待定）、4任务并行、单次8张。",
+    "专业版 · $19.99 / 30 天",
+    "购买后到账1,620 BuddyCoin；5,000次简析、400次反推。可生成180张Nano Banana 2.1 · 4K；拟提供Library云同步（容量待定）、4任务并行、单次8张。",
   ],
   packLight: [
     "轻享加油包 · $7",
-    "360 BuddyCoin，长期有效。与轻享订阅数量相同，价格高约16.9%；不含订阅工具额度。",
+    "360 BuddyCoin，长期有效。与轻享套餐数量相同，价格高约16.9%；不含套餐工具额度。",
   ],
   packStandard: [
     "标准加油包 · $11",
-    "720 BuddyCoin，长期有效。与标准订阅数量相同，价格高约10.1%；不含订阅工具额度。",
+    "720 BuddyCoin，长期有效。与标准套餐数量相同，价格高约10.1%；不含套餐工具额度。",
   ],
   packPro: [
     "专业加油包 · $22",
-    "1,620 BuddyCoin，长期有效。与专业订阅数量相同，价格高约10.1%；不含订阅工具额度。",
+    "1,620 BuddyCoin，长期有效。与专业套餐数量相同，价格高约10.1%；不含套餐工具额度。",
   ],
-  promptLight: ["提示词轻量包 · $1.99", "200次下载及简析＋50次深度反推。仅有效订阅用户可购买，两类额度分别计次，当前订阅周期结束时到期。"],
-  promptStandard: ["提示词标准包 · $3.99", "500次下载及简析＋150次深度反推。仅有效订阅用户可购买，两类额度分别计次，当前订阅周期结束时到期。"],
-  promptPro: ["提示词专业包 · $7.99", "1,200次下载及简析＋400次深度反推。仅有效订阅用户可购买，两类额度分别计次，当前订阅周期结束时到期。"],
+  promptLight: ["提示词轻量包 · $1.99", "200次下载及简析＋50次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
+  promptStandard: ["提示词标准包 · $3.99", "500次下载及简析＋150次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
+  promptPro: ["提示词专业包 · $7.99", "1,200次下载及简析＋400次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
 };
 if (document.documentElement.lang === "en") {
   Object.assign(offers, {
     free: ["Free", "$0 · 100 downloads and analyses, plus 10 deep prompt extractions per week. Library stays local. Buy BuddyCoin separately for generation."],
-    light: ["Light · $5.99 / month", "360 BuddyCoin, 1,000 analyses and 100 extractions each month. Local Library. Up to 40 Nano Banana 2.1 images at 4K."],
-    standard: ["Standard · $9.99 / month", "720 BuddyCoin, 2,000 analyses and 200 extractions each month. Local Library. Up to 80 Nano Banana 2.1 images at 4K; 2 concurrent jobs and up to 4 images per run are proposed."],
-    pro: ["Pro · $19.99 / month", "1,620 BuddyCoin, 5,000 analyses and 400 extractions each month. Up to 180 Nano Banana 2.1 images at 4K. Cloud sync, 4 concurrent jobs and up to 8 images per run are proposed."],
-    packLight: ["Light top-up · $7", "360 BuddyCoin with no expiry. About 16.9% more than the matching plan; does not include Library allowances."],
-    packStandard: ["Standard top-up · $11", "720 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include Library allowances."],
-    packPro: ["Pro top-up · $22", "1,620 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include Library allowances."],
-    promptLight: ["Small prompt pack · $1.99", "200 downloads and analyses plus 50 deep prompt extractions. For active subscribers only; allowances are separate and expire at the end of the current cycle."],
-    promptStandard: ["Standard prompt pack · $3.99", "500 downloads and analyses plus 150 deep prompt extractions. For active subscribers only; allowances are separate and expire at the end of the current cycle."],
-    promptPro: ["Pro prompt pack · $7.99", "1,200 downloads and analyses plus 400 deep prompt extractions. For active subscribers only; allowances are separate and expire at the end of the current cycle."],
+    light: ["Light · $5.99 / 30 days", "360 BuddyCoin, 1,000 analyses and 100 extractions per purchase. Local Library. Up to 40 Nano Banana 2.1 images at 4K."],
+    standard: ["Standard · $9.99 / 30 days", "720 BuddyCoin, 2,000 analyses and 200 extractions per purchase. Local Library. Up to 80 Nano Banana 2.1 images at 4K; 2 concurrent jobs and up to 4 images per run are proposed."],
+    pro: ["Pro · $19.99 / 30 days", "1,620 BuddyCoin, 5,000 analyses and 400 extractions per purchase. Up to 180 Nano Banana 2.1 images at 4K. Cloud sync, 4 concurrent jobs and up to 8 images per run are proposed."],
+    packLight: ["Light top-up · $7", "360 BuddyCoin with no expiry. About 16.9% more than the matching plan; does not include plan allowances."],
+    packStandard: ["Standard top-up · $11", "720 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include plan allowances."],
+    packPro: ["Pro top-up · $22", "1,620 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include plan allowances."],
+    promptLight: ["Small prompt pack · $1.99", "200 downloads and analyses plus 50 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
+    promptStandard: ["Standard prompt pack · $3.99", "500 downloads and analyses plus 150 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
+    promptPro: ["Pro prompt pack · $7.99", "1,200 downloads and analyses plus 400 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
   });
 }
 const models = [
