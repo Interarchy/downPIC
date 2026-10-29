@@ -27,9 +27,9 @@ const offers = {
     "专业加油包 · $22",
     "1,620 BuddyCoin，长期有效。与专业套餐数量相同，价格高约10.1%；不含套餐工具额度。",
   ],
-  promptLight: ["提示词轻量包 · $1.99", "200次下载及简析＋50次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
-  promptStandard: ["提示词标准包 · $3.99", "500次下载及简析＋150次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
-  promptPro: ["提示词专业包 · $7.99", "1,200次下载及简析＋400次深度反推。仅有效 30 天套餐用户可购买，两类额度分别计次，当前 30 天套餐结束时到期。"],
+  promptLight: ["提示词轻量包 · $1.99", "200次下载及简析＋50次深度反推。无需套餐，购买后永久有效。两类额度分别计次，普通下载不扣次数。"],
+  promptStandard: ["提示词标准包 · $3.99", "500次下载及简析＋150次深度反推。无需套餐，购买后永久有效。两类额度分别计次，普通下载不扣次数。"],
+  promptPro: ["提示词专业包 · $7.99", "1,200次下载及简析＋400次深度反推。无需套餐，购买后永久有效。两类额度分别计次，普通下载不扣次数。"],
 };
 if (document.documentElement.lang === "en") {
   Object.assign(offers, {
@@ -40,9 +40,9 @@ if (document.documentElement.lang === "en") {
     packLight: ["Light top-up · $7", "360 BuddyCoin with no expiry. About 16.9% more than the matching plan; does not include plan allowances."],
     packStandard: ["Standard top-up · $11", "720 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include plan allowances."],
     packPro: ["Pro top-up · $22", "1,620 BuddyCoin with no expiry. About 10.1% more than the matching plan; does not include plan allowances."],
-    promptLight: ["Small prompt pack · $1.99", "200 downloads and analyses plus 50 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
-    promptStandard: ["Standard prompt pack · $3.99", "500 downloads and analyses plus 150 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
-    promptPro: ["Pro prompt pack · $7.99", "1,200 downloads and analyses plus 400 deep prompt extractions. For active 30-day plan holders only; allowances are separate and expire at the end of the current 30-day term."],
+    promptLight: ["Small prompt pack · $1.99", "200 downloads and analyses plus 50 deep prompt extractions. No plan required; purchased allowances never expire and are counted separately. Ordinary downloads are free."],
+    promptStandard: ["Standard prompt pack · $3.99", "500 downloads and analyses plus 150 deep prompt extractions. No plan required; purchased allowances never expire and are counted separately. Ordinary downloads are free."],
+    promptPro: ["Pro prompt pack · $7.99", "1,200 downloads and analyses plus 400 deep prompt extractions. No plan required; purchased allowances never expire and are counted separately. Ordinary downloads are free."],
   });
 }
 const models = [

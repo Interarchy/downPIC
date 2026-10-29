@@ -715,7 +715,7 @@ tbody th:first-child {
 .prompt-pack h3 {
   margin: 14px 0 18px;
 }
-.prompt-pack button {
+.prompt-pack button, .prompt-pack .buy-pack {
   margin-top: auto;
 }
 .faq {
