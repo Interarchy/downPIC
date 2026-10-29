@@ -51,23 +51,35 @@ POST
 
 2026-10-30 用户确认插件反推、语义搜索、向量化不适用美元上限；画布每日 2 USD、单次 1 USD 保护保留。普通下载免费，200 次赠送按简析成功扣次，深度反推保留独立 50 次；所有结算由统一 Worker 完成，CloudBase 不再扣旧匿名或本地积分。输入/输出上限、每分钟频率、并发与持久幂等保留。`PRODUCT_EXECUTION_ENABLED` 由主会话在签名执行器与结果查单验收后启用，不能仅凭插件开关假定已经发布。
 
-## 构建与受控发布准备
+## 2026-10-30 受控发布脚本
 
-本机只读核验 CloudBase CLI 3.8.2。原仓库配置登记 `archbuddy-api`、`ap-shanghai`、development、稳定版本 014；本轮未查询线上资源/版本/余额。工作树没有复制真实 environment.json。CLI 登录配置文件存在，但本轮未读取凭据或验证其有效性。
+已只读核实 CloudBase CLI 3.8.2 登录与腾讯 API 可用；`dev-mel-d9guu8bpu44029179` / `ap-shanghai` / `archbuddy-api` 当前 014 为 100% 在线版本、8080端口、0–1实例。现有13个环境变量保留，无执行器Secret。`archbuddy_dev_requests` 实际权限 ADMINONLY，仅有 `_id_` 和 `_openid_1` 两索引，尚无TTL；本轮未改变线上配置。
+
+`cloudbase/scripts/publish-unified-executor.mjs` 默认只读。它从已提交 Git 对象读取固定17个部署源文件，在内存构建ZIP，拒绝未提交源码。复用现有 tcb 临时凭据签名 API，只把 `PRODUCT_EXECUTOR_SECRET` 合并到完整旧 EnvParams，环境与源文件不落地，不输出供应商密钥、签名或上传地址。真实发布仅提交 GRAY，保留旧100%版本、不自动切流、不取消其它发布任务；CloudBase接受后再通过Wrangler标准输入写入同一新密钥。root必须先核实线上 Worker 执行开关关闭。
 
 ```powershell
-# 仅生成白名单目录与 ZIP，不上传
-& cloudbase/scripts/build-deploy-package.ps1
+# 只读计划与集合权限/索引核对
+node cloudbase/scripts/publish-unified-executor.mjs --expect-version archbuddy-api-014 --inspect-database
 
-# 将本次输出目录代入；命令已核对本机 help，但本轮未执行
-# 仅从白名单目录发布灰度，不能把仓库根目录作为 source
-# 先在现有服务的受控版本配置中保留原 env 并增加 PRODUCT_EXECUTOR_SECRET
-tcb cloudrun deploy --env-id <已登记环境ID> --service-name archbuddy-api --source <本次白名单目录绝对路径> --port 8080 --traffic
+# 审核后由主任务执行，不在子任务自动运行
+node cloudbase/scripts/publish-unified-executor.mjs --execute --expect-version archbuddy-api-014 --worker-config C:/Users/lee/.codex/worktrees/stage5-launch/AIGC_Web/cloud/worker/wrangler.jsonc --wrangler-cli C:/Users/lee/.codex/worktrees/stage5-launch/AIGC_Web/node_modules/wrangler/bin/wrangler.js
+
+# 仅当CloudBase已持久保存原密钥、Worker写入失败时恢复；不会重打包/重发布/轮换
+node cloudbase/scripts/publish-unified-executor.mjs --execute --sync-worker-only --expect-version archbuddy-api-014 --worker-config C:/Users/lee/.codex/worktrees/stage5-launch/AIGC_Web/cloud/worker/wrangler.jsonc --wrangler-cli C:/Users/lee/.codex/worktrees/stage5-launch/AIGC_Web/node_modules/wrangler/bin/wrangler.js
 ```
 
-不要直接 promote 或复用旧匿名版本回滚：先核验灰度健康、生产旧入口 410、无模型签名查单、集合权限/TTL、Worker Secret一致及调用总预算，再由主会话完成切流。模型实测必须遵守已批准预算，不为验收连续调用上限。当前包不含账户账本、environment.json、开发临时数据或 Secret。
+未知发布结果不自动重试，也不生成另一把密钥；先读版本状态。构建完成后须核验灰度健康、旧入口410、无模型签名查单、权限/保留期、Worker一致，再由主任务显式切流并开启统一执行。不能直接用旧匿名版本回滚到可公开执行：故障先暂停Worker执行，保留旧版本用于受控恢复。
 
-参考：本机 `tcb cloudrun deploy --help`；[CloudBase 官方源代码迁移说明](https://docs.cloudbase.net/quick-start/migration/vercel)。
+## 统一记录专属30天物理清理
+
+统一记录同时保存 `expiresAt` 与 `unifiedExpiresAt` BSON Date，二者均为创建后30天。新增TTL只索引 `unifiedExpiresAt`，不更改旧匿名记录、不改通用 expiresAt、不删现有索引。`--apply-ttl --execute --expect-version archbuddy-api-014` 是独立操作，不能与发布或密钥恢复组合；仅允许固定集合上创建 `archbuddy_unified_expiry_v1` 单字段索引，`expireAfterSeconds:0`。先检查 ADMINONLY 和现有索引，同名不同配置则停止，完成后用原生listIndexes确认TTL和旧索引均保留。未带专属日期的历史记录不受新TTL影响。TTL物理删除有后台延迟，到期API即时拒绝读取仍保留。
+
+```powershell
+# 审核后由主任务执行；这条只处理专属TTL，不部署或配置密钥
+node cloudbase/scripts/publish-unified-executor.mjs --execute --apply-ttl --expect-version archbuddy-api-014
+```
+
+依据：[CloudBase部署API](https://docs.cloudbase.net/api-reference/manager/node/cloudrun)、本机CLI官方打包实现、[RunCommands](https://cloud.tencent.com/document/product/876/129012)、[MongoDB TTL机制](https://www.mongodb.com/docs/current/core/index-ttl/)。CloudBase公开UpdateTable模式没有TTL字段，脚本通过固定原生createIndexes命令设置，不猜测未公布参数。实际创建仍待主任务执行与线上返回验证。
 
 ## 已完成验证
 

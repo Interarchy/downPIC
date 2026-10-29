@@ -82,7 +82,8 @@ export function createUnifiedExecutions(store, { now = Date.now } = {}) {
         const record = { projectId: PROJECT_ID, stage: STAGE, kind: 'unified-execution',
           accountHash: key.accountHash, requestHash: key.requestHash, bodyHash: request.bodyHash,
           operation: request.operation, state: 'pending', dispatch: 'reserved',
-          createdAt: new Date(now()), updatedAt: new Date(now()), expiresAt: new Date(now() + RETENTION_MS) };
+          createdAt: new Date(now()), updatedAt: new Date(now()), expiresAt: new Date(now() + RETENTION_MS),
+          unifiedExpiresAt: new Date(now() + RETENTION_MS) };
         await tx.set('requests', key.id, record);
         return { created: true, key, record };
       });

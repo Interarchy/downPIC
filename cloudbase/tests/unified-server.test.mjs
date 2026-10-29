@@ -95,6 +95,8 @@ test('two server instances execute one request only, replay exact result, isolat
     assert.equal(docs.size, 1); assert.ok([...docs.keys()][0].startsWith('archbuddy_dev_requests/unified_'));
     const record = [...docs.values()][0];
     assert.equal(new Date(record.expiresAt) - new Date(record.createdAt), 30 * 86400000);
+    assert.ok(record.unifiedExpiresAt instanceof Date);
+    assert.equal(record.unifiedExpiresAt.getTime(), new Date(record.expiresAt).getTime());
     assert.equal('accountId' in record, false); assert.equal('payload' in record, false);
   }, { analyze: () => wait });
 });

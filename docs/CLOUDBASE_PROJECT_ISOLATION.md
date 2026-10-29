@@ -1,3 +1,9 @@
+## 2026-10-30：统一执行器发布前只读核查
+
+- 既有服务 archbuddy-api / ap-shanghai / development，当前稳定014占100%流量，8080端口、0–1实例；环境13项名称已核对，密钥仅在内存用于API读取，无新增或变更。
+- 固定集合 archbuddy_dev_requests 实际 ADMINONLY，原生索引只有 _id_、_openid_1，无TTL。统一记录新增专属 BSON Date unifiedExpiresAt，后续仅增加该字段TTL，避免触及旧匿名expiresAt记录。源码/发布计划见 cloudbase/UNIFIED_EXECUTOR.md。
+- 默认只读脚本已核验。实际签名密钥、GRAY发布、专属TTL创建和切流均须主任务执行，本记录不等同已上线。
+
 # CloudBase 多项目隔离约定
 
 生效日期：2026-09-15。来源：用户明确要求，CloudBase 同时承载 ArchBuddy 和未来其他小项目或 demo，各项目数据必须清晰区分，后续工作每次检查。
