@@ -45,3 +45,14 @@
 | archbuddy-unified-test-0.7.0.zip（固定ID测试） | 214017 | 9360A2D7705944E75EED43AD74786056E0ED4A0F846D2C7406AD14364BAB2216 |
 
 打包：`& extension/scripts/build-store-package.ps1`；测试包另加 `-FixedIdentityTest`。两包都在Git忽略的 `extension/dist/`，不包含测试、账号账本、环境文件、私钥或API密钥。
+
+## 当前测试包：2026-10-30 登录修复
+
+源码 `fb0d5c2`，已推送 PR #9。固定测试版仍为 0.7.0，同一测试ID；原解压目录已经更新，已加载的用户只需在 Chrome 扩展管理页重新加载。
+
+| 包 | 字节 | 当前 SHA-256 |
+| --- | --- | --- |
+| archbuddy-beta-0.7.0.zip | 216742 | 7750DC4508CEABC0D470182B268D8D07E3CE07AEC0353D1AE3E1E0D563CB47CD |
+| archbuddy-unified-test-0.7.0.zip | 217127 | 520C8AB0E8A2CEFD2026B12DA26B93A73A64804C49C710C63ACE909D4E1A485D |
+
+62 项插件、27 项 CloudBase 测试通过。独立插件会话复核包内40个条目、39个运行文件与源码一致（允许文本换行不同），manifest仅加入固定测试公开key与标识，不含私钥。隔离 Chromium 实际加载正确ID，点击登录打开正式邮箱/Google界面，关闭窗口后恢复按钮；另验证规则页往返保留授权地址。真实用户登录与A/B素材往返尚未完成，商店尚未发布。
