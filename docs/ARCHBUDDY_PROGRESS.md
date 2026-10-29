@@ -1308,3 +1308,10 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 用户反馈官网看不到本轮 SEO 工作。核对生产部署仍为 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`；正式域名首页、`/guides/`、两篇教程、`robots.txt` 和 `sitemap.xml` 均为 200。原因是此前教程入口仅在首页页脚，主要 SEO 元数据也不会作为页面内容显示。
 - 在中英文首页顶部产品导航增加“教程 / Guides”直达入口，保留页脚入口；窄屏仅缩短原 Library 和 Canvas 导航文字，不改其他内容和账户入口。Edge 本地预览检查 320、390、480、760、900、1120、1440px 的中英文首页均无横向溢出、脚本错误，教程入口在视口内可见；SEO 静态校验仍为 26 页、10 可索引、16 排除、10 个 sitemap URL。此处为本地候选，发布状态以随后生产部署记录为准。
 - PR #6 已合并到 `codex/waffo-legal-footer`，合并提交 `1317a5e9193e6cf0ece2b6651fc7770c717e37d2`。Vercel 生产部署 `dpl_EngPm3HmBcWPoKNkHT6CKVGpjafi` 为 READY，`www.archbuddy.top` 和 `archbuddy.top` 已指向该部署，无别名错误。Vercel 连接器核对正式域名中英文首页均为 200，实际 HTML 含顶部教程导航和新 CSS 版本；`/guides/` 为 200。一次无登录直连公网检查遇到 TLS 握手超时，不能以此判断内容或页面 404，已以部署别名和连接器响应交叉核对。
+
+## 2026-10-29：统一官网浏览器标签页品牌图标
+
+- 基于当前官网发布分支 codex/waffo-legal-footer 的 fb6a416（包含已上线的教程导航与最新记录），复用 assets/brand-mark.svg 的现有绿色 A 品牌图形，替换旧线条 favicon。
+- 统一公开站点目录内 26 份 HTML 的图标声明，包括中英文首页、美元定价、旧定价跳转、教程、案例、短片及历史方案预览。补齐缺失声明，采用同一 SVG 资源和 brand-20261029 版本参数。
+- 静态核验：26 页均只有一个图标声明；相对路径全部解析到同一 assets/favicon.svg，图标内容与品牌资产一致，页面 body 完全一致。未修改插件、Canvas、账户、计费、统计或 CloudBase 资源。
+- 本机浏览器运行环境报错，尚未实测标签页渲染；构建及公网发布结果以随后部署记录为准。
