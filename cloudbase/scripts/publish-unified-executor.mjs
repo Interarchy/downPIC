@@ -28,7 +28,7 @@ const READ_ACTIONS = new Set(['DescribeCloudRunServerDetail', 'DescribeTable', '
 export const TTL_INDEX = 'archbuddy_unified_expiry_v1';
 export const indexListRequest = () => ({ EnvId: TARGET.envId, MgoCommands: [{ TableName: TARGET.collection, CommandType: 'COMMAND', Command: JSON.stringify({ listIndexes: TARGET.collection }) }] });
 export const ttlCreateRequest = () => ({ EnvId: TARGET.envId, MgoCommands: [{ TableName: TARGET.collection, CommandType: 'COMMAND', Command: JSON.stringify({ createIndexes: TARGET.collection, indexes: [{ key: { unifiedExpiresAt: 1 }, name: TTL_INDEX, expireAfterSeconds: 0 }] }) }] });
-const WRITE_ACTIONS = new Set(['DescribeCloudBaseBuildService', 'UpdateCloudRunServer']);
+const WRITE_ACTIONS = new Set(['DescribeCloudBaseBuildService', 'UpdateCloudRunServer', 'ReleaseGray']);
 
 export function signedRequest(service, action, data, credential, now = Date.now()) {
   if (!SERVICE_VERSIONS[service] || !READ_ACTIONS.has(action) && !WRITE_ACTIONS.has(action)) throw safeError('UNAPPROVED_API');

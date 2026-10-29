@@ -13,6 +13,7 @@ test('plan blocks every write before network and signs credentials only in heade
   const credential = { secretId: 'mock-secret-id', secretKey: 'mock-secret-key', token: 'mock-session' };
   const api = createApi(credential, { fetchImpl: () => { calls++; } });
   await assert.rejects(api('tcbr', 'UpdateCloudRunServer', {}), { code: 'READ_ONLY_PLAN' });
+  await assert.rejects(api('tcbr', 'ReleaseGray', {}), { code: 'READ_ONLY_PLAN' });
   assert.equal(calls, 0);
   const request = signedRequest('tcbr', 'DescribeCloudRunServerDetail', { EnvId: TARGET.envId, ServerName: TARGET.service }, credential, 1793318400000);
   assert.equal(request.url, 'https://tcbr.tencentcloudapi.com/');
