@@ -1315,3 +1315,5 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 统一公开站点目录内 26 份 HTML 的图标声明，包括中英文首页、美元定价、旧定价跳转、教程、案例、短片及历史方案预览。补齐缺失声明，采用同一 SVG 资源和 brand-20261029 版本参数。
 - 静态核验：26 页均只有一个图标声明；相对路径全部解析到同一 assets/favicon.svg，图标内容与品牌资产一致，页面 body 完全一致。未修改插件、Canvas、账户、计费、统计或 CloudBase 资源。
 - 本机浏览器运行环境报错，尚未实测标签页渲染；构建及公网发布结果以随后部署记录为准。
+
+- 已提交并推送 e8731d0，Vercel 生产部署 dpl_5GEvrBBDVFZuEjCFwpUi1Ztu8w37 为 READY，www.archbuddy.top 与 archbuddy.top 均指向该提交。部署与资源引用已核对；浏览器实际标签图标渲染仍受本机运行环境故障限制。
