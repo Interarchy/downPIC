@@ -64,3 +64,8 @@
 - 无登录直访 `https://www.archbuddy.top/robots.txt` 返回 200、`text/plain`，包含 `Sitemap: https://www.archbuddy.top/sitemap.xml`；`/sitemap.xml` 返回 200、`application/xml`。其 10 个唯一 URL 均以 `https://www.archbuddy.top/` 开头，逐项返回 200，页面 canonical 与自身 URL 一致，无 `noindex`。中英文首页各有 3 条语言关联链接。
 - 正式站 `/guides/`、两篇教程、五页案例、`/index-en.html` 与原 `/legal/privacy/` 均可访问。`/pricing.html` 和 `/film/` 仍返回 200 并含 `noindex`；本次未开放支付页面索引。
 - Google 可从 `robots.txt` 发现站点地图；这不等于 Search Console 中已提交或已收录。当前工作环境未提供已验证的 Search Console 站点属性或授权连接，浏览器控制服务也未能启动，因此未声称完成站长平台内的提交、URL Inspection 或索引验证。下一步在已验证的 `archbuddy.top` 站点属性中提交完整 sitemap URL，记录平台回执，再观察索引覆盖和搜索表现。
+
+## 2026-10-29：教程入口可见性本地复核
+
+- 正式站点直访正常，但首页教程链接仅位于页脚；顶部导航缺入口，造成用户在首屏看不到新增内容。中英文首页已本地补充顶部“教程 / Guides”入口，目标均为 `guides/`。
+- Edge 本地静态预览在 320、390、480、760、900、1120、1440px 逐一检查两种语言：首页 200、链接可见、文档宽度不超过视口、无脚本错误。320px 与 1440px 截图目视复核导航排布正常。`python cloudbase/scripts/check-showcase-seo.py` PASS，仍为 26 HTML、10 可索引、16 排除、10 sitemap URL；`git diff --check` PASS。生产站是否显示该导航待部署后验证。

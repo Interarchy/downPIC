@@ -1302,3 +1302,8 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - PR #4 已合并，目标分支合并提交为 `8c24f6a95e6ab61873421dc7c716a06f0a182416`。Vercel 从该 Git 提交创建生产部署 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`，状态 READY，正式域名已分配。
 - 正式域名的 `robots.txt` 和 `sitemap.xml` 均返回 200，类型分别为 `text/plain` 与 `application/xml`。站点地图 10 个规范 URL 逐一返回 200，canonical 与 URL 一致；中英文首页语言关联存在。原法律页、案例页仍可访问；旧定价及短片继续 `noindex`。详见 ARCHBUDDY_SEO_VERIFICATION.md。
 - 站点地图已通过 `robots.txt` 对搜索引擎开放。尚未取得 Search Console 已验证站点属性或提交回执，不能将公开站点地图等同于后台提交或搜索收录。下一步由有站点属性权限的账号提交 `https://www.archbuddy.top/sitemap.xml`，再记录覆盖、查询、点击与教程入口表现。
+
+## 2026-10-29：教程入口可见性修正
+
+- 用户反馈官网看不到本轮 SEO 工作。核对生产部署仍为 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`；正式域名首页、`/guides/`、两篇教程、`robots.txt` 和 `sitemap.xml` 均为 200。原因是此前教程入口仅在首页页脚，主要 SEO 元数据也不会作为页面内容显示。
+- 在中英文首页顶部产品导航增加“教程 / Guides”直达入口，保留页脚入口；窄屏仅缩短原 Library 和 Canvas 导航文字，不改其他内容和账户入口。Edge 本地预览检查 320、390、480、760、900、1120、1440px 的中英文首页均无横向溢出、脚本错误，教程入口在视口内可见；SEO 静态校验仍为 26 页、10 可索引、16 排除、10 个 sitemap URL。此处为本地候选，发布状态以随后生产部署记录为准。
