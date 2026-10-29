@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { TARGET, SOURCE_FILES, signedRequest, createApi, inspectService, mergedEnvironment, sourceZip, publish, TTL_INDEX, indexListRequest, ttlCreateRequest, parseIndexMetadata, installUnifiedTtl } from '../scripts/publish-unified-executor.mjs';
+import { TARGET, SOURCE_FILES, signedRequest, createApi, inspectService, mergedEnvironment, sourceZip, publish, TTL_INDEX, indexListRequest, ttlCreateRequest, parseIndexMetadata, installUnifiedTtl, workerSecretArgs } from '../scripts/publish-unified-executor.mjs';
 const secret = 'unit-test-only-fixed-executor-secret-1234567890';
 const env = { ARCHBUDDY_CLOUDBASE_ENV_ID: TARGET.envId, ARCHBUDDY_STAGE: 'development', ARCHBUDDY_QUOTA_MODE: 'cloudbase', ARCHBUDDY_CLOUDBASE_API_KEY: 'mock-db', DEEPSEEK_API_KEY: 'mock-model', PORT: '8080' };
 const detail = { BaseInfo: { ServerName: TARGET.service, ServerType: 'container', Status: 'normal' },
@@ -100,4 +100,11 @@ test('upload accepts only the exact host returned by the official service, witho
       fetchImpl: () => { uploads++; }, syncSecret: () => { throw new Error('must not write Worker'); } }), { code: 'SOURCE_UPLOAD_TARGET_INVALID' });
     assert.equal(uploads, 0);
   }
+});
+
+test('Wrangler secret command selects the validated preview config without appending the environment twice', () => {
+  const args = workerSecretArgs('C:/workspace/wrangler.jsonc', 'C:/workspace/node_modules/wrangler/bin/wrangler.js');
+  assert.deepEqual(args, ['C:/workspace/node_modules/wrangler/bin/wrangler.js', 'secret', 'put', 'PRODUCT_EXECUTOR_SECRET', '--config', 'C:/workspace/wrangler.jsonc', '--env', 'preview']);
+  assert.equal(args.includes('--name'), false);
+  assert.equal(args.some(value => value.includes('preview-preview')), false);
 });

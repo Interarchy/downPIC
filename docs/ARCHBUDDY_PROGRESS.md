@@ -1,3 +1,8 @@
+## 2026-10-30：修正Wrangler环境名叠加
+
+- 主任务通过云端纯元数据发现：Wrangler同时传 --name archbuddy-beta-preview 和 --env preview 会把Secret写入误建的 archbuddy-beta-preview-preview。CLI退出成功不能证明目标正确，先前该阶段的完成输出不作为正式Worker核验。
+- 脚本去掉 --name，仅采用已严格校验的配置文件和 --env preview，新增完整argv断言；完成事件明确 remoteTargetVerified:false，必须另核对Cloudflare正式Worker的Secret名称元数据。主任务使用sync-only复用CloudBase已持久保存的原密钥，不轮换、不重新发布；误建Worker清理由主任务限定目标处理。
+
 ## 2026-10-30：灰度上传目标核对
 
 - 主任务已创建专属TTL并核验保留原2索引。第一次灰度准备在PUT之前停止：腾讯官方返回上传主机为 cloudbaserun-code-cos.cloudbase.net，而非原先只允许的COS域。

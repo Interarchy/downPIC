@@ -140,12 +140,13 @@ export async function validateWorker(configPath, cliPath) {
   if (!path.isAbsolute(configPath) || !path.isAbsolute(cliPath) || !cliPath.replaceAll('\\', '/').endsWith('/wrangler/bin/wrangler.js')) throw safeError('WORKER_CLI_INVALID');
   await readFile(cliPath); // 路径确实存在；不 import CLI，也不打印文件。
 }
+export const workerSecretArgs = (configPath, cliPath) => [cliPath, 'secret', 'put', 'PRODUCT_EXECUTOR_SECRET', '--config', configPath, '--env', TARGET.workerEnv];
 export async function syncWorkerSecret(secret, configPath, cliPath) {
   // Secret 只在 stdin，stdout/stderr 完整丢弃，避免 CLI 失败转储配置内容。
   const env = { ...process.env, CI: 'true', WRANGLER_LOG: 'error', WRANGLER_SEND_METRICS: 'false' };
   delete env.NODE_OPTIONS; delete env.DEBUG;
   await new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [cliPath, 'secret', 'put', 'PRODUCT_EXECUTOR_SECRET', '--config', configPath, '--env', TARGET.workerEnv, '--name', TARGET.worker],
+    const child = spawn(process.execPath, workerSecretArgs(configPath, cliPath),
       { cwd: path.dirname(configPath), env, windowsHide: true, stdio: ['pipe', 'ignore', 'ignore'] });
     let timer = setTimeout(() => { child.kill(); reject(safeError('WORKER_SECRET_UNCONFIRMED')); }, 55000);
     child.on('error', () => { clearTimeout(timer); reject(safeError('WORKER_SECRET_FAILED')); });
@@ -160,7 +161,7 @@ export async function publish({ api, source, inspected, workerConfig, wranglerCl
     if (!secret) throw safeError('NO_EXISTING_EXECUTOR_SECRET');
     mergedEnvironment(inspected.env, secret);
     await syncSecret(secret, workerConfig, wranglerCli);
-    emit({ phase: 'worker-secret-synced', retainedSecret: true, worker: TARGET.worker, executionEnabled: false }); return;
+    emit({ phase: 'worker-secret-command-completed', retainedSecret: true, expectedWorker: TARGET.worker, remoteTargetVerified: false }); return;
   }
   // 已有密钥只复用，不允许因重试悄悄轮换；灰度API未知时不得自动重新提交。
   secret ||= randomBytes(32).toString('hex');
@@ -182,7 +183,7 @@ export async function publish({ api, source, inspected, workerConfig, wranglerCl
     requestId: released.RequestId, keys: Object.keys(released).filter(key => key !== 'RequestId'), trafficChanged: false });
   // 先由CloudBase持久保留新密钥，再通过stdin同步；失败后用 --sync-worker-only 读取原值恢复，不生成另一把。
   await syncSecret(secret, workerConfig, wranglerCli);
-  emit({ phase: 'worker-secret-synced', worker: TARGET.worker, executionEnabled: false });
+  emit({ phase: 'worker-secret-command-completed', expectedWorker: TARGET.worker, remoteTargetVerified: false });
 }
 
 export function parseIndexMetadata(result) {
