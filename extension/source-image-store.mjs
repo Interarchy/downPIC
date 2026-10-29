@@ -1,3 +1,4 @@
+import { contextScope } from './account-storage.mjs';
 const DB_NAME = 'archbuddy-local';
 const DB_VERSION = 1;
 const STORE_NAME = 'source-images-v1';
@@ -15,9 +16,11 @@ function validId(value) {
     && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
-function openDb() {
+async function openDb(explicitScope) {
+  const scope = explicitScope || await contextScope();
+  const name = ['legacy','local-demo'].includes(scope) ? DB_NAME : DB_NAME + ':' + scope;
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = indexedDB.open(name, DB_VERSION);
     request.onupgradeneeded = () => {
       const database = request.result;
       const store = database.objectStoreNames.contains(STORE_NAME)
@@ -30,8 +33,8 @@ function openDb() {
   });
 }
 
-async function transaction(mode, operation) {
-  const database = await openDb();
+async function transaction(mode, operation, explicitScope) {
+  const database = await openDb(explicitScope);
   try {
     return await new Promise((resolve, reject) => {
       const tx = database.transaction(STORE_NAME, mode);
@@ -99,4 +102,12 @@ export async function deleteSourceImagesByScheme(schemeId) {
     for (const row of rows ?? []) store.delete(row.sourceReferenceId);
   });
   return (rows ?? []).length;
+}
+
+// 仅后台的显式历史导入可指定 legacy；常规素材操作始终使用当前账户分区。
+export async function getSourceImageForScope(id, scope) {
+  if (!validId(id)) throw storeError('NOT_FOUND', '来源图不存在');
+  const record = await transaction('readonly', store => store.get(id), scope);
+  if (!record) throw storeError('NOT_FOUND', '本机图片副本不存在，文字可单独同步');
+  return record;
 }

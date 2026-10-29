@@ -1,3 +1,4 @@
+import { accountStorage, scopeChanges } from './account-storage.mjs';
 import {
   STORAGE, PRINCIPLE, PRINCIPLE_TITLE, compileIntentPrompt, createEmptyIntentModules,
   normalizeIntentModules, normalizePromptScheme, normalizeWorkingDraft,
@@ -753,7 +754,8 @@ chrome.runtime.onMessage.addListener(message => {
     }).catch(error => feedback('builder-feedback', error.message, 'error'));
   }
 });
-chrome.storage.onChanged.addListener((changes, area) => {
+chrome.storage.onChanged.addListener(async (changes, area) => {
+  changes = await scopeChanges(changes, area);
   if (area === 'local' && changes[STORAGE.assetAIConsent]) $('asset-ai-toggle').checked = changes[STORAGE.assetAIConsent].newValue === true;
   if (area === 'local' && changes[STORAGE.privacyAccepted]?.newValue) {
     state.privacyAccepted = true; document.body.classList.remove('needs-consent'); $('privacy-gate').hidden = true;
@@ -775,7 +777,7 @@ async function handleRequestedStage(stage) {
 window.addEventListener('beforeunload', releaseImageUrls);
 async function init() {
   const [local, session] = await Promise.all([
-    chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.privacyAccepted, STORAGE.analyticsConsent]),
+    accountStorage.get([STORAGE.assetAIConsent, STORAGE.privacyAccepted, STORAGE.analyticsConsent]),
     chrome.storage.session.get([STORAGE.builderV3, STORAGE.generatedResultV3, STORAGE.activeStageV4]),
   ]);
   state.privacyAccepted = Boolean(local[STORAGE.privacyAccepted]);

@@ -1,5 +1,8 @@
+import { mountAccountUI } from './account-ui.mjs';
+import { accountStorage, scopeChanges } from './account-storage.mjs';
 import { STORAGE } from './shared.mjs';
 
+mountAccountUI(document.querySelector('.brand-row'));
 const elements = Object.fromEntries([
   'backend-status', 'capture-enabled', 'capture-copy', 'open-sidepanel',
   'open-library', 'global-feedback',
@@ -44,13 +47,13 @@ async function refreshBackend() {
     status.querySelector('span').textContent = '未配置模型';
   } else {
     status.dataset.state = 'offline';
-    status.querySelector('span').textContent = '本地服务未启动';
+    status.querySelector('span').textContent = '服务暂时不可用';
   }
 }
 
 async function initialize() {
   const [stored, tabs] = await Promise.all([
-    chrome.storage.local.get(STORAGE.captureEnabled),
+    accountStorage.get(STORAGE.captureEnabled),
     chrome.tabs.query({ active: true, currentWindow: true }),
   ]);
   currentTab = tabs[0] || null;
@@ -62,13 +65,13 @@ async function initialize() {
 elements['capture-enabled'].addEventListener('change', async event => {
   const next = event.target.checked;
   if (next) {
-    const consent = await chrome.storage.local.get(STORAGE.assetAIConsent);
+    const consent = await accountStorage.get(STORAGE.assetAIConsent);
     if (!consent[STORAGE.assetAIConsent] && confirm('开启图库 AI：新下载图片自动发送预览给 ArchBuddy 与 DeepSeek 生成描述，语义搜索发送查询与库内描述。确认有权处理并同意？取消仍可下载。')) {
-      await chrome.storage.local.set({ [STORAGE.assetAIConsent]: true, [STORAGE.privacyAccepted]: true });
+      await accountStorage.set({ [STORAGE.assetAIConsent]: true, [STORAGE.privacyAccepted]: true });
     }
   }
   enabled = next;
-  await chrome.storage.local.set({ [STORAGE.captureEnabled]: enabled });
+  await accountStorage.set({ [STORAGE.captureEnabled]: enabled });
   renderEnabled();
   const synced = await syncCapturePages();
   if (synced !== false) feedback(enabled ? '网页图片工具已开启' : '网页图片工具已关闭');

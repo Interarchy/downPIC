@@ -1,0 +1,181 @@
+import { ENABLE_UNIFIED_DESCRIBE } from './runtime-config.mjs';
+import { ACCOUNT_VIEW_KEY } from './account-storage.mjs';
+export const PRODUCT_ORIGIN = 'https://canvas.archbuddy.top';
+export const PLUGIN_BASE = '/api/beta/plugin';
+const AUTH_ERRORS = new Set(['UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID', 'SESSION_EXPIRED', 'PLUGIN_SESSION_INVALID']);
+const OPERATIONS = Object.freeze({
+  '/api/analyze': 'analyze', '/api/v2/analyze': 'analyze-v2', '/api/v3/evaluate': 'evaluate',
+  '/api/library/describe': 'describe', '/api/library/embed': 'embed', '/api/library/search': 'search',
+});
+const fail = (code, message) => Object.assign(new Error(message), { code });
+export function base64url(bytes) {
+  return btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+}
+export async function authorizationRequest(identity, clientId) {
+  const redirectUri = identity.getRedirectURL('archbuddy');
+  const verifier = base64url(crypto.getRandomValues(new Uint8Array(32)));
+  const state = base64url(crypto.getRandomValues(new Uint8Array(32)));
+  const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+  const url = new URL('/connect-plugin', PRODUCT_ORIGIN);
+  url.search = new URLSearchParams({ client_id: clientId, redirect_uri: redirectUri, code_challenge: challenge, code_challenge_method: 'S256', state });
+  return { url: url.href, redirectUri, verifier, state };
+}
+export function validateCallback(callback, expected) {
+  let result;
+  try { result = new URL(callback); } catch { throw fail('AUTH_INVALID', '登录未完成，请重新登录'); }
+  const redirect = new URL(expected.redirectUri);
+  if (result.origin !== redirect.origin || result.pathname !== redirect.pathname || result.hash ||
+      result.username || result.password || result.searchParams.getAll('state').length !== 1 ||
+      result.searchParams.get('state') !== expected.state || result.searchParams.getAll('code').length !== 1) {
+    throw fail('AUTH_INVALID', '登录返回地址校验失败');
+  }
+  const code = result.searchParams.get('code');
+  if (!code || code.length > 512 || result.searchParams.has('error')) throw fail('AUTH_INVALID', '登录授权未完成');
+  return code;
+}
+export function expiryMilliseconds(value) {
+  const n = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(n) && n > 0 ? (n < 1e12 ? n * 1000 : n) : Date.parse(value);
+}
+export async function secretStore(mode, operation) {
+  const db = await new Promise((resolve, reject) => {
+    const request = indexedDB.open('archbuddy-unified-auth-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('sessions');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(fail('ACCOUNT_STORAGE', '无法读取登录状态'));
+  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction('sessions', mode);
+      const request = operation(tx.objectStore('sessions'));
+      tx.oncomplete = () => resolve(request?.result);
+      tx.onerror = tx.onabort = () => reject(fail('ACCOUNT_STORAGE', '无法保存登录状态'));
+    });
+  } finally { db.close(); }
+}
+export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, store = secretStore, browser = chrome, canSwitch = () => true }) {
+  let busy = 0;
+  let transitioning = false;
+  let refreshing;
+  const signedOut = () => ({ account: null, mode: 'unified', packages: [] });
+  const publish = async view => { await browser.storage.session.set({ [ACCOUNT_VIEW_KEY]: view }); return view; };
+  const clear = async () => {
+    await store('readwrite', data => data.delete('active'));
+    await onSessionChange();
+    await publish(signedOut());
+  };
+  const credentials = async () => {
+    const session = await store('readonly', data => data.get('active'));
+    if (!session?.accessToken || session.expiresAt <= Date.now()) {
+      if (session) await clear();
+      throw fail('LOGIN_REQUIRED', '请先登录 ArchBuddy，官网、画布和插件共用此账号');
+    }
+    return session;
+  };
+  const transport = async (path, { method = 'GET', body, token, binary = false, timeoutMs = 135000 } = {}) => {
+    const response = await fetchImpl(PRODUCT_ORIGIN + PLUGIN_BASE + path, {
+      method, credentials: 'omit', cache: 'no-store', signal: AbortSignal.timeout(timeoutMs),
+      headers: { ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (response.ok && binary) return response.blob();
+    const envelope = await response.json().catch(() => null);
+    if (!response.ok || !envelope || !Object.hasOwn(envelope, 'data')) {
+      const error = fail(envelope?.error?.code || (response.status === 401 ? 'AUTH_INVALID' : 'SERVICE_UNAVAILABLE'),
+        envelope?.error?.message || 'ArchBuddy 服务暂时不可用，请稍后重试');
+      throw error;
+    }
+    return envelope.data;
+  };
+  const authenticated = async (path, options = {}) => {
+    if (transitioning) throw fail('ACCOUNT_BUSY', '登录状态正在切换');
+    busy++;
+    let session;
+    try {
+      session = await credentials();
+      if (options.expectedAccountId && session.accountId !== options.expectedAccountId) throw fail('ACCOUNT_CHANGED', '账号已切换，原操作已暂停');
+      const result = await transport(path, { ...options, token: session.accessToken });
+      const current = await store('readonly', data => data.get('active'));
+      if (current?.accountId !== session.accountId || current?.accessToken !== session.accessToken) throw fail('ACCOUNT_CHANGED', '账号已切换，原操作结果不再显示');
+      return result;
+    } catch (error) {
+      if (AUTH_ERRORS.has(error.code)) {
+        const current = await store('readonly', data => data.get('active'));
+        if (session && current?.accessToken === session.accessToken) await clear();
+        throw fail('LOGIN_REQUIRED', '登录已失效，请重新登录');
+      }
+      throw error;
+    } finally { busy--; }
+  };
+  const refresh = async () => {
+    if (!refreshing) refreshing = (async () => {
+      let session;
+      try { session = await credentials(); } catch (error) {
+        if (error.code === 'LOGIN_REQUIRED') return publish(signedOut());
+        throw error;
+      }
+      const data = await authenticated('/v1/account', { expectedAccountId: session.accountId, timeoutMs: 25000 });
+      if (data.product !== 'archbuddy' || data.accountId !== session.accountId) { await clear(); throw fail('AUTH_INVALID', '账号信息不匹配'); }
+      return publish({ account: {
+        id: data.accountId, product: 'archbuddy', accountId: data.accountId, workspaceId: data.workspaceId,
+        status: data.status, displayName: data.displayName,
+        credits: { availableUnits: data.credits?.availableUnits, reservedUnits: data.credits?.reservedUnits },
+        entitlements: { downloads: data.entitlements?.downloads, deepReverse: data.entitlements?.deepReverse },
+        library: { count: data.library?.count },
+      }, mode: 'unified', packages: [] });
+    })().finally(() => { refreshing = null; });
+    return refreshing;
+  };
+  return {
+    refresh,
+    async identity() { if (transitioning) throw fail('ACCOUNT_BUSY', '登录状态正在切换'); return (await credentials()).accountId; },
+    api: authenticated,
+    async request(path, options = {}) {
+      if (path === '/api/events') return { accepted: false };
+      const operation = OPERATIONS[path];
+      if (!operation) throw fail('INVALID_INPUT', '不支持的统一服务操作');
+      if (operation === 'describe' && !ENABLE_UNIFIED_DESCRIBE) throw fail('POLICY_PENDING', '简析权益规则正在确认，已保留图片；下载和整理仍可使用');
+      if (!options.requestId) throw fail('INVALID_INPUT', '操作缺少唯一请求标识');
+      const payloadBody = { operation, requestId: options.requestId, payload: options.body || {} };
+      if (new TextEncoder().encode(JSON.stringify(payloadBody)).length > 900 * 1024) throw fail('IMAGE_TOO_LARGE', '参考图仍过大，请缩小图片后重试；当前编辑内容会保留');
+      try {
+        return await authenticated('/v1/execute', { method: 'POST', expectedAccountId: options.expectedAccountId,
+          body: payloadBody });
+      } finally { void refresh().catch(() => {}); }
+    },
+    async handle(type, payload = {}) {
+      if (type === 'account.get') return { ok: true, ...await refresh() };
+      if (type === 'account.library.list') return { ok: true, ...await authenticated('/v1/library') };
+      if (type === 'account.library.get') return { ok: true, item: await authenticated('/v1/library/' + encodeURIComponent(payload.id)) };
+      if (type === 'account.library.put') return { ok: true, item: await authenticated('/v1/library/' + encodeURIComponent(payload.id), {
+        method: 'PUT', body: payload.item, expectedAccountId: payload.expectedAccountId }) };
+      if (type === 'account.library.canvas') return { ok: true, ...await authenticated('/v1/library/' + encodeURIComponent(payload.id) + '/canvas', { method: 'POST', body: {}, expectedAccountId: payload.expectedAccountId }) };
+      if (type === 'account.library.delete') return { ok: true, ...await authenticated('/v1/library/' + encodeURIComponent(payload.id), { method: 'DELETE' }) };
+      if (!['account.login', 'account.logout'].includes(type)) throw fail('INVALID_INPUT', '未知账号操作');
+      if (busy || transitioning || !canSwitch()) throw fail('ACCOUNT_BUSY', '请等待当前操作完成再切换账号');
+      transitioning = true;
+      try {
+        await refreshing?.catch(() => {});
+        if (type === 'account.logout') {
+          const session = await store('readonly', data => data.get('active'));
+          if (session) await transport('/v1/logout', { method: 'POST', body: {}, token: session.accessToken }).catch(error => {
+            if (!AUTH_ERRORS.has(error.code)) throw error;
+          });
+          await clear();
+          return { ok: true, ...signedOut() };
+        }
+        const pending = await authorizationRequest(browser.identity, browser.runtime.id);
+        const callback = await browser.identity.launchWebAuthFlow({ url: pending.url, interactive: true });
+        const code = validateCallback(callback, pending);
+        const result = await transport('/token', { method: 'POST', body: {
+          clientId: browser.runtime.id, redirectUri: pending.redirectUri, code, codeVerifier: pending.verifier,
+        } });
+        const expiresAt = expiryMilliseconds(result.expiresAt);
+        if (typeof result.accessToken !== 'string' || !result.accessToken || typeof result.accountId !== 'string' || !(expiresAt > Date.now())) throw fail('AUTH_INVALID', '登录响应无效');
+        await onSessionChange();
+        await store('readwrite', data => data.put({ accessToken: result.accessToken, expiresAt, accountId: result.accountId }, 'active'));
+      } finally { transitioning = false; }
+      return { ok: true, ...await refresh() };
+    },
+  };
+}

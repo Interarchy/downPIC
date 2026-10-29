@@ -66,41 +66,21 @@
   let toolbarPinned = false;
   let toolbarCollapsed = false;
 
-  chrome.storage.local.get([STORAGE.captureEnabled, STORAGE.projectType, STORAGE.customTypes, STORAGE.hiddenTypes, STORAGE.typeOrder]).then(values => {
-    if (disposed) return;
+  async function loadPreferences() {
+    const response = await request({ type: 'capture.preferences' });
+    if (disposed || !response?.ok) return;
+    const values = response.values || {};
     captureEnabled = Boolean(values[STORAGE.captureEnabled]);
-    defaultType = normalize(values[STORAGE.projectType]) || defaultType;
-    customTypes = Array.isArray(values[STORAGE.customTypes])
-      ? values[STORAGE.customTypes].map(normalize).filter(Boolean)
-      : [];
+    defaultType = normalize(values[STORAGE.projectType]) || PRESET_TYPES[0];
+    customTypes = Array.isArray(values[STORAGE.customTypes]) ? values[STORAGE.customTypes].map(normalize).filter(Boolean) : [];
     hiddenTypes = Array.isArray(values[STORAGE.hiddenTypes]) ? values[STORAGE.hiddenTypes] : [];
     typeOrder = Array.isArray(values[STORAGE.typeOrder]) ? values[STORAGE.typeOrder] : [];
+    if (!captureEnabled) { toolbarCollapsed = false; removeToolbar(true); }
     populateCategorySelect();
-  });
+  }
+  void loadPreferences();
   const onStorageChanged = (changes, area) => {
-    if (area !== 'local') return;
-    if (changes[STORAGE.typeOrder]) { typeOrder = changes[STORAGE.typeOrder].newValue || []; populateCategorySelect(); }
-    if (changes[STORAGE.captureEnabled]) {
-      captureEnabled = Boolean(changes[STORAGE.captureEnabled].newValue);
-      if (!captureEnabled) {
-        toolbarCollapsed = false;
-        removeToolbar(true);
-      }
-    }
-    if (changes[STORAGE.projectType]) {
-      defaultType = normalize(changes[STORAGE.projectType].newValue) || defaultType;
-      populateCategorySelect();
-    }
-    if (changes[STORAGE.customTypes]) {
-      customTypes = Array.isArray(changes[STORAGE.customTypes].newValue)
-        ? changes[STORAGE.customTypes].newValue.map(normalize).filter(Boolean)
-        : [];
-      populateCategorySelect();
-    }
-    if (changes[STORAGE.hiddenTypes]) {
-      hiddenTypes = Array.isArray(changes[STORAGE.hiddenTypes].newValue) ? changes[STORAGE.hiddenTypes].newValue : [];
-      populateCategorySelect();
-    }
+    if (area === 'local' && Object.keys(changes).some(key => Object.values(STORAGE).some(name => key === name || key.endsWith(':' + name)))) void loadPreferences();
   };
   chrome.storage.onChanged.addListener(onStorageChanged);
 
@@ -335,7 +315,7 @@
         return;
       }
       defaultType = normalize(event.currentTarget.value) || defaultType;
-      await chrome.storage.local.set({ [STORAGE.projectType]: defaultType });
+      await request({ type: 'capture.preferences.set', payload: { [STORAGE.projectType]: defaultType } });
       setStatus(`当前分类：${defaultType}`);
     });
     toolbar.querySelector('[data-action="apply-custom"]').addEventListener('click', async () => {
@@ -349,11 +329,11 @@
       if (PRESET_TYPES.includes(value)) hiddenTypes = hiddenTypes.filter(type => type !== value);
       else customTypes = [...new Set([...customTypes, value])];
       defaultType = value;
-      await chrome.storage.local.set({
+      await request({ type: 'capture.preferences.set', payload: {
         [STORAGE.customTypes]: customTypes,
         [STORAGE.hiddenTypes]: hiddenTypes,
         [STORAGE.projectType]: defaultType,
-      });
+      } });
       toolbar.querySelector('.downpic-custom-row').hidden = true;
       populateCategorySelect();
       setStatus(`当前分类：${defaultType}`, 'success');
@@ -394,6 +374,7 @@
   window.addEventListener('scroll', positionToolbar, { passive: true, signal: lifetime.signal });
   window.addEventListener('resize', positionToolbar, { signal: lifetime.signal });
   const onMessage = (message, sender, sendResponse) => {
+    if (message?.type === 'capture.preferences.changed') { defaultType = PRESET_TYPES[0]; customTypes = []; hiddenTypes = []; typeOrder = []; removeToolbar(true); void loadPreferences(); sendResponse({ ok: true }); return; }
     if (message?.type === 'capture.geometry') {
       if (!currentImage) {
         sendResponse({ ok: false });

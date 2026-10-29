@@ -1,3 +1,4 @@
+import { accountStorage, scopeChanges } from './account-storage.mjs';
 import { PRESET_TYPES, STORAGE, normalizePromptScheme, normalizeSourcePageUrl, normalizeProjectType, orderedProjectTypes, resolveProjectType } from './shared.mjs';
 import { getSourceImage, putSourceImage } from './source-image-store.mjs';
 import { createSemanticSearch, keywordMatches } from './library-search.mjs';
@@ -679,14 +680,14 @@ function resetCaptureSelection(type) {
 }
 
 async function restoreHistoricalCaptureType(type) {
-  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
+  const saved = await accountStorage.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
   const custom = saved[STORAGE.customTypes] || [];
   const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
   if (orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []).includes(type)) return;
   // 旧版允许移除分类而保留素材；用户整理这些素材时恢复其分类登记。
   if (!state.captures.some(item => item.type === type) || resolveProjectType(type, saved[STORAGE.projectTypeAliasesV4] || {}) !== type)
     throw new Error('分类已变化，请刷新后重试');
-  await chrome.storage.local.set({
+  await accountStorage.set({
     [STORAGE.customTypes]: PRESET_TYPES.includes(type) ? custom : [...new Set([...custom, type])],
     [STORAGE.hiddenProjectTypesV4]: hidden.filter(name => name !== type),
   });
@@ -710,14 +711,14 @@ async function addCaptureType() {
   const input = $('custom-type');
   const type = normalizeProjectType(input.value);
   if (!type || type.length > 40 || /[<>:"/\\|?*\x00-\x1f]/.test(type)) throw new Error('请输入 1–40 字的有效分类名称');
-  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
+  const saved = await accountStorage.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeAliasesV4, STORAGE.projectTypeOrderV4]);
   const custom = saved[STORAGE.customTypes] || [];
   const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
   const active = orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []);
   if (active.some(name => name.toLocaleLowerCase() === type.toLocaleLowerCase())) throw new Error('已有同名分类');
   const resolved = resolveProjectType(type, saved[STORAGE.projectTypeAliasesV4] || {});
   if (resolved !== type) throw new Error('这个分类已改名为“' + resolved + '”，请使用新名称');
-  await chrome.storage.local.set({
+  await accountStorage.set({
     [STORAGE.customTypes]: PRESET_TYPES.includes(type) ? custom : [...new Set([...custom, type])],
     [STORAGE.hiddenProjectTypesV4]: hidden.filter(name => name !== type),
     [STORAGE.projectType]: type,
@@ -732,14 +733,14 @@ async function deleteCaptureType(type) {
   // 分类整理不能隐式删除图库记录或电脑原图；已有拖动项目功能可先移走内容。
   await loadCaptures();
   if (state.captures.some(item => item.type === type)) throw new Error('分类中还有图片，请先将项目拖到其他分类，再删除此分类');
-  const saved = await chrome.storage.local.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectType, STORAGE.projectTypeOrderV4]);
+  const saved = await accountStorage.get([STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectType, STORAGE.projectTypeOrderV4]);
   const custom = saved[STORAGE.customTypes] || [];
   const hidden = saved[STORAGE.hiddenProjectTypesV4] || [];
   const active = orderedProjectTypes(custom, hidden, saved[STORAGE.projectTypeOrderV4] || []);
   if (!active.includes(type)) throw new Error('分类已变化，请刷新后重试');
   if (active.length <= 1) throw new Error('至少保留一个分类');
   const next = active.filter(name => name !== type);
-  await chrome.storage.local.set({
+  await accountStorage.set({
     [STORAGE.customTypes]: custom.filter(name => name !== type),
     [STORAGE.hiddenProjectTypesV4]: PRESET_TYPES.includes(type) ? [...new Set([...hidden, type])] : hidden,
     [STORAGE.projectTypeOrderV4]: next,
@@ -765,7 +766,7 @@ async function reorderTypes(order) {
   }
   draggingType = null;
   await new Promise(resolve => setTimeout(resolve, 230));
-  await chrome.storage.local.set({ [STORAGE.projectTypeOrderV4]: order });
+  await accountStorage.set({ [STORAGE.projectTypeOrderV4]: order });
 }
 
 async function moveProjectFolder({ type, project }, targetType) {
@@ -795,7 +796,7 @@ function showDeleteCaptures(items, name) {
 async function loadCaptures() {
   const version = ++state.captureLoad;
   const [downloads, stored] = await Promise.all([
-    chrome.downloads.search({}), chrome.storage.local.get([STORAGE.capturePreviewsV4, STORAGE.captureCatalogV4, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4, STORAGE.captureHiddenV4, STORAGE.importedAssetsV4, STORAGE.captureProjectViewV4]),
+    chrome.downloads.search({}), accountStorage.get([STORAGE.capturePreviewsV4, STORAGE.captureCatalogV4, STORAGE.customTypes, STORAGE.hiddenProjectTypesV4, STORAGE.projectTypeOrderV4, STORAGE.projectTypeAliasesV4, STORAGE.captureHiddenV4, STORAGE.importedAssetsV4, STORAGE.captureProjectViewV4]),
   ]);
   if (version !== state.captureLoad) return;
   for (const url of state.captureUrls.values()) URL.revokeObjectURL(url);
@@ -810,7 +811,7 @@ async function loadCaptures() {
   const custom = Array.isArray(stored[STORAGE.customTypes]) ? stored[STORAGE.customTypes] : [];
   state.activeTypes = orderedProjectTypes(custom, hidden, stored[STORAGE.projectTypeOrderV4] || []);
   const hiddenCaptures = new Set(stored[STORAGE.captureHiddenV4] || []);
-  state.captures = [...downloads.filter(item => !hiddenCaptures.has(item.id)).map(captureFromDownload).filter(Boolean),
+  state.captures = [...downloads.filter(item => (pointsEnabled() || Object.hasOwn(stored[STORAGE.captureCatalogV4] || {}, item.id)) && !hiddenCaptures.has(item.id)).map(captureFromDownload).filter(Boolean),
     ...imported.map(captureFromImport)].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
   if (state.selectedFolder && !state.captures.some(item => folderKey(item) === state.selectedFolder)) state.selectedFolder = null;
   if (!state.typeChosenByUser && state.captures.length) {
@@ -853,7 +854,7 @@ async function importDownloadPreviews(files) {
       added++;
     } catch { failed++; }
   }
-  if (added) await chrome.storage.local.set({ [STORAGE.capturePreviewsV4]: next });
+  if (added) await accountStorage.set({ [STORAGE.capturePreviewsV4]: next });
   await loadCaptures();
   toast(added ? '已补齐 ' + added + ' 张图片预览' + (failed ? '，' + failed + ' 张未能读取' : '')
     : '没有匹配到缺少预览的下载图片' + (failed ? '；' + failed + ' 张未能读取' : ''));
@@ -976,7 +977,7 @@ function renderPromptSidebar() {
 }
 
 async function persistGroups() {
-  await chrome.storage.local.set({ [STORAGE.promptGroupsV4]: { groups: state.groups, assignments: state.assignments } });
+  await accountStorage.set({ [STORAGE.promptGroupsV4]: { groups: state.groups, assignments: state.assignments } });
   renderPromptSidebar();
   renderGrid();
   await renderDetail();
@@ -1268,7 +1269,7 @@ async function renderDetail() {
 }
 async function load() {
   const loadNumber = ++state.loadNumber;
-  const stored = await chrome.storage.local.get([STORAGE.promptSchemesV3, STORAGE.promptGroupsV4]);
+  const stored = await accountStorage.get([STORAGE.promptSchemesV3, STORAGE.promptGroupsV4]);
   if (loadNumber !== state.loadNumber) return;
   releaseUrls();
   const raw = Array.isArray(stored[STORAGE.promptSchemesV3]) ? stored[STORAGE.promptSchemesV3] : [];
@@ -1308,7 +1309,7 @@ async function load() {
     .filter(([key, id]) => validKeys.has(key) && validGroups.has(id)));
   if (Object.keys(validAssignments).length !== Object.keys(state.assignments).length) {
     state.assignments = validAssignments;
-    void chrome.storage.local.set({ [STORAGE.promptGroupsV4]: { groups: state.groups, assignments: validAssignments } });
+    void accountStorage.set({ [STORAGE.promptGroupsV4]: { groups: state.groups, assignments: validAssignments } });
   }
   state.selectedKeys = new Set([...state.selectedKeys].filter(key => validKeys.has(key)));
   renderSummary();
@@ -1391,7 +1392,7 @@ function promptDocuments() { return state.items.map(item => {
   return { id: keyFor(item), text: text.length > 2000 ? text.slice(0, 800) + '；' + text.slice(-1199) : text };
 }); }
 async function primeVectorIndex(search, documents) {
-  const consent = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
+  const consent = await accountStorage.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
   if (consent[STORAGE.assetAIConsent] && consent[STORAGE.assetVectorConsent]) await search.prime(documents).catch(() => {});
   else await search.prune(documents).catch(() => {});
 }
@@ -1404,7 +1405,7 @@ async function setCaptureProjectView(view) {
   $('capture-project-grid').classList.toggle('is-large', view === 'large');
   $('capture-view-small').setAttribute('aria-pressed', String(view === 'small'));
   $('capture-view-large').setAttribute('aria-pressed', String(view === 'large'));
-  try { await chrome.storage.local.set({ [STORAGE.captureProjectViewV4]: view }); }
+  try { await accountStorage.set({ [STORAGE.captureProjectViewV4]: view }); }
   catch (error) { toast('保存视图偏好失败：' + error.message, 'error'); }
 }
 $('capture-view-small').addEventListener('click', () => { void setCaptureProjectView('small'); });
@@ -1476,7 +1477,8 @@ $('capture-folder-files').addEventListener('change', event => {
 });
 $('open-sidepanel').addEventListener('click', () => { void openPanel().catch(error => toast(error.message, 'error')); });
 $('empty-open-panel').addEventListener('click', () => { void openPanel().catch(error => toast(error.message, 'error')); });
-chrome.storage.onChanged.addListener((changes, area) => {
+chrome.storage.onChanged.addListener(async (changes, area) => {
+  changes = await scopeChanges(changes, area);
   if (area === 'local' && (changes[STORAGE.promptSchemesV3] || changes[STORAGE.promptGroupsV4])) {
     void load().catch(error => toast(error.message, 'error'));
   }
@@ -1522,7 +1524,7 @@ async function renderDescriptionProgress() {
   const progressText = $('description-progress-text');
   const progressDetail = $('description-progress-detail');
   const failedButton = $('description-progress-failed');
-  const stored = await chrome.storage.local.get(STORAGE.descriptionProgressV4);
+  const stored = await accountStorage.get(STORAGE.descriptionProgressV4);
   const progress = stored[STORAGE.descriptionProgressV4];
   if (!Array.isArray(progress?.ids) || !progress.ids.length) {
     progressElement.hidden = true;
@@ -1548,12 +1550,12 @@ async function renderDescriptionProgress() {
   progressElement.setAttribute('aria-label', '本次概要描述任务：总数 ' + total + '，已完成 ' + completed + '，剩余 ' + remaining + '，失败 ' + failed);
 }
 async function refreshAssetConsent() {
-  const stored = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
+  const stored = await accountStorage.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
   $('asset-consent').hidden = stored[STORAGE.assetAIConsent] === true && stored[STORAGE.assetVectorConsent] === true;
 }
 async function ensureCaptureDescriptionConsent() {
   if (!(await ensureAccount())) return false;
-  const stored = await chrome.storage.local.get(STORAGE.assetAIConsent);
+  const stored = await accountStorage.get(STORAGE.assetAIConsent);
   if (stored[STORAGE.assetAIConsent]) return true;
   const text = pointsEnabled()
     ? '生成核心视觉特点会发送图片的压缩预览，每张 0.1 积分；开启后新下载图片也会自动描述。确认同意并开启图库 AI？'
@@ -1565,7 +1567,7 @@ async function ensureCaptureDescriptionConsent() {
 }
 async function ensureAssetConsent() {
   if (!(await ensureAccount())) return false;
-  const stored = await chrome.storage.local.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
+  const stored = await accountStorage.get([STORAGE.assetAIConsent, STORAGE.assetVectorConsent]);
   if (!stored[STORAGE.assetAIConsent]) {
     const text = pointsEnabled()
       ? '开启图库 AI：新下载图片的预览将自动生成核心视觉特点，每张 0.1 积分（100 张共 10 积分）。确认有权处理并同意自动消耗积分？'
@@ -1589,11 +1591,11 @@ function normalizedRecentSearches(values) {
 }
 
 async function rememberSearch(query) {
-  const stored = await chrome.storage.local.get(STORAGE.librarySearchHistoryV4);
+  const stored = await accountStorage.get(STORAGE.librarySearchHistoryV4);
   const value = query.trim();
   recentSearches = [value, ...normalizedRecentSearches(stored[STORAGE.librarySearchHistoryV4])
     .filter(entry => entry.toLocaleLowerCase() !== value.toLocaleLowerCase())].slice(0, 5);
-  await chrome.storage.local.set({ [STORAGE.librarySearchHistoryV4]: recentSearches });
+  await accountStorage.set({ [STORAGE.librarySearchHistoryV4]: recentSearches });
 }
 
 function renderSearchHistory(menu, input, filter = false) {
@@ -1602,7 +1604,7 @@ function renderSearchHistory(menu, input, filter = false) {
   heading.append(element('span', '', '最近搜索'));
   if (recentSearches.length) heading.append(button('清空', 'search-history-clear', async () => {
     try {
-      await chrome.storage.local.remove(STORAGE.librarySearchHistoryV4);
+      await accountStorage.remove(STORAGE.librarySearchHistoryV4);
       recentSearches = [];
       renderSearchHistory(menu, input);
     } catch (error) { toast('清空搜索记录失败：' + error.message, 'error'); }
@@ -1630,7 +1632,7 @@ function wireSemanticSearch(inputId, buttonId, statusId, search, documents, rend
     if (openingHistory) return;
     openingHistory = true;
     try {
-      const stored = await chrome.storage.local.get(STORAGE.librarySearchHistoryV4);
+      const stored = await accountStorage.get(STORAGE.librarySearchHistoryV4);
       recentSearches = normalizedRecentSearches(stored[STORAGE.librarySearchHistoryV4]);
       if (document.activeElement === input) renderSearchHistory(menu, input);
     } catch (error) { toast('读取搜索记录失败：' + error.message, 'error'); }
@@ -1725,7 +1727,8 @@ $('image-viewer').addEventListener('keydown', event => {
 });
 $('image-viewer').addEventListener('close', () => { viewerItems = []; resetViewerZoom(); $('viewer-image').removeAttribute('src'); });
 $('enable-asset-ai').addEventListener('click', () => { void ensureAssetConsent().catch(error => toast(error.message, 'error')); });
-chrome.storage.onChanged.addListener((changes, area) => {
+chrome.storage.onChanged.addListener(async (changes, area) => {
+  changes = await scopeChanges(changes, area);
   if (area !== 'local') return;
   if (changes[STORAGE.assetAIConsent] || changes[STORAGE.assetVectorConsent]) void refreshAssetConsent();
   if (changes[STORAGE.descriptionProgressV4] || changes[STORAGE.importedAssetsV4] || changes[STORAGE.captureCatalogV4]) void renderDescriptionProgress();

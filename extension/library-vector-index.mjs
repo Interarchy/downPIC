@@ -1,11 +1,14 @@
+import { contextScope } from './account-storage.mjs';
 // Vectors belong to this browser profile. Text and image bytes are not stored here.
 const DB_NAME = 'archbuddy-library-vectors-v1';
 const STORE = 'vectors';
 const VERSION = 1;
 
-function openDatabase() {
+async function openDatabase() {
+  const scope = await contextScope();
+  const name = scope === 'local-demo' ? DB_NAME : DB_NAME + ':' + scope;
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, VERSION);
+    const request = indexedDB.open(name, VERSION);
     request.onupgradeneeded = () => request.result.createObjectStore(STORE, { keyPath: 'key' });
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(new Error('无法打开本地向量索引'));

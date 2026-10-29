@@ -1,5 +1,14 @@
 # ArchBuddy 项目进度交接
 
+## 2026-10-29：官网、Canvas、插件统一账号候选版
+
+用户明确要求三个入口为同一个产品，共用注册、账户和数据。本轮在独立工作树 `plugin-unified/downPIC-plugin` 的 `fix/unified-product-account` 分支实现，不覆盖原 `codex/phone-login-credits` 的未提交内容。正式插件改为官网邮箱/Google + PKCE 授权、后台专用会话，余额和权益读取统一账户；本地素材按账号分区，历史库明确选择后才导入云素材。新增云素材页、R2直传及在Canvas首次创建参考节点的入口。旧本地手机号演示独立保留，不再作为正式注册系统。
+
+普通下载扣次口径仍由主会话澄清，`METER_FILE_DOWNLOADS=false`；下载预占模块存在但不启用，`ENABLE_UNIFIED_DESCRIBE=false` 阻止待确认的正式简析请求。执行失败不自动生成新付费请求标识。固定后端 `https://canvas.archbuddy.top`，协议与已实现内容见 [统一账号记录](ARCHBUDDY_UNIFIED_ACCOUNT.md)。本轮未部署云端、未提交商店、未运行付费模型，API可用性、真实登录和跨端资产仍待对应服务发布后的验收。
+
+验证：全部运行模块语法检查、33项扩展测试（含14项新增安全/计量边界检查）、22项现有后端测试通过；ZIP相对模块引用完整，无环境文件、账本或测试入包。0.7.0候选包位于 `extension/dist/archbuddy-beta-0.7.0.zip`（仅本地、Git忽略）；SHA-256 `30D8FE7E417A87CF803471428D630474659CE248A40691814137B0A4CBEE52A9`。解压测试的扩展ID需明确加入后端白名单，生产商店ID保持原值。
+
+
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。
 >
 > **更新时间**：2026-10-16

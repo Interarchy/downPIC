@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ArchBuddy 云素材</title><link rel="stylesheet" href="account-ui.css"><link rel="stylesheet" href="cloud-library.css">
+</head><body>
+<header><a class="brand" href="library.html"><img src="icons/logo.svg" alt="">ArchBuddy</a><nav><a href="library.html">本地图词库</a><a href="https://canvas.archbuddy.top/studio" target="_blank" rel="noopener">Canvas</a></nav><div id="account-area"></div></header>
+<main><div class="page-heading"><div><p class="eyebrow">同一个账号 · 同一份创作资产</p><h1>云素材</h1><p>保存到 ArchBuddy 的素材可在 Canvas 使用。原有本机历史由你选择导入。</p></div><button id="refresh" class="account-button account-secondary">刷新</button></div>
+<p id="notice" role="status"></p>
+<div class="toolbar"><button id="remote-tab" class="account-button account-primary">云端素材</button><button id="current-tab" class="account-button account-secondary">当前账号的本机素材</button><button id="legacy-tab" class="account-button account-secondary">选择本机历史素材</button></div>
+<p id="scope-note" class="scope-note">云素材按当前账号保存；退出或切换账号后不会显示其他账号的数据。</p>
+<div id="items" class="items"></div>
+<form id="prompt-form"><h2>保存提示词</h2><label>名称<input id="title" maxlength="160" required></label><label>提示词<textarea id="prompt" rows="5" maxlength="60000" required></textarea></label><button class="account-button account-primary">保存到 ArchBuddy</button></form>
+</main><script type="module" src="cloud-library.mjs"></script></body></html>

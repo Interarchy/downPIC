@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ArchBuddy",
-  "version": "0.6.1",
-  "version_name": "V4.1",
+  "version": "0.7.0",
+  "version_name": "V5 统一账号",
   "description": "面向建筑设计师的图词库：采集与导入参考图，按项目整理并用自然语言搜索，生成和优化中文效果图提示词。",
   "minimum_chrome_version": "141",
   "permissions": [
@@ -11,7 +11,8 @@
     "sidePanel",
     "downloads",
     "storage",
-    "alarms"
+    "alarms",
+    "identity"
   ],
   "host_permissions": [
     "http://*/*",
