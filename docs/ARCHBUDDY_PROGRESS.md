@@ -17,6 +17,8 @@
 - 静态核对：JavaScript 语法、六个方案按钮映射、旧单项文案移除、中英文区块结构均通过；官网正式域名的中英文 HTML、CSS、JS 均 HTTP 200，正文与提交内容完全一致。因本机浏览器运行环境报错，未完成实际目视布局检查。
 - 本次仅改官网公开展示，不改变 Canvas、插件、CloudBase、Waffo 商品配置、账户账本或支付状态；如要开放购买，须先实现并核对商品、结算与额度发放。
 
+- 发布完成：功能提交 `10fb5166864182826d3b0ca00e9d779b34bd8515` 已推送；Vercel 生产部署 `dpl_436Lf2HSHvKnaDWrTvtbL5xJS9Dh` 为 READY，www.archbuddy.top 与 archbuddy.top 均已分配，aliasError 为 null。真实用户登录后的视觉验收仍待完成。
+
 ## 2026-10-28：官网法律入口与支持邮箱
 
 针对 Waffo 网站自检，仅在当前线上提交 3ce29e2 的公开官网 HTML 页脚补充服务条款、隐私政策及客服邮箱。链接为 https://www.archbuddy.top/legal/terms/ 和 https://www.archbuddy.top/legal/privacy/，联系邮箱为用户指定的 melyyang@163.com；移除页脚旧开发隐私域名。覆盖中英文首页、定价页及案例页。法律正文由独立 archbuddy-legal 静态项目维护，官网 /legal 路由提供公开访问。没有修改扩展、CloudBase API、用户数据、下载文件或模型调用。内容审核由运营者李宇阳负责，政策按已确认的人工处理流程披露，不宣称已实现自动输入输出审核。
