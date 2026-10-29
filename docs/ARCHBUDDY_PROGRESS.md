@@ -11,6 +11,8 @@
 另已准备CloudBase关闭匿名绕过：生产旧session/管理员paid入口410，仅服务端HMAC统一执行；现有ArchBuddy请求集合写30天幂等结果，可签名查单，超时/5xx保留pending，不盲退。成功不再扣旧CloudBase次数。源码包已构建但未部署、未配新Secret；TTL和权威美元单价待主会话上线前核验，Worker付费总开关保持关闭。具体协议、目标与CLI准备见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。
 
 
+草稿PR：[Interarchy/downPIC#9](https://github.com/Interarchy/downPIC/pull/9)，stacked target `codex/archbuddy-snapshot-20261022`，依赖452ee7e；仅审阅本次46文件，未合并插件主线。SSH无可用key、HTTPS Git连接reset后，通过GitHub Git对象API上传；4个实现提交的blob/tree/commit SHA均与本地逐项一致，远端候选分支head为0f1560f。未更改其他远端分支。两候选包已复制至主项目 `.scratch/unified-account-release/`，已有.scratch忽略规则生效，复制后哈希一致；只含两份公开插件候选包和中文说明，没有用户素材或私密文件。该记录提交随后只追加到同一候选分支。
+
 > **用途**：这是 ArchBuddy 的跨会话交接文件。每次在本仓库开启新的 Codex 窗口或新任务时，必须先阅读本文件，再读取 AGENTS.md 指定的章程、产品形态和 CloudBase 隔离文档。
 >
 > **更新时间**：2026-10-16
