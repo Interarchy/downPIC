@@ -224,7 +224,8 @@ async function prepareUnifiedPayload(body) {
 async function requestBackend(path, options = {}) {
   const authenticatedPaths = ['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed', '/api/events'];
   if (!authenticatedPaths.includes(path)) return fetchBackend(path, options);
-  const requestId = options.requestId || (['/api/analyze', '/api/v2/analyze', '/api/v3/evaluate', '/api/library/search', '/api/library/describe', '/api/library/embed'].includes(path) ? crypto.randomUUID() : undefined);
+  // Unified executions persist their input-bound id in the account client; a retry must not mint another paid operation.
+  const requestId = options.requestId || (LOCAL_ACCOUNTS && path !== '/api/events' ? crypto.randomUUID() : undefined);
   const body = !LOCAL_ACCOUNTS ? await prepareUnifiedPayload(options.body) : options.body;
   return accountClient.request(path, { ...options, body, requestId });
 }

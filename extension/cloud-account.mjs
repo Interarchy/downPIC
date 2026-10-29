@@ -2,12 +2,20 @@ import { ENABLE_UNIFIED_DESCRIBE } from './runtime-config.mjs';
 import { ACCOUNT_VIEW_KEY } from './account-storage.mjs';
 export const PRODUCT_ORIGIN = 'https://canvas.archbuddy.top';
 export const PLUGIN_BASE = '/api/beta/plugin';
-const AUTH_ERRORS = new Set(['UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID', 'SESSION_EXPIRED', 'PLUGIN_SESSION_INVALID']);
+const AUTH_ERRORS = new Set(['UNAUTHENTICATED', 'UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID', 'SESSION_EXPIRED', 'PLUGIN_SESSION_INVALID']);
 const OPERATIONS = Object.freeze({
   '/api/analyze': 'analyze', '/api/v2/analyze': 'analyze-v2', '/api/v3/evaluate': 'evaluate',
   '/api/library/describe': 'describe', '/api/library/embed': 'embed', '/api/library/search': 'search',
 });
 const fail = (code, message) => Object.assign(new Error(message), { code });
+// A browser timeout cannot prove that execution or charging failed.
+const EXECUTION_TIMEOUT_MS = 185000;
+const DEFINITIVE_EXECUTION_ERRORS = new Set(['INVALID_INPUT', 'BODY_TOO_LARGE', 'CREDIT_INSUFFICIENT']);
+function canonicalJson(value) {
+  return JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
+    ? Object.fromEntries(Object.keys(item).sort().map(key => [key, item[key]])) : item);
+}
+
 export function base64url(bytes) {
   return btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
 }
@@ -57,6 +65,7 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
   let busy = 0;
   let transitioning = false;
   let refreshing;
+  const executions = new Map();
   const signedOut = () => ({ account: null, mode: 'unified', packages: [] });
   const publish = async view => { await browser.storage.session.set({ [ACCOUNT_VIEW_KEY]: view }); return view; };
   const clear = async () => {
@@ -135,13 +144,43 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
       const operation = OPERATIONS[path];
       if (!operation) throw fail('INVALID_INPUT', '不支持的统一服务操作');
       if (operation === 'describe' && !ENABLE_UNIFIED_DESCRIBE) throw fail('POLICY_PENDING', '简析权益规则正在确认，已保留图片；下载和整理仍可使用');
-      if (!options.requestId) throw fail('INVALID_INPUT', '操作缺少唯一请求标识');
-      const payloadBody = { operation, requestId: options.requestId, payload: options.body || {} };
-      if (new TextEncoder().encode(JSON.stringify(payloadBody)).length > 900 * 1024) throw fail('IMAGE_TOO_LARGE', '参考图仍过大，请缩小图片后重试；当前编辑内容会保留');
-      try {
-        return await authenticated('/v1/execute', { method: 'POST', expectedAccountId: options.expectedAccountId,
-          body: payloadBody });
-      } finally { void refresh().catch(() => {}); }
+      const payload = { ...options.body };
+      // Evaluation's UI attempt id is not part of the paid input. A retry must
+      // use the original id both in the envelope and in the executor payload.
+      if (operation === 'evaluate') delete payload.requestId;
+      const serialized = canonicalJson({ operation, payload });
+      if (new TextEncoder().encode(serialized).length + 128 > 900 * 1024) throw fail('IMAGE_TOO_LARGE', '参考图仍过大，请缩小图片后重试；当前编辑内容会保留');
+      const session = await credentials();
+      if (options.expectedAccountId && session.accountId !== options.expectedAccountId) throw fail('ACCOUNT_CHANGED', '账号已切换，原操作已暂停');
+      const fingerprint = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(serialized))));
+      const key = 'execution:' + session.accountId + ':' + fingerprint;
+      if (executions.has(key)) return executions.get(key);
+      const execute = (async () => {
+        // Persist before dispatch. The journal survives service-worker restarts,
+        // logout and reconnect, and contains no images, prompts or credentials.
+        const prior = await store('readonly', data => data.get(key));
+        const requestId = prior?.requestId || options.requestId || crypto.randomUUID();
+        if (!prior) await store('readwrite', data => data.put({ requestId }, key));
+        const wirePayload = JSON.parse(serialized).payload;
+        if (operation === 'evaluate') wirePayload.requestId = requestId;
+        try {
+          const result = await authenticated('/v1/execute', { method: 'POST', expectedAccountId: session.accountId,
+            timeoutMs: EXECUTION_TIMEOUT_MS, body: { operation, requestId, payload: wirePayload } });
+          await store('readwrite', data => data.delete(key));
+          return result;
+        } catch (error) {
+          // Only definitive rejection releases the local attempt. All network,
+          // timeout, server and in-progress failures keep the same request id.
+          if (DEFINITIVE_EXECUTION_ERRORS.has(error.code)) {
+            await store('readwrite', data => data.delete(key));
+            throw error;
+          }
+          if (error.code === 'ACCOUNT_CHANGED' || error.code === 'LOGIN_REQUIRED' || AUTH_ERRORS.has(error.code)) throw error;
+          throw fail('EXECUTION_UNCONFIRMED', '这次操作的结果仍在确认中。再次点击会查询同一次操作，不会重复扣次；当前内容已保留。');
+        } finally { void refresh().catch(() => {}); }
+      })();
+      executions.set(key, execute);
+      try { return await execute; } finally { executions.delete(key); }
     },
     async handle(type, payload = {}) {
       if (type === 'account.get') return { ok: true, ...await refresh() };

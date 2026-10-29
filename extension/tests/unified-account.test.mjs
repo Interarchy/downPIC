@@ -4,15 +4,17 @@ import { authorizationRequest, base64url, validateCallback, createCloudAccountCl
 import { accountStorage, scopedKey } from '../account-storage.mjs';
 
 function harness(fetchImpl) {
-  let secret = { accessToken: 'opaque-test-only', accountId: 'account-a', expiresAt: Date.now() + 60000 };
+  const records = new Map([['active', { accessToken: 'opaque-test-only', accountId: 'account-a', expiresAt: Date.now() + 60000 }]]);
   const views = [];
+  let clears = 0;
   const store = async (_mode, operation) => operation({
-    get: () => ({ result: secret }), put: value => { secret = value; return {}; },
-    delete: () => { secret = undefined; return {}; },
+    get: key => ({ result: records.get(key) }), put: (value, key) => { records.set(key, value); return {}; },
+    delete: key => { records.delete(key); return {}; },
   })?.result;
   const browser = { runtime: { id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }, storage: { session: { set: async value => views.push(value) } } };
-  const client = createCloudAccountClient({ fetchImpl, browser, store, onSessionChange: async () => {} });
-  return { client, views, setSecret: value => { secret = value; } };
+  const makeClient = () => createCloudAccountClient({ fetchImpl, browser, store, onSessionChange: async () => { clears++; } });
+  return { client: makeClient(), makeClient, records, views, clearCount: () => clears,
+    setSecret: value => { records.set('active', value); } };
 }
 const response = data => new Response(JSON.stringify({ data, requestId: 'req-test' }), { headers: { 'Content-Type': 'application/json' } });
 test('PKCE uses a random 256-bit verifier and exact approved redirect', async () => {
@@ -95,4 +97,107 @@ test('undecided describe entitlement never reaches the server', async () => {
   let calls = 0; const h = harness(async () => { calls++; return response({}); });
   await assert.rejects(h.client.request('/api/library/describe', { requestId: 'describe-id', body: {} }), { code: 'POLICY_PENDING' });
   assert.equal(calls, 0);
+});
+
+const failure = (code, status = 401) => new Response(JSON.stringify({ error: { code } }), { status, headers: { 'Content-Type': 'application/json' } });
+const accountResponse = accountId => response({ product: 'archbuddy', accountId });
+test('actual worker UNAUTHENTICATED clears a revoked session and account view', async () => {
+  const h = harness(async () => failure('UNAUTHENTICATED'));
+  await assert.rejects(h.client.refresh(), { code: 'LOGIN_REQUIRED' });
+  assert.equal(h.records.has('active'), false);
+  assert.equal(h.clearCount(), 1);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account, null);
+});
+test('logout succeeds when the server has already revoked the session', async () => {
+  const h = harness(async () => failure('UNAUTHENTICATED'));
+  assert.equal((await h.client.handle('account.logout')).account, null);
+  assert.equal(h.records.has('active'), false);
+  assert.equal(h.clearCount(), 1);
+});
+test('unknown execution retry survives worker restart and changing UI attempt ids', async () => {
+  const calls = []; let interrupted = true;
+  const h = harness(async (url, options) => {
+    if (!url.endsWith('/v1/execute')) return accountResponse('account-a');
+    calls.push(JSON.parse(options.body));
+    if (interrupted) throw new TypeError('network interrupted after server dispatch');
+    return response({ analysisId: 'existing-result' });
+  });
+  const body = { image: { mimeType: 'image/png', base64: 'private-image-marker' } };
+  await assert.rejects(h.client.request('/api/v2/analyze', { requestId: 'first-id', body }), { code: 'EXECUTION_UNCONFIRMED' });
+  assert.equal([...h.records.keys()].filter(key => key.startsWith('execution:account-a:')).length, 1);
+  assert.equal(JSON.stringify([...h.records.entries()]).includes('private-image-marker'), false);
+  interrupted = false;
+  const restarted = h.makeClient();
+  assert.equal((await restarted.request('/api/v2/analyze', { requestId: 'new-ui-id', body: { image: { base64: 'private-image-marker', mimeType: 'image/png' } } })).analysisId, 'existing-result');
+  assert.equal(calls[0].requestId, calls[1].requestId);
+  assert.deepEqual(calls[0].payload, calls[1].payload);
+  // A deliberate repeat after confirmed success starts a new operation.
+  await restarted.request('/api/v2/analyze', { requestId: 'deliberate-repeat', body });
+  assert.equal(calls[2].requestId, 'deliberate-repeat');
+});
+test('evaluation retry reuses the same envelope and payload request id', async () => {
+  const calls = [];
+  const h = harness(async (url, options) => {
+    if (!url.endsWith('/v1/execute')) return accountResponse('account-a');
+    calls.push(JSON.parse(options.body)); throw new TypeError('network interrupted');
+  });
+  for (const requestId of ['first-evaluation', 'new-ui-attempt']) {
+    await assert.rejects(h.client.request('/api/v3/evaluate', { requestId, body: { requestId, target: { versionId: 'v1' } } }), { code: 'EXECUTION_UNCONFIRMED' });
+  }
+  assert.equal(calls[0].requestId, 'first-evaluation');
+  assert.equal(calls[1].requestId, 'first-evaluation');
+  assert.equal(calls[1].payload.requestId, 'first-evaluation');
+});
+test('unknown execution journals remain isolated across account switches', async () => {
+  const calls = [];
+  let accountId = 'account-a';
+  const h = harness(async (url, options) => {
+    if (!url.endsWith('/v1/execute')) return accountResponse(accountId);
+    calls.push(JSON.parse(options.body)); throw new TypeError('network interrupted');
+  });
+  for (const [id, requestId] of [['account-a', 'a-first'], ['account-b', 'b-first'], ['account-a', 'a-new-ui']]) {
+    accountId = id; h.setSecret({ accessToken: 'test-' + id, accountId: id, expiresAt: Date.now() + 60000 });
+    await assert.rejects(h.client.request('/api/v2/analyze', { requestId, body: { image: {} } }), { code: 'EXECUTION_UNCONFIRMED' });
+    await h.client.refresh();
+  }
+  assert.deepEqual(calls.map(call => call.requestId), ['a-first', 'b-first', 'a-first']);
+});
+test('concurrent identical inputs share one paid dispatch', async () => {
+  let release, started; const pending = new Promise(resolve => { release = resolve; });
+  const signal = new Promise(resolve => { started = resolve; }); let calls = 0;
+  const h = harness(async (url) => {
+    if (!url.endsWith('/v1/execute')) return accountResponse('account-a');
+    calls++; started(); await pending; return response({ analysisId: 'once' });
+  });
+  const first = h.client.request('/api/v2/analyze', { body: { image: {} } });
+  await signal;
+  const second = h.client.request('/api/v2/analyze', { body: { image: {} } });
+  await new Promise(resolve => setTimeout(resolve, 10)); release();
+  assert.deepEqual(await Promise.all([first, second]), [{ analysisId: 'once' }, { analysisId: 'once' }]);
+  assert.equal(calls, 1);
+});
+test('an auth error on an uncertain retry retains the original execution id for reconnect', async () => {
+  let code = 'network'; const calls = [];
+  const h = harness(async (url, options) => {
+    if (!url.endsWith('/v1/execute')) return accountResponse('account-a');
+    calls.push(JSON.parse(options.body));
+    if (code === 'network') throw new TypeError('network interrupted');
+    if (code === 'UNAUTHENTICATED') return failure(code);
+    return response({ analysisId: 'existing' });
+  });
+  await assert.rejects(h.client.request('/api/v2/analyze', { requestId: 'original', body: {} }), { code: 'EXECUTION_UNCONFIRMED' });
+  code = 'UNAUTHENTICATED';
+  await assert.rejects(h.client.request('/api/v2/analyze', { requestId: 'retry', body: {} }), { code: 'LOGIN_REQUIRED' });
+  h.setSecret({ accessToken: 'reconnected-test', accountId: 'account-a', expiresAt: Date.now() + 60000 });
+  code = 'success'; await h.client.request('/api/v2/analyze', { requestId: 'after-reconnect', body: {} });
+  assert.deepEqual(calls.map(call => call.requestId), ['original', 'original', 'original']);
+});
+test('execution timeout outlasts the 170 second BFF budget', async () => {
+  const original = AbortSignal.timeout; const timeouts = [];
+  AbortSignal.timeout = value => { timeouts.push(value); return new AbortController().signal; };
+  try {
+    const h = harness(async url => url.endsWith('/v1/execute') ? response({ ok: true }) : accountResponse('account-a'));
+    await h.client.request('/api/v2/analyze', { body: {} });
+    assert.ok(timeouts.includes(185000));
+  } finally { AbortSignal.timeout = original; }
 });
