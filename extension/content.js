@@ -44,6 +44,42 @@
   window.__downPicBetaActive = true;
   const lifetime = new AbortController();
   let disposed = false;
+  const LANGUAGE_KEY = 'archbuddyUiLanguageV1';
+  let language = 'zh';
+  let languageChanged = false;
+  const labels = new Map();
+  const PRESET_LABELS = { '文化建筑': 'Cultural buildings', '教育建筑': 'Educational buildings', '办公建筑': 'Office buildings', '社区建筑': 'Community buildings' };
+  function t(zh, en, params = {}) {
+    return (language === 'en' ? en : zh).replace(/\{(\w+)\}/g, (_match, key) => {
+      const value = params[key];
+      return String(typeof value === 'function' ? value() : value ?? '');
+    });
+  }
+  function label(element, zh, en, attribute = '', params = {}) {
+    if (!element) return;
+    let entries = labels.get(element);
+    if (!entries) { entries = new Map(); labels.set(element, entries); }
+    entries.set(attribute, { zh, en, params });
+    const value = t(zh, en, params);
+    if (attribute) element.setAttribute(attribute, value);
+    else element.textContent = value;
+  }
+  function categoryLabel(value) { return language === 'en' ? PRESET_LABELS[value] || value : value; }
+  function refreshLanguage() {
+    if (!toolbar) return;
+    toolbar.lang = language === 'en' ? 'en' : 'zh-CN';
+    for (const [element, entries] of labels) {
+      if (element !== toolbar && !toolbar.contains(element)) { labels.delete(element); continue; }
+      for (const [attribute, entry] of entries) label(element, entry.zh, entry.en, attribute, entry.params);
+    }
+    populateCategorySelect(true);
+    positionToolbar();
+  }
+  void chrome.storage.local.get(LANGUAGE_KEY).then(values => {
+    if (disposed || languageChanged) return;
+    language = values[LANGUAGE_KEY] === 'en' ? 'en' : 'zh';
+    refreshLanguage();
+  }).catch(() => {});
 
   const STORAGE = {
     captureEnabled: 'capture_enabled',
@@ -80,6 +116,11 @@
   }
   void loadPreferences();
   const onStorageChanged = (changes, area) => {
+    if (area === 'local' && changes[LANGUAGE_KEY]) {
+      languageChanged = true;
+      language = changes[LANGUAGE_KEY].newValue === 'en' ? 'en' : 'zh';
+      refreshLanguage();
+    }
     if (area === 'local' && Object.keys(changes).some(key => Object.values(STORAGE).some(name => key === name || key.endsWith(':' + name)))) void loadPreferences();
   };
   chrome.storage.onChanged.addListener(onStorageChanged);
@@ -125,6 +166,7 @@
     if (!force && (busy || toolbarPinned || toolbarCollapsed || toolbar?.contains(document.activeElement))) return;
     clearTimers();
     toolbar?.remove();
+    labels.clear();
     toolbar = null;
     currentImage = null;
     toolbarPinned = false;
@@ -151,10 +193,11 @@
     positionToolbar();
   }
 
-  function setStatus(message, tone = '') {
+  function setStatus(zh, en, tone = '', params = {}) {
     const line = toolbar?.querySelector('.downpic-status');
     if (!line) return;
-    line.textContent = message;
+    label(line, zh, en, '', params);
+    const message = line.textContent;
     line.dataset.tone = tone;
     line.hidden = !message;
     const feedbackRow = line.closest('.downpic-feedback-row');
@@ -162,22 +205,23 @@
     if (feedbackRow) feedbackRow.hidden = !message && Boolean(reveal?.hidden);
   }
 
-  function populateCategorySelect() {
+  function populateCategorySelect(preserveSelection = false) {
     const select = toolbar?.querySelector('[data-role="category"]');
     if (!select) return;
+    const selected = preserveSelection ? select.value : defaultType;
     const available = [...new Set([...PRESET_TYPES, ...customTypes])].filter(type => !hiddenTypes.includes(type));
     const values = [...new Set([...typeOrder.filter(type => available.includes(type)), ...available])];
     select.replaceChildren(...values.map(value => {
       const option = document.createElement('option');
       option.value = value;
-      option.textContent = value;
+      option.textContent = categoryLabel(value);
       return option;
     }));
     const customOption = document.createElement('option');
     customOption.value = '__custom__';
-    customOption.textContent = '＋ 自定义类型';
+    customOption.textContent = t('＋ 自定义类型', '+ Custom category');
     select.append(customOption);
-    select.value = values.includes(defaultType) ? defaultType : values[0];
+    select.value = selected === '__custom__' || values.includes(selected) ? selected : values[0];
   }
 
   function revealDownload(downloadId) {
@@ -190,16 +234,24 @@
     } catch (error) {
       return {
         ok: false,
-        error: `扩展后台未响应：${error?.message || String(error)}。请在扩展管理页重新加载 ArchBuddy 后再试。`,
+        error: t('扩展后台未响应，请在扩展管理页重新加载 ArchBuddy 后再试。', 'The extension background is not responding. Reload ArchBuddy on your extensions page and try again.'),
+        localConnectionError: true,
       };
     }
+  }
+
+  function responseError(response, zh, en) {
+    if (response?.localConnectionError) {
+      setStatus('扩展后台未响应，请在扩展管理页重新加载 ArchBuddy 后再试。', 'The extension background is not responding. Reload ArchBuddy on your extensions page and try again.', 'error');
+    } else if (response?.error) setStatus(response.error, response.error, 'error');
+    else setStatus(zh, en, 'error');
   }
 
   async function saveImage(image, button) {
     busy = true;
     button.disabled = true;
-    button.textContent = '保存中…';
-    setStatus(`保存到 ${defaultType}`);
+    label(button, '保存中…', 'Saving…');
+    setStatus('保存到 {category}', 'Saving to {category}', '', { category: () => categoryLabel(defaultType) });
     const url = usableImageUrl(image);
     const response = await request({
       type: 'download.image',
@@ -214,12 +266,12 @@
     busy = false;
     if (!response?.ok) {
       button.disabled = false;
-      button.textContent = '重试保存';
-      setStatus(response?.error || '下载失败，请重试', 'error');
+      label(button, '重试保存', 'Retry saving');
+      responseError(response, '下载失败，请重试', 'Download failed. Please retry.');
       return;
     }
-    button.textContent = '已保存';
-    setStatus(`已保存到 下载/ArchBuddy/${defaultType}`, 'success');
+    label(button, '已保存', 'Saved');
+    setStatus('已保存到 下载/ArchBuddy/{category}', 'Saved to Downloads/ArchBuddy/{category}', 'success', { category: defaultType });
     toolbarPinned = true;
     clearTimeout(hideTimer);
     const reveal = toolbar?.querySelector('[data-action="reveal"]');
@@ -233,8 +285,8 @@
   async function analyzeImage(image, button) {
     busy = true;
     button.disabled = true;
-    button.textContent = '正在取图…';
-    setStatus('正在截取图片当前可见区域');
+    label(button, '正在取图…', 'Capturing…');
+    setStatus('正在截取图片当前可见区域', 'Capturing the visible area of this image');
     toolbar.style.visibility = 'hidden';
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     const rect = image.getBoundingClientRect();
@@ -253,12 +305,12 @@
     busy = false;
     if (!response?.ok) {
       button.disabled = false;
-      button.textContent = '重试反推';
-      setStatus(response?.error || '图片读取失败，请重试', 'error');
+      label(button, '重试反推', 'Retry prompt');
+      responseError(response, '图片读取失败，请重试', 'Could not read the image. Please retry.');
       return;
     }
-    button.textContent = '已送入侧栏';
-    setStatus('参考图已进入 ArchBuddy 侧栏', 'success');
+    label(button, '已送入侧栏', 'Sent to sidebar');
+    setStatus('参考图已进入 ArchBuddy 侧栏', 'Reference image sent to the ArchBuddy sidebar', 'success');
   }
 
   function createToolbar(image) {
@@ -267,7 +319,8 @@
     currentImage = image;
     toolbar = document.createElement('div');
     toolbar.className = 'downpic-toolbar';
-    toolbar.setAttribute('aria-label', 'ArchBuddy 图片工具条');
+    labels.clear();
+    label(toolbar, 'ArchBuddy 图片工具条', 'ArchBuddy image tools', 'aria-label');
     toolbar.dataset.collapsed = String(toolbarCollapsed);
     const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" focusable="false"><rect x="8" y="8" width="112" height="112" rx="24" fill="#25634b"/><path fill="#fff" fill-rule="evenodd" d="M30 96 55 32H73L98 96H80L74 80H54L48 96ZM56 66H72V62A8 8 0 0 0 56 62Z"/></svg>`;
     toolbar.innerHTML = `
@@ -288,8 +341,25 @@
         <p class="downpic-status" hidden></p>
         <button class="downpic-reveal" type="button" data-action="reveal" hidden>在文件夹中显示</button>
       </div>`;
+    const control = action => toolbar.querySelector(`[data-action="${action}"]`);
+    for (const [action, zh, en] of [
+      ['expand', '展开', 'Expand'], ['save', '保存图片', 'Save image'],
+      ['analyze', '反推提示词', 'Extract prompt'], ['apply-custom', '使用此类型', 'Use category'],
+      ['cancel-custom', '取消', 'Cancel'], ['reveal', '在文件夹中显示', 'Show in folder'],
+    ]) label(control(action), zh, en);
+    for (const [action, zh, en] of [
+      ['open-library', '打开图词库', 'Open image and prompt library'],
+      ['expand', '展开图片工具', 'Expand image tools'], ['collapse', '收起图片工具', 'Collapse image tools'],
+      ['cancel-custom', '取消自定义', 'Cancel custom category'],
+    ]) {
+      label(control(action), zh, en, 'aria-label');
+      label(control(action), zh, en, 'title');
+    }
+    label(toolbar.querySelector('[data-role="category"]'), '选择图片分类', 'Choose image category', 'aria-label');
+    label(toolbar.querySelector('[data-role="custom-type"]'), '输入自定义图片类型', 'Enter a custom image category', 'placeholder');
     document.body.append(toolbar);
     populateCategorySelect();
+    refreshLanguage();
     positionToolbar();
     toolbar.addEventListener('pointerenter', () => clearTimeout(hideTimer));
     toolbar.addEventListener('pointerleave', scheduleHide);
@@ -301,7 +371,7 @@
       button.disabled = false;
       if (!response?.ok) {
         setToolbarCollapsed(false);
-        setStatus(response?.error || '无法打开图词库', 'error');
+        responseError(response, '无法打开图词库', 'Could not open the image and prompt library.');
       }
     });
     toolbar.querySelector('[data-action="collapse"]').addEventListener('click', () => setToolbarCollapsed(true));
@@ -316,13 +386,13 @@
       }
       defaultType = normalize(event.currentTarget.value) || defaultType;
       await request({ type: 'capture.preferences.set', payload: { [STORAGE.projectType]: defaultType } });
-      setStatus(`当前分类：${defaultType}`);
+      setStatus('当前分类：{category}', 'Current category: {category}', '', { category: () => categoryLabel(defaultType) });
     });
     toolbar.querySelector('[data-action="apply-custom"]').addEventListener('click', async () => {
       const input = toolbar.querySelector('[data-role="custom-type"]');
       const value = normalize(input.value).slice(0, 40);
       if (!value) {
-        setStatus('请输入有效的自定义类型', 'error');
+        setStatus('请输入有效的自定义类型', 'Enter a valid custom category.', 'error');
         input.focus();
         return;
       }
@@ -336,7 +406,7 @@
       } });
       toolbar.querySelector('.downpic-custom-row').hidden = true;
       populateCategorySelect();
-      setStatus(`当前分类：${defaultType}`, 'success');
+      setStatus('当前分类：{category}', 'Current category: {category}', 'success', { category: () => categoryLabel(defaultType) });
     });
     toolbar.querySelector('[data-action="cancel-custom"]').addEventListener('click', () => {
       toolbar.querySelector('.downpic-custom-row').hidden = true;
@@ -344,7 +414,8 @@
     });
     toolbar.querySelector('[data-action="reveal"]').addEventListener('click', async event => {
       const response = await revealDownload(event.currentTarget.dataset.downloadId);
-      setStatus(response?.ok ? '已在文件夹中定位这张图片' : response?.error || '无法打开下载位置', response?.ok ? 'success' : 'error');
+      if (response?.ok) setStatus('已在文件夹中定位这张图片', 'Image located in its folder', 'success');
+      else responseError(response, '无法打开下载位置', 'Could not open the download location.');
     });
   }
 

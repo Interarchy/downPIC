@@ -1,3 +1,14 @@
+## 2026-10-30：0.7.1 三项额度与全插件双语界面
+
+- 弹窗、侧栏、图词库和云素材页统一拆分品牌/语言、账户/云素材、三项额度，不再把邮箱和余额挤在品牌一行。邮箱长时缩略，账户面板保留完整名称；窄屏三列显示 BuddyCoin、简析剩余、深度反推剩余。
+- 额度直接读取统一账户返回的 `credits.availableUnits`、`entitlements.downloads.remaining`、`entitlements.deepReverse.remaining`。其中 downloads 是兼容字段，界面只称简析；未知值显示破折号，不伪造为 0 或注册赠送额。模型执行后的原有账户刷新链路继续发布最新额度。
+- 新增全插件 EN/中偏好 `archbuddyUiLanguageV1`：弹窗、侧栏、图词库、云素材、账户面板、网页图片浮框和隐私页同步更新。默认分类只翻译显示，不迁移分类值；输入草稿、选中项、上传图片和用户内容不因切换而重置或翻译。网页浮框只改自身文字，不改宿主网页语言。
+- 本轮只更新插件界面与打包清单，不修改计费或认证协议、不重新部署后端、不进行真实模型调用。原 GET 来源修复保留，用户此前已明确确认真实登录后显示账户和余额。
+- 验证：69/69 插件测试、运行文件语法与差异检查通过。隔离 Chromium 检查 320/360/440px 弹窗、320/380px 侧栏和窄屏素材库；三项模拟额度、未知值、打开面板后的语言同步、后台错误翻译、草稿/选择保留与无刷新均通过，无页面异常。真实模型扣次与跨端素材完整验收仍另行进行。
+
+- 0.7.1 已打包并原地覆盖既有 `archbuddy-unified-test-0.7.0` 解压目录，固定测试 ID 不变；安装路径中的旧版本号仅为保留 Chrome 加载路径。42 个包内文件与安装文件逐项 SHA-256 一致，49 处相对模块引用完整。重新加载扩展后重开侧栏/图词库；已打开网页刷新一次加载新浮框，此后语言切换自动同步。
+- 商店候选 242354 字节，SHA-256 `D15E5725AA8AB2E7691BF0ED60636C822BB59B6346A4DD51B46C44A0B91B5716`；固定 ID 测试包 242732 字节，SHA-256 `2E59A28F5743BD7F677E1C7821BBF81DE6A92AA1A2FE67B9F6B46191C062060E`。Chrome/Edge 商店尚未提交；本机原地更新不代表商店用户已升级。
+
 ## 2026-10-30：连接成功后仍未登录的 GET 来源修复
 
 - 用户实测已到“连接此账户”，返回侧栏后仍显示登录/注册。独立隔离 Chromium 复现：MV3 Service Worker 的 POST `/token` 自动携带扩展 Origin；带 host permissions 的 GET `/v1/account` 默认没有 Origin，正式 BFF 因此返回 403。线上仅查会话数量已确认出现有效 PluginSession，未读取用户令牌或内容。
@@ -12,13 +23,13 @@
 
 ## 当前发布状态：2026-10-30
 
-统一后端已发布，插件候选包仍待真实用户验收和商店发布。以下线上结论来自主任务在切流后回读的实际状态与探针结果；不把本地测试或打包当作线上完成证明。
+统一后端已发布，用户已确认真实授权返回后显示账户和余额；其余跨账户/素材/计量验收及商店发布仍待完成。以下线上结论来自主任务在切流后回读的实际状态与探针结果；不把本地测试或打包当作线上完成证明。
 
 - CloudBase `archbuddy-api-015` 已为 normal，承接 100% 流量；正式 Worker `archbuddy-beta-preview` 已核验存在 `PRODUCT_EXECUTOR_SECRET`，并已成功设置 `PRODUCT_EXECUTION_ENABLED=true`。旧匿名 `/api/session` 返回 410，不再绕过统一账户。
 - 015 四项无模型验收通过：`/api/status` 返回统一账户模式且匿名会话关闭；旧 session 返回 `410 / UNIFIED_LOGIN_REQUIRED`；签名结果查询返回 `200 / not_found`；错误签名返回 `401 / UNIFIED_UNAUTHORIZED`。真实模型调用为 0，不代表真实生成及扣次流程已完成端到端验收。
 - `archbuddy_dev_requests` 已核验 ADMINONLY；专属 TTL `archbuddy_unified_expiry_v1` 对 `unifiedExpiresAt` 使用 `expireAfterSeconds:0`，原 `_id_`、`_openid_1` 索引保留。统一结果自创建起保留 30 天，旧记录无该字段而不受新 TTL 影响。
 - 2026-10-30 收尾完整回归：插件 62 项、CloudBase 45 项，共 107 项全部通过；45 项包含发布脚本 12 项、固定版本路由 3 项、无模型探针 3 项。
-- 仍待真实邮箱/Google 授权成功后返回插件、A/B 账户切换与缓存隔离、所选图片/提示词进入云素材并在 Canvas 使用、实际成功简析扣 1 次及深度反推额度结算。当前不宣称完整 E2E 通过。
+- 真实授权返回插件已获用户确认；仍待 A/B 账户切换与缓存隔离、所选图片/提示词进入云素材并在 Canvas 使用、实际成功简析扣 1 次及深度反推额度结算。当前不宣称完整 E2E 通过。
 
 ## 唯一身份与服务主源
 
@@ -46,12 +57,12 @@
 
 ## 候选包与待验收
 
-- 版本：0.7.0 / V5 统一账号；新增最小必需 `identity` 权限，保留既有扩展功能。
+- 版本：0.7.1 / V5.1 Unified account；沿用统一账号所需的 `identity` 权限，保留既有扩展功能。
 - 候选 ZIP 通过现有白名单脚本生成，源码中的测试、账本、环境文件与密钥不入包。固定连接上述 Canvas 正式域，后端协议为本文件列出的 plugin API；本地代码检查不证明这些 API 已部署。
-- 商店 ZIP不含 manifest key；固定测试ZIP为 `archbuddy-unified-test-0.7.0.zip`，其公开key只为固定测试ID，不包含私钥。测试ID `ikkmbpahejfapgnngdckocmfbcbnjedo`，后端仅允许此前批准的A/B账号。回调 `https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy`，R2 CORS 精确 origin `chrome-extension://ikkmbpahejfapgnngdckocmfbcbnjedo`。
+- 商店 ZIP不含 manifest key；固定测试ZIP为 `archbuddy-unified-test-0.7.1.zip`，其公开key只为固定测试ID，不包含私钥。测试ID `ikkmbpahejfapgnngdckocmfbcbnjedo`，后端仅允许此前批准的A/B账号。回调 `https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy`，R2 CORS 精确 origin `chrome-extension://ikkmbpahejfapgnngdckocmfbcbnjedo`。
 - 商店 Chrome ID 为 `hkbnjlapflleibeodhghbephgpacbhle`，Edge ID 为 `bdbnnnababglblekgnfpdcmeihjhflok`。测试请使用固定ID包，真实联调按这三个精确ID校验，不能放宽任意扩展授权。
 - 本轮插件仅生成待验收包，尚未提交 Chrome/Edge 商店；CloudBase 发布状态见上节，本轮无真实模型调用。旧商店插件不会因官网后端部署自动升级。
-- 已运行离线语法、账户安全/隔离与既有后端回归。后端已部署，尚待真实邮箱/Google 登录、A/B 两账户切换、云图片在 Canvas 使用与统一权益验收。
+- 已运行离线语法、账户安全/隔离与既有后端回归。后端已部署，真实登录已获用户确认；尚待 A/B 两账户切换、云图片在 Canvas 使用与统一权益验收。
 
 ## 前一轮候选包摘要（不包含 2026-10-30 政策与会话修复）
 
@@ -64,7 +75,7 @@
 
 打包：`& extension/scripts/build-store-package.ps1`；测试包另加 `-FixedIdentityTest`。两包都在Git忽略的 `extension/dist/`，不包含测试、账号账本、环境文件、私钥或API密钥。
 
-## 当前测试包：2026-10-30 登录修复
+## 历史测试包：2026-10-30 早期登录修复（已由 0.7.1 替代）
 
 源码 `fb0d5c2`，已推送 PR #9。固定测试版仍为 0.7.0，同一测试ID；原解压目录已经更新，已加载的用户只需在 Chrome 扩展管理页重新加载。
 

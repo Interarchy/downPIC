@@ -63,3 +63,37 @@
 .account-diagnostics { margin-top: 12px; font-size: 11px; color: #64716a; overflow-wrap: anywhere; }
 .account-diagnostics summary { cursor: pointer; }
 .account-diagnostics p { margin-top: 6px; }
+/* Shared compact account header: identity and three independent allowances. */
+.locale-toggle { flex: 0 0 auto; min-width: 30px; min-height: 32px; padding: 4px 3px; border: 0; background: transparent; color: #25634b; font: 650 12px/1.2 "Segoe UI", "Microsoft YaHei UI", sans-serif; cursor: pointer; }
+.locale-toggle:hover { color: #194a38; text-decoration: underline; text-underline-offset: 4px; }
+.locale-toggle:focus-visible, .account-name:focus-visible, .cloud-library-link:focus-visible { outline: 2px solid #25634b; outline-offset: 2px; }
+.locale-toggle:disabled { opacity: .5; cursor: wait; }
+.account-summary { grid-column: 1 / -1; flex: 0 0 100%; min-width: 0; width: 100%; margin: 0; padding: 10px 0 0; border-top: 1px solid #e3e9e5; }
+.account-summary-row { display: flex; align-items: center; justify-content: space-between; min-width: 0; gap: 12px; }
+.account-summary .account-entry { min-height: 30px; margin: 0; padding: 3px 0; border: 0; border-radius: 0; background: transparent; color: #25634b; font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.4; }
+.account-name { display: block; flex: 1 1 0; min-width: 0; overflow: hidden; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+.cloud-library-link { flex: 0 0 auto; text-decoration: none; }
+.account-summary .account-entry:hover { background: transparent; text-decoration: underline; text-underline-offset: 3px; }
+.account-balances { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin: 8px 0 0; padding: 0 0 2px; }
+.account-balances[hidden] { display: none; }
+.account-metric { min-width: 0; }
+.account-metric dt { margin: 0 0 3px; color: #64716a; font: 400 10px/1.4 "Segoe UI", "Microsoft YaHei UI", sans-serif; overflow-wrap: anywhere; }
+.account-metric dd { margin: 0; color: #24332d; font: 650 18px/1.25 "Segoe UI", "Microsoft YaHei UI", sans-serif; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.account-dialog-balances { margin-top: 14px; padding-bottom: 14px; border-bottom: 1px solid #e3e9e5; }
+.account-dialog .account-welcome { overflow-wrap: anywhere; }
+.account-dialog > .account-button { max-width: 100%; margin-top: 15px; white-space: normal; }
+.brand-row.has-unified-account { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 10px; }
+.brand-row.has-unified-account .brand { min-width: 0; }
+.app-header.has-unified-account { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px 12px; min-height: 0; padding: 14px 18px 12px; }
+.app-header.has-unified-account .brand { min-width: 0; gap: 7px; }
+.app-header.has-unified-account .brand strong { font-size: 19px; }
+.app-header.has-unified-account .header-actions { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 5px; min-width: 0; }
+.app-header.has-unified-account .header-actions > p { font-size: 10px; white-space: normal; text-align: right; max-width: 90px; }
+@media (max-width: 360px) {
+  .app-header.has-unified-account { padding-inline: 12px; gap: 8px; }
+  .app-header.has-unified-account .brand strong { font-size: 17px; }
+  .app-header.has-unified-account .brand-mark { width: 28px; height: 28px; flex-basis: 28px; }
+  .app-header.has-unified-account .beta { font-size: 8px; padding: 2px 4px; }
+  .app-header.has-unified-account .header-actions > p { max-width: 62px; font-size: 9px; }
+  .account-balances { gap: 8px; }
+}

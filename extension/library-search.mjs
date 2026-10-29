@@ -75,8 +75,8 @@ export function createSemanticSearch(embed, namespace) {
     return task;
   };
   return {
-    query: '', ids: [], status: '', busy: false,
-    clear() { generation++; this.query = ''; this.ids = []; this.status = ''; },
+    query: '', ids: [], status: '', statusI18n: null, busy: false,
+    clear() { generation++; this.query = ''; this.ids = []; this.status = ''; this.statusI18n = null; },
     select(items, query, key, textFor) {
       if (!query.trim()) return items;
       const lexical = keywordMatches(items, query, textFor);
@@ -93,7 +93,7 @@ export function createSemanticSearch(embed, namespace) {
     async run(query, documents, update) {
       if (this.busy) return;
       const version = ++generation;
-      this.query = query.trim(); this.ids = []; this.busy = true;
+      this.query = query.trim(); this.ids = []; this.busy = true; this.statusI18n = null;
       this.status = '已显示关键词结果；正在检查本地向量索引…'; update();
       try {
         const records = await enqueue(() => indexDocuments(documents, (done, total) => {
@@ -110,7 +110,15 @@ export function createSemanticSearch(embed, namespace) {
         this.ids = scored.slice(0, Math.min(40, Math.max(12, Math.ceil(documents.length * 0.1)))).map(row => row.id);
         this.status = `关键词与本地向量结果已合并 · 语义候选 ${this.ids.length} 项`;
       } catch (error) {
-        if (version === generation) this.status = '已保留关键词结果；向量检索未完成：' + error.message;
+        if (version === generation) {
+          this.status = '已保留关键词结果；向量检索未完成：' + error.message;
+          // 保留原字符串接口；额外记录双语错误，页面切语言时无需重新检索。
+          this.statusI18n = {
+            source: this.status,
+            zh: '已保留关键词结果；向量检索未完成：' + (error.zh || error.message),
+            en: 'Keyword results kept. Semantic search did not complete: ' + (error.en || error.message),
+          };
+        }
       } finally { this.busy = false; update(); }
     },
   };

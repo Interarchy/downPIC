@@ -57,6 +57,8 @@ $requiredFiles = @(
   'cloud-library.mjs',
   'account-ui-local.mjs',
   'account-ui.mjs',
+  'i18n.mjs',
+  'privacy.mjs',
   'account-ui.css',
   'runtime-config.mjs',
   'shared.mjs',
