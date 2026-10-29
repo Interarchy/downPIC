@@ -84,3 +84,16 @@ node cloudbase/scripts/publish-unified-executor.mjs --execute --apply-ttl --expe
 ## 已完成验证
 
 使用模拟供应商与串行事务数据库，27 项 CloudBase 测试通过，其中新增 5 项覆盖：默认关闭旧管理员/匿名入口；方法/路径/时间/正文/账号篡改；双实例并发/重放/跨账户结果；超时与确认失败的结算差异；数据库不可用和 search/embed 共用幂等边界。未发送真实图片或调用模型，未执行数据库变更、发布或切流。
+
+## 灰度状态与无模型验收
+
+`verify-unified-executor.mjs` 仅读取指定版本状态；加 `--verify` 后只访问 `/api/status`、已关闭的 `/api/session` 与带签名的 `/api/unified/result`。合成账户与随机请求ID仅查不存在的记录，不提交任务、不扣权益、不调用模型。验收目标必须是腾讯API返回的精确URL参数定向版本，或已明确100%在线的目标版本；缺路由时拒绝将旧版测试误记为新版成功。不会输出Secret、签名或定向参数值。
+
+```powershell
+node cloudbase/scripts/verify-unified-executor.mjs --version archbuddy-api-015
+node cloudbase/scripts/verify-unified-executor.mjs --version archbuddy-api-015 --verify
+```
+
+官方灰度配置使用 tcbr `ReleaseGray`；定向测试为 `TrafficType:URL_PARAMS`，新版本设明确随机查询参数并非默认，旧014设默认。待无模型验收通过，主任务使用官方CLI等价的100%配置完成发布：`GrayType:gray`、`TrafficType:FLOW`、`GrayFlowRatio:100`、唯一VersionFlowItems为已核验版本且FlowRatio100、Priority0、IsDefaultPriority:true、CloseGrayRelease:true。提交前重新检查发布单CurrentVersion与ReleaseVersion以及就绪状态；脚本本身不切流。依据：[腾讯VersionFlowInfo/流量类型](https://cloud.tencent.com/document/api/1243/75713)。
+
+Wrangler写Secret仅传 `--config` 与 `--env preview`，不能再加 `--name archbuddy-beta-preview`，否则Wrangler会重复添加环境后缀。CLI成功只表明命令完成，必须另用Cloudflare专用Secret名称列表核验实际服务；不能根据完成日志推断执行开关或密钥目标已正确。
