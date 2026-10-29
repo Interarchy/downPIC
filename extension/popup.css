@@ -11,7 +11,9 @@
 }
 
 * { box-sizing: border-box; }
-body { width: 360px; margin: 0; color: var(--ink); background: var(--paper); font: 13px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif; }
+/* Chrome sizes an action popup from its document; viewport caps can shrink that measurement. */
+html, body { width: 360px; min-width: 360px; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 13px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif; }
 button, input, select { font: inherit; }
 button { cursor: pointer; }
 button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
@@ -55,12 +57,3 @@ select { width: 100%; margin-top: 10px; padding: 0 9px; }
 .privacy-link { float: right; color: var(--soft); font-size: 10px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { .switch-track, .switch-track::after { transition: none; } }
-/* The action popup remains compact and also fits narrow browser viewports. */
-body { max-width: 100vw; }
-@media (max-width: 340px) {
-  .popup-shell { padding: 14px; }
-  .brand strong { font-size: 17px; }
-  .brand-mark { width: 27px; height: 27px; flex-basis: 27px; }
-  .brand { gap: 5px; }
-  .brand-row.has-unified-account { gap: 8px; }
-}
