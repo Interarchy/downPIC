@@ -108,7 +108,8 @@ body.compact .core-features strong {
   font-weight: 500;
   text-align: right;
 }
-body.compact .plan > button {
+body.compact .plan > button,
+body.compact .plan > .buy-plan {
   margin-top: auto;
   min-height: 44px;
 }
@@ -441,7 +442,8 @@ button:hover {
   background: #30382a;
   border-color: var(--accent);
 }
-.plan > button {
+.plan > button,
+.plan > .buy-plan {
   width: 100%;
   font-size: 14px;
 }
@@ -656,7 +658,8 @@ tbody th:first-child {
   color: var(--accent);
   font-weight: 500;
 }
-.pack .buy-pack {
+.pack .buy-pack,
+.plan > .buy-plan {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -669,7 +672,8 @@ tbody th:first-child {
   text-align: center;
   transition: background 0.15s, border-color 0.15s;
 }
-.pack .buy-pack:hover {
+.pack .buy-pack:hover,
+.plan > .buy-plan:hover {
   background: #30382a;
   border-color: var(--accent);
 }

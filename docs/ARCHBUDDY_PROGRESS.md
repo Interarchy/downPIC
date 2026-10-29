@@ -1,3 +1,10 @@
+## 2026-10-30：专业版正式结账入口
+
+- 在完成上一轮云库文案发布后，收到生产验证交接并独立核对：Canvas 正式部署 dpl_HefePqwDiHdR4HrtZDkAaNVPUmgr 为 READY，源码939d19a1ebafcc20138eb37381a0443267299e5a；构建日志确有 PRO_PLAN_VERIFIED pro_30d USD19.99/30天一次性、1620币/5000简析/400深反。未登录请求进入登录页并保留该商品回跳，没有代付或创建真实订单。
+- 中英文Pro按钮直达 https://canvas.archbuddy.top/account/checkout/pro_30d；六个永久包链接与价格原样保留，Light/Standard仍为预览。只将原按钮样式选择器复用到链接，无新配色或布局。
+- 已确定的5GB、单图20MiB及保留规则不变；法律说明同步受邀销售状态，保留退款、审核、举报及备份规则。只有公开静态内容发布，不部署Canvas/Worker或修改支付开关。
+- 第一轮文案与法律v1.2公网6个目标均HTTP200且与提交正文逐字一致；本轮Pro开放文案的发布核验随后补充。
+
 ## 2026-10-30：专业版云图词库说明同步
 
 - 已核对用户原始确认回执（统一账户会话 01a14509-d377-7541-a7f4-cd8959c510b5，call_12bf7be1cd96495683f4a124b8f13650）：5 GB，以及有效期持续保存、到期后 30 天下载/续购；产品记录为 Canvas 62d9a93 的 docs/operations/cloud-library-pro-rollout.md。
