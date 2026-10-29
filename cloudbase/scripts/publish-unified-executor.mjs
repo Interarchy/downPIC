@@ -24,7 +24,7 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 const hmac = (key, value) => createHmac('sha256', key).update(value).digest();
 const safeError = code => Object.assign(new Error(code), { code });
 const SERVICE_VERSIONS = { tcb: '2018-06-08', tcbr: '2022-02-17' };
-const READ_ACTIONS = new Set(['DescribeCloudRunServerDetail', 'DescribeTable', 'DescribeResourcePermission', 'RunCommands']);
+const READ_ACTIONS = new Set(['DescribeCloudRunServerDetail', 'DescribeTable', 'DescribeResourcePermission', 'RunCommands', 'DescribeReleaseOrder', 'DescribeVersionDetail', 'DescribeCloudRunDeployRecord']);
 export const TTL_INDEX = 'archbuddy_unified_expiry_v1';
 export const indexListRequest = () => ({ EnvId: TARGET.envId, MgoCommands: [{ TableName: TARGET.collection, CommandType: 'COMMAND', Command: JSON.stringify({ listIndexes: TARGET.collection }) }] });
 export const ttlCreateRequest = () => ({ EnvId: TARGET.envId, MgoCommands: [{ TableName: TARGET.collection, CommandType: 'COMMAND', Command: JSON.stringify({ createIndexes: TARGET.collection, indexes: [{ key: { unifiedExpiresAt: 1 }, name: TTL_INDEX, expireAfterSeconds: 0 }] }) }] });
@@ -167,7 +167,7 @@ export async function publish({ api, source, inspected, workerConfig, wranglerCl
   const envParams = mergedEnvironment(inspected.env, secret);
   const upload = await api('tcb', 'DescribeCloudBaseBuildService', { EnvId: TARGET.envId, ServiceName: TARGET.service });
   const url = new URL(upload.UploadUrl);
-  if (url.protocol !== 'https:' || !/(^|\.)[a-z0-9-]+\.cos(?:\.[a-z0-9-]+)?\.(myqcloud\.com|tencentcos\.cn)$/.test(url.hostname)
+  if (url.protocol !== 'https:' || url.hostname !== 'cloudbaserun-code-cos.cloudbase.net' || url.port || url.username || url.password
       || !upload.PackageName || !upload.PackageVersion) throw safeError('SOURCE_UPLOAD_TARGET_INVALID');
   const headers = Object.fromEntries((upload.UploadHeaders || []).map(item => [item.Key, item.Value]));
   let response;

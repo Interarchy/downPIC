@@ -44,7 +44,7 @@ test('gray deployment preserves original env, emits no secrets and syncs Worker 
   const order = [], events = []; let saved, synced;
   const api = async (_service, action, data) => {
     order.push(action);
-    if (action === 'DescribeCloudBaseBuildService') return { UploadUrl: 'https://bucket.cos.ap-shanghai.myqcloud.com/source.zip?signature=test', PackageName: 'source', PackageVersion: 'v1' };
+    if (action === 'DescribeCloudBaseBuildService') return { UploadUrl: 'https://cloudbaserun-code-cos.cloudbase.net/source.zip?signature=test', PackageName: 'source', PackageVersion: 'v1' };
     assert.equal(data.DeployInfo.ReleaseType, 'GRAY'); assert.equal(data.Items.length, 1); assert.equal(data.Items[0].Key, 'EnvParam');
     saved = JSON.parse(data.Items[0].Value); return { RequestId: 'mock-release-id' };
   };
@@ -59,7 +59,7 @@ test('gray deployment preserves original env, emits no secrets and syncs Worker 
 test('an unknown gray outcome cannot configure Worker or automatically retry the release', async () => {
   let updateCalls = 0, synced = false;
   await assert.rejects(publish({ source, inspected: { env, version: 'archbuddy-api-014' }, fetchImpl: async () => ({ ok: true }),
-    api: async (_s, action) => { if (action === 'DescribeCloudBaseBuildService') return { UploadUrl: 'https://bucket.cos.ap-shanghai.myqcloud.com/source.zip', PackageName: 'source', PackageVersion: 'v1' }; updateCalls++; throw Object.assign(new Error(), { code: 'TCB_REQUEST_UNCONFIRMED' }); },
+    api: async (_s, action) => { if (action === 'DescribeCloudBaseBuildService') return { UploadUrl: 'https://cloudbaserun-code-cos.cloudbase.net/source.zip', PackageName: 'source', PackageVersion: 'v1' }; updateCalls++; throw Object.assign(new Error(), { code: 'TCB_REQUEST_UNCONFIRMED' }); },
     syncSecret: async () => { synced = true; } }), { code: 'TCB_REQUEST_UNCONFIRMED' });
   assert.equal(updateCalls, 1); assert.equal(synced, false);
 });
@@ -90,4 +90,14 @@ test('TTL creates only the new dedicated field index, retains legacy indexes, an
   };
   assert.equal((await installUnifiedTtl(api)).retainedIndexCount, 2);
   assert.equal((await installUnifiedTtl(api)).alreadyPresent, true); assert.equal(writes, 1);
+});
+
+test('upload accepts only the exact host returned by the official service, without credentials or alternate ports', async () => {
+  for (const url of ['https://cloudbaserun-code-cos.cloudbase.net.evil.test/x', 'http://cloudbaserun-code-cos.cloudbase.net/x', 'https://user:password@cloudbaserun-code-cos.cloudbase.net/x', 'https://cloudbaserun-code-cos.cloudbase.net:8443/x']) {
+    let uploads = 0;
+    await assert.rejects(publish({ source, inspected: { env, version: 'archbuddy-api-014' },
+      api: async () => ({ UploadUrl: url, PackageName: 'source', PackageVersion: 'v1' }),
+      fetchImpl: () => { uploads++; }, syncSecret: () => { throw new Error('must not write Worker'); } }), { code: 'SOURCE_UPLOAD_TARGET_INVALID' });
+    assert.equal(uploads, 0);
+  }
 });
