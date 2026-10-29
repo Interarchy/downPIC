@@ -60,3 +60,6 @@
 .sidebar-tool-card > .points-cost-note { padding: 0 9px; margin-bottom: 0; }
 
 .unified-account-entry { border: 0; background: transparent; color: #25634b; text-decoration: none; }
+.account-diagnostics { margin-top: 12px; font-size: 11px; color: #64716a; overflow-wrap: anywhere; }
+.account-diagnostics summary { cursor: pointer; }
+.account-diagnostics p { margin-top: 6px; }
