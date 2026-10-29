@@ -1,5 +1,13 @@
 # ArchBuddy 项目进度交接
 
+## 2026-10-30：官网定价页新增三档提示词加油包
+
+- 用户确认提示词加油包为三档组合额度：$1.99 含下载及简析 200 次、深度反推 50 次；$3.99 含 500 次、150 次；$7.99 含 1,200 次、400 次。原两种单项扩展包的公开展示已替换。
+- 生图 BuddyCoin 加油包仍为 $7 / 360、$11 / 720、$22 / 1,620。两类加油包在中英文定价页分别展示；提示词两种额度分别计次、不可互换，仅有效订阅用户可购买，当前订阅周期到期。页面仍明确为定价预览，尚未接入下单或自动发放。
+- 官网源码位于 downPIC 的 `opendesign/mockups/archbuddy-showcase/pricing-usd/`。页面、弹窗与样式提交 `b34b80b18a8814623e01d1bdcf723b893152d14c`，独立分支 `codex/pricing-prompt-packs-20261030`；Vercel 生产部署 `dpl_8oMENd9rJ7ey9dMaX9XiLkUMd9Er` 状态 READY，`www.archbuddy.top` 和 `archbuddy.top` 别名分配成功。
+- 静态核对：JavaScript 语法、六个方案按钮映射、旧单项文案移除、中英文区块结构均通过；官网正式域名的中英文 HTML、CSS、JS 均 HTTP 200，正文与提交内容完全一致。因本机浏览器运行环境报错，未完成实际目视布局检查。
+- 本次仅改官网公开展示，不改变 Canvas、插件、CloudBase、Waffo 商品配置、账户账本或支付状态；如要开放购买，须先实现并核对商品、结算与额度发放。
+
 ## 2026-10-28：官网法律入口与支持邮箱
 
 针对 Waffo 网站自检，仅在当前线上提交 3ce29e2 的公开官网 HTML 页脚补充服务条款、隐私政策及客服邮箱。链接为 https://www.archbuddy.top/legal/terms/ 和 https://www.archbuddy.top/legal/privacy/，联系邮箱为用户指定的 melyyang@163.com；移除页脚旧开发隐私域名。覆盖中英文首页、定价页及案例页。法律正文由独立 archbuddy-legal 静态项目维护，官网 /legal 路由提供公开访问。没有修改扩展、CloudBase API、用户数据、下载文件或模型调用。内容审核由运营者李宇阳负责，政策按已确认的人工处理流程披露，不宣称已实现自动输入输出审核。
