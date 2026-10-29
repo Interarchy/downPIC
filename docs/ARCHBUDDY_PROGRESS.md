@@ -1,5 +1,12 @@
 # ArchBuddy 项目进度交接
 
+## 2026-10-30：官网定价页接入 BuddyCoin 购买入口
+
+- 用户发现官网无法进入购买页。中英文美元定价页的三档 BuddyCoin 加油包按钮已改为 `https://canvas.archbuddy.top/account/boosters`，由 Canvas 登录及邀请资格校验后创建本站订单；不使用裸 Waffo 商品链接。提示词包与 30 天套餐仍只展示方案，不开放下单。
+- 按用户再次确认，三档套餐是 30 天一次性购买、到期手动续购；官网中英文套餐价格、说明及常见问题已移除按月自动续费措辞。提示词包仍要求有效套餐并于当期结束时到期。
+- 分支 `codex/waffo-pricing-links`，功能提交 `6214064`、`157d3ec`；Vercel 正式部署 `dpl_4DP5rxk5QXX9JX9B4j3jz611n6zo` 为 READY，`www.archbuddy.top` 与 `archbuddy.top` 均已绑定。公网中英文定价页 HTTP 200，各有 3 个购买链接；CSS 资源 200；Canvas 未登录入口返回 307 并保留回跳到 `/account/boosters`。
+- 不涉及 CloudBase 资源、账号数据、扩展运行代码或支付密钥。仍待已获邀请账户完成真实付款、入账及退款验收；官网其他商品不可购买。
+
 ## 2026-10-30：官网账户名称及额度浮层排版
 
 - 基于当前生产 b34b80b 与随后仅增加发布记录的 424e648，创建 codex/site-account-summary-20261030；保留三档提示词加油包、统一账户桥、绿色品牌 favicon、SEO、教程和其他页面内容。
