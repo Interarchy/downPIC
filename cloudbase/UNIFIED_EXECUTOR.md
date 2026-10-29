@@ -49,7 +49,7 @@ POST
 
 生产默认拒绝旧 `/api/session`、分析、评估、简析、向量和搜索路径，HTTP 410 `UNIFIED_LOGIN_REQUIRED`；旧管理员 Token 同样不能绕过。保留旧 Secret 不会重新启用旧入口。无需删除旧账号库。local-demo 仅允许明确 NODE_ENV=development/test、回环网络；匿名测试入口只由测试代码显式传 `legacyTestMode: true` 且 NODE_ENV=test，不接受启动环境变量开启。
 
-现有代码只提供供应商 token usage 和输入/输出上限，没有经核准的美元单价。DeepSeek 输出上限 8192 token；search 最多 24 条每条 6000 字符；embed 使用 `kinfra-text-embedding-0.6b`，最多 32 条每条 2000 字符。不能据此猜测费用。主会话的 Worker 默认 `PRODUCT_EXECUTION_ENABLED=false`，在权威成本配置和全站 2 USD 预算预占完成前保持关闭。下载/简析权益口径待用户确认；插件 `METER_FILE_DOWNLOADS=false` / `ENABLE_UNIFIED_DESCRIBE=false` 不变。
+2026-10-30 用户确认插件反推、语义搜索、向量化不适用美元上限；画布每日 2 USD、单次 1 USD 保护保留。普通下载免费，200 次赠送按简析成功扣次，深度反推保留独立 50 次；所有结算由统一 Worker 完成，CloudBase 不再扣旧匿名或本地积分。输入/输出上限、每分钟频率、并发与持久幂等保留。`PRODUCT_EXECUTION_ENABLED` 由主会话在签名执行器与结果查单验收后启用，不能仅凭插件开关假定已经发布。
 
 ## 构建与受控发布准备
 

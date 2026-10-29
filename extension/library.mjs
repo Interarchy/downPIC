@@ -1372,7 +1372,7 @@ $('generate-missing-descriptions').addEventListener('click', async event => {
   if (!(await ensureAccount())) return;
   const prompt = pointsEnabled()
     ? `将为 ${missing} 张缺少描述的图片逐张生成核心视觉特点，最多消耗 ${formatPoints(missing)} 积分（每张 0.1 积分），失败释放。每日模型调用最多 50 次，达到后暂停。继续？`
-    : '将逐张发送本地预览给 ArchBuddy 生成核心视觉描述，可能消耗模型额度。继续？';
+    : `将为 ${missing} 张缺少描述的图片生成简析，每成功一张消耗 1 次简析权益。普通下载免费；额度不足会暂停，未知结果不会重复扣次。继续？`;
   if (!confirm(prompt)) return;
   if (!(await ensureCaptureDescriptionConsent())) return;
   if (button.dataset.busy === 'true') return;
@@ -1541,7 +1541,7 @@ async function renderDescriptionProgress() {
   progressBar.style.width = Math.round((processed / total) * 100) + '%';
   progressTotal.textContent = '本次 ' + total;
   progressText.textContent = '已完成 ' + completed;
-  progressDetail.textContent = '剩余 ' + remaining;
+  progressDetail.textContent = progress.pauseCode ? '已暂停：' + (progress.pauseMessage || '请查看账号权益后重新点击生成') : '剩余 ' + remaining;
   failedButton.hidden = failed < 1;
   failedButton.textContent = '失败 ' + failed;
   failedButton.title = '查看本次任务失败的图片';
@@ -1559,7 +1559,7 @@ async function ensureCaptureDescriptionConsent() {
   if (stored[STORAGE.assetAIConsent]) return true;
   const text = pointsEnabled()
     ? '生成核心视觉特点会发送图片的压缩预览，每张 0.1 积分；开启后新下载图片也会自动描述。确认同意并开启图库 AI？'
-    : '生成概要描述会发送此图片的压缩预览给 ArchBuddy 与 DeepSeek，并消耗模型额度。确认开启图库 AI？';
+    : '开启图库 AI 后，新下载图片的压缩预览会自动发送给 ArchBuddy 与 DeepSeek 生成简析，每成功一张消耗 1 次简析权益。普通下载本身免费。确认开启？';
   if (!confirm(text)) return false;
   await request('assets.consent', { enabled: true });
   await refreshAssetConsent();
@@ -1571,13 +1571,13 @@ async function ensureAssetConsent() {
   if (!stored[STORAGE.assetAIConsent]) {
     const text = pointsEnabled()
       ? '开启图库 AI：新下载图片的预览将自动生成核心视觉特点，每张 0.1 积分（100 张共 10 积分）。确认有权处理并同意自动消耗积分？'
-      : '开启图库 AI：新下载图片的预览将发送给 ArchBuddy 与 DeepSeek 生成视觉描述。确认有权处理并同意？';
+      : '开启图库 AI：新下载图片的预览将自动发送给 ArchBuddy 与 DeepSeek 生成简析，每成功一张消耗 1 次简析权益。普通下载免费。确认开启？';
     if (!confirm(text)) return false;
     await request('assets.consent', { enabled: true });
   }
   if (!stored[STORAGE.assetVectorConsent]) {
-    const text = '开启本地向量检索：首次建索引及文本变化时，图片名称/描述和提示词文本会发给腾讯云 TokenHub 生成向量；每次提交搜索只发送一次查询。图片字节、文件路径和向量索引不会上传或保存在云端；'
-      + (pointsEnabled() ? '向量建索引与查询不扣积分，但计入每日模型调用保护。' : '建索引批次与查询各计入现有 AI 调用额度。') + '确认同意？';
+    const text = '开启本地向量检索：首次建索引及文本变化时，图片名称/描述和提示词文本会发给腾讯云 TokenHub 生成向量；每次提交搜索只发送一次查询。图片字节与文件路径不发送给向量服务；向量索引保存在本机，统一服务为防重复处理保留任务结果 30 天；'
+      + (pointsEnabled() ? '向量建索引与查询不扣积分，但计入每日模型调用保护。' : '语义搜索和向量化不扣简析、深度反推次数或 BuddyCoin，仍受并发和防滥用限制。') + '确认同意？';
     if (!confirm(text)) return false;
     await request('assets.vectorConsent', { enabled: true });
     void primeVectorIndex(captureSearch, captureDocuments());

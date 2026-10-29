@@ -20,8 +20,8 @@ export function backendUrl(path) {
   return `${BACKEND_BASE_URL}${suffix}`;
 }
 
-// 普通文件下载暂不扣权益；计费口径尚待产品确认。预占模块保留但不接入。
+// 普通文件下载免费；预占模块保留兼容，但不接入普通下载。
 export const METER_FILE_DOWNLOADS = false;
 
-// 简析是否扣200项权益仍待确认；确认前不向服务器发起正式简析。
-export const ENABLE_UNIFIED_DESCRIBE = false;
+// 已确认：200次为简析权益，成功生成描述才扣1次，由统一服务端结算。
+export const ENABLE_UNIFIED_DESCRIBE = true;

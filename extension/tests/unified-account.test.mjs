@@ -124,10 +124,21 @@ test('private local cache is partitioned and never imports anonymous history', a
   delete globalThis.chrome;
 });
 
-test('undecided describe entitlement never reaches the server', async () => {
-  let calls = 0; const h = harness(async () => { calls++; return response({}); });
-  await assert.rejects(h.client.request('/api/library/describe', { requestId: 'describe-id', body: {} }), { code: 'POLICY_PENDING' });
-  assert.equal(calls, 0);
+test('approved simple analysis retries the same request and returns the confirmed result', async () => {
+  const calls = []; let interrupted = true;
+  const h = harness(async (url, options) => {
+    if (!url.endsWith('/v1/execute')) return response({ product: 'archbuddy', accountId: 'account-a' });
+    calls.push(JSON.parse(options.body));
+    if (interrupted) throw new TypeError('connection closed after dispatch');
+    return response({ description: 'confirmed image description' });
+  });
+  const body = { image: { mimeType: 'image/png', base64: 'test-only' } };
+  await assert.rejects(h.client.request('/api/library/describe', { requestId: 'describe-id', body }), { code: 'EXECUTION_UNCONFIRMED' });
+  interrupted = false;
+  const result = await h.makeClient().request('/api/library/describe', { requestId: 'new-ui-attempt', body });
+  assert.equal(result.description, 'confirmed image description');
+  assert.equal(calls.length, 2); assert.equal(calls[0].operation, 'describe');
+  assert.equal(calls[1].requestId, 'describe-id');
 });
 
 const failure = (code, status = 401) => new Response(JSON.stringify({ error: { code } }), { status, headers: { 'Content-Type': 'application/json' } });

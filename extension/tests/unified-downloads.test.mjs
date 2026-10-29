@@ -20,7 +20,7 @@ function setup() {
   return { broker: createUnifiedDownloads(client), calls, setAccount: value => { accountId = value; },
     setState: value => { state = value; }, reject: () => { rejectDownload = true; } };
 }
-test('undecided ordinary download charging stays disabled', () => assert.equal(METER_FILE_DOWNLOADS, false));
+test('ordinary file downloads remain free', () => assert.equal(METER_FILE_DOWNLOADS, false));
 test('unknown Chrome download state is never guessed as failed', async () => {
   const h = setup(); await h.broker.download({ url: 'https://example.test/image.png' }); await h.broker.reconcile();
   assert.equal(h.calls.length, 1); assert.ok(h.calls[0].path.endsWith('/reserve'));

@@ -117,7 +117,10 @@ async function fetchOriginalImage(payload) {
 function backendError(code, detail = '') {
   const messages = {
     LOGIN_REQUIRED: '请先登录，再使用 AI 功能。',
-    INSUFFICIENT_POINTS: '积分不足，请打开账号查看积分包或申请内测反馈奖励。',
+    INSUFFICIENT_POINTS: '积分不足，请打开账号查看可用权益。',
+    CREDIT_INSUFFICIENT: '本项 AI 权益已用完，请打开账号查看简析或深度反推剩余次数。普通下载免费。',
+    POLICY_ACCEPTANCE_REQUIRED: '请先在官网账户页确认当前使用规则，再继续 AI 操作。',
+    EXECUTION_UNCONFIRMED: '结果仍在确认中；再次点击会查询原任务，不会重复扣次。图片与编辑内容已保留。',
     ACCOUNT_CHANGED: '账号已切换，原来的 AI 队列已暂停。',
     ACCOUNT_BUSY: '请等待当前 AI 请求完成，再切换或退出账号。',
     ACCOUNT_DISABLED: '账号已停用，请联系开发者。',
@@ -129,7 +132,7 @@ function backendError(code, detail = '') {
     UPSTREAM_FAILED: 'DeepSeek 暂时不可用，请稍后重试。',
     BODY_TOO_LARGE: '图片超过服务允许的大小，请换一张较小的图片。',
     FORBIDDEN: 'ArchBuddy 服务拒绝了扩展请求，请更新本地服务后重试。',
-    UNAUTHORIZED: LOCAL_ACCOUNTS ? '登录已失效，请重新登录。' : '匿名访问凭据已失效，正在重新建立连接，请重试。',
+    UNAUTHORIZED: '登录已失效，请重新登录。',
     ANONYMOUS_SESSION_DISABLED: 'ArchBuddy 免登录服务尚未启用，请稍后再试。',
     INVALID_INSTALLATION_ID: '插件安装身份无效，请在扩展管理页重新加载 ArchBuddy。',
     USER_DAILY_LIMIT: LOCAL_ACCOUNTS ? '今天的 AI 调用已达每日保护上限，明天恢复；积分余额保留，下载与分类仍可使用。' : '你今天的反推次数已用完，请明天再试。下载与分类仍可使用。',
@@ -138,8 +141,8 @@ function backendError(code, detail = '') {
     BUSY: '当前分析请求较多，请稍后再试。',
     ANALYSIS_PAUSED: '反推服务暂时暂停，下载与分类仍可使用。',
     INVALID_INPUT: '评估输入无效，请换图或返回提示词构建检查方案。',
-    AUTH_REQUIRED: LOCAL_ACCOUNTS ? '请先登录，再使用 AI 功能。' : '匿名会话已失效，请重试。',
-    AUTH_INVALID: LOCAL_ACCOUNTS ? '登录已失效，请重新登录。' : '匿名会话无效，请重试。',
+    AUTH_REQUIRED: '请先登录，再使用 AI 功能。',
+    AUTH_INVALID: '登录已失效，请重新登录。',
     MODEL_TIMEOUT: '模型评估超时，请稍后重试。',
     QUOTA_REACHED: '今天暂时无法继续评估，请稍后再试。',
     MODEL_RESPONSE_INVALID: '模型评估结果无法解析，请重试。',
@@ -1620,18 +1623,19 @@ async function describeMissingCaptureDescriptions() {
   if (descriptionsRunning) throw new Error('已有描述生成任务正在运行，请稍后查看');
   const consent = await accountStorage.get(STORAGE.assetAIConsent);
   if (!consent[STORAGE.assetAIConsent]) throw new Error('请先开启图库 AI');
-  const stored = await accountStorage.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
+  const stored = await accountStorage.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4, STORAGE.descriptionProgressV4]);
+  const resumableStatuses = stored[STORAGE.descriptionProgressV4]?.pauseCode ? ['none', 'failed', 'pending'] : ['none', 'failed'];
   const queuedIds = [];
   for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
     if (item.description || !stored[STORAGE.capturePreviewsV4]?.[id]
-        || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
+        || !resumableStatuses.includes(item.descriptionStatus || 'none')) continue;
     await queueCaptureMutation(() => patchCaptureStatus(Number(id), {
       descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
     }));
     queuedIds.push(String(id));
   }
   for (const item of stored[STORAGE.importedAssetsV4] || []) {
-    if (item.description || !['none', 'failed'].includes(item.descriptionStatus || 'none')) continue;
+    if (item.description || !resumableStatuses.includes(item.descriptionStatus || 'none')) continue;
     await queueCaptureMutation(() => patchImportedStatus(item.id, {
       descriptionStatus: 'pending', descriptionError: null, descriptionRetryAt: null,
     }));
@@ -1665,7 +1669,8 @@ async function drainCaptureDescriptions() {
     const expectedAccountId = ACCOUNT_REQUIRED ? await accountClient.identity() : null;
     const consent = await accountStorage.get(STORAGE.assetAIConsent);
     if (!consent[STORAGE.assetAIConsent]) return;
-    const stored = await accountStorage.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4]);
+    const stored = await accountStorage.get([STORAGE.captureCatalogV4, STORAGE.capturePreviewsV4, STORAGE.importedAssetsV4, STORAGE.descriptionProgressV4]);
+    if (stored[STORAGE.descriptionProgressV4]?.pauseCode) return;
     const tasks = [];
     for (const [id, item] of Object.entries(stored[STORAGE.captureCatalogV4] || {})) {
       if (item.description || !['pending', 'preview-missing'].includes(item.descriptionStatus) || !stored[STORAGE.capturePreviewsV4]?.[id]
@@ -1683,7 +1688,7 @@ async function drainCaptureDescriptions() {
     const descriptionConcurrency = 6;
     const nonRetryableCodes = new Set(['USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT', 'TEST_LIMIT_REACHED',
       'QUOTA_REACHED', 'NOT_CONFIGURED', 'ANALYSIS_PAUSED', 'INVALID_IMAGE', 'IMAGE_TOO_LARGE',
-      'LOGIN_REQUIRED', 'ACCOUNT_CHANGED', 'ACCOUNT_DISABLED', 'INSUFFICIENT_POINTS']);
+      'LOGIN_REQUIRED', 'ACCOUNT_CHANGED', 'ACCOUNT_DISABLED', 'INSUFFICIENT_POINTS', 'CREDIT_INSUFFICIENT', 'FORBIDDEN', 'POLICY_ACCEPTANCE_REQUIRED']);
     let cursor = 0, stop = false;
     const runTask = async () => {
       while (cursor < tasks.length && !stop) {
@@ -1710,6 +1715,18 @@ async function drainCaptureDescriptions() {
             await describeCapture({ downloadId: task.downloadId, expectedAccountId });
             break;
           } catch (error) {
+            if (ACCOUNT_REQUIRED && ['CREDIT_INSUFFICIENT', 'FORBIDDEN', 'POLICY_ACCEPTANCE_REQUIRED'].includes(error?.code)) {
+              await markStatus({ descriptionStatus: 'pending', descriptionError: error.message, descriptionRetryAt: null });
+              await queueCaptureMutation(async () => {
+                const current = await accountStorage.get(STORAGE.descriptionProgressV4);
+                await accountStorage.set({ [STORAGE.descriptionProgressV4]: {
+                  ...(current[STORAGE.descriptionProgressV4] || {}), pauseCode: error.code,
+                  pauseMessage: error.message, pausedAt: Date.now(),
+                } });
+              });
+              stop = true;
+              break;
+            }
             if (ACCOUNT_REQUIRED && ['LOGIN_REQUIRED', 'ACCOUNT_CHANGED', 'ACCOUNT_DISABLED', 'INSUFFICIENT_POINTS', 'USER_DAILY_LIMIT', 'PROJECT_DAILY_LIMIT'].includes(error?.code)) {
               await markStatus({ descriptionStatus: 'pending', descriptionError: error.message, descriptionRetryAt: null });
               stop = true;
@@ -1763,7 +1780,7 @@ async function recoverDescriptionQueue() {
         // 中断的付费请求结果未知：有结果则收尾，没有结果不自动重复计费。
         await patchCaptureStatus(id, item.description
           ? { descriptionStatus: 'ready', descriptionError: null }
-          : { descriptionStatus: 'failed', descriptionError: '生成中断，可重新生成或填写视觉描述' });
+          : { descriptionStatus: 'failed', descriptionError: '结果待确认；再次点击会查询原任务，不会重复扣次。也可手工填写描述。' });
       }
     }
     const imported = [...(stored[STORAGE.importedAssetsV4] || [])];
@@ -1772,7 +1789,7 @@ async function recoverDescriptionQueue() {
       if (item.descriptionStatus === 'processing' && Date.now() - item.descriptionStartedAt > 180000) {
         imported[index] = item.description
           ? { ...item, descriptionStatus: 'ready', descriptionError: null }
-          : { ...item, descriptionStatus: 'failed', descriptionError: '生成中断，可重新生成或填写视觉描述' };
+          : { ...item, descriptionStatus: 'failed', descriptionError: '结果待确认；再次点击会查询原任务，不会重复扣次。也可手工填写描述。' };
         importedChanged = true;
       }
     }
