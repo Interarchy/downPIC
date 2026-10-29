@@ -1,6 +1,23 @@
-# 统一账户模型执行器（待部署）
+# 统一账户模型执行器（015 已发布）
 
-日期：2026-10-29。本文件优先于旧匿名测试部署说明。实现仅在独立工作树完成，尚未部署，不代表线上 `archbuddy-api-014` 已关闭匿名访问。官网、Canvas、插件统一账户、积分和权益以 Cloudflare D1 为唯一主源。CloudBase 只接收 Worker 签名的模型执行，不建立另一套正式注册或积分。
+更新：2026-10-30。本文件优先于旧匿名测试部署说明。统一执行器已由主任务部署为 `archbuddy-api-015` 并完成 100% 切流；014 保留为旧版本，不能恢复其匿名访问作为正式回滚。官网、Canvas、插件统一账户、积分和权益以 Cloudflare D1 为唯一主源。CloudBase 只接收 Worker 签名的模型执行，不建立另一套正式注册或积分。
+
+## 当前线上证据：2026-10-30
+
+主任务已在真实切流后确认 `archbuddy-api-015` 为 normal 且在线比例 100%，随后 `verify-unified-executor.mjs --version archbuddy-api-015 --verify` 通过以下四项。读取版本与实际探针结合，未将旧 014 的健康响应误记为新版通过。
+
+| 探针 | 实际结果 |
+| --- | --- |
+| `GET /api/status` | 200，`accountMode=unified`、`anonymousSessionsEnabled=false` |
+| `POST /api/session` | 410，`UNIFIED_LOGIN_REQUIRED` |
+| HMAC 签名 `POST /api/unified/result` | 200，合成不存在任务返回 `not_found` |
+| 错误签名 `POST /api/unified/result` | 401，`UNIFIED_UNAUTHORIZED` |
+
+该验收 `modelCalls=0`；未提交 execute、未消耗用户权益，不能代表真实模型调用、成功扣次或用户登录 E2E 已验收。通过后，主任务已向实际 `archbuddy-beta-preview` 设置 `PRODUCT_EXECUTION_ENABLED=true`；同名执行器 Secret 已先通过专用 Secret 名称元数据核验存在，未在记录中披露密钥值。
+
+集合 `archbuddy_dev_requests` 为 ADMINONLY，专属 `archbuddy_unified_expiry_v1` TTL 已成功建立并回读确认（`unifiedExpiresAt:1`、`expireAfterSeconds:0`）；旧两个索引保持。TTL 配置生效不等于已经观察了 30 天后的实际清理，应用端到期读取拒绝仍保留。
+
+最初 URL_PARAMS 灰度 API 虽返回成功，实际回读仍 FLOW 且没有定向参数；未声称定向测试成功，也未继续重复配置。主任务保持 Worker 执行关闭，采用显式 015 全流量切换，再完成上述四项探针，最后才开启 Worker。现有脚本默认拒绝未经确认的 canary 写操作。
 
 ## 入口与签名
 
@@ -38,10 +55,10 @@ POST
 - completed 持久化旧接口完整响应（含生成提示词或向量）；重复 execute 仅返回记录，不调用模型。
 - 提交前明确失败，或供应商明确返回 400/401/403/404/413/415/422/429 拒绝，持久化 failed。错误响应仅在失败状态保存成功后附 `executionState: failed`；其他已认领异常为 pending。供应商 HTTP 408/5xx 不作为确认未收费。
 - 查单只返回 `completed + result`、`failed + errorCode`、`pending` 或 `not_found`。not_found 表示无法查到结果，不能自行推导“从未提交”或退款。
-- 统一路径跳过旧 CloudBase 次数/积分预占，防止双重扣费；只有 Worker 的 D1 预占、扣减、退款与全站成本预算生效。CloudBase 并发/分钟速率限制仅用于保护，不增加独立每日预算。
+- 统一路径跳过旧 CloudBase 次数/积分预占，防止双重扣费；只有 Worker 的 D1 预占、扣减与退款生效；美元预算仅适用于画布，不适用于用户明确豁免的插件操作。CloudBase 并发/分钟速率限制仅用于保护，不增加独立每日预算。
 - 浏览器断开不主动取消已提交的统一模型请求，尽量写入可查结果。供应商超时仍按现有适配器上限中断，但不能当作确认失败。
 
-结果保存目标为 30 天，`expiresAt` 已写入，查询拒绝读取过期结果。旧隔离记录明确 TTL 尚未验证，部署前必须核验该集合的 `expiresAt` 自动清理；仅有字段不等于物理删除已经实现。完成结果可能含私人文字或向量，集合必须 ADMINONLY，不能开放给匿名或浏览器客户端。旧历史计数和本地手机号账本不删除。
+结果自创建起保存 30 天，`expiresAt` 控制即时读取拒绝，`unifiedExpiresAt` BSON Date 对应已核验的专属 TTL 物理清理；后台删除可能有延迟。旧记录不含专属字段，不受新 TTL 影响。完成结果可能含私人文字或向量，集合必须 ADMINONLY，不能开放给匿名或浏览器客户端。旧历史计数和本地手机号账本不删除。
 
 ## 上线配置和成本边界
 
@@ -49,11 +66,11 @@ POST
 
 生产默认拒绝旧 `/api/session`、分析、评估、简析、向量和搜索路径，HTTP 410 `UNIFIED_LOGIN_REQUIRED`；旧管理员 Token 同样不能绕过。保留旧 Secret 不会重新启用旧入口。无需删除旧账号库。local-demo 仅允许明确 NODE_ENV=development/test、回环网络；匿名测试入口只由测试代码显式传 `legacyTestMode: true` 且 NODE_ENV=test，不接受启动环境变量开启。
 
-2026-10-30 用户确认插件反推、语义搜索、向量化不适用美元上限；画布每日 2 USD、单次 1 USD 保护保留。普通下载免费，200 次赠送按简析成功扣次，深度反推保留独立 50 次；所有结算由统一 Worker 完成，CloudBase 不再扣旧匿名或本地积分。输入/输出上限、每分钟频率、并发与持久幂等保留。`PRODUCT_EXECUTION_ENABLED` 由主会话在签名执行器与结果查单验收后启用，不能仅凭插件开关假定已经发布。
+2026-10-30 用户确认插件反推、语义搜索、向量化不适用美元上限；画布每日 2 USD、单次 1 USD 保护保留。普通下载免费，200 次赠送按简析成功扣次，深度反推保留独立 50 次；所有结算由统一 Worker 完成，CloudBase 不再扣旧匿名或本地积分。输入/输出上限、每分钟频率、并发与持久幂等保留。`PRODUCT_EXECUTION_ENABLED` 已由主任务在签名执行器与结果查单验收通过后启用；实际模型与用户权益验收仍须单独完成。
 
-## 2026-10-30 受控发布脚本
+## 历史发布准备：2026-10-30 切流前快照
 
-已只读核实 CloudBase CLI 3.8.2 登录与腾讯 API 可用；`dev-mel-d9guu8bpu44029179` / `ap-shanghai` / `archbuddy-api` 当前 014 为 100% 在线版本、8080端口、0–1实例。现有13个环境变量保留，无执行器Secret。`archbuddy_dev_requests` 实际权限 ADMINONLY，仅有 `_id_` 和 `_openid_1` 两索引，尚无TTL；本轮未改变线上配置。
+以下为切流前的准备记录和当时使用的固定版本命令，不是当前线上状态，不应直接重跑 014 命令。已只读核实 CloudBase CLI 3.8.2 登录与腾讯 API 可用；`dev-mel-d9guu8bpu44029179` / `ap-shanghai` / `archbuddy-api` 当前 014 为 100% 在线版本、8080端口、0–1实例。现有13个环境变量保留，无执行器Secret。`archbuddy_dev_requests` 实际权限 ADMINONLY，仅有 `_id_` 和 `_openid_1` 两索引，尚无TTL；本轮未改变线上配置。
 
 `cloudbase/scripts/publish-unified-executor.mjs` 默认只读。它从已提交 Git 对象读取固定17个部署源文件，在内存构建ZIP，拒绝未提交源码。复用现有 tcb 临时凭据签名 API，只把 `PRODUCT_EXECUTOR_SECRET` 合并到完整旧 EnvParams，环境与源文件不落地，不输出供应商密钥、签名或上传地址。真实发布仅提交 GRAY，保留旧100%版本、不自动切流、不取消其它发布任务；CloudBase接受后再通过Wrangler标准输入写入同一新密钥。root必须先核实线上 Worker 执行开关关闭。
 
@@ -79,11 +96,11 @@ node cloudbase/scripts/publish-unified-executor.mjs --execute --sync-worker-only
 node cloudbase/scripts/publish-unified-executor.mjs --execute --apply-ttl --expect-version archbuddy-api-014
 ```
 
-依据：[CloudBase部署API](https://docs.cloudbase.net/api-reference/manager/node/cloudrun)、本机CLI官方打包实现、[RunCommands](https://cloud.tencent.com/document/product/876/129012)、[MongoDB TTL机制](https://www.mongodb.com/docs/current/core/index-ttl/)。CloudBase公开UpdateTable模式没有TTL字段，脚本通过固定原生createIndexes命令设置，不猜测未公布参数。实际创建仍待主任务执行与线上返回验证。
+依据：[CloudBase部署API](https://docs.cloudbase.net/api-reference/manager/node/cloudrun)、本机CLI官方打包实现、[RunCommands](https://cloud.tencent.com/document/product/876/129012)、[MongoDB TTL机制](https://www.mongodb.com/docs/current/core/index-ttl/)。CloudBase公开UpdateTable模式没有TTL字段，脚本通过固定原生createIndexes命令设置，不猜测未公布参数。实际创建及原索引保留已由主任务执行并回读核验，见文首当前证据。
 
 ## 已完成验证
 
-使用模拟供应商与串行事务数据库，27 项 CloudBase 测试通过，其中新增 5 项覆盖：默认关闭旧管理员/匿名入口；方法/路径/时间/正文/账号篡改；双实例并发/重放/跨账户结果；超时与确认失败的结算差异；数据库不可用和 search/embed 共用幂等边界。未发送真实图片或调用模型，未执行数据库变更、发布或切流。
+2026-10-30 收尾执行 `node --test extension/tests/*.test.mjs cloudbase/tests/*.test.mjs`，共 107 项通过：插件 62 项、CloudBase 45 项。CloudBase 新增发布脚本 12 项、路由 3 项、探针 3 项；原有 27 项使用模拟供应商与串行事务数据库，其中新增 5 项覆盖：默认关闭旧管理员/匿名入口；方法/路径/时间/正文/账号篡改；双实例并发/重放/跨账户结果；超时与确认失败的结算差异；数据库不可用和 search/embed 共用幂等边界。离线测试未发送真实图片或调用模型；实际数据库索引、发布与切流由主任务独立执行，证据见文首。
 
 ## 灰度状态与无模型验收
 
@@ -94,6 +111,6 @@ node cloudbase/scripts/verify-unified-executor.mjs --version archbuddy-api-015
 node cloudbase/scripts/verify-unified-executor.mjs --version archbuddy-api-015 --verify
 ```
 
-官方灰度配置使用 tcbr `ReleaseGray`；定向测试为 `TrafficType:URL_PARAMS`，新版本设明确随机查询参数并非默认，旧014设默认。待无模型验收通过，主任务使用官方CLI等价的100%配置完成发布：`GrayType:gray`、`TrafficType:FLOW`、`GrayFlowRatio:100`、唯一VersionFlowItems为已核验版本且FlowRatio100、Priority0、IsDefaultPriority:true、CloseGrayRelease:true。提交前重新检查发布单CurrentVersion与ReleaseVersion以及就绪状态；脚本本身不切流。依据：[腾讯VersionFlowInfo/流量类型](https://cloud.tencent.com/document/api/1243/75713)。
+腾讯 schema 列出 `URL_PARAMS`，但本次服务的实际配置未生效；文档支持不等于当前服务已验收。`route-unified-canary.mjs` 现拒绝普通 canary 写操作；`--promote` 仍要求实际路由和四项探针通过。主任务本次在执行关闭的前提下使用 `--execute --promote-direct`，固定 014→015、候选 normal、原版100%，允许已完成的 open/gray 发布单，随后通过 verify 脚本回读015100%并验收。该一次性路由脚本现因线上已015而拒绝重复执行；以后发布须另核对目标，不能复用硬编码旧版本。依据：[腾讯VersionFlowInfo/流量类型](https://cloud.tencent.com/document/api/1243/75713)。
 
 Wrangler写Secret仅传 `--config` 与 `--env preview`，不能再加 `--name archbuddy-beta-preview`，否则Wrangler会重复添加环境后缀。CLI成功只表明命令完成，必须另用Cloudflare专用Secret名称列表核验实际服务；不能根据完成日志推断执行开关或密钥目标已正确。

@@ -2,6 +2,16 @@
 
 日期：2026-10-29。分支：`fix/unified-product-account`，基于完整快照 `452ee7e`。本轮直接依据用户“官网、Canvas、plugin 同一个产品，共用账户、注册和数据，未完成请完成”的指令实施；覆盖旧本地演示阶段的手机号优先、200 积分独立账本、账号间共用图库与不做云同步的范围约定。旧本地演示保留为开发专用模块，不是正式产品账户。
 
+## 当前发布状态：2026-10-30
+
+统一后端已发布，插件候选包仍待真实用户验收和商店发布。以下线上结论来自主任务在切流后回读的实际状态与探针结果；不把本地测试或打包当作线上完成证明。
+
+- CloudBase `archbuddy-api-015` 已为 normal，承接 100% 流量；正式 Worker `archbuddy-beta-preview` 已核验存在 `PRODUCT_EXECUTOR_SECRET`，并已成功设置 `PRODUCT_EXECUTION_ENABLED=true`。旧匿名 `/api/session` 返回 410，不再绕过统一账户。
+- 015 四项无模型验收通过：`/api/status` 返回统一账户模式且匿名会话关闭；旧 session 返回 `410 / UNIFIED_LOGIN_REQUIRED`；签名结果查询返回 `200 / not_found`；错误签名返回 `401 / UNIFIED_UNAUTHORIZED`。真实模型调用为 0，不代表真实生成及扣次流程已完成端到端验收。
+- `archbuddy_dev_requests` 已核验 ADMINONLY；专属 TTL `archbuddy_unified_expiry_v1` 对 `unifiedExpiresAt` 使用 `expireAfterSeconds:0`，原 `_id_`、`_openid_1` 索引保留。统一结果自创建起保留 30 天，旧记录无该字段而不受新 TTL 影响。
+- 2026-10-30 收尾完整回归：插件 62 项、CloudBase 45 项，共 107 项全部通过；45 项包含发布脚本 12 项、固定版本路由 3 项、无模型探针 3 项。
+- 仍待真实邮箱/Google 授权成功后返回插件、A/B 账户切换与缓存隔离、所选图片/提示词进入云素材并在 Canvas 使用、实际成功简析扣 1 次及深度反推额度结算。当前不宣称完整 E2E 通过。
+
 ## 唯一身份与服务主源
 
 - 固定正式服务域名：`https://canvas.archbuddy.top`。官网邮箱/Google 注册仍由同一 Clerk 实例负责，插件不建立手机号注册接口。
@@ -32,12 +42,12 @@
 - 候选 ZIP 通过现有白名单脚本生成，源码中的测试、账本、环境文件与密钥不入包。固定连接上述 Canvas 正式域，后端协议为本文件列出的 plugin API；本地代码检查不证明这些 API 已部署。
 - 商店 ZIP不含 manifest key；固定测试ZIP为 `archbuddy-unified-test-0.7.0.zip`，其公开key只为固定测试ID，不包含私钥。测试ID `ikkmbpahejfapgnngdckocmfbcbnjedo`，后端仅允许此前批准的A/B账号。回调 `https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy`，R2 CORS 精确 origin `chrome-extension://ikkmbpahejfapgnngdckocmfbcbnjedo`。
 - 商店 Chrome ID 为 `hkbnjlapflleibeodhghbephgpacbhle`，Edge ID 为 `bdbnnnababglblekgnfpdcmeihjhflok`。测试请使用固定ID包，真实联调按这三个精确ID校验，不能放宽任意扩展授权。
-- 本轮只生成待验收包，不提交 Chrome/Edge 商店、不部署 CloudBase、不调用付费模型。旧商店插件不会因官网后端部署自动升级。
-- 已运行离线语法、账户安全/隔离与既有后端回归。尚待已部署后端的真实邮箱/Google 登录、A/B 两账户切换、云图片在 Canvas 使用与统一权益验收。
+- 本轮插件仅生成待验收包，尚未提交 Chrome/Edge 商店；CloudBase 发布状态见上节，本轮无真实模型调用。旧商店插件不会因官网后端部署自动升级。
+- 已运行离线语法、账户安全/隔离与既有后端回归。后端已部署，尚待真实邮箱/Google 登录、A/B 两账户切换、云图片在 Canvas 使用与统一权益验收。
 
 ## 前一轮候选包摘要（不包含 2026-10-30 政策与会话修复）
 
-固定正式后端 `https://canvas.archbuddy.top`，API 协议版本为 `/api/beta/plugin` 的统一账号接口；CloudBase 执行升级准备见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。后端上线版本须由主会话另行登记，不以本地打包代表已部署。
+固定正式后端 `https://canvas.archbuddy.top`，API 协议版本为 `/api/beta/plugin` 的统一账号接口；CloudBase 执行升级准备见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。该表仅保留历史包摘要，不代表当前插件包或后端版本；当前状态见文首。
 
 | 包 | 字节 | SHA-256 |
 | --- | --- | --- |
@@ -55,4 +65,4 @@
 | archbuddy-beta-0.7.0.zip | 216742 | 7750DC4508CEABC0D470182B268D8D07E3CE07AEC0353D1AE3E1E0D563CB47CD |
 | archbuddy-unified-test-0.7.0.zip | 217127 | 520C8AB0E8A2CEFD2026B12DA26B93A73A64804C49C710C63ACE909D4E1A485D |
 
-62 项插件、27 项 CloudBase 测试通过。独立插件会话复核包内40个条目、39个运行文件与源码一致（允许文本换行不同），manifest仅加入固定测试公开key与标识，不含私钥。隔离 Chromium 实际加载正确ID，点击登录打开正式邮箱/Google界面，关闭窗口后恢复按钮；另验证规则页往返保留授权地址。真实用户登录与A/B素材往返尚未完成，商店尚未发布。
+此包构建时 62 项插件、27 项 CloudBase 测试通过；本次最终回归为 62 + 45 = 107 项。独立插件会话复核包内40个条目、39个运行文件与源码一致（允许文本换行不同），manifest仅加入固定测试公开key与标识，不含私钥。隔离 Chromium 实际加载正确ID，点击登录打开正式邮箱/Google界面，关闭窗口后恢复按钮；另验证规则页往返保留授权地址。真实用户登录与A/B素材往返尚未完成，商店尚未发布。
