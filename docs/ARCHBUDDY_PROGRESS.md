@@ -1,3 +1,13 @@
+
+
+### 生产发布核验完成
+
+- 官网正式部署 dpl_FihjpMVii3yvL1eEJpnrwZR7byee / 96609ba8bf942f486c1a1daa9aac75660cc00049 READY，www.archbuddy.top 与 archbuddy.top 已绑定，aliasError=null。
+- 法律站正式部署 dpl_2EFj3mqi47zH4MuZnYV3o5UA4qvj / 源码5dea4cfd84fa2386479ad875cf188fa9ad092e0c READY，稳定源站别名正常，官网/legal路由保持。
+- 中英文定价、pricing.js、pricing.css、服务条款、隐私政策共6个公网目标HTTP200且正文与本次源文件逐字一致。中英文各有7个唯一结账入口（Pro+原6加油包），只有Pro新增；所有金额和原永久包链接保留。
+- 未登录Pro入口已核对进入Clerk登录，保留pro_30d回跳。未创建真实订单、未代付；实际付款/入账/退款仍需账户所有者验收。
+- 本机helper故障导致无实际浏览器视觉验收；本次完成脚本解析、生成器内存执行、文本/结构/链接与公网内容核验，不将其宣称为真人端到端付款测试。
+
 ## 2026-10-30：专业版正式结账入口
 
 - 在完成上一轮云库文案发布后，收到生产验证交接并独立核对：Canvas 正式部署 dpl_HefePqwDiHdR4HrtZDkAaNVPUmgr 为 READY，源码939d19a1ebafcc20138eb37381a0443267299e5a；构建日志确有 PRO_PLAN_VERIFIED pro_30d USD19.99/30天一次性、1620币/5000简析/400深反。未登录请求进入登录页并保留该商品回跳，没有代付或创建真实订单。
