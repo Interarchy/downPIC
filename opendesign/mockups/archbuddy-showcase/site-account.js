@@ -6,17 +6,8 @@
   const get = name => menu.querySelector('[data-account-' + name + ']');
   const ui = Object.fromEntries(['label','credit','name','status','values','points','analysis','reverse','note','login','workspace','refresh'].map(name => [name,get(name)]));
   const origin = document.body.dataset.accountOrigin;
-  const allowed = new Set(['https://canvas.archbuddy.top','https://archbuddy-canvas-preview-ed82c1yc8-mel-96aa.vercel.app']);
+  const allowed = new Set(['https://canvas.archbuddy.top']);
   if (!allowed.has(origin)) return;
-  if (document.body.dataset.accountBridge === 'pending') {
-    ui.status.textContent = en
-      ? 'Account balance on this website is being connected. Sign in to Canvas to manage your account.'
-      : '官网账户额度查询接入中。你可以先登录 Canvas 管理账户。';
-    ui.login.href = origin + '/sign-in';
-    ui.workspace.href = origin + '/workspace';
-    ui.refresh.hidden = true;
-    return;
-  }
   const channel = 'archbuddy-account-v1';
   const bridge = new URL('/site-account', origin);
   bridge.searchParams.set('parent', location.origin);
@@ -48,8 +39,8 @@
     ui.login.hidden = !['signed_out','unavailable'].includes(status);
     ui.workspace.hidden = status === 'signed_out';
     if (['active','pending','suspended','closed'].includes(status)) {
-      ui.label.textContent = en ? 'Account' : '我的账户';
       ui.name.textContent = typeof data.displayName === 'string' ? data.displayName.slice(0,64) : 'ArchBuddy';
+      ui.label.textContent = ui.name.textContent;
     }
     if (status !== 'active') return;
     if (!Number.isSafeInteger(data.credits) || data.credits < 0) {
@@ -57,7 +48,7 @@
     }
     ui.values.hidden = false; ui.credit.hidden = false;
     ui.points.textContent = data.credits.toLocaleString(en ? 'en-US' : 'zh-CN');
-    ui.credit.textContent = ui.points.textContent + (en ? ' pts' : ' 积分');
+    ui.credit.textContent = ui.points.textContent + ' BuddyCoin';
     const library = data.library;
     const connected = library && library.status === 'connected' &&
       Number.isSafeInteger(library.analysisRemaining) && library.analysisRemaining >= 0 &&
@@ -114,7 +105,11 @@
     ui.status.textContent = en ? 'Complete sign-in in the new window, then return here.' : '请在新窗口完成登录，然后返回这里。';
   });
   window.addEventListener('focus', () => {
-    if (menu.open && (!popup || popup.closed) && Date.now() - lastRead > 5000) read();
+    if ((!popup || popup.closed) && Date.now() - lastRead > 5000) read();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && (!popup || popup.closed) && Date.now() - lastRead > 5000) read();
   });
   window.addEventListener('pagehide', () => { clearTimeout(timer); pending = null; });
+  read();
 })();
