@@ -18,18 +18,30 @@
 - 云素材页提供当前账号素材和本机历史的显式选择。点击保存只同步所选素材；图片须另行勾选。只有 640px 预览的旧下载图片标注“预览副本”，不会声称原图已上传。
 - 云端元数据通过 revision 乐观锁更新。图片上传依次创建上传意向、使用限定 PUT 地址直传、服务端完成校验，再绑定 assetId。
 - 在 Canvas 使用先请求素材的 `/canvas` 动作，由服务端首次创建节点，随后打开 `/studio?project=<id>`；不直接覆盖已有画布。
-- 本地文件删除与云素材删除分开；不存在未经选择的历史全库迁移。
+- 本地文件删除与云素材移出分开；不存在未经选择的历史全库迁移。
 
 ## 计费口径待确认
 
 用户历史消息中“赠送 200 次下载”与后续定价文件中“普通下载免费，成功简析扣权益”存在冲突，主会话已向用户澄清。候选包的 `METER_FILE_DOWNLOADS=false`，普通文件下载不扣次。下载预占/Chrome 结果结算模块已独立实现但未启用；不得将其称为已上线计费。`ENABLE_UNIFIED_DESCRIBE=false` 同时阻止正式简析发往服务器；简析权益部署须等待主会话统一规则，不以插件本地设置推断服务端口径。
 
-网络未知结果不会自动重发新的付费请求；若将来明确启用文件下载扣次，只有 Chrome 确认完成/中断或明确拒绝下载时才结算，未知结果保留，不凭超时退款。结算使用原 reservationId 并校验原账号。
+网络未知结果不会自动重发新的付费请求；账号与规范化输入摘要绑定持久请求 ID，超时、断网或重登仍复用原 ID；并发相同操作合并，execute 超时 185 秒。服务端 UNAUTHENTICATED/撤销会话会清空本地账号视图；若将来明确启用文件下载扣次，只有 Chrome 确认完成/中断或明确拒绝下载时才结算，未知结果保留，不凭超时退款。结算使用原 reservationId 并校验原账号。
 
 ## 候选包与待验收
 
 - 版本：0.7.0 / V5 统一账号；新增最小必需 `identity` 权限，保留既有扩展功能。
 - 候选 ZIP 通过现有白名单脚本生成，源码中的测试、账本、环境文件与密钥不入包。固定连接上述 Canvas 正式域，后端协议为本文件列出的 plugin API；本地代码检查不证明这些 API 已部署。
-- 商店 Chrome ID 为 `hkbnjlapflleibeodhghbephgpacbhle`，Edge ID 为 `bdbnnnababglblekgnfpdcmeihjhflok`。解压加载没有 manifest 固定 key 时会产生不同 ID；真实联调需核对该 ID 并将它明确加入后端白名单，不能放宽任意扩展授权。
+- 商店 ZIP不含 manifest key；固定测试ZIP为 `archbuddy-unified-test-0.7.0.zip`，其公开key只为固定测试ID，不包含私钥。测试ID `ikkmbpahejfapgnngdckocmfbcbnjedo`，后端仅允许此前批准的A/B账号。回调 `https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy`，R2 CORS 精确 origin `chrome-extension://ikkmbpahejfapgnngdckocmfbcbnjedo`。
+- 商店 Chrome ID 为 `hkbnjlapflleibeodhghbephgpacbhle`，Edge ID 为 `bdbnnnababglblekgnfpdcmeihjhflok`。测试请使用固定ID包，真实联调按这三个精确ID校验，不能放宽任意扩展授权。
 - 本轮只生成待验收包，不提交 Chrome/Edge 商店、不部署 CloudBase、不调用付费模型。旧商店插件不会因官网后端部署自动升级。
 - 已运行离线语法、账户安全/隔离与既有后端回归。尚待已部署后端的真实邮箱/Google 登录、A/B 两账户切换、云图片在 Canvas 使用与统一权益验收。
+
+## 本轮候选包摘要
+
+固定正式后端 `https://canvas.archbuddy.top`，API 协议版本为 `/api/beta/plugin` 的统一账号接口；CloudBase 执行升级准备见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。后端上线版本须由主会话另行登记，不以本地打包代表已部署。
+
+| 包 | 字节 | SHA-256 |
+| --- | --- | --- |
+| archbuddy-beta-0.7.0.zip（商店候选，无key） | 213632 | 660651131418786F798E989FD05660D2B6A8C7ED236DCAF3B9E838A0D3391802 |
+| archbuddy-unified-test-0.7.0.zip（固定ID测试） | 214017 | 9360A2D7705944E75EED43AD74786056E0ED4A0F846D2C7406AD14364BAB2216 |
+
+打包：`& extension/scripts/build-store-package.ps1`；测试包另加 `-FixedIdentityTest`。两包都在Git忽略的 `extension/dist/`，不包含测试、账号账本、环境文件、私钥或API密钥。

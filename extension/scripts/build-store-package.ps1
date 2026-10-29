@@ -1,5 +1,6 @@
 param(
-  [string]$OutputDirectory
+  [string]$OutputDirectory,
+  [switch]$FixedIdentityTest
 )
 
 $ErrorActionPreference = 'Stop'
@@ -18,6 +19,18 @@ if (-not (Test-Path -LiteralPath $manifestPath)) {
 
 $manifestText = [System.IO.File]::ReadAllText($manifestPath, [System.Text.Encoding]::UTF8)
 $manifest = $manifestText | ConvertFrom-Json
+if ($manifest.PSObject.Properties.Name -contains 'key') { throw 'Canonical/store manifest must not include a test identity key.' }
+if ($FixedIdentityTest) {
+  $testIdentity = Get-Content -LiteralPath (Join-Path $extensionDirectory 'test-fixtures\unified-public-key.json') -Raw | ConvertFrom-Json
+  $publicBytes = [Convert]::FromBase64String([string]$testIdentity.publicKey)
+  $sha = [System.Security.Cryptography.SHA256]::Create()
+  try { $digest = $sha.ComputeHash($publicBytes) } finally { $sha.Dispose() }
+  $identity = -join (([BitConverter]::ToString($digest[0..15]).Replace('-', '').ToLowerInvariant()).ToCharArray() | ForEach-Object { [char](97 + [Convert]::ToInt32([string]$_, 16)) })
+  if ($identity -ne $testIdentity.extensionId -or $identity -ne 'ikkmbpahejfapgnngdckocmfbcbnjedo') { throw 'Fixed test public key identity mismatch.' }
+  $manifest | Add-Member -NotePropertyName 'key' -NotePropertyValue ([string]$testIdentity.publicKey)
+  $manifest.version_name = [string]$manifest.version_name + ' (A/B TEST)'
+  $manifestText = $manifest | ConvertTo-Json -Depth 20
+}
 $version = [string]$manifest.version
 if ($version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') {
   throw 'manifest version is invalid.'
@@ -80,7 +93,8 @@ foreach ($relativePath in $requiredFiles) {
 }
 
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
-$archivePath = Join-Path $OutputDirectory ('archbuddy-beta-' + $version + '.zip')
+$packageName = if ($FixedIdentityTest) { 'archbuddy-unified-test-' } else { 'archbuddy-beta-' }
+$archivePath = Join-Path $OutputDirectory ($packageName + $version + '.zip')
 if (Test-Path -LiteralPath $archivePath) {
   Remove-Item -LiteralPath $archivePath -Force
 }
@@ -94,15 +108,19 @@ try {
     $sourcePath = Join-Path $extensionDirectory $relativePath
     $entryName = $relativePath.Replace('\', '/')
     $entry = $archive.CreateEntry($entryName, [System.IO.Compression.CompressionLevel]::Optimal)
-    $source = [System.IO.File]::OpenRead($sourcePath)
     $destination = $entry.Open()
-    try { $source.CopyTo($destination) }
-    finally {
-      $destination.Dispose()
-      $source.Dispose()
-    }
+    try {
+      if ($FixedIdentityTest -and $relativePath -eq 'manifest.json') {
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($manifestText)
+        $destination.Write($bytes, 0, $bytes.Length)
+      } else {
+        $source = [System.IO.File]::OpenRead($sourcePath)
+        try { $source.CopyTo($destination) } finally { $source.Dispose() }
+      }
+    } finally { $destination.Dispose() }
   }
 } finally {
   $archive.Dispose()
 }
-Write-Output ('Created Chrome Web Store package: ' + $archivePath)
+$packageLabel = if ($FixedIdentityTest) { 'Created fixed-ID test package: ' } else { 'Created Chrome Web Store package: ' }
+Write-Output ($packageLabel + $archivePath)

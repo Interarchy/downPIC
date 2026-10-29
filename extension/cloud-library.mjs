@@ -52,9 +52,9 @@ async function load(next = scope) {
           await chrome.tabs.create({ url: target.href });
         }); actions.append(open);
       }
-      const remove = el('button', '删除云素材', 'account-button account-secondary');
+      const remove = el('button', '移出素材库', 'account-button account-secondary');
       remove.onclick = () => void run(async () => {
-        if (!confirm('删除这条云素材？本机来源文件会保留。')) return;
+        if (!confirm('将这条素材移出云素材库？本机来源文件会保留，相关图片仍按存储规则到期清理。')) return;
         await request('account.library.delete', { id: item.id, expectedAccountId: accountId }); await load();
       });
       actions.append(remove);
