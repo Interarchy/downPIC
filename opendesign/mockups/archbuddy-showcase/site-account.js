@@ -69,7 +69,7 @@
     }
     ui.note.hidden = false;
     ui.note.textContent = connected
-      ? (en ? 'Ordinary image saves are free. Brief analysis and deep reverse use separate allowances.' : '普通保存图片不计次，图片简析与深度反推分别计次。')
+      ? (en ? 'Ordinary image saves are free. Brief prompt generation and deep prompt reverse use separate allowances.' : '普通保存图片不计次，简析生成提示词与深度反推提示词分别计次。')
       : (en ? 'Library allowances are temporarily unavailable. Retry to refresh.' : '暂时无法读取图词库额度，请稍后刷新。');
     ui.status.textContent = (en ? 'Updated at ' : '更新于 ') + new Date().toLocaleTimeString(en ? 'en-US' : 'zh-CN',{hour:'2-digit',minute:'2-digit'});
   }
