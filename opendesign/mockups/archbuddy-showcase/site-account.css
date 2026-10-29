@@ -5,25 +5,29 @@
 .site-products .nav-library summary,.site-products .nav-canvas,.site-products .nav-guides{font-size:16px;font-weight:650;min-height:44px;letter-spacing:.015em}
 .site-products .nav-library-menu{left:50%;right:auto;transform:translateX(-50%)}
 .site-utilities .nav-language{padding:0;margin:0;border:0}
-.nav-account{position:relative}
-.nav-account>summary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 14px;border:1px solid #a9c7ad66;border-radius:6px;background:#dce9d410;color:#e8f2e9;list-style:none;cursor:pointer;font-size:13px;white-space:nowrap;transition:background .2s ease,border-color .2s ease}
+.nav-account{position:relative;z-index:40;min-width:0}
+.nav-account>summary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:6px 12px;border:1px solid #a9c7ad66;border-radius:6px;background:#dce9d410;color:#e8f2e9;list-style:none;cursor:pointer;font-size:13px;white-space:nowrap;transition:background .2s ease,border-color .2s ease}
 .nav-account>summary::-webkit-details-marker{display:none}
 .nav-account>summary:hover,.nav-account[open]>summary{background:#dce9d421;border-color:#c2d8bba6}
 .nav-account summary>.icon{width:13px;height:13px}
-.nav-account [data-account-label]{max-width:100px;overflow:hidden;text-overflow:ellipsis}
+.account-identity{display:grid;gap:3px;min-width:0;max-width:128px;text-align:left}
+.nav-account [data-account-label]{display:block;max-width:128px;overflow:hidden;text-overflow:ellipsis;font-weight:600;line-height:1.25}
+.nav-account>summary:focus-visible{outline:2px solid #d2eac4;outline-offset:4px}
 .nav-account [hidden]{display:none!important}
-.account-credit{padding-left:8px;border-left:1px solid #b9d8be40;color:#d2eac4;font-variant-numeric:tabular-nums}
-.account-menu{position:absolute;right:0;top:calc(100% + 14px);width:310px;max-width:calc(100vw - 32px);padding:24px;background:#f1f5ee;border:1px solid #c8d6c8;border-radius:10px;box-shadow:0 24px 60px #00180e50;color:#173b2d;text-align:left;white-space:normal}
-.account-eyebrow{font-size:9px;letter-spacing:.16em;color:#718575;margin:0 0 12px}
-.account-menu h2{font-size:21px;line-height:1.4;font-weight:600;letter-spacing:0;margin:0}
+.account-credit{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;color:#c4d9c0;font-size:11px;line-height:1.2;font-weight:400;font-variant-numeric:tabular-nums}
+.account-menu{position:absolute;right:0;top:calc(100% + 14px);box-sizing:border-box;width:320px;max-width:calc(100vw - 28px);max-height:calc(100svh - 130px);overflow-y:auto;overscroll-behavior:contain;padding:24px;background:#f1f5ee;border:1px solid #c8d6c8;border-radius:10px;box-shadow:0 24px 60px #00180e50;color:#173b2d;text-align:left;white-space:normal}
+.nav-account::after{content:"";position:absolute;left:0;right:0;top:100%;height:16px;pointer-events:none}
+.nav-account[open]::after{pointer-events:auto}
+.account-eyebrow{font-size:10px;letter-spacing:.16em;color:#718575;margin:0 0 12px}
+.account-menu h2{font-size:20px;overflow-wrap:anywhere;line-height:1.4;font-weight:600;letter-spacing:0;margin:0}
 .account-status{margin:9px 0 18px;font-size:12px;line-height:1.7;color:#5b7161}
 .account-metrics{margin:0 0 17px;padding:0;border-top:1px solid #cedbce}
 .account-metrics>div{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:13px 0;border-bottom:1px solid #d9e2d6}
-.account-metrics dt{font-size:12px;color:#526958}
-.account-metrics dd{margin:0;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
-.account-metrics>div:first-child dd{font-size:28px}
+.account-metrics dt{font-size:13px;line-height:1.5;color:#526958}
+.account-metrics dd{margin:0;max-width:58%;overflow-wrap:anywhere;text-align:right;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.account-metrics>div:first-child dd{font-size:30px}
 .account-metrics dd[data-pending=true]{font-size:12px;font-weight:400;color:#728475}
-.account-note{font-size:11px;line-height:1.65;color:#728475;margin:0 0 17px}
+.account-note{font-size:12px;line-height:1.65;color:#728475;margin:0 0 17px}
 .account-menu .account-primary{display:flex;justify-content:center;align-items:center;min-height:42px;padding:8px 16px;background:#234e39;color:#f3f7ee;border-radius:5px;font-size:13px;font-weight:600;text-decoration:none}
 .account-menu .account-primary:hover{background:#173b2d;color:#fff}
 .account-refresh{display:block;margin:13px auto 0;border:0;background:none;color:#5b7161;font:inherit;font-size:11px;cursor:pointer;padding:6px 9px}
@@ -36,7 +40,7 @@
  .site-products .nav-library summary,.site-products .nav-canvas,.site-products .nav-guides{font-size:14px}
  .site-header .header-inner .site-utilities{gap:13px}
  .nav-account>summary{padding:0 10px}
- .account-credit{display:none}
+ .account-identity,.nav-account [data-account-label]{max-width:100px}
 }
 @media(max-width:900px){
  .site-header .header-inner{grid-template-columns:1fr auto;grid-template-rows:54px 42px;column-gap:12px;row-gap:0;height:112px;min-height:112px;padding-bottom:8px;align-content:center}
@@ -56,12 +60,19 @@
  .site-header .header-inner .site-utilities{gap:10px}
  .site-utilities .nav-pricing{font-size:11px}
  .nav-account>summary{font-size:11px;padding:0 9px;min-height:34px}
- .nav-account [data-account-label]{max-width:64px}
+ .account-identity,.nav-account [data-account-label]{max-width:72px}
  .site-header .header-inner .site-products{gap:26px}
  .site-products .nav-library summary,.site-products .nav-canvas,.site-products .nav-guides{font-size:14px}
  .site-products .nav-library-label-full,.site-products .nav-canvas-label-full{display:none}
  .site-products .nav-library-label-mobile,.site-products .nav-canvas-label-mobile{display:inline}
- .account-menu{width:300px;padding:21px}
+ .account-menu{width:300px;padding:20px}
+ .account-credit{font-size:10px}
+ .account-metrics dd{font-size:18px}
  body[data-hero-live=true] .abhero{height:auto;min-height:calc(100svh - 112px)}
+}
+@media(max-width:380px){
+ .site-header .header-inner .site-utilities{gap:8px}
+ .account-identity,.nav-account [data-account-label]{max-width:64px}
+ .account-credit{display:none}
 }
 @media(prefers-reduced-motion:reduce){.nav-account>summary{transition:none}}

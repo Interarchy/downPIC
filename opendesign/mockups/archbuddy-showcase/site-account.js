@@ -17,6 +17,9 @@
   ui.login.href = login.href;
   ui.workspace.href = origin + '/workspace';
   let frame = null, popup = null, pending = null, timer = 0, lastRead = 0;
+  let hoverTimer = 0, leaveTimer = 0;
+  const summary = menu.querySelector('summary');
+  const format = value => value.toLocaleString(en ? 'en-US' : 'zh-CN');
   const words = {
     loading: en ? 'Reading your account…' : '正在读取账户信息…',
     unavailable: en ? 'Unable to read your account. Retry or open Canvas to check.' : '暂时无法读取账户，请重试或进入 Canvas 查看。',
@@ -30,39 +33,55 @@
     ui.points.textContent = ui.analysis.textContent = ui.reverse.textContent = '—';
     ui.label.textContent = en ? 'Sign In' : '账户登录';
     ui.name.textContent = en ? 'One Account, Every Step' : '一个账号，连接创作';
+    ui.label.removeAttribute('title');
+    summary.setAttribute('aria-label', en ? 'Sign in and account allowances' : '账户登录与额度');
   }
   function finish(data) {
     clearTimeout(timer); pending = null; ui.refresh.disabled = false;
     clear();
     const status = typeof data.status === 'string' ? data.status : 'unavailable';
+    menu.dataset.accountState = status;
+    summary.removeAttribute('aria-busy');
     ui.status.textContent = words[status] || words.unavailable;
+    if (status === 'unavailable') ui.label.textContent = en ? 'Account' : '我的账户';
     ui.login.hidden = !['signed_out','unavailable'].includes(status);
     ui.workspace.hidden = status === 'signed_out';
     if (['active','pending','suspended','closed'].includes(status)) {
-      ui.name.textContent = typeof data.displayName === 'string' ? data.displayName.slice(0,64) : 'ArchBuddy';
+      ui.name.textContent = typeof data.displayName === 'string' && data.displayName.trim() ? data.displayName.trim().slice(0,64) : 'ArchBuddy';
       ui.label.textContent = ui.name.textContent;
+      ui.label.title = ui.name.textContent;
+      summary.setAttribute('aria-label', ui.name.textContent + (en ? ', account allowances' : '，查看账户额度'));
     }
     if (status !== 'active') return;
     if (!Number.isSafeInteger(data.credits) || data.credits < 0) {
       finish({status:'unavailable'}); return;
     }
     ui.values.hidden = false; ui.credit.hidden = false;
-    ui.points.textContent = data.credits.toLocaleString(en ? 'en-US' : 'zh-CN');
+    ui.points.textContent = format(data.credits);
     ui.credit.textContent = ui.points.textContent + ' BuddyCoin';
     const library = data.library;
     const connected = library && library.status === 'connected' &&
       Number.isSafeInteger(library.analysisRemaining) && library.analysisRemaining >= 0 &&
       Number.isSafeInteger(library.reverseRemaining) && library.reverseRemaining >= 0;
     for (const [element,key] of [[ui.analysis,'analysisRemaining'],[ui.reverse,'reverseRemaining']]) {
-      element.textContent = connected ? library[key].toLocaleString() : (en ? 'Not Connected' : '尚未接入');
+      element.textContent = connected ? format(library[key]) : (en ? 'Unavailable' : '暂不可用');
       element.dataset.pending = String(!connected);
     }
-    ui.note.hidden = connected;
+    ui.note.hidden = false;
+    ui.note.textContent = connected
+      ? (en ? 'Ordinary image saves are free. Brief analysis and deep reverse use separate allowances.' : '普通保存图片不计次，图片简析与深度反推分别计次。')
+      : (en ? 'Library allowances are temporarily unavailable. Retry to refresh.' : '暂时无法读取图词库额度，请稍后刷新。');
     ui.status.textContent = (en ? 'Updated at ' : '更新于 ') + new Date().toLocaleTimeString(en ? 'en-US' : 'zh-CN',{hour:'2-digit',minute:'2-digit'});
   }
   function arm(source) {
-    clearTimeout(timer); clear();
-    ui.login.hidden = false; ui.workspace.hidden = false;
+    clearTimeout(timer);
+    // Keep the account name steady during refresh; never show stale balances as current.
+    ui.values.hidden = true; ui.note.hidden = true; ui.credit.hidden = true;
+    summary.setAttribute('aria-busy','true');
+    if (!menu.dataset.accountState) {
+      ui.label.textContent = en ? 'Account' : '我的账户';
+      ui.login.hidden = true; ui.workspace.hidden = true;
+    }
     ui.status.textContent = words.loading; ui.refresh.disabled = true;
     pending = {source,requestId:crypto.randomUUID()};
     timer = setTimeout(() => finish({status:'unavailable'}),15000);
@@ -73,6 +92,7 @@
     source.postMessage({channel,action:'read',requestId:pending.requestId},origin);
   }
   function read() {
+    if (pending) return;
     if (popup && !popup.closed) { send(popup); return; }
     if (!frame) {
       frame = document.createElement('iframe');
@@ -94,8 +114,22 @@
     finish(data);
   });
   menu.addEventListener('toggle', () => {
-    if (menu.open && Date.now() - lastRead > 3000) read();
+    if (menu.open && Date.now() - lastRead > 30000) read();
   });
+  // Hover reveals the same native details panel; touch and keyboard retain click support.
+  menu.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse') return;
+    clearTimeout(leaveTimer);
+    hoverTimer = setTimeout(() => { menu.open = true; },180);
+  });
+  menu.addEventListener('pointerleave', event => {
+    if (event.pointerType !== 'mouse') return;
+    clearTimeout(hoverTimer);
+    leaveTimer = setTimeout(() => {
+      if (!menu.contains(document.activeElement)) menu.open = false;
+    },240);
+  });
+  summary.addEventListener('click', () => { clearTimeout(hoverTimer); clearTimeout(leaveTimer); });
   ui.refresh.addEventListener('click', read);
   ui.login.addEventListener('click', event => {
     const opened = window.open(login.href,'archbuddy-account','popup,width=540,height=760');
@@ -110,6 +144,8 @@
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && (!popup || popup.closed) && Date.now() - lastRead > 5000) read();
   });
-  window.addEventListener('pagehide', () => { clearTimeout(timer); pending = null; });
+  window.addEventListener('pagehide', () => {
+    clearTimeout(timer); clearTimeout(hoverTimer); clearTimeout(leaveTimer); pending = null;
+  });
   read();
 })();
