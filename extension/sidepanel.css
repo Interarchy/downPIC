@@ -349,3 +349,7 @@ html[lang="en"] .sticky-header .tab { height: auto; min-height: 38px; padding: 7
 html[lang="en"] .reference-section > .section-title { align-items: start; gap: 8px; }
 html[lang="en"] .reference-section > .section-title .text-button { white-space: normal; text-align: right; max-width: 45%; }
 html[lang="en"] .prompt-actions button { min-width: 0; white-space: normal; }
+
+/* Canvas 入口与语言并列；极窄侧栏让出非必要 Beta 标记的空间。 */
+.app-header.has-unified-account .header-actions:has(.canvas-launch) { flex-wrap: nowrap; gap: 6px; }
+@media (max-width: 360px) { .app-header .brand .beta { display: none; } }

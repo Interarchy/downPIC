@@ -97,3 +97,8 @@
   .app-header.has-unified-account .header-actions > p { max-width: 62px; font-size: 9px; }
   .account-balances { gap: 8px; }
 }
+
+/* 同一产品的 Canvas 主入口：侧栏与图词库共用。 */
+.canvas-launch { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; min-height: 36px; padding: 8px 11px; border: 1px solid var(--green, #25634b); border-radius: 6px; background: var(--green, #25634b); color: #fff; font: 650 12px/1.25 "Segoe UI", "Microsoft YaHei UI", sans-serif; text-decoration: none; white-space: nowrap; }
+.canvas-launch:hover { border-color: var(--green-dark, #194a38); background: var(--green-dark, #194a38); color: #fff; text-decoration: none; }
+.canvas-launch:focus-visible { outline: 2px solid var(--green, #25634b); outline-offset: 3px; }
