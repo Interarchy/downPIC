@@ -1,5 +1,12 @@
 # ArchBuddy 项目进度交接
 
+## 2026-10-28：官网法律入口与支持邮箱
+
+针对 Waffo 网站自检，仅在当前线上提交 3ce29e2 的公开官网 HTML 页脚补充服务条款、隐私政策及客服邮箱。链接为 https://www.archbuddy.top/legal/terms/ 和 https://www.archbuddy.top/legal/privacy/，联系邮箱为用户指定的 melyyang@163.com；移除页脚旧开发隐私域名。覆盖中英文首页、定价页及案例页。法律正文由独立 archbuddy-legal 静态项目维护，官网 /legal 路由提供公开访问。没有修改扩展、CloudBase API、用户数据、下载文件或模型调用。内容审核由运营者李宇阳负责，政策按已确认的人工处理流程披露，不宣称已实现自动输入输出审核。
+
+发布需核验无登录 HTTP 正文、页脚链接及联系方式，并确认原资源和 /legal 路由保持。此项不代表 Waffo 审核通过；现有模型输入输出审核能力仍需单独验收。
+
+
 ## 2026-10-26：官网访问统计接入
 
 官网静态 HTML 的中英文首页、定价页与案例页接入 Vercel Web Analytics 页面浏览脚本，用于查看访客数、浏览量及来源网站。该统计属于 `archbuddy-official-site` Vercel 项目；不写入 CloudBase 的插件功能统计集合，也不关联账户、素材或提示词。控制台已由站点所有者开启 Hobby 统计。代码已通过 PR #2 合并至 `feature/archbuddy-film-scene-01`，Vercel 正式部署 `dpl_GU9FVYGbWDazeWXU4NrLAt1JXkQH` 指向提交 `3ce29e2`。2026-10-26 已核对 `www.archbuddy.top` 中英文首页、定价页与案例页 HTTP 200 且含统计脚本，脚本地址 HTTP 200；真实浏览器访问后的页面浏览请求和后台计数仍待确认。
@@ -1265,3 +1272,55 @@ CloudBase 为多个项目共享的环境，ArchBuddy 固定标识为 archbuddy�
 - 新增英文定价页，翻译套餐、价格说明、扣点表、功能对比、FAQ 和方案弹窗；金额、额度、模型数据和未开通支付的状态与中文版一致。英文首页的定价入口和旧英文定价地址均指向英文版。
 - 账户继续沿用官网现有 Canvas 登录入口；正式账户额度连接尚未完成，菜单明确显示接入中，不展示虚假积分或额度。
 - 静态检查：两页所需脚本和样式引用齐全，页面 ID 无重复，英页仅保留语言按钮中的“中文”汉字，脚本可解析。浏览器视觉与登录联调待上线后复核。
+
+## 2026-10-26：SEO 本地独立规划
+
+基于官网公开分支提交 2f500116，创建 codex/seo-local-20261026 独立工作树。用户要求先本地、待官网平行更新完成后同步。已记录统一首页、索引范围、关键词假设、内容证据、转化口径与分阶段同步方式，详见 ARCHBUDDY_SEO_STRATEGY.md。只读公网确认 robots.txt 与 sitemap.xml 返回 404。纯本地准备，不涉及云端资源；原有工作区改动保留。
+
+## 2026-10-26：SEO 基础改造本地完成
+
+在独立 codex/seo-local-20261026 分支完成正式页面元数据、首页语言关联/WebSite 结构化数据、robots 与 sitemap；未上线定价和短片页面增加 noindex。21 页静态校验通过：7 可索引、14 排除、7 sitemap URL；14 个改动页面正文与基线一致，git diff --check 通过。详见 ARCHBUDDY_SEO_VERIFICATION.md。只有本地提交，不推送、不部署；等待官网平行更新后用增量提交整合，复核现价/URL/索引范围与生产根目录。未涉及云端资源、用户数据、统计采集、模型或收费配置。
+
+## 2026-10-26：教程与案例本地完成
+
+独立 SEO 分支新增教程入口及参考图整理、结构化提示词两篇教程；沿用品牌样式和官网已有界面演示图，图注说明版本/演示性质。首页仅增加页脚入口，教程互链到产品研究案例及官方安装入口。SEO 静态校验为24页、10可索引、14排除；内部链接、资源、锚点和manifest解析通过，原首页变化限定在页脚。视觉审阅与最终记录见 ARCHBUDDY_SEO_GUIDES.md。无模型调用、用户数据/统计采集、推送或云端部署。
+
+## 2026-10-28：SEO 整合到新版官网代码
+
+- 从 Vercel 最新生产部署确认官网代码提交 513ac6b（codex/waffo-legal-footer），在独立工作树新建 codex/seo-site-sync-20261028，逐个合入原 SEO 三项提交；原 codex/seo-local-20261026 分支保留。
+- 草稿 PR 准备期间，官网目标分支新增统计上线记录与页脚排版提交；SEO 分支已重放到目标分支 43b9e6d，并保留其法律导航排版变动，避免 PR 落后于并行修改。
+- 解决首页、案例、短片和定价页冲突，保留新版账户菜单、美元定价、Web Analytics 与正式法律页脚；只加入 SEO 元数据、索引规则和教程入口。两份新美元定价方案未开放支付，设置 noindex,follow；教程页脚改用官网正式法律与客服链接。
+- 本地 SEO 校验 PASS：26 个 HTML，10 个可索引、16 个排除、10 个 sitemap URL；git diff --check 通过，无残留冲突标记。2026-10-28 正式域名 / 为 200，/robots.txt 与 /sitemap.xml 仍为 404，/legal/privacy/ 为 200，说明本轮尚未发布。
+- Edge 在 390/1440 宽度复核三页教程均 200、无横向滚动或脚本错误，懒加载截图滚入视口后正常。进一步定位正式站既有的窄屏功能标题单行问题：英文首页 390px 实际宽度 452px、中文首页 320px 实际宽度 335px，均与教程入口无关；本轮限定断点允许标题换行。修正后 320/390/760/1440px 中英文首页和教程均无横向滚动或脚本错误。
+- 下一步：核对商店版本与教程操作路径，完成新版预览和 HTTP 验收，再审阅合并与生产发布；发布后提交站点地图并开始记录搜索查询、索引及教程入口数据。不改 Canvas、插件运行逻辑、CloudBase 数据与账户计费。
+- 草稿 PR #4 已创建，目标 codex/waffo-legal-footer，当前可合并。Vercel 预览 dpl_BRumYgKZeQoxBXMf8pYPXCFyoyF6（75e127d）READY；连接器核对首页、英文首页、三页教程、案例、短片、旧定价与美元定价均 200，robots 为 text/plain 200，sitemap 为 application/xml 200 且含 10 个规范 URL；未开放方案与短片在预览响应中为 noindex。项目预览域名启用 Vercel 登录保护。正式域名未发布本轮 SEO，发布后仍须复核真实响应、商店版本和站长平台。
+- 窄屏修正提交 7abb43a 的预览 dpl_3LWZ6wtmFDmfRvSSsQ5Gpmsg4PNn READY；中英文首页与新 CSS 实际响应均 200，引用和换行规则存在，robots/sitemap 继续 200。GitHub Vercel 状态 success，未见检查注释；正式站仍保持原生产部署。
+- 2026-10-28 独立浏览器核对商店公开页：Chrome 0.6.0（10 月 5 日更新），Edge V4.1（10 月 16 日更新），均 HTTP 200。Chrome 公开说明覆盖教程中的采集、项目整理、语义检索、最多三张参考图和提示词编辑确认；仓库本地 0.6.1 未上架 Chrome。教程截图明确标为 V4 演示，未把开发界面冒充商店逐控件截图。PR #4 目标分支和生产部署截至本次核对未变化。
+
+## 2026-10-28：SEO 合并与官网生产发布
+
+- PR #4 已合并，目标分支合并提交为 `8c24f6a95e6ab61873421dc7c716a06f0a182416`。Vercel 从该 Git 提交创建生产部署 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`，状态 READY，正式域名已分配。
+- 正式域名的 `robots.txt` 和 `sitemap.xml` 均返回 200，类型分别为 `text/plain` 与 `application/xml`。站点地图 10 个规范 URL 逐一返回 200，canonical 与 URL 一致；中英文首页语言关联存在。原法律页、案例页仍可访问；旧定价及短片继续 `noindex`。详见 ARCHBUDDY_SEO_VERIFICATION.md。
+- 站点地图已通过 `robots.txt` 对搜索引擎开放。尚未取得 Search Console 已验证站点属性或提交回执，不能将公开站点地图等同于后台提交或搜索收录。下一步由有站点属性权限的账号提交 `https://www.archbuddy.top/sitemap.xml`，再记录覆盖、查询、点击与教程入口表现。
+
+## 2026-10-29：教程入口可见性修正
+
+- 用户反馈官网看不到本轮 SEO 工作。核对生产部署仍为 `dpl_6RHaLLjNdZ5Xpz8PxAt4hFdBD4e4`；正式域名首页、`/guides/`、两篇教程、`robots.txt` 和 `sitemap.xml` 均为 200。原因是此前教程入口仅在首页页脚，主要 SEO 元数据也不会作为页面内容显示。
+- 在中英文首页顶部产品导航增加“教程 / Guides”直达入口，保留页脚入口；窄屏仅缩短原 Library 和 Canvas 导航文字，不改其他内容和账户入口。Edge 本地预览检查 320、390、480、760、900、1120、1440px 的中英文首页均无横向溢出、脚本错误，教程入口在视口内可见；SEO 静态校验仍为 26 页、10 可索引、16 排除、10 个 sitemap URL。此处为本地候选，发布状态以随后生产部署记录为准。
+- PR #6 已合并到 `codex/waffo-legal-footer`，合并提交 `1317a5e9193e6cf0ece2b6651fc7770c717e37d2`。Vercel 生产部署 `dpl_EngPm3HmBcWPoKNkHT6CKVGpjafi` 为 READY，`www.archbuddy.top` 和 `archbuddy.top` 已指向该部署，无别名错误。Vercel 连接器核对正式域名中英文首页均为 200，实际 HTML 含顶部教程导航和新 CSS 版本；`/guides/` 为 200。一次无登录直连公网检查遇到 TLS 握手超时，不能以此判断内容或页面 404，已以部署别名和连接器响应交叉核对。
+
+## 2026-10-29：统一官网浏览器标签页品牌图标
+
+- 基于当前官网发布分支 codex/waffo-legal-footer 的 fb6a416（包含已上线的教程导航与最新记录），复用 assets/brand-mark.svg 的现有绿色 A 品牌图形，替换旧线条 favicon。
+- 统一公开站点目录内 26 份 HTML 的图标声明，包括中英文首页、美元定价、旧定价跳转、教程、案例、短片及历史方案预览。补齐缺失声明，采用同一 SVG 资源和 brand-20261029 版本参数。
+- 静态核验：26 页均只有一个图标声明；相对路径全部解析到同一 assets/favicon.svg，图标内容与品牌资产一致，页面 body 完全一致。未修改插件、Canvas、账户、计费、统计或 CloudBase 资源。
+- 本机浏览器运行环境报错，尚未实测标签页渲染；构建及公网发布结果以随后部署记录为准。
+
+- 已提交并推送 e8731d0，Vercel 生产部署 dpl_5GEvrBBDVFZuEjCFwpUi1Ztu8w37 为 READY，www.archbuddy.top 与 archbuddy.top 均指向该提交。部署与资源引用已核对；浏览器实际标签图标渲染仍受本机运行环境故障限制。
+
+## 2026-10-29：修正官网标签页图标的品牌底色
+
+- 用户指出上一版白底不符合品牌主题；依据 docs/BRAND.md，直接复用 extension/icons/logo.svg 的正式绿色底（#25634B）、白色 A 图形，纠正 assets/favicon.svg。保留 Logo 几何形状，不重绘品牌。
+- 更新官网 26 份 HTML 的 favicon 查询版本为 brand-green-20261029，避免继续命中上一版白底图标缓存。页面正文、导航品牌资产、账户脚本及其他功能不变。
+- 静态核验：26 页图标引用各更新一次、正文逐字一致；favicon 与正式插件 Logo 源文件完全一致。无新增依赖、数据或 CloudBase 资源变化。
+- 本机命令环境仍报 helper_unknown_error，使用 GitHub 连接器完成最小修改与提交推送；未执行本机浏览器渲染验证。本轮按用户要求 commit and push，未手动发起生产部署。

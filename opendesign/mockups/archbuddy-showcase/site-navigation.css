@@ -4,14 +4,15 @@
 .site-top-nav{display:flex;align-items:center;gap:clamp(18px,2.2vw,34px);margin-left:auto}
 .site-header .header-inner .site-top-nav{gap:clamp(18px,2.2vw,34px)}
 .site-top-nav .nav-library{position:relative}
-.site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{display:inline-flex;align-items:center;gap:8px;min-height:39px;color:#e8f2e9;font-size:13px;font-weight:570;letter-spacing:.005em;white-space:nowrap;text-decoration:none}
+.site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-guides,.site-top-nav .nav-pricing{display:inline-flex;align-items:center;gap:8px;min-height:39px;color:#e8f2e9;font-size:13px;font-weight:570;letter-spacing:.005em;white-space:nowrap;text-decoration:none}
+.site-top-nav .nav-library-label-mobile,.site-top-nav .nav-canvas-label-mobile{display:none}
 .site-top-nav .nav-library summary{list-style:none;cursor:pointer}
 .site-top-nav .nav-library summary::-webkit-details-marker{display:none}
 .site-top-nav .nav-library summary .icon{width:15px;height:15px;stroke-width:1.8;transition:transform .2s ease}
 .site-top-nav .nav-library[open] summary .icon{transform:rotate(180deg)}
 .site-top-nav .nav-canvas .icon{width:14px;height:14px;stroke-width:1.8}
 .site-top-nav .nav-pricing[aria-current=page]{color:#c6eabf}
-.site-top-nav .nav-library summary:hover,.site-top-nav .nav-canvas:hover,.site-top-nav .nav-pricing:hover{color:#c6eabf}
+.site-top-nav .nav-library summary:hover,.site-top-nav .nav-canvas:hover,.site-top-nav .nav-guides:hover,.site-top-nav .nav-pricing:hover{color:#c6eabf}
 .site-top-nav :is(summary,a):focus-visible{outline:2px solid #c6eabf;outline-offset:4px;border-radius:2px}
 .site-top-nav .nav-library-menu{position:absolute;right:-15px;top:calc(100% + 12px);width:170px;padding:6px;border:1px solid #b9d8be50;border-radius:7px;background:rgba(234,241,233,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 25px 50px #00100880;color:#173b2d}
 .site-top-nav .nav-library-menu::before{content:"";position:absolute;left:0;right:0;top:-13px;height:13px}
@@ -29,7 +30,7 @@ html[lang=en] .tool-card-footer{font-size:10px}
 @media(max-width:1050px){
  .site-header .header-inner{width:calc(100% - 48px)}
  .site-header .header-inner .site-top-nav{gap:16px}
- .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{font-size:12px}
+ .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-guides,.site-top-nav .nav-pricing{font-size:12px}
  .site-top-nav .nav-language{padding-left:15px}
 }
 @media(max-width:760px){
@@ -43,7 +44,7 @@ html[lang=en] .tool-card-footer{font-size:10px}
 }
 @media(max-width:440px){
  .site-header .header-inner .site-top-nav{gap:11px}
- .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-pricing{font-size:12px}
+ .site-top-nav .nav-library summary,.site-top-nav .nav-canvas,.site-top-nav .nav-guides,.site-top-nav .nav-pricing{font-size:12px}
  .site-top-nav .nav-language{gap:5px;padding-left:9px;font-size:11px}
  .site-top-nav .nav-canvas .icon{display:none}
 }
