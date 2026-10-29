@@ -125,7 +125,8 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
     try {
       const response = await fetchImpl(PRODUCT_ORIGIN + PLUGIN_BASE + path, {
         method, credentials: 'omit', cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(timeoutMs),
-        headers: { ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) },
+        // Privileged extension GET fetches omit Origin in Chrome. Keep the exact runtime origin for the gateway's client check.
+        headers: { Origin: `chrome-extension://${browser.runtime.id}`, ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) },
         body: body ? JSON.stringify(body) : undefined,
       });
       if (response.ok && binary) return await response.blob();

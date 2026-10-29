@@ -422,3 +422,27 @@ test('a normal explicit local logout clears a previously unconfirmed notice', as
   assert.equal(result.remoteLogoutConfirmed, false);
   assert.equal(h.views.at(-1).archbuddyAccountViewV1.notice, undefined);
 });
+
+
+test('login publishes the account when Chrome omits the automatic Origin on GET', async () => {
+  const requests = [];
+  const h = harness(async (url, options) => {
+    const method = options.method || 'GET';
+    const headers = new Headers(options.headers);
+    // Chrome adds Origin to this POST but omits it from privileged GET fetches.
+    const origin = headers.get('origin') || (method === 'POST' ? `chrome-extension://${h.browser.runtime.id}` : null);
+    requests.push({ method, origin, credentials: options.credentials });
+    if (origin !== `chrome-extension://${h.browser.runtime.id}`) return failure('FORBIDDEN', 403);
+    return url.endsWith('/token') ? response(newSession()) : response({
+      product: 'archbuddy', accountId: 'account-b', displayName: 'Test Account', credits: { availableUnits: 50 },
+    });
+  });
+  installIdentity(h);
+  const result = await h.client.handle('account.login');
+  assert.equal(result.account.id, 'account-b');
+  assert.equal(result.account.credits.availableUnits, 50);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account.displayName, 'Test Account');
+  assert.equal((await h.makeClient().refresh()).account.id, 'account-b');
+  assert.ok(requests.some(request => request.method === 'GET'));
+  assert.ok(requests.every(request => request.origin === `chrome-extension://${h.browser.runtime.id}` && request.credentials === 'omit'));
+});

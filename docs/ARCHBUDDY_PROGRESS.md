@@ -1,3 +1,11 @@
+## 2026-10-30：连接成功后仍未登录的 GET 来源修复
+
+- 用户实测已到“连接此账户”，返回侧栏后仍显示登录/注册。独立隔离 Chromium 复现：MV3 Service Worker 的 POST `/token` 自动携带扩展 Origin；带 host permissions 的 GET `/v1/account` 默认没有 Origin，正式 BFF 因此返回 403。线上仅查会话数量已确认出现有效 PluginSession，未读取用户令牌或内容。
+- 仅修改插件统一 transport，显式设置真实 `chrome-extension://${browser.runtime.id}`，继续使用固定官网地址与 `credentials: omit`。BFF 精确来源白名单、PKCE、会话绑定、Cookie 禁止和跨账户校验全部保留，无须改 Clerk 或云端。
+- 验证范围：隔离浏览器已验证真实请求来源差异；完整合成 UI 探针在初始化阶段遇到 ACCOUNT_BUSY，未进入授权阶段，未记为通过。随后用户本人已完成真实授权并确认账户和余额正常。
+- 新回归覆盖连接换取→账户 GET→公开视图发布→客户端重建刷新。修前确定失败 FORBIDDEN，修后插件 63/63 检查通过；独立复核账户测试 39/39，通过语法与差异检查。隔离 Chrome 对正式接口的无效令牌请求在正确 Origin 下返回预期 401，而非原来的 403；没有真实模型调用。
+- 原固定 ID 解压目录已原地更新。测试 ZIP SHA256：`36BF816672F68D4C329215F3C2A82EEF3BD9B7C4F9F4FC1FB38A89B98A50CA05`；商店候选 ZIP：`8D88351C8A047A4BB25B55EFD1ED75B686C4C32663CB1D3B7E6D32433855A6B2`。商店未提交；用户重新加载既有测试扩展并完成连接后，已明确确认右上角显示账户和余额。真实双账号切换与跨端素材往返仍需独立验收。
+
 ## 2026-10-30：统一执行器已上线，真实用户跨端验收仍待完成
 
 - 主任务已确认 CloudBase `archbuddy-api-015` normal / 100%；四项无模型探针通过：状态 unified、匿名session 410、签名合成查单 not_found、错误签名401。模型调用0。随后实际 `archbuddy-beta-preview` 已设置 `PRODUCT_EXECUTION_ENABLED=true`；执行器Secret已核验在正确Worker存在。
