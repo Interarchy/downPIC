@@ -2,6 +2,7 @@ import { ENABLE_UNIFIED_DESCRIBE } from './runtime-config.mjs';
 import { ACCOUNT_VIEW_KEY } from './account-storage.mjs';
 export const PRODUCT_ORIGIN = 'https://canvas.archbuddy.top';
 export const PLUGIN_BASE = '/api/beta/plugin';
+const APPROVED_CLIENTS = new Set(['hkbnjlapflleibeodhghbephgpacbhle', 'bdbnnnababglblekgnfpdcmeihjhflok', 'ikkmbpahejfapgnngdckocmfbcbnjedo']);
 const AUTH_ERRORS = new Set(['UNAUTHENTICATED', 'UNAUTHORIZED', 'AUTH_REQUIRED', 'AUTH_INVALID', 'SESSION_EXPIRED', 'PLUGIN_SESSION_INVALID']);
 const OPERATIONS = Object.freeze({
   '/api/analyze': 'analyze', '/api/v2/analyze': 'analyze-v2', '/api/v3/evaluate': 'evaluate',
@@ -10,6 +11,7 @@ const OPERATIONS = Object.freeze({
 const fail = (code, message) => Object.assign(new Error(message), { code });
 // A browser timeout cannot prove that execution or charging failed.
 const EXECUTION_TIMEOUT_MS = 185000;
+const LOGOUT_UNCONFIRMED_NOTICE = '已退出本机插件，服务器暂未确认撤销。需要使关联会话失效时，请到画布退出账号。';
 const DEFINITIVE_EXECUTION_ERRORS = new Set(['INVALID_INPUT', 'BODY_TOO_LARGE', 'CREDIT_INSUFFICIENT']);
 function canonicalJson(value) {
   return JSON.stringify(value, (_key, item) => item && typeof item === 'object' && !Array.isArray(item)
@@ -61,82 +63,133 @@ export async function secretStore(mode, operation) {
     });
   } finally { db.close(); }
 }
-export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, store = secretStore, browser = chrome, canSwitch = () => true }) {
+export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, store = secretStore, browser = chrome, canSwitch = () => true, authTimeoutMs = 300000 }) {
   let busy = 0;
   let transitioning = false;
   let refreshing;
+  let mutationQueue = Promise.resolve();
+  const mutate = operation => {
+    const pending = mutationQueue.catch(() => {}).then(operation);
+    mutationQueue = pending;
+    return pending;
+  };
   const executions = new Map();
-  const signedOut = () => ({ account: null, mode: 'unified', packages: [] });
-  const publish = async view => { await browser.storage.session.set({ [ACCOUNT_VIEW_KEY]: view }); return view; };
-  const clear = async () => {
-    await store('readwrite', data => data.delete('active'));
-    await onSessionChange();
-    await publish(signedOut());
+  const signedOut = notice => ({ account: null, mode: 'unified', packages: [], ...(notice === LOGOUT_UNCONFIRMED_NOTICE ? { notice } : {}) });
+  let lastView = signedOut();
+  // All credential mutations and public-scope publications share this queue.
+  const publish = async view => {
+    await browser.storage.session.set({ [ACCOUNT_VIEW_KEY]: view });
+    lastView = view;
+    return view;
+  };
+  const clear = (expectedToken, notice) => mutate(async () => {
+    const removed = await store('readwrite', data => {
+      const outcome = { result: false };
+      const current = data.get('active');
+      current.onsuccess = () => {
+        if ((current.result?.accessToken ?? null) !== (expectedToken ?? null)) return;
+        if (current.result) data.delete('active');
+        outcome.result = true;
+      };
+      return outcome;
+    });
+    if (!removed) return lastView;
+    if (notice === undefined && !expectedToken) {
+      const prior = (await browser.storage.session.get(ACCOUNT_VIEW_KEY))?.[ACCOUNT_VIEW_KEY];
+      if (prior?.account === null && prior.notice === LOGOUT_UNCONFIRMED_NOTICE) notice = prior.notice;
+    }
+    try { await onSessionChange(); } finally { await publish(signedOut(notice)); }
+    return lastView;
+  });
+  const assertActive = async session => {
+    const current = await store('readonly', data => data.get('active'));
+    if (current?.accountId !== session.accountId || current?.accessToken !== session.accessToken) {
+      throw fail('ACCOUNT_CHANGED', '账号已切换，原操作结果不再显示');
+    }
   };
   const credentials = async () => {
     const session = await store('readonly', data => data.get('active'));
-    if (!session?.accessToken || session.expiresAt <= Date.now()) {
-      if (session) await clear();
+    if (typeof session?.accessToken !== 'string' || !session.accessToken ||
+        typeof session.accountId !== 'string' || !session.accountId ||
+        !Number.isFinite(session.expiresAt) || session.expiresAt <= Date.now()) {
+      await clear(session?.accessToken);
       throw fail('LOGIN_REQUIRED', '请先登录 ArchBuddy，官网、画布和插件共用此账号');
     }
     return session;
   };
   const transport = async (path, { method = 'GET', body, token, binary = false, timeoutMs = 135000 } = {}) => {
-    const response = await fetchImpl(PRODUCT_ORIGIN + PLUGIN_BASE + path, {
-      method, credentials: 'omit', cache: 'no-store', signal: AbortSignal.timeout(timeoutMs),
-      headers: { ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) },
-      body: body ? JSON.stringify(body) : undefined,
-    });
-    if (response.ok && binary) return response.blob();
-    const envelope = await response.json().catch(() => null);
-    if (!response.ok || !envelope || !Object.hasOwn(envelope, 'data')) {
-      const error = fail(envelope?.error?.code || (response.status === 401 ? 'AUTH_INVALID' : 'SERVICE_UNAVAILABLE'),
-        envelope?.error?.message || 'ArchBuddy 服务暂时不可用，请稍后重试');
-      throw error;
+    try {
+      const response = await fetchImpl(PRODUCT_ORIGIN + PLUGIN_BASE + path, {
+        method, credentials: 'omit', cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(timeoutMs),
+        headers: { ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) },
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      if (response.ok && binary) return await response.blob();
+      const envelope = await response.json().catch(reason => {
+        if (['AbortError', 'TimeoutError'].includes(reason?.name)) throw reason;
+        return null;
+      });
+      if (!response.ok || !envelope || !Object.hasOwn(envelope, 'data')) {
+        const code = typeof envelope?.error?.code === 'string' ? envelope.error.code
+          : response.status === 401 ? 'AUTH_INVALID' : 'SERVICE_UNAVAILABLE';
+        throw fail(code, typeof envelope?.error?.message === 'string' ? envelope.error.message
+          : 'ArchBuddy 服务暂时不可用，请稍后重试');
+      }
+      return envelope.data;
+    } catch (reason) {
+      // DOMException.code is numeric (AbortError = 20), not an API error code.
+      if (typeof reason?.code === 'string') throw reason;
+      const timedOut = ['AbortError', 'TimeoutError'].includes(reason?.name);
+      throw fail(timedOut ? 'PROCESS_TIMEOUT' : 'NETWORK_UNAVAILABLE', timedOut
+        ? '账号服务响应超时，请稍后重试' : '无法连接账号服务，请检查网络后重试');
     }
-    return envelope.data;
   };
-  const authenticated = async (path, options = {}) => {
-    if (transitioning) throw fail('ACCOUNT_BUSY', '登录状态正在切换');
+  const authenticated = async (path, options = {}, allowTransition = false) => {
+    if (transitioning && !allowTransition) throw fail('ACCOUNT_BUSY', '登录状态正在切换');
     busy++;
     let session;
     try {
       session = await credentials();
       if (options.expectedAccountId && session.accountId !== options.expectedAccountId) throw fail('ACCOUNT_CHANGED', '账号已切换，原操作已暂停');
+      if (options.expectedToken && session.accessToken !== options.expectedToken) throw fail('ACCOUNT_CHANGED', '登录状态已变化');
       const result = await transport(path, { ...options, token: session.accessToken });
-      const current = await store('readonly', data => data.get('active'));
-      if (current?.accountId !== session.accountId || current?.accessToken !== session.accessToken) throw fail('ACCOUNT_CHANGED', '账号已切换，原操作结果不再显示');
+      await assertActive(session);
       return result;
     } catch (error) {
       if (AUTH_ERRORS.has(error.code)) {
-        const current = await store('readonly', data => data.get('active'));
-        if (session && current?.accessToken === session.accessToken) await clear();
+        if (session) await clear(session.accessToken);
         throw fail('LOGIN_REQUIRED', '登录已失效，请重新登录');
       }
       throw error;
     } finally { busy--; }
   };
-  const refresh = async () => {
+  const refresh = async (allowTransition = false) => {
+    if (transitioning && !allowTransition) throw fail('ACCOUNT_BUSY', '登录状态正在切换');
     if (!refreshing) refreshing = (async () => {
       let session;
       try { session = await credentials(); } catch (error) {
-        if (error.code === 'LOGIN_REQUIRED') return publish(signedOut());
+        if (error.code === 'LOGIN_REQUIRED') return lastView;
         throw error;
       }
-      const data = await authenticated('/v1/account', { expectedAccountId: session.accountId, timeoutMs: 25000 });
-      if (data.product !== 'archbuddy' || data.accountId !== session.accountId) { await clear(); throw fail('AUTH_INVALID', '账号信息不匹配'); }
-      return publish({ account: {
-        id: data.accountId, product: 'archbuddy', accountId: data.accountId, workspaceId: data.workspaceId,
-        status: data.status, displayName: data.displayName,
-        credits: { availableUnits: data.credits?.availableUnits, reservedUnits: data.credits?.reservedUnits },
-        entitlements: { downloads: data.entitlements?.downloads, deepReverse: data.entitlements?.deepReverse },
-        library: { count: data.library?.count },
-      }, mode: 'unified', packages: [] });
+      const data = await authenticated('/v1/account', { expectedAccountId: session.accountId, expectedToken: session.accessToken, timeoutMs: 25000 }, allowTransition);
+      if (data.product !== 'archbuddy' || data.accountId !== session.accountId) { await clear(session.accessToken); throw fail('AUTH_INVALID', '账号信息不匹配'); }
+      return mutate(async () => {
+        await assertActive(session);
+        const view = await publish({ account: {
+          id: data.accountId, product: 'archbuddy', accountId: data.accountId, workspaceId: data.workspaceId,
+          status: data.status, displayName: data.displayName,
+          credits: { availableUnits: data.credits?.availableUnits, reservedUnits: data.credits?.reservedUnits },
+          entitlements: { downloads: data.entitlements?.downloads, deepReverse: data.entitlements?.deepReverse },
+          library: { count: data.library?.count },
+        }, mode: 'unified', packages: [] });
+        await assertActive(session);
+        return view;
+      });
     })().finally(() => { refreshing = null; });
     return refreshing;
   };
   return {
-    refresh,
+    refresh: () => refresh(),
     async identity() { if (transitioning) throw fail('ACCOUNT_BUSY', '登录状态正在切换'); return (await credentials()).accountId; },
     api: authenticated,
     async request(path, options = {}) {
@@ -144,6 +197,7 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
       const operation = OPERATIONS[path];
       if (!operation) throw fail('INVALID_INPUT', '不支持的统一服务操作');
       if (operation === 'describe' && !ENABLE_UNIFIED_DESCRIBE) throw fail('POLICY_PENDING', '简析权益规则正在确认，已保留图片；下载和整理仍可使用');
+      if (transitioning) throw fail('ACCOUNT_BUSY', '登录状态正在切换');
       const payload = { ...options.body };
       // Evaluation's UI attempt id is not part of the paid input. A retry must
       // use the original id both in the envelope and in the executor payload.
@@ -165,8 +219,9 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
         if (operation === 'evaluate') wirePayload.requestId = requestId;
         try {
           const result = await authenticated('/v1/execute', { method: 'POST', expectedAccountId: session.accountId,
-            timeoutMs: EXECUTION_TIMEOUT_MS, body: { operation, requestId, payload: wirePayload } });
+            expectedToken: session.accessToken, timeoutMs: EXECUTION_TIMEOUT_MS, body: { operation, requestId, payload: wirePayload } });
           await store('readwrite', data => data.delete(key));
+          await assertActive(session);
           return result;
         } catch (error) {
           // Only definitive rejection releases the local attempt. All network,
@@ -175,7 +230,7 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
             await store('readwrite', data => data.delete(key));
             throw error;
           }
-          if (error.code === 'ACCOUNT_CHANGED' || error.code === 'LOGIN_REQUIRED' || AUTH_ERRORS.has(error.code)) throw error;
+          if (['ACCOUNT_CHANGED', 'LOGIN_REQUIRED', 'FORBIDDEN', 'POLICY_ACCEPTANCE_REQUIRED', 'RATE_LIMITED', 'GENERATION_LIMIT_REACHED', 'SCHEMA_MISMATCH'].includes(error.code) || AUTH_ERRORS.has(error.code)) throw error;
           throw fail('EXECUTION_UNCONFIRMED', '这次操作的结果仍在确认中。再次点击会查询同一次操作，不会重复扣次；当前内容已保留。');
         } finally { void refresh().catch(() => {}); }
       })();
@@ -197,24 +252,57 @@ export function createCloudAccountClient({ onSessionChange, fetchImpl = fetch, s
         await refreshing?.catch(() => {});
         if (type === 'account.logout') {
           const session = await store('readonly', data => data.get('active'));
-          if (session) await transport('/v1/logout', { method: 'POST', body: {}, token: session.accessToken }).catch(error => {
-            if (!AUTH_ERRORS.has(error.code)) throw error;
-          });
-          await clear();
-          return { ok: true, ...signedOut() };
+          let notice;
+          if (session?.accessToken) {
+            try { await transport('/v1/logout', { method: 'POST', body: {}, token: session.accessToken, timeoutMs: 15000 }); }
+            catch (error) {
+              if (!AUTH_ERRORS.has(error.code)) notice = LOGOUT_UNCONFIRMED_NOTICE;
+            }
+          }
+          const view = await clear(session?.accessToken, notice ?? null);
+          return { ok: true, ...view, remoteLogoutConfirmed: Boolean(session?.accessToken) && !notice };
+        }
+        if (!APPROVED_CLIENTS.has(browser.runtime?.id)) throw fail('AUTH_CLIENT_UNSUPPORTED', '请加载正式商店版或指定测试包，再登录 ArchBuddy。');
+        if (typeof browser.identity?.getRedirectURL !== 'function' || typeof browser.identity?.launchWebAuthFlow !== 'function') {
+          throw fail('AUTH_UNAVAILABLE', '浏览器未提供插件登录接口，请重新加载支持 identity 权限的最新插件。');
         }
         const pending = await authorizationRequest(browser.identity, browser.runtime.id);
-        const callback = await browser.identity.launchWebAuthFlow({ url: pending.url, interactive: true });
+        if (pending.redirectUri !== `https://${browser.runtime.id}.chromiumapp.org/archbuddy`) throw fail('AUTH_UNAVAILABLE', '浏览器未提供有效的插件登录回调地址。');
+        let timer;
+        let callback;
+        try {
+          // Timing out this await never accepts a late callback or writes its token.
+          callback = await Promise.race([
+            Promise.resolve().then(() => browser.identity.launchWebAuthFlow({ url: pending.url, interactive: true })),
+            new Promise((_resolve, reject) => { timer = setTimeout(() => reject(fail('LOGIN_TIMEOUT', '登录等待超时。请关闭之前的登录窗口，再点击登录重试。')), authTimeoutMs); }),
+          ]);
+        } catch (reason) {
+          if (reason?.code === 'LOGIN_TIMEOUT') throw reason;
+          throw fail('LOGIN_CANCELLED', '登录未完成，请关闭之前的登录窗口后重试；已有登录状态不会改变。');
+        } finally { clearTimeout(timer); }
         const code = validateCallback(callback, pending);
         const result = await transport('/token', { method: 'POST', body: {
           clientId: browser.runtime.id, redirectUri: pending.redirectUri, code, codeVerifier: pending.verifier,
         } });
         const expiresAt = expiryMilliseconds(result.expiresAt);
         if (typeof result.accessToken !== 'string' || !result.accessToken || typeof result.accountId !== 'string' || !(expiresAt > Date.now())) throw fail('AUTH_INVALID', '登录响应无效');
-        await onSessionChange();
-        await store('readwrite', data => data.put({ accessToken: result.accessToken, expiresAt, accountId: result.accountId }, 'active'));
+        const nextSession = { accessToken: result.accessToken, expiresAt, accountId: result.accountId };
+        try {
+          await mutate(async () => {
+            await onSessionChange();
+            await store('readwrite', data => data.put(nextSession, 'active'));
+            // Publish the new storage scope while switching remains locked.
+            // Profile latency must never pair a new token with the old user's cache.
+            await publish({ ...signedOut(), account: { id: result.accountId, accountId: result.accountId, product: 'archbuddy' } });
+          });
+          const view = await refresh(true);
+          await assertActive(nextSession);
+          return { ok: true, ...view };
+        } catch (error) {
+          await clear(nextSession.accessToken);
+          throw error;
+        }
       } finally { transitioning = false; }
-      return { ok: true, ...await refresh() };
     },
   };
 }

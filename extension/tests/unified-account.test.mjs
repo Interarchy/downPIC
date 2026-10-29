@@ -3,18 +3,41 @@ import assert from 'node:assert/strict';
 import { authorizationRequest, base64url, validateCallback, createCloudAccountClient } from '../cloud-account.mjs';
 import { accountStorage, scopedKey } from '../account-storage.mjs';
 
-function harness(fetchImpl) {
+function harness(fetchImpl, options = {}) {
   const records = new Map([['active', { accessToken: 'opaque-test-only', accountId: 'account-a', expiresAt: Date.now() + 60000 }]]);
-  const views = [];
-  let clears = 0;
-  const store = async (_mode, operation) => operation({
-    get: key => ({ result: records.get(key) }), put: (value, key) => { records.set(key, value); return {}; },
-    delete: key => { records.delete(key); return {}; },
-  })?.result;
-  const browser = { runtime: { id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }, storage: { session: { set: async value => views.push(value) } } };
-  const makeClient = () => createCloudAccountClient({ fetchImpl, browser, store, onSessionChange: async () => { clears++; } });
-  return { client: makeClient(), makeClient, records, views, clearCount: () => clears,
-    setSecret: value => { records.set('active', value); } };
+  const views = [], transactions = [];
+  let clears = 0, beforeStore, onPublish, onChange;
+  let transactionQueue = Promise.resolve();
+  const store = (mode, operation) => {
+    const task = transactionQueue.then(async () => {
+      await beforeStore?.(mode);
+      const values = mode === 'readwrite' ? new Map(records) : records;
+      const tasks = [], calls = [];
+      const request = (kind, key, work) => {
+        const result = {};
+        calls.push([kind, key]);
+        tasks.push(() => { result.result = work(); result.onsuccess?.(); });
+        return result;
+      };
+      const result = operation({
+        get: key => request('get', key, () => values.get(key)),
+        put: (value, key) => request('put', key, () => { values.set(key, value); return key; }),
+        delete: key => request('delete', key, () => values.delete(key)),
+      });
+      // IDB success handlers run inside the same transaction and may enqueue writes.
+      while (tasks.length) tasks.shift()();
+      if (mode === 'readwrite') { records.clear(); for (const [key, value] of values) records.set(key, value); }
+      transactions.push({ mode, calls });
+      return result?.result;
+    });
+    transactionQueue = task.catch(() => {});
+    return task;
+  };
+  const browser = { runtime: { id: 'hkbnjlapflleibeodhghbephgpacbhle' }, storage: { session: { get: async () => views.at(-1) || {}, set: async value => { await onPublish?.(value); views.push(value); } } } };
+  const makeClient = () => createCloudAccountClient({ fetchImpl, browser, store, onSessionChange: async () => { clears++; await onChange?.(); }, ...options });
+  return { client: makeClient(), makeClient, records, views, browser, transactions, clearCount: () => clears,
+    setSecret: value => { if (value) records.set('active', value); else records.delete('active'); },
+    beforeStore: callback => { beforeStore = callback; }, onPublish: callback => { onPublish = callback; }, onChange: callback => { onChange = callback; } };
 }
 const response = data => new Response(JSON.stringify({ data, requestId: 'req-test' }), { headers: { 'Content-Type': 'application/json' } });
 test('PKCE uses a random 256-bit verifier and exact approved redirect', async () => {
@@ -200,4 +223,183 @@ test('execution timeout outlasts the 170 second BFF budget', async () => {
     await h.client.request('/api/v2/analyze', { body: {} });
     assert.ok(timeouts.includes(185000));
   } finally { AbortSignal.timeout = original; }
+});
+
+
+function deferred() { let resolve; const promise = new Promise(done => { resolve = done; }); return { promise, resolve }; }
+function installIdentity(h, launch) {
+  h.browser.identity = {
+    getRedirectURL: path => `https://${h.browser.runtime.id}.chromiumapp.org/${path}`,
+    launchWebAuthFlow: launch || (async ({ url }) => {
+      const request = new URL(url);
+      return request.searchParams.get('redirect_uri') + '?state=' + request.searchParams.get('state') + '&code=' + 'c'.repeat(43);
+    }),
+  };
+}
+const newSession = () => ({ accessToken: 'abp_' + 'n'.repeat(43), accountId: 'account-b', expiresAt: Date.now() + 60000 });
+
+test('stale auth failure cannot delete a new token between its read and write', async () => {
+  const h = harness(async () => failure('UNAUTHENTICATED'));
+  let replaced = false;
+  h.beforeStore(mode => {
+    if (mode === 'readwrite' && !replaced) { replaced = true; h.setSecret(newSession()); }
+  });
+  await assert.rejects(h.client.api('/v1/account'), { code: 'LOGIN_REQUIRED' });
+  assert.equal(h.records.get('active').accountId, 'account-b');
+  assert.equal(h.clearCount(), 0);
+  assert.equal(h.views.some(view => view.archbuddyAccountViewV1.account === null), false);
+  assert.ok(h.transactions.some(tx => tx.mode === 'readwrite' && tx.calls.some(([kind, key]) => kind === 'get' && key === 'active')));
+});
+test('clearing a revoked token compares and deletes in one readwrite transaction', async () => {
+  const h = harness(async () => failure('UNAUTHENTICATED'));
+  await assert.rejects(h.client.api('/v1/account'), { code: 'LOGIN_REQUIRED' });
+  assert.ok(h.transactions.some(tx => tx.mode === 'readwrite' &&
+    JSON.stringify(tx.calls) === JSON.stringify([['get', 'active'], ['delete', 'active']])));
+});
+test('expired credential cleanup cannot clear a replacement session', async () => {
+  const h = harness(async () => { throw new Error('must not fetch'); });
+  h.setSecret({ accessToken: 'expired', accountId: 'account-a', expiresAt: 1 });
+  let replaced = false;
+  h.beforeStore(mode => { if (mode === 'readwrite' && !replaced) { replaced = true; h.setSecret(newSession()); } });
+  await assert.rejects(h.client.identity(), { code: 'LOGIN_REQUIRED' });
+  assert.equal(h.records.get('active').accountId, 'account-b');
+  assert.equal(h.clearCount(), 0);
+});
+test('a delayed account refresh cannot republish an account cleared by another request', async () => {
+  const started = deferred(), release = deferred();
+  const h = harness(async url => {
+    if (url.endsWith('/v1/account')) { started.resolve(); await release.promise; return accountResponse('account-a'); }
+    return failure('UNAUTHENTICATED');
+  });
+  const refresh = h.client.refresh();
+  await started.promise;
+  await assert.rejects(h.client.api('/v1/library'), { code: 'LOGIN_REQUIRED' });
+  release.resolve();
+  await assert.rejects(refresh, { code: 'ACCOUNT_CHANGED' });
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account, null);
+  assert.equal(h.records.has('active'), false);
+});
+for (const mode of ['forbidden', 'network']) test(`logout clears locally on ${mode} and reports unconfirmed remote revocation`, async () => {
+  const h = harness(async () => { if (mode === 'forbidden') return failure('FORBIDDEN', 403); throw new TypeError('private network details'); });
+  const result = await h.client.handle('account.logout');
+  assert.equal(result.ok, true); assert.equal(result.account, null);
+  assert.equal(result.remoteLogoutConfirmed, false);
+  assert.match(result.notice, /服务器暂未确认撤销/);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.notice, result.notice);
+  assert.equal((await h.makeClient().handle('account.get')).notice, result.notice);
+  assert.equal(h.records.has('active'), false);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account, null);
+});
+for (const name of ['AbortError', 'TimeoutError']) test(`${name} numeric DOMException code becomes a stable timeout code`, async () => {
+  const h = harness(async () => { throw new DOMException('private abort details', name); });
+  await assert.rejects(h.client.api('/v1/library'), { code: 'PROCESS_TIMEOUT' });
+  assert.equal(h.records.has('active'), true);
+});
+test('login keeps switching locked until new token and new cache scope are published and profile completes', async () => {
+  const started = deferred(), release = deferred();
+  const h = harness(async url => {
+    if (url.endsWith('/token')) return response(newSession());
+    started.resolve(); await release.promise; return accountResponse('account-b');
+  });
+  installIdentity(h);
+  const login = h.client.handle('account.login');
+  await started.promise;
+  assert.equal(h.records.get('active').accountId, 'account-b');
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account.id, 'account-b');
+  await assert.rejects(h.client.identity(), { code: 'ACCOUNT_BUSY' });
+  await assert.rejects(h.client.api('/v1/library'), { code: 'ACCOUNT_BUSY' });
+  await assert.rejects(h.client.request('/api/v2/analyze', { body: {} }), { code: 'ACCOUNT_BUSY' });
+  await assert.rejects(h.client.handle('account.logout'), { code: 'ACCOUNT_BUSY' });
+  release.resolve();
+  assert.equal((await login).account.id, 'account-b');
+  assert.equal(await h.client.identity(), 'account-b');
+});
+test('login profile failure leaves neither the new token nor an old-account public scope', async () => {
+  const h = harness(async url => url.endsWith('/token') ? response(newSession()) : failure('UNAVAILABLE', 503));
+  installIdentity(h);
+  await assert.rejects(h.client.handle('account.login'), { code: 'UNAVAILABLE' });
+  assert.equal(h.records.has('active'), false);
+  assert.deepEqual(h.views.map(view => view.archbuddyAccountViewV1.account?.id || null), ['account-b', null]);
+  await assert.rejects(h.client.identity(), { code: 'LOGIN_REQUIRED' });
+});
+test('public state writes stay serialized while credential transitions wait for publication', async () => {
+  const publishing = deferred(), release = deferred();
+  let writes = 0, simultaneous = 0, maximum = 0;
+  const h = harness(async () => accountResponse('account-a'));
+  h.onPublish(async () => {
+    simultaneous++; maximum = Math.max(maximum, simultaneous); writes++;
+    if (writes === 1) { publishing.resolve(); await release.promise; }
+    simultaneous--;
+  });
+  const refresh = h.client.refresh(); await publishing.promise;
+  const logout = h.client.handle('account.logout');
+  await new Promise(resolve => setTimeout(resolve, 10));
+  assert.equal(h.records.has('active'), true);
+  release.resolve(); await refresh; await logout;
+  assert.equal(maximum, 1);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.account, null);
+});
+test('unsupported clients and unavailable identity API fail before opening a login window', async () => {
+  let fetches = 0;
+  const h = harness(async () => { fetches++; return response({}); });
+  h.browser.runtime.id = 'a'.repeat(32);
+  await assert.rejects(h.client.handle('account.login'), { code: 'AUTH_CLIENT_UNSUPPORTED' });
+  h.browser.runtime.id = 'hkbnjlapflleibeodhghbephgpacbhle';
+  await assert.rejects(h.client.handle('account.login'), { code: 'AUTH_UNAVAILABLE' });
+  assert.equal(fetches, 0);
+  assert.equal(h.records.get('active').accountId, 'account-a');
+});
+test('login timeout ignores a late callback and permits a clean retry', async () => {
+  const late = deferred(); let firstUrl; let tokenCalls = 0;
+  const h = harness(async url => {
+    if (url.endsWith('/token')) { tokenCalls++; return response(newSession()); }
+    return accountResponse('account-b');
+  }, { authTimeoutMs: 15 });
+  installIdentity(h, ({ url }) => { firstUrl = url; return late.promise; });
+  await assert.rejects(h.client.handle('account.login'), { code: 'LOGIN_TIMEOUT' });
+  const old = new URL(firstUrl);
+  late.resolve(old.searchParams.get('redirect_uri') + '?state=' + old.searchParams.get('state') + '&code=' + 'l'.repeat(43));
+  await new Promise(resolve => setTimeout(resolve, 10));
+  assert.equal(tokenCalls, 0); assert.equal(h.records.get('active').accountId, 'account-a');
+  installIdentity(h);
+  assert.equal((await h.client.handle('account.login')).account.id, 'account-b');
+  assert.equal(tokenCalls, 1);
+});
+
+test('response body abort maps the numeric DOMException code to PROCESS_TIMEOUT', async () => {
+  const h = harness(async () => ({ ok: true, json: async () => { throw new DOMException('private', 'AbortError'); } }));
+  await assert.rejects(h.client.api('/v1/account'), { code: 'PROCESS_TIMEOUT' });
+});
+test('quota exhaustion remains a definitive error and does not turn into an uncertain charge', async () => {
+  const h = harness(async url => url.endsWith('/v1/execute') ? failure('CREDIT_INSUFFICIENT', 409) : accountResponse('account-a'));
+  await assert.rejects(h.client.request('/api/v2/analyze', { body: { image: {} } }), { code: 'CREDIT_INSUFFICIENT' });
+  assert.equal([...h.records.keys()].some(key => key.startsWith('execution:')), false);
+});
+for (const code of ['FORBIDDEN', 'POLICY_ACCEPTANCE_REQUIRED', 'RATE_LIMITED']) test(`execution surfaces ${code} for queue control while retaining its request identity`, async () => {
+  const h = harness(async url => url.endsWith('/v1/execute') ? failure(code, code === 'RATE_LIMITED' ? 429 : 403) : accountResponse('account-a'));
+  await assert.rejects(h.client.request('/api/v2/analyze', { body: { image: {} } }), { code });
+  assert.equal([...h.records.keys()].filter(key => key.startsWith('execution:')).length, 1);
+});
+
+
+test('successful login replaces an unconfirmed logout notice with the new account view', async () => {
+  const h = harness(async url => {
+    if (url.endsWith('/v1/logout')) return failure('FORBIDDEN', 403);
+    return url.endsWith('/token') ? response(newSession()) : accountResponse('account-b');
+  });
+  await h.client.handle('account.logout');
+  installIdentity(h);
+  const result = await h.client.handle('account.login');
+  assert.equal(result.notice, undefined);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.notice, undefined);
+  assert.equal(result.account.id, 'account-b');
+});
+
+test('a normal explicit local logout clears a previously unconfirmed notice', async () => {
+  const h = harness(async () => failure('FORBIDDEN', 403));
+  await h.client.handle('account.logout');
+  const result = await h.makeClient().handle('account.logout');
+  assert.equal(result.notice, undefined);
+  assert.equal(result.remoteLogoutConfirmed, false);
+  assert.equal(h.views.at(-1).archbuddyAccountViewV1.notice, undefined);
 });
