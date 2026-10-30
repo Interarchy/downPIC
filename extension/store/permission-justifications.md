@@ -1,3 +1,5 @@
+> 历史资料：本文件不用于0.7.5提交。当前版本请使用[新版发布材料](releases/0.7.5/)，旧登录、额度与保留规则不代表当前产品。
+
 # ArchBuddy 0.6.0（V4）权限与数据披露填写稿
 
 > 对应 `extension/manifest.json` 和 V4 实际数据流。按 Chrome Web Store 后台当前字段填写；不要粘贴测试密钥或真实用户素材。`downloads.open` 已从本版 Manifest 移除，大图在图词库网页内查看。

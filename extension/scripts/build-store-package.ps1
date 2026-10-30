@@ -1,5 +1,7 @@
 param(
   [string]$OutputDirectory,
+  [ValidateSet('chrome', 'edge')]
+  [string]$Browser = 'chrome',
   [switch]$FixedIdentityTest
 )
 
@@ -39,7 +41,7 @@ if ($version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') {
 $runtimeConfigPath = Join-Path $extensionDirectory 'runtime-config.mjs'
 $runtimeConfigText = [System.IO.File]::ReadAllText($runtimeConfigPath, [System.Text.Encoding]::UTF8)
 if ($runtimeConfigText -notmatch 'export\s+const\s+BACKEND_MODE\s*=\s*[''"]cloud[''"]') {
-  throw 'Chrome Web Store packages require BACKEND_MODE=cloud.'
+  throw 'Store packages require BACKEND_MODE=cloud.'
 }
 
 $requiredFiles = @(
@@ -95,7 +97,7 @@ foreach ($relativePath in $requiredFiles) {
 }
 
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
-$packageName = if ($FixedIdentityTest) { 'archbuddy-unified-test-' } else { 'archbuddy-beta-' }
+$packageName = if ($FixedIdentityTest) { 'archbuddy-unified-test-' } else { 'archbuddy-' + $Browser + '-' }
 $archivePath = Join-Path $OutputDirectory ($packageName + $version + '.zip')
 if (Test-Path -LiteralPath $archivePath) {
   Remove-Item -LiteralPath $archivePath -Force
@@ -110,6 +112,7 @@ try {
     $sourcePath = Join-Path $extensionDirectory $relativePath
     $entryName = $relativePath.Replace('\', '/')
     $entry = $archive.CreateEntry($entryName, [System.IO.Compression.CompressionLevel]::Optimal)
+    $entry.LastWriteTime = [DateTimeOffset]::new(2026, 1, 1, 0, 0, 0, [TimeSpan]::Zero)
     $destination = $entry.Open()
     try {
       if ($FixedIdentityTest -and $relativePath -eq 'manifest.json') {
@@ -124,5 +127,5 @@ try {
 } finally {
   $archive.Dispose()
 }
-$packageLabel = if ($FixedIdentityTest) { 'Created fixed-ID test package: ' } else { 'Created Chrome Web Store package: ' }
+$packageLabel = if ($FixedIdentityTest) { 'Created fixed-ID test package: ' } else { 'Created ' + $Browser + ' store package: ' }
 Write-Output ($packageLabel + $archivePath)

@@ -1,0 +1,60 @@
+{
+  "sourceVersion": "0.7.5",
+  "method": "current-source-ui-in-isolated-chromium-with-browser-api-fixture",
+  "sourceBase": "C:/Users/lee/.codex/worktrees/plugin-unified/downPIC-plugin",
+  "syntheticData": "示例账户 / Demo；50 BuddyCoin、200简析、50深度反推均为展示夹具，不是真实服务器余额。专业云库active状态与12.5MB用量为展示夹具；素材来自仓库architecture-board.png，提示词为旧截图脚本中手工文本。",
+  "externalRequestsBlocked": [],
+  "modelCalls": [],
+  "pageErrors": [],
+  "shots": [
+    {
+      "name": "01-library-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "89386a9f647a90ec68ec7891705967642115fa39af207f27b43da92f13be3f8c"
+    },
+    {
+      "name": "02-image-details-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "25258002ee41d39d7198253b6d6196725d1903136a7194971679b96f8537580f"
+    },
+    {
+      "name": "03-prompt-library-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "51600b98bfc02fb9b86bc355f8413bc73d5effee9244bdb0e8fbb40904a4ab15"
+    },
+    {
+      "name": "04-cloud-library-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "48d4c134b47edffea269adcc52b09baadc2747bfbc9d29f41bc448832ae1668a"
+    },
+    {
+      "name": "_sidebar-top-420x800.png",
+      "width": 420,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "622d5e17f5a68cf767fc497c2de4e3a037094561e5028e5a55b64620ce4156b3"
+    },
+    {
+      "name": "_sidebar-prompt-420x800.png",
+      "width": 420,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "c6b82e203058267e7c3d1a9f591421e1556a23d8e8553604d509e2c1667685f1"
+    },
+    {
+      "name": "05-prompt-builder-1280x800.png",
+      "width": 1280,
+      "height": 800,
+      "hasAlpha": false,
+      "sha256": "8793b5db308235cd051819a860446db3da637b52049046c1452d3205ad49a671"
+    }
+  ]
+}
