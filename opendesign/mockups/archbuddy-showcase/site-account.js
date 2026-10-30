@@ -142,7 +142,7 @@
     if (fromFrame && popup && !popup.closed) return;
     const data = event.data;
     if (!data || data.channel !== channel) return;
-    if (data.action === 'ready') { send(event.source); return; }
+    if (data.action === 'ready') { if (pending?.action !== 'checkin') send(event.source); return; }
     if (!pending || pending.source !== event.source || data.requestId !== pending.requestId) return;
     finish(data);
   });
