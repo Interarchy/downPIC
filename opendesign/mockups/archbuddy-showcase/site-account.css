@@ -27,6 +27,12 @@
 .account-metrics dd{margin:0;max-width:58%;overflow-wrap:anywhere;text-align:right;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
 .account-metrics>div:first-child dd{font-size:30px}
 .account-metrics dd[data-pending=true]{font-size:12px;font-weight:400;color:#728475}
+.account-checkin{margin:0 0 17px}
+.account-checkin-button{display:flex;align-items:center;justify-content:center;width:100%;min-height:42px;padding:8px 12px;border:1px solid #52735a;border-radius:5px;background:#e6efe3;color:#173b2d;font:inherit;font-size:13px;font-weight:650;cursor:pointer;transition:background .2s ease,border-color .2s ease}
+.account-checkin-button:hover:not(:disabled){background:#d7e9d3;border-color:#234e39}
+.account-checkin-button:focus-visible{outline:2px solid #234e39;outline-offset:3px}
+.account-checkin-button:disabled{opacity:.6;cursor:default}
+.account-checkin-feedback{margin:7px 0 0;color:#526958;font-size:11px;line-height:1.5}
 .account-note{font-size:12px;line-height:1.65;color:#728475;margin:0 0 17px}
 .account-menu .account-primary{display:flex;justify-content:center;align-items:center;min-height:42px;padding:8px 16px;background:#234e39;color:#f3f7ee;border-radius:5px;font-size:13px;font-weight:600;text-decoration:none}
 .account-menu .account-primary:hover{background:#173b2d;color:#fff}

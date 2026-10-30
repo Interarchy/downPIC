@@ -5,6 +5,9 @@
   const en = document.documentElement.lang.startsWith('en');
   const get = name => menu.querySelector('[data-account-' + name + ']');
   const ui = Object.fromEntries(['label','credit','name','status','values','points','analysis','reverse','note','login','workspace','refresh'].map(name => [name,get(name)]));
+  const checkInWrap = get('checkin-wrap');
+  const checkInButton = get('checkin');
+  const checkInFeedback = get('checkin-feedback');
   const origin = document.body.dataset.accountOrigin;
   const allowed = new Set(['https://canvas.archbuddy.top']);
   if (!allowed.has(origin)) return;
@@ -16,7 +19,8 @@
   login.searchParams.set('redirect_url', bridge.href);
   ui.login.href = login.href;
   ui.workspace.href = origin + '/workspace';
-  let frame = null, popup = null, pending = null, timer = 0, lastRead = 0;
+  let frame = null, popup = null, pending = null, timer = 0, resetTimer = 0, lastRead = 0;
+  let lastCheckIn = null;
   let hoverTimer = 0, leaveTimer = 0;
   const summary = menu.querySelector('summary');
   const format = value => value.toLocaleString(en ? 'en-US' : 'zh-CN');
@@ -30,6 +34,7 @@
   };
   function clear() {
     ui.values.hidden = true; ui.note.hidden = true; ui.credit.hidden = true;
+    checkInWrap.hidden = true; checkInFeedback.hidden = true; lastCheckIn = null;
     ui.points.textContent = ui.analysis.textContent = ui.reverse.textContent = '—';
     ui.label.textContent = en ? 'Sign In' : '账户登录';
     ui.name.textContent = en ? 'One Account, Every Step' : '一个账号，连接创作';
@@ -37,7 +42,8 @@
     summary.setAttribute('aria-label', en ? 'Sign in and account allowances' : '账户登录与额度');
   }
   function finish(data) {
-    clearTimeout(timer); pending = null; ui.refresh.disabled = false;
+    const completedAction = pending?.action;
+    clearTimeout(timer); clearTimeout(resetTimer); pending = null; ui.refresh.disabled = false;
     clear();
     const status = typeof data.status === 'string' ? data.status : 'unavailable';
     menu.dataset.accountState = status;
@@ -71,9 +77,32 @@
     ui.note.textContent = connected
       ? (en ? 'Ordinary image saves are free. Brief analysis and deep reverse use separate allowances.' : '普通保存图片不计次，图片简析与深度反推分别计次。')
       : (en ? 'Library allowances are temporarily unavailable. Retry to refresh.' : '暂时无法读取图词库额度，请稍后刷新。');
+    const state = data.checkIn;
+    const validCheckIn = state && typeof state.claimed === 'boolean' &&
+      typeof state.expiresAt === 'string' && Number.isFinite(Date.parse(state.expiresAt));
+    lastCheckIn = validCheckIn ? state : null;
+    checkInWrap.hidden = false;
+    checkInButton.disabled = Boolean(validCheckIn && state.claimed);
+    checkInButton.textContent = validCheckIn
+      ? (state.claimed
+          ? (en ? 'Checked in today' : '今日已签到')
+          : (en ? 'Check in +10' : '签到 +10'))
+      : (en ? 'Refresh check-in status' : '刷新签到状态');
+    if (completedAction === 'checkin') {
+      checkInFeedback.hidden = false;
+      checkInFeedback.textContent = data.checkInError
+        ? (en ? 'Could not confirm check-in. Please retry.' : '签到未能确认，请重试。')
+        : state?.awarded
+          ? (en ? '10 BuddyCoin added for today.' : '今日 10 BuddyCoin 已到账。')
+          : (en ? 'Already checked in today.' : '今天已经签到。');
+    }
+    if (validCheckIn) {
+      const delay = Date.parse(state.expiresAt) - Date.now() + 1000;
+      if (delay > 0) resetTimer = setTimeout(() => { lastRead = 0; read(); }, delay);
+    }
     ui.status.textContent = (en ? 'Updated at ' : '更新于 ') + new Date().toLocaleTimeString(en ? 'en-US' : 'zh-CN',{hour:'2-digit',minute:'2-digit'});
   }
-  function arm(source) {
+  function arm(source, action = 'read') {
     clearTimeout(timer);
     // Keep the account name steady during refresh; never show stale balances as current.
     ui.values.hidden = true; ui.note.hidden = true; ui.credit.hidden = true;
@@ -82,14 +111,18 @@
       ui.label.textContent = en ? 'Account' : '我的账户';
       ui.login.hidden = true; ui.workspace.hidden = true;
     }
-    ui.status.textContent = words.loading; ui.refresh.disabled = true;
-    pending = {source,requestId:crypto.randomUUID()};
+    ui.status.textContent = action === 'checkin'
+      ? (en ? 'Checking in…' : '正在签到…') : words.loading;
+    ui.refresh.disabled = true;
+    checkInButton.disabled = true;
+    if (action === 'checkin') checkInButton.textContent = en ? 'Checking in…' : '签到中…';
+    pending = {source,action,requestId:crypto.randomUUID()};
     timer = setTimeout(() => finish({status:'unavailable'}),15000);
   }
-  function send(source) {
+  function send(source, action = 'read') {
     if (!source) return;
-    arm(source); lastRead = Date.now();
-    source.postMessage({channel,action:'read',requestId:pending.requestId},origin);
+    arm(source, action); lastRead = Date.now();
+    source.postMessage({channel,action,requestId:pending.requestId},origin);
   }
   function read() {
     if (pending) return;
@@ -131,6 +164,15 @@
   });
   summary.addEventListener('click', () => { clearTimeout(hoverTimer); clearTimeout(leaveTimer); });
   ui.refresh.addEventListener('click', read);
+  checkInButton.addEventListener('click', () => {
+    if (pending || menu.dataset.accountState !== 'active') return;
+    if (!lastCheckIn) { read(); return; }
+    if (lastCheckIn.claimed) return;
+    const source = popup && !popup.closed ? popup : frame?.contentWindow;
+    if (source) send(source, 'checkin');
+    else read();
+  });
+
   ui.login.addEventListener('click', event => {
     const opened = window.open(login.href,'archbuddy-account','popup,width=540,height=760');
     if (!opened) return; // The normal link remains available when popups are blocked.
@@ -145,7 +187,7 @@
     if (document.visibilityState === 'visible' && (!popup || popup.closed) && Date.now() - lastRead > 5000) read();
   });
   window.addEventListener('pagehide', () => {
-    clearTimeout(timer); clearTimeout(hoverTimer); clearTimeout(leaveTimer); pending = null;
+    clearTimeout(timer); clearTimeout(resetTimer); clearTimeout(hoverTimer); clearTimeout(leaveTimer); pending = null;
   });
   read();
 })();
