@@ -915,3 +915,7 @@ dialog .eyebrow {
     transition: none !important;
   }
 }
+
+/* Pro stays visible while cross-platform Library sync is verified. */
+body.compact .plan > button:disabled { cursor: default; opacity: .76; }
+body.compact .plan > button:disabled:hover { background: transparent; border-color: #65705a; }
