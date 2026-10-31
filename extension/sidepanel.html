@@ -43,88 +43,88 @@ SOFTWARE.
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ArchBuddy</title>
-  <link rel="stylesheet" href="sidepanel.css?v=0.6.1" />
+  <link rel="stylesheet" href="sidepanel.css?v=0.7.3" />
   <link rel="stylesheet" href="account-ui.css" />
 </head>
 <body class="needs-consent">
   <div class="sticky-header">
   <header class="app-header">
     <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span class="beta">Beta</span></div>
-    <div class="header-actions"><p id="session-status">正在连接</p></div>
+    <div class="header-actions"><p id="session-status" data-i18n-en="Connecting…">正在连接</p><a class="canvas-launch" href="https://canvas.archbuddy.top/studio" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开 ArchBuddy Canvas" data-i18n-aria-label-en="Open ArchBuddy Canvas in a new tab" title="在新标签页打开画布" data-i18n-title-en="Open Canvas in a new tab" data-i18n-en="Open Canvas">打开 Canvas</a></div>
   </header>
   <nav class="tabs">
-    <button id="open-library" class="tab" type="button" data-tab="library">图词库</button>
-    <button class="tab is-active" type="button" data-tab="analysis">提示词生成</button>
-    <button class="tab" type="button" data-tab="optimize">提示词优化</button>
+    <button id="open-library" class="tab" type="button" data-tab="library" data-i18n-en="Library">图词库</button>
+    <button class="tab is-active" type="button" data-tab="analysis" data-i18n-en="Build prompt">提示词生成</button>
+    <button class="tab" type="button" data-tab="optimize" data-i18n-en="Refine prompt">提示词优化</button>
   </nav>
   </div>
   <main>
     <p id="local-demo-notice" class="local-demo-notice" hidden></p>
     <section id="analysis-panel" class="panel">
       <section id="privacy-gate" class="setup-block onboarding-gate" hidden>
-        <h1>开始使用前确认</h1>
+        <h1 data-i18n-en="Before you begin">开始使用前确认</h1>
         <label class="check-row onboarding-check"><input id="privacy-check" type="checkbox" />
-          <span><strong>我同意图片与图库 AI 处理</strong><small>新下载图片自动发送预览以生成视觉描述；语义检索发送查询与库内描述/提示词；分析和评估发送所选图片及相关提示词给 ArchBuddy 与 DeepSeek。我确认有权处理这些内容。</small></span>
+          <span><strong data-i18n-en="I agree to AI processing of images and library content">我同意图片与图库 AI 处理</strong><small data-i18n-en="Previews of new downloads are sent for visual descriptions. Semantic search sends your query and library descriptions or prompts. Analysis and evaluation send selected images and related prompts to ArchBuddy and DeepSeek. I confirm that I have permission to process this content.">新下载图片自动发送预览以生成视觉描述；语义检索发送查询与库内描述/提示词；分析和评估发送所选图片及相关提示词给 ArchBuddy 与 DeepSeek。我确认有权处理这些内容。</small></span>
         </label>
-        <p id="privacy-points-note" class="points-cost-note" hidden>开启后，下载图片自动生成核心视觉描述，每张 0.1 积分；反推与效果分析每张 1 积分。可在详细说明中关闭自动描述。</p>
-        <div class="onboarding-actions"><a href="privacy.html" target="_blank">隐私说明</a><button id="privacy-accept" class="primary-button" disabled>确认</button></div>
+        <p id="privacy-points-note" class="points-cost-note" hidden data-i18n-en="When enabled, visual descriptions cost 0.1 credit per image; reverse prompting and evaluation cost 1 credit per image. You can turn off automatic descriptions in Details.">开启后，下载图片自动生成核心视觉描述，每张 0.1 积分；反推与效果分析每张 1 积分。可在详细说明中关闭自动描述。</p>
+        <div class="onboarding-actions"><a href="privacy.html" target="_blank" data-i18n-en="Privacy">隐私说明</a><button id="privacy-accept" class="primary-button" disabled data-i18n-en="Confirm">确认</button></div>
       </section>
       <p id="analysis-points-total" class="points-cost-note" hidden></p>
-      <div id="reference-list" class="reference-list"><button id="new-builder" type="button" class="text-button" hidden>清空参考图</button></div>
-      <button id="add-reference" class="secondary-button add-reference">添加参考图二</button>
+      <div id="reference-list" class="reference-list"><button id="new-builder" type="button" class="text-button" hidden data-i18n-en="Clear references">清空参考图</button></div>
+      <button id="add-reference" class="secondary-button add-reference" data-i18n-en="Add reference 2">添加参考图二</button>
       <p id="builder-feedback" class="section-note"></p>
       <section class="prompt-block builder-summary">
-        <label class="draft-name-field" for="prompt-name">提示词名称<input id="prompt-name" maxlength="80" placeholder="例如：山地酒店 · 暖色混凝土" /></label>
-        <div class="section-title"><h2>整体 Prompt 预览</h2><span id="prompt-count"></span></div>
-        <p class="section-note">正文可直接编辑；上方替换只更新对应段落。</p>
+        <label class="draft-name-field" for="prompt-name"><span data-i18n-en="Prompt name">提示词名称</span><input id="prompt-name" maxlength="80" placeholder="例如：山地酒店 · 暖色混凝土" data-i18n-placeholder-en="e.g. Mountain hotel · warm concrete" /></label>
+        <div class="section-title"><h2 data-i18n-en="Complete prompt">整体 Prompt 预览</h2><span id="prompt-count"></span></div>
+        <p class="section-note" data-i18n-en="Edit the text directly. Replacing a dimension above updates only its section.">正文可直接编辑；上方替换只更新对应段落。</p>
         <div id="prompt-preview"></div>
         <div class="prompt-actions">
-          <button id="confirm-prompt" class="secondary-button" disabled>整体确认</button>
-          <button id="copy-prompt" class="primary-button" disabled>复制</button>
+          <button id="confirm-prompt" class="secondary-button" disabled data-i18n-en="Confirm prompt">整体确认</button>
+          <button id="copy-prompt" class="primary-button" disabled data-i18n-en="Copy">复制</button>
         </div>
         <textarea id="copy-fallback" class="copy-fallback" readonly hidden></textarea>
         <p id="copy-feedback" class="section-note"></p>
       </section>
 
       <details class="details-panel">
-        <summary>详细说明</summary>
-        <p class="section-note">在参考图的各维度中编辑，点击“加入”或“替换”汇入整体预览。已选内容继续编辑时，预览同步更新。整体确认后再复制。</p>
-        <label class="check-row"><input id="analytics-toggle" type="checkbox" />允许匿名功能统计（不包含图片和提示词）</label>
-        <label class="check-row"><input id="asset-ai-toggle" type="checkbox" />下载后自动描述与图库语义检索</label>
-        <p id="auto-description-points" class="points-cost-note" hidden>自动描述每张 0.1 积分（100 张共 10 积分）；向量建索引与检索不扣积分，均受每日调用上限保护。</p>
-        <a href="privacy.html" target="_blank">隐私说明</a>
+        <summary data-i18n-en="Details">详细说明</summary>
+        <p class="section-note" data-i18n-en="Edit each dimension of a reference and choose Add or Replace to include it in the full prompt. Further edits to selected dimensions update the preview. Confirm the complete prompt before copying.">在参考图的各维度中编辑，点击“加入”或“替换”汇入整体预览。已选内容继续编辑时，预览同步更新。整体确认后再复制。</p>
+        <label class="check-row"><input id="analytics-toggle" type="checkbox" /><span data-i18n-en="Allow anonymous usage statistics (excluding images and prompts)">允许匿名功能统计（不包含图片和提示词）</span></label>
+        <label class="check-row"><input id="asset-ai-toggle" type="checkbox" /><span data-i18n-en="Automatic descriptions and semantic library search">下载后自动描述与图库语义检索</span></label>
+        <p id="auto-description-points" class="points-cost-note" hidden data-i18n-en="Automatic descriptions cost 0.1 credit per image (10 credits per 100 images). Indexing and search do not deduct credits; daily request limits still apply.">自动描述每张 0.1 积分（100 张共 10 积分）；向量建索引与检索不扣积分，均受每日调用上限保护。</p>
+        <a href="privacy.html" target="_blank" data-i18n-en="Privacy">隐私说明</a>
       </details>
     </section>
     <section id="optimize-panel" class="panel optimize-panel" hidden>
-      <nav class="render-services" aria-label="前往 AI 生图网站">
+      <nav class="render-services" aria-label="前往 AI 生图网站" data-i18n-aria-label-en="Open an AI image generation website">
         <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="icons/gemini.png" alt="" /><span><strong>Gemini</strong><small>gemini.google.com</small></span><svg class="external-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a>
         <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="icons/chatgpt.svg" alt="" /><span><strong>ChatGPT</strong><small>chatgpt.com</small></span><svg class="external-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg></a>
       </nav>
-      <div class="section-title"><h2>生成效果图</h2><span>粘贴、拖入或选择文件</span></div>
+      <div class="section-title"><h2 data-i18n-en="Generated image">生成效果图</h2><span data-i18n-en="Paste, drop or choose a file">粘贴、拖入或选择文件</span></div>
       <figure id="generated-preview" class="preview is-empty" tabindex="0">
-        <img id="generated-image" hidden alt="生成效果图" />
-        <figcaption id="generated-caption">放入已经生成的效果图</figcaption>
-        <button id="generated-choose" class="secondary-button compact">选择文件</button>
+        <img id="generated-image" hidden alt="生成效果图" data-i18n-alt-en="Generated image" />
+        <figcaption id="generated-caption" data-i18n-en="Add your generated image">放入已经生成的效果图</figcaption>
+        <button id="generated-choose" class="secondary-button compact" data-i18n-en="Choose file">选择文件</button>
         <input id="generated-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
       </figure>
       <section class="baseline-picker">
-        <label for="scheme-select">选择已确认的基本提示词</label>
-        <select id="scheme-select"><option value="">从最近确认的提示词库中选择</option></select>
-        <details id="baseline-details" hidden><summary>查看原文</summary><pre id="baseline-prompt"></pre></details>
+        <label for="scheme-select" data-i18n-en="Choose a confirmed base prompt">选择已确认的基本提示词</label>
+        <select id="scheme-select"><option value="" data-i18n-en="Choose a recently confirmed prompt">从最近确认的提示词库中选择</option></select>
+        <details id="baseline-details" hidden><summary data-i18n-en="View original">查看原文</summary><pre id="baseline-prompt"></pre></details>
       </section>
-      <p id="evaluation-points-cost" class="points-cost-note" hidden>本次分析 1 张效果图，消耗 1 积分；失败释放。</p>
-      <button id="run-evaluation" title="点击后发送生成图与所选提示词给 ArchBuddy 与 DeepSeek 进行评估" class="primary-button" disabled>开始评估</button>
+      <p id="evaluation-points-cost" class="points-cost-note" hidden data-i18n-en="Evaluate one generated image for 1 credit. Failed requests release the reservation.">本次分析 1 张效果图，消耗 1 积分；失败释放。</p>
+      <button id="run-evaluation" title="点击后发送生成图与所选提示词给 ArchBuddy 与 DeepSeek 进行评估" data-i18n-title-en="Send the generated image and selected prompt to ArchBuddy and DeepSeek for evaluation" class="primary-button" disabled data-i18n-en="Evaluate">开始评估</button>
       <p id="evaluation-feedback" class="section-note"></p>
       <section id="evaluation-report" hidden>
-        <div class="section-title"><h2>评估与调整</h2><span>在原文中直接编辑</span></div>
+        <div class="section-title"><h2 data-i18n-en="Evaluate and refine">评估与调整</h2><span data-i18n-en="Edit the original text directly">在原文中直接编辑</span></div>
         <p id="overall-conclusion" class="section-note"></p>
         <div id="finding-list" class="finding-list"></div>
-        <div class="prompt-actions"><button id="confirm-revision" class="primary-button">确认提示词并入库</button><button id="copy-revision" class="secondary-button" disabled>复制</button></div>
+        <div class="prompt-actions"><button id="confirm-revision" class="primary-button" data-i18n-en="Confirm and save prompt">确认提示词并入库</button><button id="copy-revision" class="secondary-button" disabled data-i18n-en="Copy">复制</button></div>
         <textarea id="revision-copy-fallback" class="copy-fallback" readonly hidden></textarea>
         <p id="revision-feedback" class="section-note"></p>
       </section>
       <details class="drafts-block drafts-panel">
-        <summary>最近确认的提示词库</summary>
+        <summary data-i18n-en="Recent confirmed prompts">最近确认的提示词库</summary>
         <div id="library-list" class="draft-list"></div>
       </details>
     </section>

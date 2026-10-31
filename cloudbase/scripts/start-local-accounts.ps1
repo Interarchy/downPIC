@@ -8,10 +8,11 @@ if (Get-NetTCPConnection -LocalPort 8080 -State Listen -ErrorAction SilentlyCont
   throw 'Port 8080 is in use. Stop the existing local service before starting the account demo.'
 }
 if (-not $SkipPrepareExtension) { & $preparePath }
-$names = @('ARCHBUDDY_ACCOUNT_MODE', 'ARCHBUDDY_LOCAL_MOCK_AI', 'ARCHBUDDY_QUOTA_MODE', 'ARCHBUDDY_ANALYTICS_ENABLED', 'ARCHBUDDY_MAX_CONCURRENT', 'ARCHBUDDY_CALLS_PER_MINUTE', 'PORT')
+$names = @('NODE_ENV', 'ARCHBUDDY_ACCOUNT_MODE', 'ARCHBUDDY_LOCAL_MOCK_AI', 'ARCHBUDDY_QUOTA_MODE', 'ARCHBUDDY_ANALYTICS_ENABLED', 'ARCHBUDDY_MAX_CONCURRENT', 'ARCHBUDDY_CALLS_PER_MINUTE', 'PORT')
 $previous = @{}
 foreach ($name in $names) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 try {
+  $env:NODE_ENV = 'development'
   $env:ARCHBUDDY_ACCOUNT_MODE = 'local-demo'
   $env:ARCHBUDDY_LOCAL_MOCK_AI = 'true'
   $env:ARCHBUDDY_QUOTA_MODE = 'process-test'

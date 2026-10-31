@@ -103,6 +103,16 @@
   letter-spacing: normal;
   appearance: auto;
 }
+/* English labels need more room; Chinese keeps its compact fixed widths. */
+.downpic-toolbar:lang(en) .downpic-toolbar-row { flex-wrap: wrap; }
+.downpic-toolbar:lang(en) .downpic-toolbar-row > [data-action="save"],
+.downpic-toolbar:lang(en) .downpic-toolbar-row > [data-action="analyze"] {
+  width: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.downpic-toolbar:lang(en) .downpic-category-label select { width: 190px; }
+
 .downpic-category-label select:focus-visible,
 .downpic-toolbar input:focus-visible { outline: 2px solid var(--downpic-green); outline-offset: 2px; }
 .downpic-custom-row { display: flex; gap: 7px; margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--downpic-line); }

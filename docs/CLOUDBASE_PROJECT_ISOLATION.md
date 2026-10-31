@@ -1,3 +1,9 @@
+## 2026-10-30：统一执行器发布前只读核查
+
+- 既有服务 archbuddy-api / ap-shanghai / development，当前稳定014占100%流量，8080端口、0–1实例；环境13项名称已核对，密钥仅在内存用于API读取，无新增或变更。
+- 固定集合 archbuddy_dev_requests 实际 ADMINONLY，原生索引只有 _id_、_openid_1，无TTL。统一记录新增专属 BSON Date unifiedExpiresAt，后续仅增加该字段TTL，避免触及旧匿名expiresAt记录。源码/发布计划见 cloudbase/UNIFIED_EXECUTOR.md。
+- 默认只读脚本已核验。实际签名密钥、GRAY发布、专属TTL创建和切流均须主任务执行，本记录不等同已上线。
+
 # CloudBase 多项目隔离约定
 
 生效日期：2026-09-15。来源：用户明确要求，CloudBase 同时承载 ArchBuddy 和未来其他小项目或 demo，各项目数据必须清晰区分，后续工作每次检查。
@@ -25,6 +31,13 @@ Chrome 扩展安装在用户浏览器；部署到 CloudBase 的是 ArchBuddy 后
 | 服务凭据 | `DEEPSEEK_API_KEY`、`ARCHBUDDY_TEST_TOKEN`、`ARCHBUDDY_SESSION_SECRET` 等 | 仅登记变量名，不登记值；其他项目不得默认复用本项目令牌 |
 
 以上现状来自仓库实现及此前部署记录，不代表已完成云端全资源或权限审计。
+
+## 2026-10-29 统一执行器新增记录（仅本地实现）
+
+- 固定归属仍为 archbuddy / development / 原 archbuddy-api，不新建服务或集合。新增 `archbuddy_dev_requests` 中 `unified_` 文档前缀，与旧匿名记录分开。
+- 保存请求/账号摘要、操作、幂等状态和成功响应，成功响应可能含用户提示词、评估内容或向量，不再将此类记录描述为纯无正文统计。原请求图片和 payload 不落这些记录；结果30天到期，字段和查询到期拒绝已实现，TTL物理清理仍待线上核验。
+- 只接受统一Worker的 HMAC 调用，专用 `PRODUCT_EXECUTOR_SECRET` 只在两端服务设置中；旧匿名和管理员付费路由默认关闭。D1 是统一权益/预算主源，不在CloudBase再扣次数或本地积分。
+- 已用模拟数据核验跨账号/请求篡改、事务并发和失败状态；未读取真实用户记录、未配置Secret、未部署或变更共享环境。详见 [统一执行器](../cloudbase/UNIFIED_EXECUTOR.md)。
 
 ## 2026-10-09 本地账号积分资源登记
 

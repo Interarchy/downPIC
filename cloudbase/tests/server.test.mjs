@@ -13,7 +13,8 @@ const result = { sections: SECTION_TITLES.map(title => ({ title, text: '测试�
 async function withServer(run, { environment = {}, ...options } = {}) {
   let calls = 0;
   const server = createAnalysisServer({
-    environment: { DEEPSEEK_API_KEY: apiKey, ARCHBUDDY_TEST_TOKEN: token, ...environment },
+    legacyTestMode: true,
+    environment: { NODE_ENV: 'test', DEEPSEEK_API_KEY: apiKey, ARCHBUDDY_TEST_TOKEN: token, ...environment },
     analyzerFactory: () => ({ analyze: async () => { calls++; return result; } }),
     ...options,
   });

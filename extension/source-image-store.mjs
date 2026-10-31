@@ -1,3 +1,4 @@
+import { contextScope } from './account-storage.mjs';
 const DB_NAME = 'archbuddy-local';
 const DB_VERSION = 1;
 const STORE_NAME = 'source-images-v1';
@@ -15,9 +16,11 @@ function validId(value) {
     && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
-function openDb() {
+async function openDb(explicitScope) {
+  const scope = explicitScope || await contextScope();
+  const name = ['legacy','local-demo'].includes(scope) ? DB_NAME : DB_NAME + ':' + scope;
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = indexedDB.open(name, DB_VERSION);
     request.onupgradeneeded = () => {
       const database = request.result;
       const store = database.objectStoreNames.contains(STORE_NAME)
@@ -30,8 +33,8 @@ function openDb() {
   });
 }
 
-async function transaction(mode, operation) {
-  const database = await openDb();
+async function transaction(mode, operation, explicitScope) {
+  const database = await openDb(explicitScope);
   try {
     return await new Promise((resolve, reject) => {
       const tx = database.transaction(STORE_NAME, mode);
@@ -50,11 +53,11 @@ async function transaction(mode, operation) {
   }
 }
 
-export async function putSourceImage(record = {}) {
+async function writeSourceImage(record = {}, explicitScope) {
   if (!validId(record.sourceReferenceId) || !validId(record.schemeId)
       || !(record.blob instanceof Blob) || !MIME_TYPES.has(record.blob.type)
-      || record.blob.size < 1 || record.blob.size > MAX_IMAGE_BYTES) {
-    throw storeError('INVALID_IMAGE', '来源图必须是 1 字节至 10 MB 的 PNG、JPEG 或 WebP');
+      || record.blob.size < 1 || record.blob.size > (explicitScope ? 20 * 1024 * 1024 : MAX_IMAGE_BYTES)) {
+    throw storeError('INVALID_IMAGE', explicitScope ? '云端来源图必须是 1 字节至 20 MB 的 PNG、JPEG 或 WebP' : '来源图必须是 1 字节至 10 MB 的 PNG、JPEG 或 WebP');
   }
   const stored = {
     sourceReferenceId: record.sourceReferenceId,
@@ -64,8 +67,8 @@ export async function putSourceImage(record = {}) {
     blob: record.blob,
     createdAt: new Date().toISOString(),
   };
-  await transaction('readwrite', store => store.put(stored));
-  const verified = await getSourceImage(record.sourceReferenceId);
+  await transaction('readwrite', store => store.put(stored), explicitScope);
+  const verified = explicitScope ? await getSourceImageForScope(record.sourceReferenceId, explicitScope) : await getSourceImage(record.sourceReferenceId);
   if (verified.schemeId !== stored.schemeId || verified.mimeType !== stored.mimeType || verified.byteSize !== stored.byteSize) {
     throw storeError('TRANSACTION_FAILED', '来源图写入后校验失败');
   }
@@ -99,4 +102,23 @@ export async function deleteSourceImagesByScheme(schemeId) {
     for (const row of rows ?? []) store.delete(row.sourceReferenceId);
   });
   return (rows ?? []).length;
+}
+
+// 仅后台的显式历史导入可指定 legacy；常规素材操作始终使用当前账户分区。
+export async function getSourceImageForScope(id, scope) {
+  if (!validId(id)) throw storeError('NOT_FOUND', '来源图不存在');
+  const record = await transaction('readonly', store => store.get(id), scope);
+  if (!record) throw storeError('NOT_FOUND', '本机图片副本不存在，文字可单独同步');
+  return record;
+}
+
+export function putSourceImage(record = {}) { return writeSourceImage(record); }
+// 后台下载绑定发起时的账号分区；切号不会把图片写入新账号。
+export function putSourceImageForScope(record, scope) {
+  if (typeof scope !== 'string' || !scope || ['signed-out', 'legacy', 'local-demo'].includes(scope)) throw storeError('OWNERSHIP_MISMATCH', '本地图片账号无效');
+  return writeSourceImage(record, scope);
+}
+export async function deleteSourceImageForScope(id, scope) {
+  if (!validId(id) || typeof scope !== 'string' || !scope || ['signed-out', 'legacy', 'local-demo'].includes(scope)) throw storeError('OWNERSHIP_MISMATCH', '本地图片账号无效');
+  await transaction('readwrite', store => store.delete(id), scope);
 }

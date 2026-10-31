@@ -1,0 +1,20 @@
+{
+  "method": "browser-rendered-brand-layout-with-current-UI-screenshot",
+  "brand": "Existing ArchBuddy logo, #25634B, Microsoft YaHei UI / Segoe UI",
+  "sourceScreenshot": "01-library-1280x800.png",
+  "screenshotsAreDemo": true,
+  "files": [
+    {
+      "name": "small-promo-440x280.png",
+      "width": 440,
+      "height": 280,
+      "sha256": "f64a0cabff8fe888c9c3ec3b1123848deb65fcdf00ed16f343f8b1fc96d84e58"
+    },
+    {
+      "name": "marquee-promo-1400x560.png",
+      "width": 1400,
+      "height": 560,
+      "sha256": "30b182a0a2dd7478f641eb5f42a5ad7ed44b2c2e62a98954e8e05ab6ca218b36"
+    }
+  ]
+}

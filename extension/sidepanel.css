@@ -335,3 +335,21 @@ button:disabled { cursor: default; opacity: .48; }
 .render-services small { display: block; font: 10px/1.5 'Segoe UI',sans-serif; color: var(--soft); }
 .render-services .external-arrow { display: block; flex: 0 0 16px; width: 16px; height: 16px; margin-left: auto; color: #819087; }
 @media(max-width:360px) { .render-services small { display: none; } }
+
+/* 窄侧栏的品牌与语言在首行，账号和三项额度使用完整第二行。 */
+.app-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 12px; min-height: 0; padding: 12px 14px; }
+.app-header .brand { min-width: 0; gap: 7px; }
+.app-header .brand strong { font-size: 19px; }
+.app-header .brand-mark { width: 29px; height: 29px; flex-basis: 29px; }
+.app-header .header-actions { display: contents; }
+.app-header .header-actions > #session-status { display: none; }
+.app-header .account-summary { grid-column: 1 / -1; min-width: 0; width: 100%; }
+.app-header .locale-toggle { justify-self: end; }
+html[lang="en"] .sticky-header .tab { height: auto; min-height: 38px; padding: 7px 4px; font-size: 12px; line-height: 1.3; }
+html[lang="en"] .reference-section > .section-title { align-items: start; gap: 8px; }
+html[lang="en"] .reference-section > .section-title .text-button { white-space: normal; text-align: right; max-width: 45%; }
+html[lang="en"] .prompt-actions button { min-width: 0; white-space: normal; }
+
+/* Canvas 入口与语言并列；极窄侧栏让出非必要 Beta 标记的空间。 */
+.app-header.has-unified-account .header-actions:has(.canvas-launch) { flex-wrap: nowrap; gap: 6px; }
+@media (max-width: 360px) { .app-header .brand .beta { display: none; } }

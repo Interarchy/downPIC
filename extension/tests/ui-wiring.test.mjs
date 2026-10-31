@@ -72,22 +72,21 @@ test('扩展端没有模型 Key、DeepSeek 地址或管理员测试凭据', () =
   assert.ok(!packagedClient.includes('api.deepseek.com'));
   assert.ok(!packagedClient.includes("'x-api-key'"));
   assert.ok(!packagedClient.includes('ARCHBUDDY_TEST_TOKEN'));
-  assert.match(source['runtime-config.mjs'], /https:\/\/archbuddy-api-[^']+\.sh\.run\.tcloudbase\.com/);
-  assert.match(source['background.mjs'], /\/api\/session/);
+  assert.match(source['runtime-config.mjs'], /https:\/\/canvas\.archbuddy\.top/);
+  assert.ok(!source['background.mjs'].includes('/api/session'));
+  assert.match(source['background.mjs'], /accountClient\.request/);
   assert.match(source['background.mjs'], /crypto\.randomUUID\(\)/);
 });
 
-test('普通用户界面和匿名请求结果不展示具体额度', () => {
+test('旧界面不残留匿名服务额度', () => {
   const packagedClient = [source['sidepanel.mjs'], source['background.mjs']].join('\n');
   assert.ok(!packagedClient.includes('今日剩余'));
   assert.ok(!packagedClient.includes('userRemaining'));
   assert.ok(!packagedClient.includes('projectRemaining'));
 });
 
-test('云端状态与匿名会话超时覆盖 CloudBase 冷启动', () => {
+test('身份状态与模型请求具有独立超时', () => {
   assert.match(source['background.mjs'], /const STATUS_TIMEOUT_MS = 25_000/);
-  assert.match(source['background.mjs'], /const SESSION_TIMEOUT_MS = 30_000/);
   assert.match(source['background.mjs'], /const ANALYSIS_TIMEOUT_MS = 135_000/);
-  assert.match(source['background.mjs'], /timeoutMs: SESSION_TIMEOUT_MS/);
   assert.match(source['background.mjs'], /timeoutMs: STATUS_TIMEOUT_MS/);
 });

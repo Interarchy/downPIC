@@ -1,3 +1,5 @@
+> 历史资料：本文件不用于0.7.5提交。当前版本请使用[新版发布材料](../releases/0.7.5/)，旧登录、额度与保留规则不代表当前产品。
+
 # Edge Add-ons 上架清单（V4.1 / 0.6.1）
 
 状态：**Edge 专用隐私页已公开部署，商店尚未提交**。用户已反馈 Edge 本地测试版可以使用；提交前仍需复核最终候选包。官方流程：[Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension)。

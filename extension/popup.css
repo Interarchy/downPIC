@@ -11,7 +11,9 @@
 }
 
 * { box-sizing: border-box; }
-body { width: 360px; margin: 0; color: var(--ink); background: var(--paper); font: 13px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif; }
+/* Chrome sizes an action popup from its document; viewport caps can shrink that measurement. */
+html, body { width: 360px; min-width: 360px; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 13px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif; }
 button, input, select { font: inherit; }
 button { cursor: pointer; }
 button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
@@ -19,11 +21,12 @@ p, strong { margin: 0; }
 .popup-shell { padding: 16px; }
 .brand-row, .switch-row, .section-heading, .custom-row, .analysis-button { display: flex; align-items: center; }
 .brand-row, .switch-row, .section-heading, .analysis-button { justify-content: space-between; }
+.brand-row { flex-wrap: wrap; gap: 8px 4px; }
 .brand { display: flex; align-items: center; gap: 7px; }
 .brand-mark { display: block; flex: 0 0 30px; width: 30px; height: 30px; }
 .brand strong { font: 700 19px/1 "Segoe UI", "Microsoft YaHei UI", sans-serif; letter-spacing: -.025em; }
 .brand > span:last-child { padding: 2px 5px; color: var(--green); background: var(--mist); border-radius: 4px; font-size: 9px; font-weight: 700; }
-#backend-status { display: flex; align-items: center; gap: 5px; color: var(--soft); font-size: 10px; }
+#backend-status { display: flex; align-items: center; gap: 5px; color: var(--soft); font-size: 10px; white-space: nowrap; flex-shrink: 0; }
 #backend-status i { width: 7px; height: 7px; background: #9aa39e; border-radius: 50%; }
 #backend-status[data-state="online"] i { background: #2d8a5e; }
 #backend-status[data-state="offline"] i { background: var(--danger); }

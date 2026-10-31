@@ -5,9 +5,10 @@ import { DeepSeekVisionAnalyzer, VisionAnalysisError } from '../plugin-prototype
 import { QuotaError, normalizeUsage } from './quota.mjs';
 import { embedTexts, EmbeddingError, validEmbeddingKey } from './embedding.mjs';
 import { createAnonymousSession, validSessionSecret, verifyAnonymousSession } from './session.mjs';
+import { UNIFIED_MAX_BYTES, UNIFIED_PATHS, UnifiedAuthError, definitelyRejected, validExecutorSecret, verifyUnifiedRequest } from './unified-auth.mjs';
 
-// Protected developer smoke-test service. The extension is not yet switched here.
-// This administrative test token is NEVER included in any extension build.
+// Production accepts only signed requests from the shared account/billing Worker.
+// Legacy credentials are restricted to an explicit loopback-only unit test harness.
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const MAX_BODY_BYTES = Math.ceil(MAX_IMAGE_BYTES / 3) * 4 + 4096;
 const MAX_SESSION_BODY_BYTES = 4096;
@@ -63,7 +64,11 @@ function authenticate(header, { testToken, sessionSecret, now }) {
   return session ? { ...session, type: 'anonymous' } : null;
 }
 
-async function readJson(req, maximumBytes) {
+async function readJson(req, maximumBytes, includeRaw = false) {
+  if (req.unifiedPayload) {
+    if (Buffer.byteLength(JSON.stringify(req.unifiedPayload)) > maximumBytes) throw new HttpError(413, 'BODY_TOO_LARGE', '请求内容过大');
+    return req.unifiedPayload;
+  }
   if (String(req.headers['content-type'] || '').split(';')[0].trim().toLowerCase() !== 'application/json') {
     throw new HttpError(415, 'INVALID_CONTENT_TYPE', '请使用 JSON 发送请求');
   }
@@ -89,7 +94,7 @@ async function readJson(req, maximumBytes) {
     req.on('error', reject);
     req.on('aborted', () => reject(new HttpError(400, 'REQUEST_ABORTED', '请求已中断')));
   });
-  try { return JSON.parse(raw.toString('utf8')); }
+  try { const body = JSON.parse(raw.toString('utf8')); return includeRaw ? { body, raw } : body; }
   catch { throw new HttpError(400, 'MALFORMED_JSON', '请求内容不是有效 JSON'); }
 }
 
@@ -212,23 +217,29 @@ export function createAnalysisServer({
   embedder = embedTexts,
   accountService = null,
   localMockAI = false,
+  unifiedExecutions = null,
+  legacyTestMode = false,
 } = {}) {
   const testToken = environment.ARCHBUDDY_TEST_TOKEN;
   const sessionSecret = environment.ARCHBUDDY_SESSION_SECRET;
   const persistent = environment.ARCHBUDDY_QUOTA_MODE === 'cloudbase';
   const localAccounts = environment.ARCHBUDDY_ACCOUNT_MODE === 'local-demo';
+  const legacyTests = legacyTestMode === true && environment.NODE_ENV === 'test';
+  if (legacyTestMode && !legacyTests) throw new Error('Legacy authentication is available only in an explicit NODE_ENV=test harness');
+  if (localAccounts && !['development', 'test'].includes(environment.NODE_ENV)) throw new Error('Local account demo requires explicit non-production NODE_ENV');
+  const unifiedConfigured = validExecutorSecret(environment.PRODUCT_EXECUTOR_SECRET) && Boolean(unifiedExecutions);
   if (localAccounts && (persistent || !accountService)) throw new Error('Local accounts require a local account store and cannot use CloudBase quota');
   if (localMockAI && !localAccounts) throw new Error('Mock AI is restricted to local account mode');
-  const anonymousSessionsEnabled = !localAccounts && validSessionSecret(sessionSecret);
+  const anonymousSessionsEnabled = legacyTests && !localAccounts && validSessionSecret(sessionSecret);
   const identify = header => localAccounts
     ? accountService.authenticate(bearerToken(header))
-    : authenticate(header, { testToken, sessionSecret, now });
+    : legacyTests ? authenticate(header, { testToken, sessionSecret, now }) : null;
   const configured = (localMockAI || Boolean(environment.DEEPSEEK_API_KEY))
-    && (localAccounts || validSecret(testToken) || anonymousSessionsEnabled)
-    && (!persistent || Boolean(quota));
+    && (localAccounts || unifiedConfigured || (legacyTests && (validSecret(testToken) || anonymousSessionsEnabled)))
+    && (!legacyTests || !persistent || Boolean(quota));
   const embeddingConfigured = !localMockAI && validEmbeddingKey(environment.ARCHBUDDY_EMBEDDING_API_KEY)
-    && (localAccounts || validSecret(testToken) || anonymousSessionsEnabled)
-    && (!persistent || Boolean(quota));
+    && (localAccounts || unifiedConfigured || (legacyTests && (validSecret(testToken) || anonymousSessionsEnabled)))
+    && (!legacyTests || !persistent || Boolean(quota));
   const maxCalls = positiveInt(environment.ARCHBUDDY_MAX_CALLS_PER_PROCESS, 20);
   const maxConcurrent = positiveInt(environment.ARCHBUDDY_MAX_CONCURRENT, 3);
   const perMinute = positiveInt(environment.ARCHBUDDY_CALLS_PER_MINUTE, 3);
@@ -252,9 +263,12 @@ export function createAnalysisServer({
     let modelSucceeded = false;
     let modelStartedAt = null;
     let outcomeRecorded = false;
+    let unifiedIdentity = null;
+    let unifiedLease = null;
+    let unifiedKnownFailure = false;
     try {
-      const pathname = new URL(req.url, 'http://localhost').pathname;
-      if (localAccounts) {
+      let pathname = new URL(req.url, 'http://localhost').pathname;
+      if (localAccounts || legacyTests) {
         const host = new URL(`http://${req.headers.host || ''}`).hostname;
         const origin = req.headers.origin;
         if (!['127.0.0.1', 'localhost'].includes(host)
@@ -268,10 +282,10 @@ export function createAnalysisServer({
         return;
       }
       if (req.method === 'GET' && pathname === '/api/status') {
-        json(res, 200, { configured, provider: localMockAI ? 'local-demo' : 'deepseek', model: localMockAI ? 'archbuddy-local-demo' : 'deepseek-flash', mode: localAccounts ? 'local-demo' : persistent ? 'anonymous-beta' : 'local-process-test', authenticationRequired: true,
+        json(res, 200, { configured, provider: localMockAI ? 'local-demo' : 'deepseek', model: localMockAI ? 'archbuddy-local-demo' : 'deepseek-flash', mode: localAccounts ? 'local-demo' : legacyTests ? 'local-test' : 'unified-product', authenticationRequired: true,
           anonymousSessionsEnabled, embeddingConfigured,
-          accountMode: localAccounts ? 'local-demo' : 'anonymous', localDemo: localAccounts, mockAI: localMockAI,
-          quotaMode: localAccounts ? 'local-daily' : persistent ? 'daily' : 'process-test',
+          accountMode: localAccounts ? 'local-demo' : legacyTests ? 'legacy-test' : 'unified', localDemo: localAccounts, mockAI: localMockAI,
+          quotaMode: localAccounts ? 'local-daily' : legacyTests ? (persistent ? 'daily' : 'process-test') : 'shared-worker',
           ...(persistent || localAccounts ? { quotaTimeZone: 'Asia/Shanghai' } : {}),
         });
         return;
@@ -299,6 +313,26 @@ export function createAnalysisServer({
           json(res, 200, await accountService.createOrder(identity.actorId, body?.packageId, body?.requestId));
         } else throw new HttpError(404, 'NOT_FOUND', '账号接口不存在或请求方式无效');
         return;
+      }
+      if (pathname.startsWith('/api/unified/')) {
+        if (!['/api/unified/execute', '/api/unified/result'].includes(pathname)) throw new HttpError(404, 'NOT_FOUND', '接口不存在');
+        if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
+        const signed = await readJson(req, UNIFIED_MAX_BYTES, true);
+        const verified = verifyUnifiedRequest({ method: req.method, path: pathname, headers: req.headers, ...signed, secret: environment.PRODUCT_EXECUTOR_SECRET, now });
+        if (!unifiedExecutions) throw new UnifiedAuthError(503, 'UNIFIED_NOT_CONFIGURED');
+        if (pathname === '/api/unified/result') { json(res, 200, await unifiedExecutions.result(verified)); return; }
+        const lease = await unifiedExecutions.reserve(verified);
+        if (!lease.created) {
+          if (lease.record.state === 'completed') { json(res, 200, lease.record.result); return; }
+          throw new UnifiedAuthError(409, lease.record.state === 'failed' ? 'UNIFIED_FAILED' : 'UNIFIED_PENDING', '请查询原任务，不要重新生成请求');
+        }
+        unifiedLease = lease;
+        unifiedIdentity = { actorId: verified.accountId, type: 'unified' };
+        req.unifiedPayload = signed.body.payload;
+        pathname = UNIFIED_PATHS[verified.operation];
+      }
+      if (!unifiedIdentity && !localAccounts && !legacyTests && pathname.startsWith('/api/')) {
+        throw new HttpError(410, 'UNIFIED_LOGIN_REQUIRED', '请更新插件并使用 ArchBuddy 统一账号登录');
       }
       if (pathname === '/api/session') {
         if (req.method !== 'POST') throw new HttpError(405, 'METHOD_NOT_ALLOWED', '仅支持 POST 请求');
@@ -334,10 +368,10 @@ export function createAnalysisServer({
       if (embedding ? !embeddingConfigured : !configured) {
         throw new HttpError(503, embedding ? 'EMBEDDING_NOT_CONFIGURED' : 'NOT_CONFIGURED', embedding ? '语义向量服务尚未配置；关键词搜索仍可使用' : '测试服务尚未配置完成');
       }
-      const identity = await identify(req.headers.authorization);
+      const identity = unifiedIdentity || await identify(req.headers.authorization);
       if (!identity) throw new HttpError(401, 'UNAUTHORIZED', localAccounts ? '账号登录状态无效或已过期，请重新登录' : '匿名访问凭据无效或已过期');
       if (environment.ARCHBUDDY_ANALYSIS_ENABLED === 'false') throw new HttpError(503, 'ANALYSIS_PAUSED', '反推服务暂时暂停，下载与分类仍可使用');
-      if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+      if (!unifiedIdentity && !persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
       if (embedding) {
         if (now() - embeddingMinuteStart >= 60_000) { embeddingMinuteStart = now(); embeddingMinuteCalls = 0; }
         if (embeddingMinuteCalls >= embeddingPerMinute) throw new HttpError(429, 'RATE_LIMITED', '向量生成请求过于频繁，请稍后再试');
@@ -357,13 +391,14 @@ export function createAnalysisServer({
             || body.texts.some(text => typeof text !== 'string' || !text.trim() || text.length > 2000)) {
           throw new HttpError(400, 'INVALID_INPUT', '向量化文本无效');
         }
-        if (persistent) reservation = await quota.reserve(identity.actorId, req.headers['x-archbuddy-request-id']);
+        if (persistent && !unifiedIdentity) reservation = await quota.reserve(identity.actorId, req.headers['x-archbuddy-request-id']);
         if (localAccounts) pointReservation = await accountService.reserve(identity.actorId, req.headers['x-archbuddy-request-id'], 'embed');
         if (req.aborted || res.destroyed) return;
-        if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+        if (!unifiedIdentity && !persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), timeoutMs);
-        res.on('close', () => { if (!res.writableEnded) controller.abort(); });
+        res.on('close', () => { if (!unifiedIdentity && !res.writableEnded) controller.abort(); });
+        if (unifiedLease) await unifiedExecutions.markSubmitted(unifiedLease);
         startedCalls++;
         modelStarted = true;
         modelStartedAt = now();
@@ -380,11 +415,17 @@ export function createAnalysisServer({
             outcomeRecorded = true;
           } catch { console.warn(JSON.stringify({ event: 'usage_record_failed', projectId: 'archbuddy', stage: 'development' })); }
         }
-        json(res, 200, { model: result.model, vectors: result.vectors, durationMs: now() - modelStartedAt,
-          usage: normalizeUsage(result.usage), usageRecorded, ...(localAccounts ? { demo: localMockAI, account: await accountService.getAccount(identity.actorId) } : {}) });
+        const responseBody = { model: result.model, vectors: result.vectors, durationMs: now() - modelStartedAt,
+          usage: normalizeUsage(result.usage), usageRecorded, ...(localAccounts ? { demo: localMockAI, account: await accountService.getAccount(identity.actorId) } : {}) };
+        if (unifiedLease) {
+          try { await unifiedExecutions.complete(unifiedLease, responseBody); }
+          catch { console.warn(JSON.stringify({ event: 'unified_result_record_failed', projectId: 'archbuddy' })); }
+        }
+        json(res, 200, responseBody);
         return;
       }
       const evaluationRequest = contractVersion === 3 ? await readEvaluationRequest(req) : null;
+      if (unifiedIdentity && evaluationRequest && evaluationRequest.requestId !== req.headers['x-archbuddy-request-id']) throw new HttpError(400, 'INVALID_REQUEST_ID', '评估请求标识不一致');
       let searchRequest = null;
       if (semantic) {
         const body = await readJson(req, 768 * 1024);
@@ -403,7 +444,7 @@ export function createAnalysisServer({
       }
       const image = semantic ? null : evaluationRequest?.image ?? await readImage(req);
       const controller = new AbortController();
-      res.on('close', () => { if (!res.writableEnded) controller.abort(); });
+      res.on('close', () => { if (!unifiedIdentity && !res.writableEnded) controller.abort(); });
       const analyzer = analyzerFactory({
         apiKey: environment.DEEPSEEK_API_KEY,
         baseUrl: environment.DEEPSEEK_BASE_URL,
@@ -417,7 +458,7 @@ export function createAnalysisServer({
         timeoutMs,
       });
       if (req.aborted || res.destroyed) return;
-      if (persistent) {
+      if (persistent && !unifiedIdentity) {
         reservation = await quota.reserve(identity.actorId, req.headers['x-archbuddy-request-id']);
         if (req.aborted || res.destroyed) return;
       }
@@ -427,7 +468,8 @@ export function createAnalysisServer({
         if (req.aborted || res.destroyed) return;
       }
       // Count attempts, even failures: upstream may charge for unsuccessful requests.
-      if (!persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+      if (!unifiedIdentity && !persistent && !localAccounts && startedCalls >= maxCalls) throw new HttpError(429, 'TEST_LIMIT_REACHED', '本次测试调用额度已用完');
+      if (unifiedLease) await unifiedExecutions.markSubmitted(unifiedLease);
       startedCalls++;
       modelStarted = true;
       modelStartedAt = now();
@@ -464,14 +506,23 @@ export function createAnalysisServer({
         : description ? { description: result.description } : contractVersion === 3
         ? result.evaluation
         : contractVersion === 2 ? { contractVersion: 2, modules: result.modules } : { sections };
-      json(res, 200, { ...analysisPayload, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
+      const responseBody = { ...analysisPayload, model: result.model, durationMs: result.durationMs, truncated: Boolean(result.truncated), cached: false,
         usage: normalizeUsage(result.usage), usageRecorded,
         ...(localAccounts ? { demo: localMockAI, account: await accountService.getAccount(identity.actorId) } : {}),
         ...(reservation && identity.type === 'administrator'
           ? { quota: { day: reservation.day, userRemaining: reservation.userRemaining, projectRemaining: reservation.projectRemaining } }
           : {}),
-      });
+      };
+      if (unifiedLease) {
+        try { await unifiedExecutions.complete(unifiedLease, responseBody); }
+        catch { console.warn(JSON.stringify({ event: 'unified_result_record_failed', projectId: 'archbuddy' })); }
+      }
+      json(res, 200, responseBody);
     } catch (error) {
+      if (unifiedLease && !modelSucceeded && definitelyRejected(error, modelStarted)) {
+        try { await unifiedExecutions.failBeforeOrRejected(unifiedLease, error.code || 'REQUEST_NOT_SUBMITTED'); unifiedKnownFailure = true; }
+        catch { console.warn(JSON.stringify({ event: 'unified_failure_record_failed', projectId: 'archbuddy' })); }
+      }
       if (pointReservation && modelStarted && !pointsRecorded) {
         // A valid result with a bookkeeping error stays reserved; never refund an uncertain success.
         if (!modelSucceeded) {
@@ -488,9 +539,9 @@ export function createAnalysisServer({
         }
       }
       const sendError = (status, code, message) => json(res, status, contractVersion === 3
-        ? { error: { code, message }, requestId: req.headers['x-archbuddy-request-id'] || null }
-        : { code, message });
-      if (error instanceof HttpError || error instanceof QuotaError || error.name === 'AccountError') {
+        ? { error: { code, message }, requestId: req.headers['x-archbuddy-request-id'] || null, ...(unifiedLease ? { executionState: unifiedKnownFailure ? 'failed' : 'pending' } : {}) }
+        : { code, message, ...(unifiedLease ? { executionState: unifiedKnownFailure ? 'failed' : 'pending' } : {}) });
+      if (error instanceof HttpError || error instanceof QuotaError || error instanceof UnifiedAuthError || error.name === 'AccountError') {
         const code = contractVersion === 3 && !localAccounts
           ? (error.status === 429 ? 'QUOTA_REACHED' : error.status === 401 ? 'AUTH_REQUIRED' : error.status === 403 ? 'AUTH_INVALID' : error.status >= 500 ? 'SERVICE_UNAVAILABLE' : 'INVALID_INPUT')
           : error.code;
@@ -506,6 +557,10 @@ export function createAnalysisServer({
       // Do not log request bodies, credentials, images, prompts, or upstream errors.
       req.resume();
     } finally {
+      if (unifiedLease && !modelStarted) {
+        try { await unifiedExecutions.failBeforeOrRejected(unifiedLease, 'REQUEST_NOT_SUBMITTED'); }
+        catch { console.warn(JSON.stringify({ event: 'unified_release_record_failed', projectId: 'archbuddy' })); }
+      }
       if (pointReservation && !modelStarted) {
         try { await accountService.cancel(pointReservation); }
         catch { console.warn(JSON.stringify({ event: 'local_points_cancel_failed', projectId: 'archbuddy', stage: 'local' })); }

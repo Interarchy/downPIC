@@ -1,5 +1,7 @@
 # ArchBuddy｜CloudBase 开发测试部署
 
+> 2026-10-29：统一产品候选后端已准备，生产匿名入口将关闭，改为仅接受 Worker HMAC 签名和可查询的持久任务记录。当前未部署；最新规则见 [统一执行器](UNIFIED_EXECUTOR.md)，下文匿名入口/个人次数为历史版本说明。
+
 目标环境由本地 `environment.json` 与服务端环境变量指定，地域为上海 `ap-shanghai`。建议服务名：`archbuddy-api`，容器端口：`8080`。真实环境配置不提交到公开仓库；字段模板见 `environment.example.json`。
 
 ## 多项目隔离：每次云端变更前检查

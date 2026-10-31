@@ -1,0 +1,7 @@
+{
+  "purpose": "ArchBuddy unified test package only",
+  "extensionId": "ikkmbpahejfapgnngdckocmfbcbnjedo",
+  "origin": "chrome-extension://ikkmbpahejfapgnngdckocmfbcbnjedo",
+  "callback": "https://ikkmbpahejfapgnngdckocmfbcbnjedo.chromiumapp.org/archbuddy",
+  "publicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqjU9DxEVHr3itMH/KWvEF7Tx6CWD76L4WLbZn1WzWwtlfe/3EaMJrCDlOFSfyc0qJSmT7yz5a7BaNn9yk6dCpaMW1xUIo0JEIlEYGmzRdTywJa6QoloyJW7QwSa/HRdRelzJqlazmZVn7eQCCoa8+ngwx/9dRFdLiKjmlC9ia97uPvNrzRxq6MdlUlBiYM6Cc51LezQQOlG3eLZIhbPpXDWbEqXu2eoxIXq5olTLysrODMh+4dFgexk6QHxTvhzKjUAOpMINgdRxTF/0mPLxKuoBTEn76Wcw6ilQ25JjlCTyqwXq7EQJy7avBG/XflT6OrbB20b1zw98i1YYYwPV+QIDAQAB"
+}

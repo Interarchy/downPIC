@@ -538,3 +538,64 @@ h1, h2, h3, p, figure { margin: 0; }
 .capture-type-create input:focus-visible { outline-offset: -2px; }
 .capture-type-create .solid-button { min-height: 34px; padding: 0 8px; font-size: 11px; }
 .capture-detail-layout .detail-body > .detail-image { min-height: 180px; border-radius: 5px; }
+
+/* 账户与三项权益收进顶部工具区，桌面与搜索同排。 */
+.topbar { grid-template-columns: 220px minmax(240px, 1fr) 240px auto; gap: 12px 16px; }
+.topbar > .brand { grid-column: 1; grid-row: 1; }
+.topbar > .header-searches { grid-column: 2; grid-row: 1; width: 100%; }
+.topbar > .account-summary { display: block; grid-column: 3; grid-row: 1; width: 100%; min-width: 0; padding: 0; border: 0; }
+.topbar > .account-summary[hidden] { display: none; }
+.topbar .account-summary-row { min-width: 0; gap: 10px; }
+.topbar .account-summary .account-entry { min-height: 24px; padding: 0; font-size: 11px; }
+.topbar .account-balances { width: 100%; margin: 3px 0 0; padding: 0; gap: 10px; }
+.topbar .account-metric dt { margin: 0; font-size: 10px; white-space: nowrap; }
+.topbar .account-metric dd { font-size: 15px; }
+.topbar > .top-actions { grid-column: 4; grid-row: 1; display: flex; min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: 9px; }
+.topbar .canvas-launch { flex: 0 0 auto; }
+#open-sidepanel { width: auto; min-width: 0; padding-inline: 10px; white-space: nowrap; }
+.library-sidebar { top: var(--library-header-height, 86px); height: calc(100dvh - var(--library-header-height, 86px)); }
+.detail { top: calc(var(--library-header-height, 86px) + 20px); max-height: calc(100dvh - var(--library-header-height, 86px) - 40px); }
+.capture-detail-actions button { white-space: normal; overflow-wrap: anywhere; }
+.folder-type-row .group-mini-action { white-space: nowrap; }
+html[lang="en"] .sidebar-tool-copy strong { line-height: 1.3; }
+html[lang="en"] .asset-drag-hint { white-space: normal; text-align: right; }
+@media (max-width: 1179px) {
+  .topbar { grid-template-columns: 220px minmax(220px, 1fr) auto; }
+  .topbar > .account-summary { grid-column: 2; grid-row: 1; max-width: 290px; justify-self: end; }
+  .topbar > .top-actions { grid-column: 3; grid-row: 1; }
+  .topbar > .header-searches { grid-column: 1 / -1; grid-row: 2; max-width: none; }
+}
+@media (max-width: 860px) {
+  .topbar { grid-template-columns: minmax(240px, .85fr) minmax(280px, 1fr); gap: 12px; }
+  .topbar > .brand { grid-column: 1; grid-row: 1; }
+  .topbar > .top-actions { grid-column: 2; grid-row: 1; }
+  .topbar > .account-summary { grid-column: 1; grid-row: 2; max-width: 280px; justify-self: start; }
+  .topbar > .header-searches { grid-column: 2; grid-row: 2; }
+  .header-search-control .search-submit { padding-inline: 10px; }
+}
+@media (max-width: 800px) {
+  .library-sidebar { position: static; height: auto; }
+  .detail { position: static; max-height: none; }
+}
+@media (max-width: 650px) {
+  .topbar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px 12px; }
+  .topbar > .brand { grid-column: 1; grid-row: 1; gap: 7px; }
+  .topbar .brand strong { font-size: 16px; }
+  .topbar .brand > span { display: none; }
+  .topbar > .top-actions { display: contents; }
+  .top-actions > .locale-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
+  .top-actions > .canvas-launch { grid-column: 1; grid-row: 2; justify-self: stretch; }
+  .top-actions > #open-sidepanel { grid-column: 2; grid-row: 2; justify-self: stretch; min-height: 38px; padding: 6px 8px; white-space: normal; line-height: 1.25; }
+  .topbar > .account-summary { grid-column: 1 / -1; grid-row: 3; max-width: none; }
+  .topbar .account-summary .account-entry { min-height: 30px; font-size: 12px; }
+  .topbar .account-balances { margin-top: 5px; gap: 12px; }
+  .topbar > .header-searches { grid-column: 1 / -1; grid-row: 4; }
+  .header-search-control .search-submit { max-width: 110px; min-height: 36px; padding: 4px 8px; white-space: normal; line-height: 1.2; }
+}
+
+@media (max-width: 600px) {
+  .asset-consent { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 10px; }
+  .asset-consent[hidden] { display: none; }
+  .asset-consent > span { min-width: 0; width: 100%; }
+  .asset-consent > button { justify-self: start; max-width: 100%; white-space: normal; }
+}

@@ -1,11 +1,11 @@
 // Public runtime configuration only. Never put a DeepSeek API key, administrator
 // token or session-signing secret in this file.
-// 源码与商店构建默认访问已登记的 ArchBuddy 云端服务。仅做本地联调时可临时
+// 源码与商店构建固定访问统一 ArchBuddy 服务。仅做本地联调时可临时
 // 改为 local；开始提交、打包或部署前必须恢复 cloud，且不得提交 local 配置。
 export const BACKEND_MODE = 'cloud';
 
 const PUBLIC_BACKENDS = Object.freeze({
-  cloud: 'https://archbuddy-api-313819-12-1419174875.sh.run.tcloudbase.com',
+  cloud: 'https://canvas.archbuddy.top',
   local: 'http://127.0.0.1:8080',
 });
 
@@ -19,3 +19,9 @@ export function backendUrl(path) {
   const suffix = String(path || '').startsWith('/') ? String(path) : `/${path}`;
   return `${BACKEND_BASE_URL}${suffix}`;
 }
+
+// 普通文件下载免费；预占模块保留兼容，但不接入普通下载。
+export const METER_FILE_DOWNLOADS = false;
+
+// 已确认：200次为简析权益，成功生成描述才扣1次，由统一服务端结算。
+export const ENABLE_UNIFIED_DESCRIBE = true;

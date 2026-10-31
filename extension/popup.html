@@ -4,37 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ArchBuddy</title>
-    <link rel="stylesheet" href="popup.css?v=0.6.1" />
-  </head>
+    <link rel="stylesheet" href="popup.css?v=0.7.3" />
+  <link rel="stylesheet" href="account-ui.css">
+</head>
   <body>
     <main class="popup-shell">
       <header class="brand-row">
         <div class="brand"><img class="brand-mark" src="icons/icon-128.png" alt="" /><strong>ArchBuddy</strong><span>Beta</span></div>
-        <p id="backend-status" data-state="checking"><i></i><span>检查服务</span></p>
+        <p id="backend-status" data-state="checking"><i></i><span data-i18n-en="Checking service">检查服务</span></p>
       </header>
 
       <section class="switch-row">
-        <div><strong id="capture-title">打开图片浏览器下载浮框</strong><p id="capture-copy">功能已关闭</p></div>
+        <div><strong id="capture-title" data-i18n-en="Webpage image tools">打开图片浏览器下载浮框</strong><p id="capture-copy" data-i18n-en="Off">功能已关闭</p></div>
         <label class="switch">
-          <span class="sr-only">打开或关闭图片浏览器下载浮框</span>
+          <span class="sr-only" data-i18n-en="Enable or disable webpage image tools">打开或关闭图片浏览器下载浮框</span>
           <input id="capture-enabled" type="checkbox" />
           <span class="switch-track"></span>
         </label>
       </section>
 
       <button id="open-library" class="analysis-button" type="button">
-        <span><strong>打开图词库</strong><small>查看采集图片与生成的提示词</small></span>
+        <span><strong data-i18n-en="Open library">打开图词库</strong><small data-i18n-en="Browse saved images and prompts">查看采集图片与生成的提示词</small></span>
         <b aria-hidden="true">›</b>
       </button>
 
       <button id="open-sidepanel" class="analysis-button" type="button">
-        <span><strong>打开侧边栏</strong><small>生成和优化提示词</small></span>
+        <span><strong data-i18n-en="Open sidebar">打开侧边栏</strong><small data-i18n-en="Create and refine prompts">生成和优化提示词</small></span>
         <b aria-hidden="true">›</b>
       </button>
 
-      <p class="usage-note">开启后，将鼠标移到网页内容图片上，即可保存或反推提示词。</p>
+      <p class="usage-note" data-i18n-en="When enabled, hover over a webpage image to save it or analyze its prompt.">开启后，将鼠标移到网页内容图片上，即可保存或反推提示词。</p>
       <p id="global-feedback" class="feedback" aria-live="polite"></p>
-      <a class="privacy-link" href="privacy.html" target="_blank">隐私说明</a>
+      <a class="privacy-link" href="privacy.html" target="_blank" data-i18n-en="Privacy">隐私说明</a>
     </main>
     <script type="module" src="popup.mjs"></script>
   </body>

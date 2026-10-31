@@ -1,7 +1,7 @@
-# 商店资料目录
+# Chrome 与 Edge 发布资料
 
-- 当前目录中既有 `listing-zh-CN.md`、`permission-justifications.md`、`privacy-policy.md`、`RELEASE_CHECKLIST.md`、`NEW_ACCOUNT_SUBMISSION.md` 与 `assets/v4/`，继续作为 **Chrome Web Store** 的历史和当前资料，不移动、不覆盖。
-- `edge/` 只放 **Microsoft Edge Add-ons** 的填写稿、隐私页与专用上传素材。两店共用经过验证的扩展业务代码，但商店后台资料和上架状态各自维护。
-- `../dist/edge/` 仅放 Edge 的 ZIP 产物；它被 Git 忽略。文件名中的 `local-test` 表示本地测试，`store-candidate` 表示待补齐上架前检查的候选包。不得把本地账号积分演示包上传任一商店。
+当前交付版本：**0.7.5 / V5.1**。统一材料在[releases/0.7.5](releases/0.7.5/)，两店各有商品文案及披露指引。业务源码和随包privacy.html共用；商店身份与提交状态各自维护。
 
-Edge 材料和剩余发布关口见 [Edge 上架清单](edge/SUBMISSION_CHECKLIST.md)。
+extension/scripts/build-store-package.ps1支持-Browser chrome和-Browser edge。旧Edge包装脚本已改为调用同一构建器，不再读取0.6.1历史ZIP。
+
+当前目录旧listing-zh-CN.md、permission-justifications.md、privacy-policy.md及assets/v4等保留历史参考，顶部标注了新版入口，不应直接用于本次上架。不要把本地手机号演示包或固定测试ID包上传商店。

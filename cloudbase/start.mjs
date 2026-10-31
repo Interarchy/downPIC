@@ -1,9 +1,10 @@
 import { createAnalysisServer } from './server.mjs';
-import { createQuotaService } from './quota.mjs';
+import { createUnifiedExecutions, validExecutorSecret } from './unified-auth.mjs';
 import { loadDeepSeekEnvironment } from '../plugin-prototype/developer-settings.mjs';
 
 const localAccounts = process.env.ARCHBUDDY_ACCOUNT_MODE === 'local-demo';
 if (process.env.ARCHBUDDY_ACCOUNT_MODE && !localAccounts) throw new Error('Invalid account mode');
+if (localAccounts && !['development', 'test'].includes(process.env.NODE_ENV)) throw new Error('Local demo requires explicit development or test NODE_ENV');
 if (localAccounts && process.env.ARCHBUDDY_QUOTA_MODE === 'cloudbase') throw new Error('Local account demo cannot use CloudBase resources');
 if (process.env.ARCHBUDDY_LOCAL_MOCK_AI === 'true' && !localAccounts) throw new Error('Mock AI requires local account mode');
 const localMockAI = localAccounts && process.env.ARCHBUDDY_LOCAL_MOCK_AI === 'true';
@@ -11,9 +12,10 @@ if (localAccounts && !localMockAI) throw new Error('This local account milestone
 const environment = localMockAI ? { ...process.env } : await loadDeepSeekEnvironment();
 const port = Number(environment.PORT || 8080);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be 1..65535');
-const mode = environment.ARCHBUDDY_QUOTA_MODE || 'process-test';
+const mode = environment.ARCHBUDDY_QUOTA_MODE || (localAccounts ? 'process-test' : 'cloudbase');
+if (!localAccounts && (mode !== 'cloudbase' || !validExecutorSecret(environment.PRODUCT_EXECUTOR_SECRET))) throw new Error('Unified production requires CloudBase persistence and PRODUCT_EXECUTOR_SECRET');
 if (!['cloudbase', 'process-test'].includes(mode)) throw new Error('Invalid quota mode');
-let quota = null;
+let unifiedExecutions = null;
 let eventWriter = null;
 let accountService = null;
 let localModelOptions = {};
@@ -27,10 +29,10 @@ if (localAccounts) {
 } else if (mode === 'cloudbase') {
   const { createEventWriter, initializeCloudBaseStore } = await import('./cloudbase-store.mjs');
   const store = initializeCloudBaseStore();
-  quota = createQuotaService(store, { environment });
+  unifiedExecutions = createUnifiedExecutions(store);
   eventWriter = createEventWriter(store);
 }
-const server = createAnalysisServer({ environment, quota, eventWriter, accountService, localMockAI, ...localModelOptions });
+const server = createAnalysisServer({ environment, unifiedExecutions, eventWriter, accountService, localMockAI, ...localModelOptions });
 let stopping = false;
 async function releaseStore() { if (accountService) { const service = accountService; accountService = null; await service.close(); } }
 server.on('error', async error => {
